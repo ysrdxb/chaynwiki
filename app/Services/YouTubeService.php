@@ -17,7 +17,12 @@ class YouTubeService
     public function searchVideo(string $query)
     {
         if (empty($this->apiKey)) {
-            return null;
+            // Mock data for UI testing
+            return [
+                'id' => 'dQw4w9WgXcQ', // Never Gonna Give You Up (Classic placeholder)
+                'title' => 'Mock Video - ' . $query,
+                'thumbnail' => 'https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg',
+            ];
         }
 
         $response = Http::get("{$this->baseUrl}/search", [

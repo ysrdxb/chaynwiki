@@ -1,27 +1,38 @@
-<div class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen bg-[#050511] py-12 pt-32 relative">
+    <!-- Background Decor -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-brand-900/20 via-[#050511] to-[#050511]"></div>
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05]"></div>
+    </div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Header -->
-    <div class="mb-10 text-center">
-        <h1 class="text-3xl font-display font-bold text-white mb-2">Contribute to the Archive</h1>
-        <p class="text-gray-400">Add knowledge to the definitive music encyclopedia.</p>
+    <div class="mb-12 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-600/20 text-brand-400 text-xs font-mono uppercase tracking-widest mb-6">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
+            Contribution
+        </div>
+        <h1 class="text-4xl md:text-5xl font-display font-black text-white uppercase tracking-tight mb-4">Contribute to the Archive</h1>
+        <p class="text-gray-400 max-w-xl mx-auto">Add knowledge to the definitive music encyclopedia.</p>
     </div>
 
     <!-- Progress Steps -->
-    <div class="flex items-center justify-center mb-12">
+    <div class="flex items-center justify-center mb-16">
         <div class="flex items-center">
-            <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm {{ $step >= 1 ? 'bg-brand-500 text-white shadow-[0_0_15px_rgba(59,130,246,0.5)]' : 'bg-white/10 text-gray-400' }}">1</div>
-            <span class="ml-2 text-sm font-medium {{ $step >= 1 ? 'text-white' : 'text-gray-500' }}">Category</span>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 {{ $step >= 1 ? 'bg-brand-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.5)] scale-110' : 'bg-white/5 text-gray-500 border border-white/10' }}">1</div>
+            <span class="ml-3 text-sm font-bold uppercase tracking-wider {{ $step >= 1 ? 'text-white' : 'text-gray-600' }}">Category</span>
         </div>
-        <div class="w-16 h-px mx-4 {{ $step >= 2 ? 'bg-brand-500' : 'bg-white/10' }}"></div>
+        <div class="w-24 h-px mx-6 bg-gradient-to-r from-brand-500/50 to-purple-500/50 {{ $step >= 2 ? 'opacity-100' : 'opacity-20' }}"></div>
         <div class="flex items-center">
-            <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm {{ $step >= 2 ? 'bg-brand-500 text-white shadow-[0_0_15px_rgba(59,130,246,0.5)]' : 'bg-white/10 text-gray-400' }}">2</div>
-            <span class="ml-2 text-sm font-medium {{ $step >= 2 ? 'text-white' : 'text-gray-500' }}">Details</span>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 {{ $step >= 2 ? 'bg-brand-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.5)] scale-110' : 'bg-white/5 text-gray-500 border border-white/10' }}">2</div>
+            <span class="ml-3 text-sm font-bold uppercase tracking-wider {{ $step >= 2 ? 'text-white' : 'text-gray-600' }}">Details</span>
         </div>
     </div>
 
-    <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 rounded-3xl p-8 relative overflow-hidden">
+    <div class="bg-[#0A0A14] backdrop-blur-xl border border-white/10 rounded-[32px] p-8 md:p-12 relative overflow-hidden shadow-2xl">
         <!-- Decoration -->
-        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-500/10 rounded-full blur-[80px] -mr-32 -mt-32 pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500/5 rounded-full blur-[100px] -mr-32 -mt-32 pointer-events-none"></div>
 
         <!-- Step 1: Category Selection -->
         @if ($step === 1)

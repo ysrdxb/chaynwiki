@@ -62,37 +62,51 @@ class Create extends Component
         $this->isFetchingSpotify = true;
 
         try {
-            // Extract ID from URL (e.g. https://open.spotify.com/track/123456?si=...)
             $url = $this->spotifyImportUrl;
-            $id = basename(parse_url($url, PHP_URL_PATH));
+            
+            // Extract type and id using regex
+            if (preg_match('/(track|artist)\/([a-zA-Z0-9]+)/', $url, $matches)) {
+                $type = $matches[1];
+                $id = $matches[2];
+            } else {
+                throw new \Exception('Invalid Spotify URL. Please provide a track or artist link.');
+            }
 
             if ($this->category === 'song') {
-                $track = $spotify->getTrack($id);
+                if ($type !== 'track') {
+                    throw new \Exception('This is a Song creation page, but you provided an Artist link.');
+                }
                 
+                $track = $spotify->getTrack($id);
                 $this->title = $track->name;
                 $this->meta['spotify_id'] = $track->id;
                 $this->meta['album'] = $track->album->name;
                 $this->meta['release_date'] = $track->album->release_date;
-                $this->meta['artist_id'] = $track->artists[0]->name; // Temporary string for now
+                $this->meta['artist_id'] = $track->artists[0]->name; // Temporary
                 
-                // Fetch YouTube Video
                 $query = $track->artists[0]->name . ' - ' . $track->name . ' Official Video';
                 $video = $youtube->searchVideo($query);
                 if ($video) {
                     $this->meta['youtube_id'] = $video['id'];
                 }
                 
-                // Try to get image
-                if (!empty($track->album->images)) {
-                    // In a real app we would download `track->album->images[0]->url` to temp storage
+                session()->flash('message', 'Song details imported from Spotify!');
+            } elseif ($this->category === 'artist') {
+                if ($type !== 'artist') {
+                    throw new \Exception('This is an Artist creation page, but you provided a Track link.');
                 }
                 
-                $msg = 'Spotify data imported!';
-                if ($video) $msg .= ' YouTube video found.';
-                session()->flash('message', $msg);
+                $artistData = $spotify->getArtist($id);
+                $this->title = $artistData->name;
+                $this->meta['spotify_id'] = $artistData->id;
+                $this->meta['genres'] = implode(', ', $artistData->genres);
+                
+                session()->flash('message', 'Artist details imported from Spotify!');
+            } else {
+                throw new \Exception('Spotify import is only available for Songs and Artists.');
             }
         } catch (\Exception $e) {
-            $this->addError('spotifyImportUrl', 'Failed to fetch data: ' . $e->getMessage());
+            $this->addError('spotifyImportUrl', $e->getMessage());
         }
 
         $this->isFetchingSpotify = false;
@@ -130,6 +144,7 @@ class Create extends Component
 
     public function render()
     {
-        return view('livewire.article.create');
+        return view('livewire.article.create')
+            ->layout('layouts.wiki');
     }
 }

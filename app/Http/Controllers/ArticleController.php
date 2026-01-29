@@ -55,7 +55,7 @@ class ArticleController extends Controller
             'song' => 'wiki.song',
             'artist' => 'wiki.artist',
             'genre' => 'wiki.genre',
-            default => 'wiki.default',
+            default => 'wiki.show',
         };
 
         return view($view, compact('article'));

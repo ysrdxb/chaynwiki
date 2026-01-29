@@ -1,5 +1,5 @@
 <div class="mt-12">
-    <h3 class="text-2xl font-display font-bold text-white mb-8">Discussion ({{ $comments->count() }})</h3>
+<div class="mt-12">
 
     <!-- Auth Check -->
     @auth

@@ -39,7 +39,7 @@ class ArticleService
             Revision::create([
                 'article_id' => $article->id,
                 'user_id' => auth()->id(),
-                'content_snapshot' => json_encode(array_merge($article->toArray(), $metaData)),
+                'content_snapshot' => array_merge($article->only(['title', 'category', 'content', 'excerpt', 'featured_image']), $metaData),
                 'change_summary' => 'Initial creation',
             ]);
 
@@ -72,7 +72,7 @@ class ArticleService
             Revision::create([
                 'article_id' => $article->id,
                 'user_id' => auth()->id(),
-                'content_snapshot' => json_encode(array_merge($article->toArray(), $metaData)),
+                'content_snapshot' => array_merge($article->only(['title', 'category', 'content', 'excerpt', 'featured_image']), $metaData),
                 'change_summary' => $data['change_summary'] ?? 'Updated article',
             ]);
 

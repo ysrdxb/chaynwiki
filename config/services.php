@@ -45,4 +45,20 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Ollama - Free Local AI
+    |--------------------------------------------------------------------------
+    |
+    | Ollama runs AI models locally on your machine. 100% free.
+    | Install: https://ollama.com/download
+    | Pull model: ollama pull llama3
+    |
+    */
+    'ollama' => [
+        'url' => env('OLLAMA_URL', 'http://localhost:11434'),
+        'model' => env('OLLAMA_MODEL', 'llama3'),
+        'timeout' => env('OLLAMA_TIMEOUT', 120),
+    ],
+
 ];

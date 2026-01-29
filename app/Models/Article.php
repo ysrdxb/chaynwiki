@@ -56,4 +56,9 @@ class Article extends Model
     {
         return $this->morphMany(Vote::class, 'votable');
     }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
+    }
 }

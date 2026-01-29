@@ -15,6 +15,7 @@
 
             <div class="flex flex-col md:flex-row items-center md:items-start gap-12">
                 <!-- Avatar -->
+
                 <div class="shrink-0 relative">
                     <div class="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-4 border-white/5 shadow-2xl bg-[#11111a] flex items-center justify-center">
                         @if($user->avatar)
@@ -41,7 +42,7 @@
                         <p class="text-gray-600 italic mb-8">This contributor is still writing their own story...</p>
                     @endif
 
-                    <div class="flex flex-wrap justify-center md:justify-start gap-8 text-xs font-mono text-gray-500 uppercase tracking-widest">
+                    <div class="flex flex-wrap justify-center md:justify-start gap-8 text-xs font-mono text-gray-500 uppercase tracking-widest items-center">
                         @if($user->location)
                             <div class="flex items-center gap-2">
                                 <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
@@ -52,6 +53,11 @@
                             <svg class="w-4 h-4 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             Sonic Node Joined {{ $user->created_at->format('M d, Y') }}
                         </div>
+                        @if(auth()->id() === $user->id)
+                            <a href="{{ route('settings') }}" wire:navigate class="px-4 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-[10px] font-bold text-white transition-all uppercase tracking-widest">
+                                Edit Profile
+                            </a>
+                        @endif
                     </div>
                 </div>
 
@@ -123,7 +129,7 @@
                 
                 <div class="space-y-6">
                     @forelse($articles as $article)
-                        <a href="{{ route('wiki.show', $article->slug) }}" class="group block bg-[#0A0A14] border border-white/5 rounded-3xl p-8 hover:border-brand-500/30 transition-all duration-500 relative overflow-hidden">
+                        <a href="{{ route('wiki.show', $article->slug) }}" wire:navigate class="group block bg-[#0A0A14] border border-white/5 rounded-3xl p-8 hover:border-brand-500/30 transition-all duration-500 relative overflow-hidden">
                             <div class="absolute inset-0 bg-gradient-to-r from-brand-500/0 to-brand-500/0 group-hover:from-brand-500/[0.02] transition-all"></div>
                             
                             <div class="relative flex flex-col md:flex-row md:items-center justify-between gap-6">

@@ -121,7 +121,7 @@
                     </dl>
                     
                     <div class="mt-8 pt-6 border-t border-white/10">
-                         <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-2 bg-white/5 text-white font-bold rounded-xl hover:bg-white/10 transition mb-3 flex items-center justify-center">
+                         <a href="{{ route('wiki.edit', $article->slug) }}" wire:navigate class="w-full py-2 bg-white/5 text-white font-bold rounded-xl hover:bg-white/10 transition mb-3 flex items-center justify-center">
                             Edit Biography
                         </a>
                     </div>

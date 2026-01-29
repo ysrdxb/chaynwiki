@@ -34,7 +34,7 @@
             </div>
             
             @foreach($results as $result)
-                <a href="{{ route('wiki.show', $result->slug) }}" class="flex items-center gap-4 p-4 hover:bg-white/5 transition-colors group">
+                <a href="{{ route('wiki.show', $result->slug) }}" wire:navigate class="flex items-center gap-4 p-4 hover:bg-white/5 transition-colors group">
                     @if($result->featured_image)
                         <img src="{{ Storage::url($result->featured_image) }}" class="w-12 h-12 rounded-lg object-cover border border-white/10 group-hover:border-brand-500/50 transition-colors">
                     @else
@@ -54,14 +54,14 @@
                 </a>
             @endforeach
             
-            <a href="{{ route('search', ['q' => $query]) }}" class="block p-3 text-center text-sm font-bold text-brand-400 hover:text-white hover:bg-brand-600/20 transition-colors">
+            <a href="{{ route('search', ['q' => $query]) }}" wire:navigate class="block p-3 text-center text-sm font-bold text-brand-400 hover:text-white hover:bg-brand-600/20 transition-colors">
                 View all results for "{{ $query }}"
             </a>
         </div>
     @elseif(strlen($query) >= 2 && count($results) === 0)
         <div x-show="focused" class="absolute top-full left-4 right-4 mt-2 bg-[#0A0A14]/95 border border-white/10 backdrop-blur-3xl rounded-2xl shadow-2xl p-6 text-center z-50">
             <p class="text-gray-400">No matches found for "<span class="text-white">{{ $query }}</span>"</p>
-            <a href="{{ route('wiki.create') }}" class="inline-block mt-4 text-xs font-bold text-brand-400 uppercase tracking-widest border-b border-brand-500/30 hover:text-white hover:border-white transition-all">Create this page +</a>
+            <a href="{{ route('wiki.create') }}" wire:navigate class="inline-block mt-4 text-xs font-bold text-brand-400 uppercase tracking-widest border-b border-brand-500/30 hover:text-white hover:border-white transition-all">Create this page +</a>
         </div>
     @endif
 </div>

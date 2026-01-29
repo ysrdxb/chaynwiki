@@ -65,7 +65,7 @@
                     
                     <div class="flex items-center gap-6 text-lg text-gray-300 font-medium">
                         @if($article->song && $article->song->artist)
-                             <a href="#" class="hover:text-white transition flex items-center gap-2">
+                             <a href="{{ route('wiki.show', $article->song->artist->slug) }}" wire:navigate class="hover:text-white transition flex items-center gap-2">
                                 <img src="https://ui-avatars.com/api/?name={{ urlencode($article->song->artist->name ?? 'Artist') }}&background=random" class="w-8 h-8 rounded-full">
                                 {{ $article->song->artist->name ?? 'Artist' }}
                              </a>
@@ -150,7 +150,7 @@
                     </dl>
 
                     <div class="mt-8">
-                        <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-3 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition mb-3 flex items-center justify-center gap-2">
+                        <a href="{{ route('wiki.edit', $article->slug) }}" wire:navigate class="w-full py-3 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition mb-3 flex items-center justify-center gap-2">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
                             Edit this Page
                         </a>
