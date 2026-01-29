@@ -6,7 +6,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
             <!-- Logo -->
             <div class="flex items-center gap-10">
-                <a href="/" wire:navigate class="flex items-center gap-3 group">
+                <a href="{{ route('home') }}" wire:navigate class="flex items-center gap-3 group">
                     <div class="relative">
                         <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center shadow-lg shadow-brand-500/30 group-hover:shadow-brand-500/50 transition-all group-hover:scale-105">
                             <span class="text-white font-bold text-lg">C</span>
