@@ -182,55 +182,141 @@
             const artistData = @json($artistNetwork);
             const timelineData = @json($timeline);
 
+            // Premium Dark Theme Options
+            const darkThemeOptions = {
+                nodes: {
+                    shape: 'dot',
+                    font: {
+                        color: '#FFFFFF',
+                        size: 14,
+                        face: 'Plus Jakarta Sans, sans-serif',
+                        bold: {
+                            color: '#FFFFFF',
+                            size: 16
+                        }
+                    },
+                    borderWidth: 2,
+                    borderWidthSelected: 3,
+                    shadow: {
+                        enabled: true,
+                        color: 'rgba(59, 130, 246, 0.3)',
+                        size: 10,
+                        x: 0,
+                        y: 0
+                    }
+                },
+                edges: {
+                    smooth: {
+                        type: 'continuous',
+                        roundness: 0.5
+                    },
+                    font: {
+                        color: '#9CA3AF',
+                        size: 11,
+                        face: 'Plus Jakarta Sans, sans-serif',
+                        align: 'middle',
+                        strokeWidth: 0
+                    },
+                    width: 2,
+                    selectionWidth: 3,
+                    shadow: {
+                        enabled: true,
+                        color: 'rgba(0, 0, 0, 0.2)',
+                        size: 5
+                    }
+                },
+                physics: {
+                    enabled: true,
+                    stabilization: {
+                        enabled: true,
+                        iterations: 200,
+                        updateInterval: 25
+                    },
+                    barnesHut: {
+                        gravitationalConstant: -8000,
+                        centralGravity: 0.3,
+                        springLength: 150,
+                        springConstant: 0.04,
+                        damping: 0.09,
+                        avoidOverlap: 0.1
+                    }
+                },
+                interaction: {
+                    hover: true,
+                    tooltipDelay: 100,
+                    hideEdgesOnDrag: false,
+                    hideEdgesOnZoom: false
+                },
+                layout: {
+                    improvedLayout: true,
+                    randomSeed: 42
+                }
+            };
+
             // Genre Network
             const genreContainer = document.getElementById('genre-network');
             if (genreContainer && genreData.nodes.length > 0) {
                 const genreNetwork = new vis.Network(genreContainer, {
                     nodes: new vis.DataSet(genreData.nodes),
                     edges: new vis.DataSet(genreData.edges)
-                }, {
-                    nodes: { shape: 'dot', font: { color: '#fff', size: 14 } },
-                    edges: { smooth: { type: 'continuous' } },
-                    physics: { stabilization: { iterations: 100 } },
-                    interaction: { hover: true }
-                });
+                }, darkThemeOptions);
 
                 genreNetwork.on('click', function(params) {
                     if (params.nodes.length > 0) {
                         @this.selectGenre(params.nodes[0]);
                     }
                 });
+
+                // Smooth zoom on hover
+                genreNetwork.on('hoverNode', function(params) {
+                    genreContainer.style.cursor = 'pointer';
+                });
+
+                genreNetwork.on('blurNode', function(params) {
+                    genreContainer.style.cursor = 'default';
+                });
             }
 
             // Artist Network
             const artistContainer = document.getElementById('artist-network');
             if (artistContainer && artistData.nodes.length > 0) {
-                new vis.Network(artistContainer, {
+                const artistNetwork = new vis.Network(artistContainer, {
                     nodes: new vis.DataSet(artistData.nodes),
                     edges: new vis.DataSet(artistData.edges)
                 }, {
-                    nodes: { shape: 'dot', font: { color: '#fff', size: 12 } },
-                    edges: { smooth: true },
-                    physics: { stabilization: { iterations: 150 } }
+                    ...darkThemeOptions,
+                    physics: {
+                        ...darkThemeOptions.physics,
+                        stabilization: { iterations: 250 }
+                    }
+                });
+
+                artistNetwork.on('hoverNode', function(params) {
+                    artistContainer.style.cursor = 'pointer';
+                });
+
+                artistNetwork.on('blurNode', function(params) {
+                    artistContainer.style.cursor = 'default';
                 });
             }
 
             // Timeline
             const timelineContainer = document.getElementById('music-timeline');
             if (timelineContainer && timelineData.length > 0) {
-                const groups = new vis.DataSet([
-                    {id: 1, content: 'Music Genres'}
-                ]);
-                
                 const items = timelineData.map(item => ({
                     ...item,
                     group: 1
                 }));
 
                 new vis.Timeline(timelineContainer, new vis.DataSet(items), {
-                    style: 'modern',
-                    zoomMin: 1000 * 60 * 60 * 24 * 31 * 12, // One year
-                    margin: { item: 10 }
+                    style: 'box',
+                    zoomMin: 1000 * 60 * 60 * 24 * 365, // One year
+                    margin: { item: 10 },
+                    orientation: 'top',
+                    showCurrentTime: false,
+                    template: function(item) {
+                        return `<div style="color: #fff; font-weight: 600;">${item.content}</div>`;
+                    }
                 });
             }
         }
