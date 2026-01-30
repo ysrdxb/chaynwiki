@@ -15,13 +15,8 @@
         <div class="h-20 flex items-center justify-between">
             
             {{-- Left: Logo --}}
-            <a href="{{ route('home') }}" wire:navigate class="flex items-center gap-3 group">
-                <div class="w-10 h-10 bg-white p-1 rounded-xl shadow-lg shadow-white/5 transition-transform group-hover:scale-105">
-                    <div class="w-full h-full bg-[#050510] flex items-center justify-center rounded-[8px]">
-                        <span class="text-blue-500 font-bold text-lg italic">C</span>
-                    </div>
-                </div>
-                <span class="text-[18px] font-black text-white italic uppercase tracking-tighter group-hover:text-blue-500 transition-colors">CHAYNWIKI</span>
+            <a href="{{ route('home') }}" wire:navigate class="group">
+                <span class="text-2xl font-black text-white uppercase tracking-tight group-hover:text-blue-500 transition-colors">CHAYNWIKI</span>
             </a>
 
             {{-- Center: Search (Desktop) --}}
