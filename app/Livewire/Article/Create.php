@@ -53,7 +53,7 @@ class Create extends Component
         return $rules;
     }
 
-    public function fetchFromSpotify(SpotifyService $spotify, YouTubeService $youtube)
+    public function fetchFromLink(\App\Services\DataIntelligenceService $intelligence)
     {
         $this->validate([
             'spotifyImportUrl' => 'required|url'
@@ -62,49 +62,36 @@ class Create extends Component
         $this->isFetchingSpotify = true;
 
         try {
-            $url = $this->spotifyImportUrl;
-            
-            // Extract type and id using regex
-            if (preg_match('/(track|artist)\/([a-zA-Z0-9]+)/', $url, $matches)) {
-                $type = $matches[1];
-                $id = $matches[2];
-            } else {
-                throw new \Exception('Invalid Spotify URL. Please provide a track or artist link.');
+            $result = $intelligence->fetchFromLink($this->spotifyImportUrl);
+
+            if (!$result['success']) {
+                throw new \Exception($result['message']);
             }
 
-            if ($this->category === 'song') {
-                if ($type !== 'track') {
-                    throw new \Exception('This is a Song creation page, but you provided an Artist link.');
-                }
-                
-                $track = $spotify->getTrack($id);
-                $this->title = $track->name;
-                $this->meta['spotify_id'] = $track->id;
-                $this->meta['album'] = $track->album->name;
-                $this->meta['release_date'] = $track->album->release_date;
-                $this->meta['artist_id'] = $track->artists[0]->name; // Temporary
-                
-                $query = $track->artists[0]->name . ' - ' . $track->name . ' Official Video';
-                $video = $youtube->searchVideo($query);
-                if ($video) {
-                    $this->meta['youtube_id'] = $video['id'];
-                }
-                
-                session()->flash('message', 'Song details imported from Spotify!');
-            } elseif ($this->category === 'artist') {
-                if ($type !== 'artist') {
-                    throw new \Exception('This is an Artist creation page, but you provided a Track link.');
-                }
-                
-                $artistData = $spotify->getArtist($id);
-                $this->title = $artistData->name;
-                $this->meta['spotify_id'] = $artistData->id;
-                $this->meta['genres'] = implode(', ', $artistData->genres);
-                
-                session()->flash('message', 'Artist details imported from Spotify!');
-            } else {
-                throw new \Exception('Spotify import is only available for Songs and Artists.');
+            if ($this->category !== $result['category']) {
+                throw new \Exception("The provided link is for a {$result['category']}, but you are creating a {$this->category}.");
             }
+
+            // Map data
+            $data = $result['data'];
+            $this->title = $data['title'];
+            
+            if ($this->category === 'song') {
+                $this->meta['spotify_id'] = $data['spotify_id'] ?? null;
+                $this->meta['album'] = $data['album'] ?? null;
+                $this->meta['release_date'] = $data['release_date'] ?? null;
+                $this->meta['artist_name'] = $data['artist'] ?? null;
+                
+                // If youtube_id was fetched by service (currently not in service but we could add it)
+                if (isset($data['youtube_id'])) {
+                    $this->meta['youtube_id'] = $data['youtube_id'];
+                }
+            } elseif ($this->category === 'artist') {
+                $this->meta['spotify_id'] = $data['spotify_id'] ?? null;
+                $this->meta['genres'] = is_array($data['genres'] ?? null) ? implode(', ', $data['genres']) : ($data['genres'] ?? '');
+            }
+
+            session()->flash('message', 'Node data successfully established from source link!');
         } catch (\Exception $e) {
             $this->addError('spotifyImportUrl', $e->getMessage());
         }

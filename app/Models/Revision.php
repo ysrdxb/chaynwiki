@@ -11,10 +11,14 @@ class Revision extends Model
         'user_id',
         'content_snapshot',
         'change_summary',
+        'status',
+        'moderated_by',
+        'moderated_at',
     ];
 
     protected $casts = [
         'content_snapshot' => 'array',
+        'moderated_at' => 'datetime',
     ];
 
     public function article()
@@ -25,5 +29,10 @@ class Revision extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function moderator()
+    {
+        return $this->belongsTo(User::class, 'moderated_by');
     }
 }

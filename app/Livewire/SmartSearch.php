@@ -20,13 +20,18 @@ class SmartSearch extends Component
     public bool $showSuggestions = false;
 
     protected $queryString = [
-        'query' => ['except' => ''],
+        'query' => ['except' => '', 'as' => 'q'],
         'category' => ['except' => 'all'],
         'sortBy' => ['except' => 'relevance'],
     ];
 
     public function mount(): void
     {
+        // Read 'q' parameter from URL if present
+        if (request()->has('q') && empty($this->query)) {
+            $this->query = request()->get('q');
+        }
+        
         $service = app(SmartSearchService::class);
         $this->trending = $service->getTrendingSearches(8);
         $this->categories = $service->getCategoryFacets();

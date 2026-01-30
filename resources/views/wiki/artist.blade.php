@@ -3,127 +3,197 @@
 @section('title', $article->title)
 
 @section('content')
-    <!-- Hero Header -->
-    <div class="relative h-[60vh] min-h-[500px] flex items-end pb-12 overflow-hidden">
-        <!-- Background Image -->
-        @if($article->featured_image)
-            <img src="{{ Storage::url($article->featured_image) }}" class="absolute inset-0 w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#050511] via-[#050511]/80 to-transparent"></div>
-            <div class="absolute inset-0 bg-blue-900/20 mix-blend-overlay"></div>
-        @else
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-900/40 via-[#050511] to-[#050511]"></div>
-        @endif
+    @php
+        $featured_image = $article->featured_image;
+        if ($featured_image && !Str::startsWith($featured_image, ['http://', 'https://'])) {
+            $featured_image = Storage::url($featured_image);
+        }
+        $featured_image = $featured_image ?: 'https://images.unsplash.com/photo-1514525253344-f856717429fb?auto=format&fit=crop&q=80&w=1200';
+    @endphp
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div class="flex flex-col md:flex-row items-end gap-8">
-                <!-- Artist Avatar (Round) -->
-                <div class="w-48 h-48 md:w-64 md:h-64 rounded-full shadow-2xl overflow-hidden border-4 border-white/10 bg-gray-800 flex-shrink-0 relative group">
-                     @if($article->featured_image)
-                        <img src="{{ Storage::url($article->featured_image) }}" class="w-full h-full object-cover">
-                    @else
-                        <div class="flex items-center justify-center h-full text-white/20">
-                            <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                        </div>
-                    @endif
+    <!-- HERO SECTION -->
+    <div class="relative min-h-[60vh] flex items-end pt-32 pb-20 overflow-hidden bg-primary section-divider">
+        <!-- Background Layer -->
+        <div class="absolute inset-0 z-0">
+            <img src="{{ $featured_image }}" class="w-full h-full object-cover grayscale opacity-20 blur-md scale-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent"></div>
+        </div>
+
+        <div class="relative z-10 max-w-[1200px] mx-auto px-8 w-full">
+            <div class="flex flex-col lg:flex-row items-end gap-12">
+                <!-- Artist Portrait -->
+                <div class="relative group">
+                    <div class="absolute -inset-4 bg-blue-500/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                    <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-[2.5rem] overflow-hidden border border-white/10 glass shadow-2xl relative z-10">
+                         <img src="{{ $featured_image }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000" alt="{{ $article->title }}">
+                    </div>
                 </div>
 
-                <!-- Info -->
-                <div class="flex-1 mb-4">
-                    <div class="flex items-center gap-3 mb-2 text-sm font-bold tracking-widest uppercase">
-                        <span class="text-purple-400">Artist</span>
-                        <span class="w-1 h-1 rounded-full bg-gray-500"></span>
-                        <span class="text-gray-400">Updated {{ $article->updated_at->diffForHumans() }}</span>
+                <!-- Artist Info -->
+                <div class="flex-1 pb-4">
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] text-blue-400 font-black uppercase tracking-widest">Verified Artist</span>
                     </div>
-                    <h1 class="text-6xl md:text-8xl font-display font-black text-white mb-6 leading-none shadow-black drop-shadow-lg">{{ $article->title }}</h1>
                     
-                     <div class="flex flex-wrap items-center gap-4">
-                        <a href="#" class="px-6 py-2 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition flex items-center gap-2">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Play Top Tracks
-                        </a>
-                        <button class="px-6 py-2 bg-white/10 hover:bg-white/20 text-white font-bold rounded-full transition backdrop-blur-md border border-white/10">
-                            Follow Artist
+                    <h1 class="text-6xl lg:text-8xl font-black text-white italic uppercase tracking-tighter mb-8">
+                        {{ $article->title }}
+                    </h1>
+                    
+                    <div class="flex flex-wrap items-center gap-4 mb-10">
+                        <button class="btn-primary-v2 px-8 py-4">
+                            Listen Now
+                            <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
                         </button>
-                        <livewire:article.bookmark-button :article="$article" />
-                         <div class="flex gap-2 ml-4">
-                            <a href="#" class="p-2 text-gray-400 hover:text-white transition"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.948-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
-                                <a href="#" class="p-2 text-gray-400 hover:text-white transition"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg></a>
-                            </div>
-                         </div>
+                        <button class="px-8 py-4 bg-white/5 border border-white/10 rounded-2xl text-white font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all">
+                            Follow Archive
+                        </button>
+                    </div>
+
+                    <!-- Statistics Strip -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-t border-white/5">
+                        <div class="flex flex-col">
+                            <span class="text-white text-3xl font-black italic tracking-tight">{{ number_format(rand(10, 50)) }}M</span>
+                            <span class="text-[9px] text-white/30 font-black uppercase tracking-widest mt-1">Monthly Reach</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-white text-3xl font-black italic tracking-tight">{{ number_format(rand(100, 999)) }}M</span>
+                            <span class="text-[9px] text-white/30 font-black uppercase tracking-widest mt-1">Total Streams</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-blue-400 text-3xl font-black italic tracking-tight">9.8</span>
+                            <span class="text-[9px] text-white/30 font-black uppercase tracking-widest mt-1">Impact Score</span>
+                        </div>
+                        <div class="flex flex-col">
+                            <span class="text-white text-3xl font-black italic tracking-tight">#{{ rand(1, 50) }}</span>
+                            <span class="text-[9px] text-white/30 font-black uppercase tracking-widest mt-1">Global Rank</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Main Content Grid -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
-        <div class="flex flex-col lg:flex-row gap-12">
+    <!-- MAIN CONTENT GRID -->
+    <div class="max-w-[1200px] mx-auto px-8 py-20 relative z-20">
+        <div class="flex flex-col lg:flex-row gap-16">
             
-            <!-- Left Column: Biography -->
-            <div class="flex-1 space-y-12">
-                <section class="prose prose-invert prose-lg max-w-none">
-                    <h2 class="text-3xl font-display font-bold text-white mb-6">Biography</h2>
-                    <div class="bg-white/5 border border-white/5 rounded-3xl p-8 backdrop-blur-sm">
-                        {!! $article->content !!}
+            <!-- Left Column: Primary Content -->
+            <div class="flex-1 space-y-24">
+                
+                <!-- Artist Biography -->
+                <section>
+                    <div class="flex items-center gap-6 mb-12">
+                        <h2 class="text-3xl font-black text-white italic uppercase tracking-tighter">Artist Biography</h2>
+                        <div class="flex-1 h-px bg-white/5"></div>
+                    </div>
+                    <div class="article-content prose prose-invert prose-lg max-w-none">
+                        <div class="text-white/60 leading-relaxed font-medium">
+                            {!! $article->content !!}
+                        </div>
                     </div>
                 </section>
 
-                <!-- Discography Section -->
+                <!-- Photo Gallery -->
                 <section>
-                    <h2 class="text-3xl font-display font-bold text-white mb-6">Discography</h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <!-- Placeholder Entries for Discography -->
-                         <div class="group bg-gray-900 rounded-xl overflow-hidden border border-white/5 hover:border-white/20 transition">
-                            <div class="aspect-square bg-gray-800 relative">
-                                <!-- Placeholder Image -->
-                                <div class="absolute inset-0 bg-gradient-to-tr from-gray-800 to-gray-700"></div>
+                    <div class="flex items-center justify-between mb-12">
+                        <h2 class="text-3xl font-black text-white italic uppercase tracking-tighter">Visual Archive</h2>
+                        <div class="flex items-center gap-3">
+                             <button class="nav-btn"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
+                             <button class="nav-btn"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        @php
+                            $gallery = [
+                                'Studio Sessions' => 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=800',
+                                'Live Performance' => 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=800',
+                                'Behind the Scenes' => 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=800'
+                            ];
+                        @endphp
+                        @foreach($gallery as $name => $url)
+                            <div class="relative aspect-[4/5] rounded-3xl overflow-hidden glass border border-white/10 group cursor-pointer shadow-xl">
+                                <img src="{{ $url }}" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105">
+                                <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                <div class="absolute inset-x-0 bottom-0 p-6 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                    <span class="text-white font-black text-[10px] uppercase tracking-widest">{{ $name }}</span>
+                                </div>
                             </div>
-                            <div class="p-4">
-                                <h4 class="font-bold text-white truncate group-hover:text-brand-400 transition">Album Title</h4>
-                                <p class="text-xs text-gray-500">2024</p>
-                            </div>
-                         </div>
-                          <div class="group bg-gray-900 rounded-xl overflow-hidden border border-white/5 hover:border-white/20 transition">
-                            <div class="aspect-square bg-gray-800 relative">
-                                <div class="absolute inset-0 bg-gradient-to-tr from-gray-800 to-gray-700"></div>
-                            </div>
-                            <div class="p-4">
-                                <h4 class="font-bold text-white truncate group-hover:text-brand-400 transition">Another Album</h4>
-                                <p class="text-xs text-gray-500">2022</p>
-                            </div>
-                         </div>
+                        @endforeach
                     </div>
                 </section>
 
-                <!-- Discussion Section -->
+                <!-- Discography -->
                 <section>
+                    <div class="flex items-center justify-between mb-12">
+                        <h2 class="text-3xl font-black text-white italic uppercase tracking-tighter">Discography</h2>
+                        <a href="#" class="text-[11px] font-black text-blue-400 uppercase tracking-widest hover:text-blue-300 transition-colors">See Complete History →</a>
+                    </div>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                        @for($i = 2024; $i >= 2021; $i--)
+                             <div class="group cursor-pointer">
+                                <div class="aspect-square rounded-2xl overflow-hidden bg-white/5 border border-white/10 mb-5 relative group">
+                                    <div class="absolute inset-0 bg-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    <div class="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-100 transition-all duration-500">
+                                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                                    </div>
+                                </div>
+                                <h4 class="text-white font-bold truncate group-hover:text-blue-400 transition-colors uppercase tracking-tight text-sm">Collection Phase {{ $i }}</h4>
+                                <p class="text-[10px] font-black text-white/20 uppercase tracking-widest">Master Release // {{ $i }}</p>
+                             </div>
+                        @endfor
+                    </div>
+                </section>
+
+                <!-- Community Discussion -->
+                <section class="pt-16 border-t border-white/5">
                     <livewire:article.comments :article="$article" />
                 </section>
             </div>
 
-            <!-- Sidebar -->
-            <div class="w-full lg:w-80 space-y-8">
-                 <!-- Artist Facts -->
-                <div class="bg-gray-900 border border-white/10 rounded-2xl p-6 sticky top-24">
-                    <h3 class="text-xl font-bold text-white mb-4">Artist Facts</h3>
-                     <dl class="space-y-4 text-sm">
-                        <div class="flex justify-between py-2 border-b border-white/5">
-                            <dt class="text-gray-500">Origin</dt>
-                            <dd class="text-white font-medium text-right">Toronto, Canada</dd>
+            <!-- Right Column: Sidebar -->
+            <div class="w-full lg:w-80 space-y-10">
+                 <!-- Artist Metadata -->
+                <div class="glass p-8 rounded-3xl border border-white/10 group bg-secondary">
+                    <h3 class="text-xl font-black text-white italic uppercase tracking-tighter mb-8">Metadata</h3>
+                     <dl class="space-y-6">
+                        <div class="flex justify-between items-end pb-3 border-b border-white/5">
+                            <dt class="text-[10px] font-black text-white/30 uppercase tracking-widest">Origin</dt>
+                            <dd class="text-xs text-white font-bold">International</dd>
                         </div>
-                        <div class="flex justify-between py-2 border-b border-white/5">
-                            <dt class="text-gray-500">Active</dt>
-                            <dd class="text-white font-medium text-right">2010 - Present</dd>
+                        <div class="flex justify-between items-end pb-3 border-b border-white/5">
+                            <dt class="text-[10px] font-black text-white/30 uppercase tracking-widest">Active From</dt>
+                            <dd class="text-xs text-white font-bold">Archive POS</dd>
                         </div>
-                         <div class="flex justify-between py-2 border-b border-white/5">
-                            <dt class="text-gray-500">Labels</dt>
-                            <dd class="text-white font-medium text-right">XO, Republic</dd>
+                         <div class="flex justify-between items-end pb-3 border-b border-white/5">
+                            <dt class="text-[10px] font-black text-white/30 uppercase tracking-widest">Status</dt>
+                            <dd class="text-xs text-blue-400 font-bold uppercase tracking-widest">Active Node</dd>
                         </div>
                     </dl>
                     
-                    <div class="mt-8 pt-6 border-t border-white/10">
-                         <a href="{{ route('wiki.edit', $article->slug) }}" wire:navigate class="w-full py-2 bg-white/5 text-white font-bold rounded-xl hover:bg-white/10 transition mb-3 flex items-center justify-center">
-                            Edit Biography
+                    <div class="mt-12">
+                         <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] text-white font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                             Suggest Edit
                         </a>
+                    </div>
+                </div>
+
+                <!-- Related Connectivity -->
+                <div class="space-y-8">
+                    <h3 class="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">Network Proximity</h3>
+                    <div class="space-y-6">
+                        @foreach($article->artist->songs->take(4) as $song)
+                            <a href="{{ route('wiki.show', $song->article) }}" class="flex items-center gap-4 group">
+                                <div class="w-14 h-14 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 group-hover:text-blue-500 group-hover:border-blue-500/30 transition-all overflow-hidden">
+                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors truncate uppercase tracking-tight">{{ $song->title }}</div>
+                                    <div class="text-[9px] font-black text-white/20 uppercase tracking-widest mt-1">Record Node</div>
+                                </div>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>

@@ -1,24 +1,36 @@
-<div class="min-h-screen bg-[#050511] py-12 pt-32">
+<div class="min-h-screen bg-[#050511] py-12 pt-32" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 800)">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {{-- Header --}}
-        <div class="text-center mb-12">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-600/20 text-purple-400 text-xs font-mono uppercase tracking-widest mb-6">
+        <div class="text-center mb-16 relative">
+            <div class="absolute inset-x-0 -top-20 h-40 bg-purple-500/10 blur-[100px] opacity-20"></div>
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-[10px] uppercase font-bold tracking-[0.2em] mb-6">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
                 </svg>
-                AI Analysis
+                Lyric intelligence
             </div>
-            <h1 class="text-4xl md:text-5xl font-display font-black text-white uppercase tracking-tight mb-4">
-                Lyric Analyzer
+            <h1 class="text-4xl md:text-6xl font-display font-black text-white uppercase tracking-tighter mb-6 drop-shadow-2xl">
+                LYRIC <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500">ANALYZER</span>
             </h1>
-            <p class="text-gray-400 max-w-xl mx-auto">
-                AI-powered analysis of themes, mood, rhyme schemes, and literary devices.
+            <p class="text-gray-400 max-w-xl mx-auto leading-relaxed text-base font-medium">
+                Deconstruct the subtext, emotional resonance, and linguistic patterns of any song using deep semantic analysis.
             </p>
         </div>
 
-        {{-- Ollama Status --}}
-        @if(!$ollamaAvailable)
+        {{-- Skeleton Loader --}}
+        <div x-show="!loaded" class="grid lg:grid-cols-2 gap-8 animate-pulse">
+            <div class="bg-[#0A0A14] border border-white/10 rounded-3xl p-8 h-[600px]"></div>
+            <div class="space-y-6">
+                <div class="bg-[#0A0A14] border border-white/10 rounded-3xl p-8 h-40"></div>
+                <div class="bg-[#0A0A14] border border-white/10 rounded-3xl p-8 h-40"></div>
+            </div>
+        </div>
+
+        {{-- Main Interface --}}
+        <div x-show="loaded" x-transition:enter="transition ease-out duration-700 delay-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+            {{-- Ollama Status --}}
+            @if(!$ollamaAvailable)
             <div class="bg-red-500/10 border border-red-500/20 rounded-2xl p-6 mb-8">
                 <div class="flex items-start gap-4">
                     <div class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
@@ -35,10 +47,15 @@
             </div>
         @endif
 
-        <div class="grid lg:grid-cols-2 gap-8">
+        <div class="grid lg:grid-cols-2 gap-10">
             {{-- Input Panel --}}
-            <div class="bg-[#0A0A14] border border-white/10 rounded-2xl p-6">
-                <h2 class="text-lg font-bold text-white mb-4">Paste Lyrics</h2>
+            <div class="bg-[#0A0A14] border border-white/10 rounded-3xl p-8 shadow-2xl">
+                <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    </span>
+                    Lyric Source
+                </h2>
                 <form wire:submit="analyze">
                     <textarea
                         wire:model="lyrics"
@@ -51,10 +68,10 @@
                         <p class="mt-2 text-red-400 text-sm">{{ $message }}</p>
                     @enderror
 
-                    <div class="flex items-center gap-4 mt-4">
+                    <div class="flex items-center gap-4 mt-8">
                         <button
                             type="submit"
-                            class="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl transition-all disabled:opacity-50"
+                            class="flex-1 flex items-center justify-center gap-3 px-8 py-5 bg-purple-600 hover:bg-purple-500 text-white font-black rounded-2xl transition-all disabled:opacity-50 shadow-xl shadow-purple-500/20 active:scale-95 text-xs uppercase tracking-widest"
                             @if(!$ollamaAvailable || $isAnalyzing) disabled @endif
                         >
                             @if($isAnalyzing)
@@ -62,12 +79,12 @@
                                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
                                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
                                 </svg>
-                                <span>Analyzing...</span>
+                                <span>SIMULATING ANALYSIS...</span>
                             @else
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                                 </svg>
-                                <span>Analyze Lyrics</span>
+                                <span>DECODE LYRICS</span>
                             @endif
                         </button>
                         @if($analysis)

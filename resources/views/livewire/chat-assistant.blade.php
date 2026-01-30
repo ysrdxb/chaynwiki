@@ -4,11 +4,11 @@
     {{-- Chat Toggle Button --}}
     <button
         wire:click="toggle"
-        class="w-14 h-14 rounded-full bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-600/30 flex items-center justify-center transition-all hover:scale-110"
+        class="w-16 h-16 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white shadow-2xl shadow-blue-500/20 flex items-center justify-center transition-all hover:scale-110 active:scale-95 border border-white/5"
         :class="{ 'scale-0 opacity-0': show }"
     >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
         </svg>
     </button>
 
@@ -25,21 +25,22 @@
         style="display: none;"
     >
         {{-- Header --}}
-        <div class="bg-gradient-to-r from-brand-600 to-purple-600 px-4 py-3 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        <div class="bg-gradient-to-r from-blue-600 to-purple-800 px-5 py-4 flex items-center justify-between border-b border-white/10 relative overflow-hidden">
+            <div class="absolute inset-0 bg-black/10"></div>
+            <div class="flex items-center gap-4 relative z-10">
+                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/20">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-white font-bold text-sm">ChaynWiki AI</h3>
-                    <p class="text-white/60 text-xs">Ask anything about music</p>
+                    <h3 class="text-white font-black text-[11px] uppercase tracking-[0.2em] italic">ChaynWiki AI</h3>
+                    <p class="text-white/40 text-[9px] font-black uppercase tracking-widest italic mt-0.5">Global Archive Assistant</p>
                 </div>
             </div>
-            <button wire:click="close" class="text-white/60 hover:text-white transition-colors">
+            <button wire:click="close" class="text-white/40 hover:text-white transition-colors relative z-10">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
         </div>
@@ -56,7 +57,12 @@
         @endif
 
         {{-- Messages Area --}}
-        <div class="flex-1 overflow-y-auto p-4 space-y-4" id="chat-messages">
+        <div 
+            class="flex-1 overflow-y-auto p-4 space-y-4 scroll-smooth" 
+            id="chat-messages"
+            x-ref="messageContainer"
+            x-init="$watch('show', value => { if(value) { $nextTick(() => { $refs.messageContainer.scrollTop = $refs.messageContainer.scrollHeight }) } })"
+        >
             {{-- Welcome Message --}}
             @if(empty($messages))
                 <div class="text-center py-8">
@@ -72,21 +78,23 @@
 
             {{-- Message History --}}
             @foreach($messages as $msg)
-                <div class="flex {{ $msg['role'] === 'user' ? 'justify-end' : 'justify-start' }}">
-                    <div class="max-w-[85%] {{ $msg['role'] === 'user' ? 'bg-brand-600 text-white' : 'bg-white/5 text-gray-200' }} rounded-2xl px-4 py-3 text-sm {{ $msg['role'] === 'user' ? 'rounded-br-md' : 'rounded-bl-md' }}">
-                        {!! nl2br(e($msg['content'])) !!}
+                <div class="flex {{ $msg['role'] === 'user' ? 'justify-end' : 'justify-start' }}" x-init="$nextTick(() => { $refs.messageContainer.scrollTop = $refs.messageContainer.scrollHeight })">
+                    <div class="max-w-[85%] {{ $msg['role'] === 'user' ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/10' : 'bg-white/5 text-gray-200' }} rounded-2xl px-5 py-3.5 text-xs font-medium {{ $msg['role'] === 'user' ? 'rounded-br-sm' : 'rounded-bl-sm border border-white/5' }}">
+                        <div class="prose prose-sm prose-invert max-w-none prose-p:leading-relaxed prose-pre:bg-black/30 prose-pre:border prose-pre:border-white/10 font-medium">
+                            {!! Str::markdown($msg['content']) !!}
+                        </div>
                     </div>
                 </div>
             @endforeach
 
             {{-- Loading Indicator --}}
             @if($isLoading)
-                <div class="flex justify-start">
-                    <div class="bg-white/5 rounded-2xl rounded-bl-md px-4 py-3">
-                        <div class="flex items-center gap-1">
-                            <div class="w-2 h-2 bg-brand-400 rounded-full animate-bounce" style="animation-delay: 0ms"></div>
-                            <div class="w-2 h-2 bg-brand-400 rounded-full animate-bounce" style="animation-delay: 150ms"></div>
-                            <div class="w-2 h-2 bg-brand-400 rounded-full animate-bounce" style="animation-delay: 300ms"></div>
+                <div class="flex justify-start" x-init="$nextTick(() => { $refs.messageContainer.scrollTop = $refs.messageContainer.scrollHeight })">
+                    <div class="bg-white/5 rounded-2xl rounded-bl-sm px-5 py-4 border border-white/5">
+                        <div class="flex items-center gap-1.5">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                            <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                            <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
                         </div>
                     </div>
                 </div>
@@ -108,22 +116,22 @@
         @endif
 
         {{-- Input Area --}}
-        <div class="border-t border-white/10 p-3">
-            <form wire:submit="sendMessage" class="flex items-center gap-2">
+        <div class="border-t border-white/10 p-4 bg-secondary/50">
+            <form wire:submit="sendMessage" class="flex items-center gap-3">
                 <input
                     type="text"
                     wire:model="message"
-                    placeholder="Ask about music..."
-                    class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-gray-500 text-sm focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all"
+                    placeholder="Ask about music history..."
+                    class="flex-1 bg-white/5 border border-white/5 rounded-xl px-5 py-3 text-white placeholder-white/10 text-xs font-black uppercase tracking-widest focus:border-blue-500/50 focus:ring-0 transition-all italic"
                     @if(!$ollamaAvailable) disabled @endif
                 />
                 <button
                     type="submit"
-                    class="w-10 h-10 bg-brand-600 hover:bg-brand-500 rounded-xl flex items-center justify-center text-white transition-all disabled:opacity-50"
+                    class="w-11 h-11 bg-blue-600 hover:bg-blue-500 rounded-xl flex items-center justify-center text-white transition-all disabled:opacity-50 shadow-lg shadow-blue-500/20 active:scale-95"
                     @if(!$ollamaAvailable || $isLoading) disabled @endif
                 >
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                    <svg class="w-5 h-5 translate-x-px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
                     </svg>
                 </button>
             </form>

@@ -43,12 +43,15 @@ class ArticleController extends Controller
         return view('wiki.index', compact('articles', 'search', 'category'));
     }
 
-    public function show(\App\Models\Article $article)
+    public function show(\App\Models\Article $article, \App\Services\SmartLinkerService $linker)
     {
         $article->load(['song.artist', 'artist', 'genre', 'playlist', 'user']);
         
-        // Increment view count (basic implementation, should be queued)
-        $article->increment('view_count');
+        // Apply Smart Linking
+        $article->content = $linker->injectLinks($article->content, $article->id);
+        
+        // Use TrendingService to log view (includes IP tracking and interaction logging)
+        app(\App\Services\TrendingService::class)->logView($article->id, auth()->id());
         
         // Determine view based on category
         $view = match ($article->category) {

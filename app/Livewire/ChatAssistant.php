@@ -18,13 +18,27 @@ class ChatAssistant extends Component
     
     public ?string $articleContext = null;
 
-    protected $listeners = ['openChat' => 'open'];
+    protected $listeners = [
+        'openChat' => 'open',
+        'updateContext' => 'updateContext'
+    ];
 
     public function mount(?string $articleContext = null): void
     {
         $this->articleContext = $articleContext;
         $this->checkOllama();
         $this->loadSuggestions();
+    }
+
+    public function updateContext(?string $context = null): void
+    {
+        $this->articleContext = $context;
+        
+        // If chat is open and we just got new context, maybe add a small hint?
+        // For now, just silently update for the next message.
+        if ($this->isOpen && $context) {
+            $this->loadSuggestions(); // Refresh suggestions based on new context
+        }
     }
 
     public function checkOllama(): void

@@ -14,6 +14,7 @@ new #[Layout('layouts.guest')] class extends Component
     public string $email = '';
     public string $password = '';
     public string $password_confirmation = '';
+    public bool $agree_terms = false;
 
     /**
      * Handle an incoming registration request.
@@ -24,9 +25,11 @@ new #[Layout('layouts.guest')] class extends Component
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'agree_terms' => ['accepted'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
+        unset($validated['agree_terms']);
 
         event(new Registered($user = User::create($validated)));
 
@@ -37,52 +40,106 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <form wire:submit="register">
-        <!-- Name -->
+    <h2 class="text-xl font-bold text-white mb-8">Create an Account</h2>
+    
+    <form wire:submit="register" class="space-y-5">
+        <!-- Full Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input wire:model="name" id="name" class="block mt-1 w-full" type="text" name="name" required autofocus autocomplete="name" />
+            <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+            <input 
+                wire:model="name" 
+                id="name" 
+                type="text" 
+                name="name" 
+                required 
+                autofocus 
+                autocomplete="name"
+                placeholder="Enter your full name"
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+            >
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autocomplete="username" />
+        <div>
+            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+            <input 
+                wire:model="email" 
+                id="email" 
+                type="email" 
+                name="email" 
+                required 
+                autocomplete="username"
+                placeholder="Enter Email Address"
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+            >
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
+        <div>
+            <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+            <input 
+                wire:model="password" 
+                id="password" 
+                type="password"
+                name="password"
+                required 
+                autocomplete="new-password"
+                placeholder="Enter your Password"
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+            >
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
+        <div>
+            <label for="password_confirmation" class="block text-sm font-medium text-gray-300 mb-2">Confirm Password</label>
+            <input 
+                wire:model="password_confirmation" 
+                id="password_confirmation" 
+                type="password"
+                name="password_confirmation"
+                required 
+                autocomplete="new-password"
+                placeholder="Enter your Password"
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+            >
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-400 hover:text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500 dark:focus:ring-offset-gray-800 transition-colors" href="{{ route('login') }}" wire:navigate>
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+        <!-- Terms Checkbox -->
+        <div>
+            <label for="agree_terms" class="flex items-center gap-2 cursor-pointer">
+                <input 
+                    wire:model="agree_terms" 
+                    id="agree_terms" 
+                    type="checkbox" 
+                    name="agree_terms"
+                    class="w-4 h-4 rounded bg-white/5 border-white/10 text-blue-500 focus:ring-blue-500"
+                >
+                <span class="text-sm text-gray-400">I agree all terms and conditions</span>
+            </label>
+            <x-input-error :messages="$errors->get('agree_terms')" class="mt-2" />
         </div>
+
+        <!-- Submit Button -->
+        <button 
+            type="submit" 
+            class="w-full flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/25"
+        >
+            Sign Up
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+        </button>
     </form>
+
+    <!-- Login Link -->
+    <p class="mt-8 text-center text-gray-400">
+        Already have an account? 
+        <a href="{{ route('login') }}" wire:navigate class="text-white font-semibold hover:text-blue-400 transition-colors">
+            Login now
+        </a>
+    </p>
 </div>

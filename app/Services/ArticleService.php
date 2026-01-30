@@ -98,31 +98,31 @@ class ArticleService
         switch ($category) {
             case 'song':
                 $article->song()->create([
-                    'title' => $article->title, // Redundant but useful for standalone query
-                    'artist_id' => $data['artist_id'] ?? null, // Need to handle this
+                    'title' => $article->title,
+                    'artist_id' => $data['artist_id'] ?? null,
                     'album' => $data['album'] ?? null,
                     'release_date' => $data['release_date'] ?? null,
                     'lyrics' => $data['lyrics'] ?? null,
-                    // Add other fields as per schema
+                    'spotify_id' => $data['spotify_id'] ?? null,
+                    'youtube_id' => $data['youtube_id'] ?? null,
                 ]);
                 break;
             case 'artist':
                 $article->artist()->create([
                     'name' => $article->title,
-                    'biography' => $data['biography'] ?? $article->content, // Fallback
-                    // Add other fields
+                    'biography' => $data['biography'] ?? $article->content,
+                    'spotify_id' => $data['spotify_id'] ?? null,
                 ]);
                 break;
             case 'genre':
                 $article->genre()->create([
                     'name' => $article->title,
-                    // 'description' is not in the genre table, we rely on article content
                 ]);
                 break;
-             case 'playlist':
+            case 'playlist':
                 $article->playlist()->create([
                     'title' => $article->title,
-                    // 'description' is in article content
+                    'spotify_id' => $data['spotify_id'] ?? null,
                 ]);
                 break;
         }
@@ -130,20 +130,18 @@ class ArticleService
 
     private function updateSpecificContent(Article $article, string $category, array $data)
     {
-        // Similar switch to update the relation
-        switch ($category) {
-            case 'song':
-                $article->song()->update($data); // Naive update, filter keys in real app
-                break;
-            case 'artist':
-                $article->artist()->update($data);
-                break;
-             case 'genre':
-                $article->genre()->update($data);
-                break;
-             case 'playlist':
-                $article->playlist()->update($data);
-                break;
+        // Allowed keys for each relation
+        $allowed = [
+            'song' => ['artist_id', 'album', 'release_date', 'lyrics', 'spotify_id', 'youtube_id', 'bpm', 'key'],
+            'artist' => ['biography', 'spotify_id', 'website', 'social_links'],
+            'genre' => [],
+            'playlist' => ['spotify_id'],
+        ];
+
+        $filteredData = array_intersect_key($data, array_flip($allowed[$category] ?? []));
+
+        if (!empty($filteredData)) {
+            $article->{$category}()->update($filteredData);
         }
     }
 }

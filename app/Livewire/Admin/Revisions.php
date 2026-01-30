@@ -12,7 +12,7 @@ class Revisions extends Component
 
     public $filterStatus = 'pending';
 
-    public function approve($id)
+    public function approve($id, \App\Services\ReputationService $reputation)
     {
         $revision = Revision::findOrFail($id);
         
@@ -20,15 +20,32 @@ class Revisions extends Component
         $article = $revision->article;
         $article->update($revision->content_snapshot);
         
-        $revision->update(['status' => 'approved']);
+        $revision->update([
+            'status' => 'approved',
+            'moderated_by' => auth()->id(),
+            'moderated_at' => now(),
+        ]);
+
+        // Award reputation to the contributor
+        if ($revision->user) {
+            $reputation->award(
+                $revision->user, 
+                \App\Services\ReputationService::POINTS_REVISION_APPROVED, 
+                "Consensus: Revision approved for '{$article->title}'"
+            );
+        }
         
-        session()->flash('message', 'Revision approved and synced!');
+        session()->flash('message', 'Revision approved, points awarded, and content synced!');
     }
 
     public function reject($id)
     {
         $revision = Revision::findOrFail($id);
-        $revision->update(['status' => 'rejected']);
+        $revision->update([
+            'status' => 'rejected',
+            'moderated_by' => auth()->id(),
+            'moderated_at' => now(),
+        ]);
         
         session()->flash('message', 'Revision rejected.');
     }

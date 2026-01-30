@@ -1,67 +1,74 @@
-<div class="min-h-screen bg-[#050511] pt-32">
+<div class="min-h-screen bg-[#050511] pt-32" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 800)">
     {{-- Header --}}
-    <div class="bg-gradient-to-b from-purple-900/20 to-transparent py-12 border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-8">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/20 text-purple-400 text-xs font-mono uppercase tracking-widest mb-6">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+    <div class="relative py-16 border-b border-white/5 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-600/5 via-transparent to-transparent"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/5 border border-blue-500/10 text-blue-500 text-[9px] font-black uppercase tracking-[0.2em] mb-6">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
                     </svg>
-                    Interactive Explorer
+                    Interactive Explorer Node
                 </div>
-                <h1 class="text-4xl md:text-5xl font-display font-black text-white uppercase tracking-tight mb-4">
-                    Knowledge Explorer
+                <h1 class="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter mb-4 leading-none">
+                    KNOWLEDGE <span class="text-blue-500">EXPLORER</span>
                 </h1>
-                <p class="text-gray-400 max-w-xl mx-auto">
-                    Discover how genres evolved, explore artist collaborations, and navigate music history.
+                <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] max-w-xl mx-auto leading-relaxed">
+                    Map the evolution of genres, track artist collaborations, and navigate the global music archive.
                 </p>
             </div>
 
             {{-- Tab Navigation --}}
             <div class="flex justify-center gap-4">
+                @foreach(['genres' => 'Genre Map', 'artists' => 'Artist Network', 'timeline' => 'Chronology'] as $tab => $label)
                 <button
-                    wire:click="setTab('genres')"
-                    class="px-6 py-3 rounded-xl font-semibold transition-all {{ $activeTab === 'genres' ? 'bg-purple-600 text-white' : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10' }}"
+                    wire:click="setTab('{{ $tab }}')"
+                    class="px-6 py-2.5 rounded-xl font-black text-[9px] uppercase tracking-[0.2em] transition-all {{ $activeTab === $tab ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/20 border border-white/5 hover:border-white/10 hover:text-white' }}"
                 >
                     <span class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
-                        Genre Map
+                        @if($tab === 'genres')
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        @elseif($tab === 'artists')
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        @else
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        @endif
+                        {{ $label }}
                     </span>
                 </button>
-                <button
-                    wire:click="setTab('artists')"
-                    class="px-6 py-3 rounded-xl font-semibold transition-all {{ $activeTab === 'artists' ? 'bg-purple-600 text-white' : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10' }}"
-                >
-                    <span class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
-                        Artist Network
-                    </span>
-                </button>
-                <button
-                    wire:click="setTab('timeline')"
-                    class="px-6 py-3 rounded-xl font-semibold transition-all {{ $activeTab === 'timeline' ? 'bg-purple-600 text-white' : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10' }}"
-                >
-                    <span class="flex items-center gap-2">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        Timeline
-                    </span>
-                </button>
+                @endforeach
+            </div>
+        </div>
+    </div>
+
+    {{-- Skeleton Loader --}}
+    <div x-show="!loaded" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 transition-all duration-500">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <div class="flex-1">
+                <div class="bg-secondary border border-white/5 rounded-2xl overflow-hidden skeleton-v2" style="height: 600px;"></div>
+                <div class="mt-6 flex justify-center gap-4">
+                    <div class="w-24 h-2 bg-white/5 rounded-full skeleton-v2"></div>
+                    <div class="w-24 h-2 bg-white/5 rounded-full skeleton-v2"></div>
+                    <div class="w-24 h-2 bg-white/5 rounded-full skeleton-v2"></div>
+                </div>
+            </div>
+            <div class="w-full lg:w-80 space-y-4">
+                <div class="bg-secondary border border-white/5 rounded-2xl p-8 skeleton-v2" style="height: 400px;"></div>
             </div>
         </div>
     </div>
 
     {{-- Explorer Content --}}
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="flex gap-8">
-            {{-- Main Graph Area --}}
-            <div class="flex-1">
-                <div class="bg-[#0A0A14] border border-white/10 rounded-2xl overflow-hidden" style="min-height: 600px;">
+    <div x-show="loaded" x-transition:enter="transition ease-out duration-700 delay-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <div class="flex-1 relative group">
+                <div class="bg-secondary border border-white/5 rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:border-blue-500/10" style="min-height: 600px;">
+                    <div wire:loading wire:target="setTab" class="absolute inset-0 bg-black/40 backdrop-blur-sm z-20 flex items-center justify-center rounded-3xl">
+                        <div class="flex flex-col items-center gap-3">
+                            <div class="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
+                            <span class="text-xs font-mono text-blue-400 uppercase tracking-widest">Recalculating...</span>
+                        </div>
+                    </div>
                     @if($activeTab === 'genres')
                         {{-- Genre Network --}}
                         <div id="genre-network" class="w-full h-[600px]" wire:ignore></div>
@@ -94,26 +101,17 @@
             </div>
 
             {{-- Side Panel (Genre Details) --}}
-            @if($genreDetails)
-                <div class="w-80 bg-[#0A0A14] border border-white/10 rounded-2xl p-6 self-start">
-                    <div class="flex items-center justify-between mb-4">
-                        <h3 class="text-lg font-bold text-white">{{ $genreDetails['genre']['name'] ?? 'Genre' }}</h3>
-                        <button wire:click="closeDetails" class="text-gray-500 hover:text-white">
+            <div class="w-full lg:w-80">
+                @if($genreDetails)
+                    <div class="bg-secondary border border-white/5 rounded-2xl p-8 sticky top-32 shadow-2xl animate-fade-in">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-xl font-black text-white uppercase italic tracking-tighter">{{ $genreDetails['genre']['name'] ?? 'Node Detail' }}</h3>
+                        <button wire:click="closeDetails" class="text-white/20 hover:text-white transition-colors">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
                             </svg>
                         </button>
                     </div>
-
-                    @if(!empty($genreDetails['genre']['description']))
-                        <p class="text-gray-400 text-sm mb-4">{{ $genreDetails['genre']['description'] }}</p>
-                    @endif
-
-                    @if(!empty($genreDetails['genre']['era_start']))
-                        <div class="text-xs text-gray-500 mb-4">
-                            Era: {{ $genreDetails['genre']['era_start'] }} - {{ $genreDetails['genre']['era_end'] ?? 'Present' }}
-                        </div>
-                    @endif
 
                     {{-- Influenced By --}}
                     @if(!empty($genreDetails['influenced_by']))
@@ -152,8 +150,18 @@
                             </div>
                         </div>
                     @endif
-                </div>
-            @endif
+                @else
+                    <div class="bg-secondary/40 border border-white/5 border-dashed rounded-2xl p-8 text-center sticky top-32 h-[410px] flex flex-col items-center justify-center">
+                        <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6">
+                            <svg class="w-8 h-8 text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
+                            </svg>
+                        </div>
+                        <h4 class="text-[11px] font-black text-white uppercase tracking-widest mb-2">Select a Node</h4>
+                        <p class="text-[9px] font-black text-white/20 uppercase tracking-widest leading-loose">Interact with the visualization map to access detailed record connections.</p>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 

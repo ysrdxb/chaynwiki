@@ -1,4 +1,4 @@
-<div class="space-y-6">
+<div class="space-y-6" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
     @section('header', 'Resource Index')
     @section('subheader', 'Manage all indexed music nodes and knowledge records.')
 
@@ -20,6 +20,42 @@
         </div>
     </div>
 
+    <!-- Skeleton Loading State -->
+    <div x-show="!loaded" class="glass-card overflow-hidden">
+        <table class="w-full text-left">
+            <thead>
+                <tr class="bg-white/[0.02]">
+                    <th class="px-8 py-4"><div class="skeleton-v2 h-3 w-12"></div></th>
+                    <th class="px-8 py-4"><div class="skeleton-v2 h-3 w-16"></div></th>
+                    <th class="px-8 py-4"><div class="skeleton-v2 h-3 w-14"></div></th>
+                    <th class="px-8 py-4"><div class="skeleton-v2 h-3 w-16"></div></th>
+                    <th class="px-8 py-4"><div class="skeleton-v2 h-3 w-14"></div></th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5">
+                @for($i = 0; $i < 5; $i++)
+                <tr>
+                    <td class="px-8 py-6">
+                        <div class="flex items-center">
+                            <div class="skeleton-v2 w-10 h-10 rounded-lg mr-4"></div>
+                            <div>
+                                <div class="skeleton-v2 h-4 w-32 mb-2"></div>
+                                <div class="skeleton-v2 h-3 w-24"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-8 py-6"><div class="skeleton-v2 h-5 w-16 rounded-md"></div></td>
+                    <td class="px-8 py-6"><div class="skeleton-v2 h-4 w-20"></div></td>
+                    <td class="px-8 py-6"><div class="skeleton-v2 w-5 h-5 rounded"></div></td>
+                    <td class="px-8 py-6 text-right"><div class="skeleton-v2 h-5 w-16 ml-auto"></div></td>
+                </tr>
+                @endfor
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Actual Content -->
+    <div x-show="loaded" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" style="display: none;">
     <!-- Articles Table -->
     <div class="glass-card overflow-hidden">
         <table class="w-full text-left">
@@ -83,4 +119,5 @@
             {{ $articles->links() }}
         </div>
     </div>
+    </div><!-- End x-show loaded -->
 </div>

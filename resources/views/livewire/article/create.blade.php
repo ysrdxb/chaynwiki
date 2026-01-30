@@ -1,181 +1,134 @@
-<div class="min-h-screen bg-[#050511] py-12 pt-32 relative">
-    <!-- Background Decor -->
-    <div class="fixed inset-0 z-0 pointer-events-none">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-brand-900/20 via-[#050511] to-[#050511]"></div>
-        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05]"></div>
-    </div>
+<div class="min-h-screen bg-primary pt-32 pb-24" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
+    <div class="max-w-[800px] mx-auto px-8">
+        
+        <!-- Header -->
+        <div class="mb-16">
+            <nav class="flex items-center gap-2 text-[10px] font-black text-white/10 uppercase tracking-[0.2em] mb-8 px-1">
+                <a href="{{ route('home') }}" class="hover:text-blue-500 transition-colors">Home</a>
+                <span>/</span>
+                <span class="text-blue-500/50">Initialize Archive Node</span>
+            </nav>
 
-    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    <!-- Header -->
-    <div class="mb-12 text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-600/20 text-brand-400 text-xs font-mono uppercase tracking-widest mb-6">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/></svg>
-            Contribution
+            <h1 class="text-5xl lg:text-6xl font-black text-white italic uppercase tracking-tighter mb-4 leading-none">
+                WHAT ARE YOU <span class="text-blue-500">ARCHIVING</span>?
+            </h1>
+
+            <p class="text-[11px] font-black text-white/20 uppercase tracking-[0.3em]">
+                Select the record classification to begin the data entry sequence.
+            </p>
         </div>
-        <h1 class="text-4xl md:text-5xl font-display font-black text-white uppercase tracking-tight mb-4">Contribute to the Archive</h1>
-        <p class="text-gray-400 max-w-xl mx-auto">Add knowledge to the definitive music encyclopedia.</p>
-    </div>
 
-    <!-- Progress Steps -->
-    <div class="flex items-center justify-center mb-16">
-        <div class="flex items-center">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 {{ $step >= 1 ? 'bg-brand-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.5)] scale-110' : 'bg-white/5 text-gray-500 border border-white/10' }}">1</div>
-            <span class="ml-3 text-sm font-bold uppercase tracking-wider {{ $step >= 1 ? 'text-white' : 'text-gray-600' }}">Category</span>
-        </div>
-        <div class="w-24 h-px mx-6 bg-gradient-to-r from-brand-500/50 to-purple-500/50 {{ $step >= 2 ? 'opacity-100' : 'opacity-20' }}"></div>
-        <div class="flex items-center">
-            <div class="w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-300 {{ $step >= 2 ? 'bg-brand-500 text-white shadow-[0_0_20px_rgba(59,130,246,0.5)] scale-110' : 'bg-white/5 text-gray-500 border border-white/10' }}">2</div>
-            <span class="ml-3 text-sm font-bold uppercase tracking-wider {{ $step >= 2 ? 'text-white' : 'text-gray-600' }}">Details</span>
-        </div>
-    </div>
-
-    <div class="bg-[#0A0A14] backdrop-blur-xl border border-white/10 rounded-[32px] p-8 md:p-12 relative overflow-hidden shadow-2xl">
-        <!-- Decoration -->
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500/5 rounded-full blur-[100px] -mr-32 -mt-32 pointer-events-none"></div>
-
-        <!-- Step 1: Category Selection -->
-        @if ($step === 1)
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in-up">
-                <!-- Song -->
-                <button wire:click="setCategory('song')" class="group relative p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition text-left flex flex-col gap-4 overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-blue-500/0 to-blue-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 group-hover:scale-110 transition">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-1">Song</h3>
-                        <p class="text-xs text-gray-400">Single tracks, remixes, or instrumental pieces.</p>
-                    </div>
-                </button>
-
-                <!-- Artist -->
-                <button wire:click="setCategory('artist')" class="group relative p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition text-left flex flex-col gap-4 overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-purple-500/0 via-purple-500/0 to-purple-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 group-hover:scale-110 transition">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-1">Artist</h3>
-                        <p class="text-xs text-gray-400">Solo musicians, bands, or collectives.</p>
-                    </div>
-                </button>
-
-                <!-- Genre -->
-                 <button wire:click="setCategory('genre')" class="group relative p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition text-left flex flex-col gap-4 overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-pink-500/0 via-pink-500/0 to-pink-500/10 opacity-0 group-hover:opacity-100 transition duration-500"></div>
-                    <div class="w-12 h-12 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400 group-hover:scale-110 transition">
-                       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-1">Genre</h3>
-                        <p class="text-xs text-gray-400">Musical styles, movements, or micro-genres.</p>
-                    </div>
-                </button>
-            </div>
-        @endif
-
-        <!-- Step 2: Details Form -->
-        @if ($step === 2)
-            <div class="animate-fade-in-up">
-                <div class="flex items-center justify-between mb-8">
-                     <h2 class="text-2xl font-bold text-white capitalize">Add New {{ $category }}</h2>
-                     <button wire:click="goBack" class="text-sm text-gray-400 hover:text-white underline">Change Category</button>
+        <!-- Classification Selector -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12 px-1">
+            @foreach(['song', 'artist', 'genre', 'playlist'] as $cat)
+            <button 
+                wire:click="setCategory('{{ $cat }}')"
+                class="flex flex-col items-center justify-center p-6 rounded-2xl border transition-all group {{ $category === $cat ? 'bg-blue-600 border-blue-600 shadow-xl shadow-blue-500/10' : 'bg-secondary border-white/5 hover:border-white/10' }}"
+            >
+                <div class="w-10 h-10 rounded-xl mb-3 flex items-center justify-center transition-all {{ $category === $cat ? 'bg-white/20 text-white' : 'bg-white/5 text-white/20 group-hover:bg-white/10 group-hover:text-white' }}">
+                    @if($cat === 'song')
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                    @elseif($cat === 'artist')
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    @elseif($cat === 'genre')
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg>
+                    @else
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    @endif
                 </div>
-                
-                <!-- Spotify Import -->
-                @if($category === 'song' || $category === 'artist')
-                    <div class="mb-8 p-4 bg-[#81b71a]/10 border border-[#81b71a]/20 rounded-xl flex items-end gap-4">
-                        <div class="flex-1">
-                            <label class="block text-xs font-bold text-[#81b71a] uppercase tracking-wider mb-1">Auto-fill from Spotify</label>
-                            <input wire:model="spotifyImportUrl" type="text" class="w-full bg-black/20 border border-white/10 rounded-lg px-3 py-2 text-white text-sm focus:ring-1 focus:ring-[#81b71a] transition" placeholder="Paste Spotify Link (e.g. https://open.spotify.com/track/...)">
-                            @error('spotifyImportUrl') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
+                <span class="text-[9px] font-black uppercase tracking-[0.2em] {{ $category === $cat ? 'text-white' : 'text-white/20' }}">{{ $cat }}</span>
+            </button>
+            @endforeach
+        </div>
+
+        <!-- Form Node -->
+        <div class="bg-secondary border border-white/5 rounded-2xl p-10 md:p-16 shadow-2xl relative overflow-hidden">
+            <div wire:loading wire:target="setCategory" class="absolute inset-0 bg-secondary/80 backdrop-blur-sm z-20 flex items-center justify-center">
+                <div class="flex flex-col items-center gap-4">
+                    <div class="w-10 h-10 border-4 border-blue-500/10 border-t-blue-500 rounded-full animate-spin"></div>
+                    <span class="text-[10px] font-black text-blue-400 uppercase tracking-widest">Applying Protocol...</span>
+                </div>
+            </div>
+
+            <form wire:submit="save" class="space-y-8">
+                @if($category)
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="col-span-full">
+                            <label class="block text-[11px] font-black text-white/60 uppercase tracking-[0.2em] mb-4">Primary Title Identification</label>
+                            <input 
+                                wire:model="title" 
+                                type="text" 
+                                placeholder="Enter canonical record name"
+                                class="w-full bg-[#050510] border border-white/10 rounded-2xl px-6 py-4 text-white placeholder-white/10 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/40 transition-all font-bold text-lg"
+                            >
+                            @error('title') <span class="text-red-500 text-[10px] font-black uppercase tracking-widest mt-2 block">{{ $message }}</span> @enderror
                         </div>
-                        <button type="button" wire:click="fetchFromSpotify" wire:loading.attr="disabled" class="px-4 py-2 bg-[#81b71a] hover:bg-[#81b71a]/90 text-black font-bold text-sm rounded-lg transition flex items-center gap-2">
-                            <svg wire:loading.remove wire:target="fetchFromSpotify" class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.48.66.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.72 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-                            <svg wire:loading wire:target="fetchFromSpotify" class="animate-spin w-4 h-4 ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                            <span>Fetch Data</span>
+
+                        @if($category === 'song')
+                            <div>
+                                <label class="block text-[11px] font-black text-white/60 uppercase tracking-[0.2em] mb-4">Origin Artist</label>
+                                <input wire:model="meta.artist_name" type="text" placeholder="Artist Name" class="w-full bg-[#050510] border border-white/10 rounded-2xl px-6 py-4 text-white text-sm font-bold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/40 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-black text-white/60 uppercase tracking-[0.2em] mb-4">Release Timestamp</label>
+                                <input wire:model="meta.release_date" type="text" placeholder="YYYY-MM-DD" class="w-full bg-[#050510] border border-white/10 rounded-2xl px-6 py-4 text-white text-sm font-bold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/40 transition-all">
+                            </div>
+                        @elseif($category === 'artist')
+                            <div>
+                                <label class="block text-[11px] font-black text-white/60 uppercase tracking-[0.2em] mb-4">Origin Region</label>
+                                <input wire:model="meta.origin" type="text" placeholder="e.g. United Kingdom" class="w-full bg-[#050510] border border-white/10 rounded-2xl px-6 py-4 text-white text-sm font-bold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/40 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-black text-white/60 uppercase tracking-[0.2em] mb-4">Active Chronology</label>
+                                <input wire:model="meta.active_years" type="text" placeholder="e.g. 2010 - Present" class="w-full bg-[#050510] border border-white/10 rounded-2xl px-6 py-4 text-white text-sm font-bold focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/40 transition-all">
+                            </div>
+                        @endif
+
+                        <div class="col-span-full">
+                            <label class="block text-[11px] font-black text-white/60 uppercase tracking-[0.2em] mb-4">Comprehensive Data Payload</label>
+                            <textarea 
+                                wire:model="content" 
+                                rows="8"
+                                placeholder="Input detailed historical and analytical data here..."
+                                class="w-full bg-[#050510] border border-white/10 rounded-2xl px-6 py-5 text-white/80 placeholder-white/10 focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500/40 transition-all leading-relaxed text-sm"
+                            ></textarea>
+                            @error('content') <span class="text-red-500 text-[10px] font-black uppercase tracking-widest mt-2 block">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="col-span-full">
+                            <label class="block text-[11px] font-black text-white/60 uppercase tracking-[0.2em] mb-4">Visual Identification (Cover Art)</label>
+                            <div class="border border-dashed border-white/10 rounded-2xl p-12 text-center hover:border-blue-500/40 transition-all cursor-pointer group/upload bg-[#050510] hover:bg-white/[0.02]">
+                                @if ($featured_image)
+                                    <img src="{{ $featured_image->temporaryUrl() }}" class="w-40 h-40 object-cover rounded-2xl mx-auto shadow-2xl">
+                                @else
+                                    <div class="text-white/20 group-hover/upload:text-blue-500 transition-colors">
+                                        <svg class="w-12 h-12 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <p class="text-[10px] font-black uppercase tracking-widest">Commit High-Resolution Artwork</p>
+                                    </div>
+                                @endif
+                                <input wire:model="featured_image" type="file" class="hidden">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Registry -->
+                    <div class="flex flex-wrap items-center gap-4 pt-8 border-t border-white/5">
+                        <button type="button" class="px-6 py-3 bg-white/5 border border-white/5 rounded-xl text-[9px] font-black text-white/30 uppercase tracking-widest hover:bg-white/10 hover:text-white transition-all">
+                            Save Local Draft
                         </button>
+                        <button type="submit" class="flex-1 md:flex-none px-10 py-3 bg-blue-600 hover:bg-blue-500 text-white font-black text-[10px] uppercase tracking-[0.3em] rounded-xl transition-all shadow-xl shadow-blue-500/10 active:scale-95">
+                            Commit to Global Archive
+                        </button>
+                    </div>
+                @else
+                    <!-- Initialization Prompt -->
+                    <div class="text-center py-20 grayscale opacity-20 group">
+                        <svg class="w-20 h-20 mx-auto mb-8 transition-all group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        <h3 class="text-xl font-black italic uppercase tracking-tighter text-white">READY FOR INPUT</h3>
+                        <p class="text-[10px] font-black uppercase tracking-widest mt-2">Select a classification to unlock protocol</p>
                     </div>
                 @endif
-
-                <form wire:submit="save" class="space-y-6">
-                    <!-- Basic Info -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Title / Name *</label>
-                        <input wire:model="title" type="text" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:ring-2 focus:ring-brand-500 focus:border-transparent transition" placeholder="e.g. Midnight City">
-                        @error('title') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
-                    </div>
-
-                    <!-- Description / Content -->
-                    <div wire:ignore>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">{{ $category === 'song' ? 'Description / Context' : 'Biography' }} *</label>
-                        
-                        <div x-data="richText($wire.entangle('content'))" class="w-full bg-white/5 border border-white/10 rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-brand-500 transition">
-                            <!-- Toolbar -->
-                            <div class="flex items-center gap-1 p-2 border-b border-white/5 bg-white/5">
-                                <button type="button" @click="toggleBold()" :class="{ 'text-brand-400 bg-white/10': editor?.isActive('bold') }" class="p-1.5 rounded hover:bg-white/10 text-gray-400 transition" title="Bold">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 12h8a4 4 0 100-8H6v8zm0 0l4 8"></path></svg>
-                                </button>
-                                <button type="button" @click="toggleItalic()" :class="{ 'text-brand-400 bg-white/10': editor?.isActive('italic') }" class="p-1.5 rounded hover:bg-white/10 text-gray-400 transition" title="Italic">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4M6 16l-4-4 4-4M14 16l4 4 4-4m-4 4V8"></path></svg>
-                                </button>
-                                <div class="w-px h-4 bg-white/10 mx-1"></div>
-                                <button type="button" @click="toggleH2()" :class="{ 'text-brand-400 bg-white/10': editor?.isActive('heading', { level: 2 }) }" class="p-1.5 rounded hover:bg-white/10 text-gray-400 transition font-bold text-xs">H2</button>
-                                <button type="button" @click="toggleH3()" :class="{ 'text-brand-400 bg-white/10': editor?.isActive('heading', { level: 3 }) }" class="p-1.5 rounded hover:bg-white/10 text-gray-400 transition font-bold text-xs">H3</button>
-                                <div class="w-px h-4 bg-white/10 mx-1"></div>
-                                <button type="button" @click="toggleBulletList()" :class="{ 'text-brand-400 bg-white/10': editor?.isActive('bulletList') }" class="p-1.5 rounded hover:bg-white/10 text-gray-400 transition" title="List">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                                </button>
-                            </div>
-
-                            <!-- Editor Area -->
-                            <div x-ref="editor" class="p-4 min-h-[300px] outline-none"></div>
-                        </div>
-                        @error('content') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
-                    </div>
-
-                    <!-- Image Upload -->
-                    <div>
-                         <label class="block text-sm font-medium text-gray-300 mb-2">Featured Image</label>
-                         <div class="flex items-center gap-4">
-                            @if ($featured_image)
-                                <img src="{{ $featured_image->temporaryUrl() }}" class="w-20 h-20 object-cover rounded-lg">
-                            @endif
-                            <input wire:model="featured_image" type="file" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20">
-                         </div>
-                    </div>
-
-                    <!-- Category Specific Fields -->
-                    @if($category === 'song')
-                        <div class="pt-6 border-t border-white/10">
-                            <h3 class="text-lg font-bold text-white mb-4">Song Details</h3>
-                            
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-300 mb-2">Spotify ID (Optional)</label>
-                                    <input wire:model="meta.spotify_id" type="text" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:ring-2 focus:ring-brand-500 transition" placeholder="Spotify Track ID">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-300 mb-2">Artist ID (Internal)</label>
-                                    <input wire:model="meta.artist_id" type="text" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:ring-2 focus:ring-brand-500 transition" placeholder="Search for artist...">
-                                </div>
-                            </div>
-                            
-                            <div class="mt-4">
-                                <label class="block text-sm font-medium text-gray-300 mb-2">Lyrics</label>
-                                <textarea wire:model="meta.lyrics" rows="6" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:ring-2 focus:ring-brand-500 transition font-mono text-sm" placeholder="Paste lyrics here..."></textarea>
-                            </div>
-                        </div>
-                    @endif
-
-                    <div class="pt-8 flex justify-end">
-                        <button type="submit" class="px-8 py-3 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-full transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_30px_rgba(59,130,246,0.5)]">
-                            Create Article
-                        </button>
-                    </div>
-                </form>
-            </div>
-        @endif
+            </form>
+        </div>
     </div>
 </div>

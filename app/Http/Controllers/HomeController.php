@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    public function __invoke()
+    public function __invoke(\App\Services\DiscoveryService $discovery)
     {
+        $discoveryMix = $discovery->getDailyDiscovery();
+        $hiddenGems = $discovery->getHiddenGems();
         // 1. New Topics (Latest Articles)
         $newTopics = Article::with(['user', 'song.artist', 'genre'])
             ->where('status', 'published')
@@ -29,6 +31,8 @@ class HomeController extends Controller
         $insights = [
             'total_edits' => 100 + Article::sum('view_count'),
             'new_wikis_today' => Article::whereDate('created_at', today())->count(),
+            'total_articles' => Article::where('status', 'published')->count(),
+            'total_users' => User::count(),
         ];
 
         // 4. Music Weather (Mocked Data Layer - simulating real-time analytics)
@@ -47,18 +51,17 @@ class HomeController extends Controller
             ]
         ];
 
-        // 5. Discover Tags (Dynamic Fetch)
-        // Fetch 5 random articles to serve as "Trending Tags" for now
-        $trendingTags = Article::select('title', 'category', 'view_count')
+        // 5. Discover Tags (Dynamic Fetch using Trending Score)
+        $trendingTags = Article::select('title', 'category', 'view_count', 'trending_score')
             ->where('status', 'published')
-            ->inRandomOrder()
+            ->orderByDesc('trending_score')
             ->take(5)
             ->get()
             ->map(function($item) {
                 return [
                     'label' => $item->title,
                     'sub' => $item->category,
-                    'stat' => '+' . rand(5, 25) . '% vs last hour',
+                    'stat' => $item->trending_score > 5 ? '+' . round($item->trending_score * 0.5, 1) . '% activity' : 'Stable',
                     'style' => match($item->category) {
                         'genre' => 'blue',
                         'artist' => 'purple',
@@ -75,11 +78,12 @@ class HomeController extends Controller
                 ['label' => 'Afrofusion', 'sub' => 'Genre', 'stat' => 'New', 'style' => 'teal'],
             ]);
         }
-
-        // 6. Featured Content (High SEO Score or Trending)
-        $featuredArticles = Article::where('status', 'published')
-            ->inRandomOrder()
-            ->take(5) // Get 5 to ensure enough content
+ 
+        // 6. Featured Content (The Beat of the Moment - High Trending Score)
+        $trendingArticles = Article::where('status', 'published')
+            ->with(['song.artist', 'genre'])
+            ->orderByDesc('trending_score')
+            ->take(6)
             ->get();
 
         // 7. Recent Updates (Revisions)
@@ -93,6 +97,17 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-        return view('welcome', compact('newTopics', 'stats', 'insights', 'musicWeather', 'trendingTags', 'featuredArticles', 'recentUpdates', 'topContributors'));
+        return view('welcome', compact(
+            'newTopics', 
+            'stats', 
+            'insights', 
+            'musicWeather', 
+            'trendingTags', 
+            'trendingArticles', 
+            'recentUpdates', 
+            'topContributors',
+            'discoveryMix',
+            'hiddenGems'
+        ));
     }
 }

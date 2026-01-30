@@ -30,7 +30,7 @@
     <x-navigation />
 
     <!-- Content -->
-    <main class="pb-24">
+    <main>
         {{ $slot ?? '' }}
         @yield('content')
     </main>

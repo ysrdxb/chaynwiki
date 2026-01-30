@@ -14,54 +14,107 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    @livewireStyles
     
-    <!-- Tailwind Config -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind Configuration -->
     <script>
+        window.tailwind = window.tailwind || {};
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         brand: {
-                            50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa',
-                            500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a', 950: '#172554',
+                            50: '#f0f7ff', 100: '#e0effe', 200: '#bae2fd', 300: '#7cc8fb', 400: '#38acf8',
+                            500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e', 950: '#082f49',
                         },
+                        dark: {
+                            DEFAULT: '#05050a',
+                            surface: '#0c0c14',
+                            elevated: '#151522',
+                        }
                     },
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        display: ['Outfit', 'sans-serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Plus Jakarta Sans"', 'sans-serif'],
                     },
+                    fontSize: {
+                        '10xl': '10rem',
+                        '11xl': '12rem',
+                    },
+                    letterSpacing: {
+                        'tightest': '-0.06em',
+                        'tighter': '-0.04em',
+                        'ultra-tight': '-0.05em',
+                        'mega-tight': '-0.02em',
+                    }
                 }
             }
         }
     </script>
+    <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Global Styles -->
     <style>
-        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #030308; }
-        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #3b82f6, #8b5cf6); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 20px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+        
         [x-cloak] { display: none !important; }
         
         .text-gradient {
-            background: linear-gradient(135deg, #fff 0%, #60a5fa 50%, #a78bfa 100%);
+            background: linear-gradient(to bottom right, #fff 20%, #7dd3fc 50%, #38bdf8 80%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-dark {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Skeleton Loading Animation */
+        @keyframes skeleton-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .skeleton-v2 {
+            background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 100%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s ease-in-out infinite;
+            border-radius: 8px;
+        }
+
+        /* Fade In Animation */
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fade-in 0.5s ease-out forwards;
+        }
     </style>
     @stack('styles')
 </head>
-<body class="font-sans antialiased bg-[#030308] min-h-screen text-white overflow-x-hidden selection:bg-brand-500 selection:text-white">
+<body class="font-sans antialiased bg-[#030308] min-h-screen text-slate-400 overflow-x-hidden selection:bg-blue-500 selection:text-white">
     <!-- Background Noise/Decor -->
     <div class="fixed inset-0 z-0 pointer-events-none">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-brand-900/10 via-[#030308] to-[#030308]"></div>
-        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-blue-900/5 via-[#050510] to-[#050510]"></div>
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02]"></div>
     </div>
 
     <!-- Main Content -->
@@ -77,5 +130,15 @@
     @endauth
 
     @stack('scripts')
+    @livewireScripts
+    
+    <script>
+        // Clear AI context on navigation if not on a wiki page
+        document.addEventListener('livewire:navigated', () => {
+            if (!window.location.pathname.includes('/wiki/')) {
+                Livewire.dispatch('updateContext', { context: null });
+            }
+        });
+    </script>
 </body>
 </html>

@@ -36,18 +36,13 @@ class SmartSearchService
         // Log the search
         $this->logSearch($query, $category, $userId);
 
-        // Build search query
+        // Build search query - use LIKE as fallback (FULLTEXT may not be available)
         $searchQuery = Article::query()
             ->where('status', 'published')
             ->where(function ($q) use ($query) {
-                // Full-text search on title and content
-                $q->whereRaw(
-                    "MATCH(title, content) AGAINST(? IN NATURAL LANGUAGE MODE)",
-                    [$query]
-                )
-                // Also match with LIKE for partial matches
-                ->orWhere('title', 'LIKE', "%{$query}%")
-                ->orWhere('content', 'LIKE', "%{$query}%");
+                // Use LIKE for reliable matching across all MySQL setups
+                $q->where('title', 'LIKE', "%{$query}%")
+                    ->orWhere('content', 'LIKE', "%{$query}%");
             });
 
         // Apply category filter
@@ -68,10 +63,14 @@ class SmartSearchService
                 break;
             case 'relevance':
             default:
-                // Order by full-text relevance score
+                // Order by title match first (exact matches score higher), then by views
                 $searchQuery->orderByRaw(
-                    "MATCH(title, content) AGAINST(? IN NATURAL LANGUAGE MODE) DESC",
-                    [$query]
+                    "CASE 
+                        WHEN title LIKE ? THEN 0 
+                        WHEN title LIKE ? THEN 1 
+                        ELSE 2 
+                    END, views DESC",
+                    ["{$query}%", "%{$query}%"]
                 );
                 break;
         }

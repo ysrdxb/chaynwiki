@@ -242,4 +242,45 @@ PROMPT;
     {
         return ArticleAnalysis::where('article_id', $articleId)->first();
     }
+
+    /**
+     * Perform batch analysis on multiple articles
+     */
+    public function batchProcess(array $articleIds): array
+    {
+        $results = [
+            'total' => count($articleIds),
+            'processed' => 0,
+            'failed' => 0,
+            'details' => []
+        ];
+
+        foreach ($articleIds as $id) {
+            $article = Article::find($id);
+            if (!$article || empty($article->content)) {
+                $results['failed']++;
+                $results['details'][] = ['id' => $id, 'status' => 'error', 'message' => 'Article not found or empty'];
+                continue;
+            }
+
+            try {
+                $analysis = $this->analyze($article->content, $article->id);
+                if ($analysis) {
+                    $results['processed']++;
+                    $results['details'][] = ['id' => $id, 'status' => 'success'];
+                } else {
+                    $results['failed']++;
+                    $results['details'][] = ['id' => $id, 'status' => 'failed'];
+                }
+            } catch (\Exception $e) {
+                $results['failed']++;
+                $results['details'][] = ['id' => $id, 'status' => 'error', 'message' => $e->getMessage()];
+            }
+
+            // Simple throttle to avoid overwhelming local Ollama
+            usleep(500000); // 0.5s pause
+        }
+
+        return $results;
+    }
 }

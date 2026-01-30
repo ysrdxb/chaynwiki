@@ -47,6 +47,8 @@ Route::middleware(['auth', 'can:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', \App\Livewire\Admin\Dashboard::class)->name('admin.dashboard');
     Route::get('/articles', \App\Livewire\Admin\Articles::class)->name('admin.articles');
     Route::get('/revisions', \App\Livewire\Admin\Revisions::class)->name('admin.revisions');
+    Route::get('/batch-analysis', \App\Livewire\Admin\BatchAnalysis::class)->name('admin.batch-analysis');
+    Route::get('/knowledge-graph', \App\Livewire\Admin\KnowledgeGraph::class)->name('admin.knowledge-graph');
     Route::get('/users', \App\Livewire\Admin\Users::class)->name('admin.users');
 });
 

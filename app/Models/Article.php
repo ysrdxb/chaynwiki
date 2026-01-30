@@ -14,6 +14,21 @@ class Article extends Model
         'published_at' => 'datetime',
     ];
 
+    public function getFeaturedImageAttribute($value)
+    {
+        if ($value) {
+            return \Illuminate\Support\Facades\Storage::url($value);
+        }
+
+        // Return high-quality Unsplash placeholders based on category
+        return match($this->category) {
+            'artist' => "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=800&q=80",
+            'song' => "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80",
+            'genre' => "https://images.unsplash.com/photo-1514525253361-bee8a48740ad?w=800&q=80",
+            default => "https://images.unsplash.com/photo-1459749411177-042180ce6742?w=800&q=80"
+        };
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -42,6 +57,11 @@ class Article extends Model
         return $this->hasOne(Playlist::class);
     }
 
+    public function analysis()
+    {
+        return $this->hasOne(ArticleAnalysis::class);
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
@@ -60,5 +80,22 @@ class Article extends Model
     public function bookmarks()
     {
         return $this->hasMany(Bookmark::class);
+    }
+
+    public function getMetaDescriptionAttribute(): string
+    {
+        if ($this->analysis && $this->analysis->summary) {
+            return $this->analysis->summary;
+        }
+        return \Illuminate\Support\Str::limit(strip_tags($this->content), 160);
+    }
+
+    public function getMetaKeywordsAttribute(): string
+    {
+        $base = [$this->title, $this->category, 'ChaynWiki', 'music encyclopedia'];
+        if ($this->analysis && !empty($this->analysis->themes)) {
+            $base = array_merge($base, $this->analysis->themes);
+        }
+        return implode(', ', array_unique($base));
     }
 }
