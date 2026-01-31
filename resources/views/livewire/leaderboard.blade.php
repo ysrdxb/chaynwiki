@@ -40,7 +40,9 @@
                     <h3 class="text-[9px] font-black text-white/10 uppercase tracking-[0.3em] mb-6 italic px-1">Archive Filter</h3>
                     <div class="space-y-2">
                         @foreach(['All', 'Recordings', 'Artist Profiles', 'Classifications'] as $cat)
-                        <button class="w-full text-left px-5 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $loop->first ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/20 border border-white/5 hover:border-white/10 hover:text-white' }}">
+                        <button 
+                            wire:click="setFilter('{{ $cat }}')"
+                            class="w-full text-left px-5 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $activeFilter === $cat ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/20 border border-white/5 hover:border-white/10 hover:text-white' }}">
                             {{ $cat }}
                         </button>
                         @endforeach
@@ -51,7 +53,9 @@
                     <h3 class="text-[9px] font-black text-white/10 uppercase tracking-[0.3em] mb-6 italic px-1">Sort Protocol</h3>
                     <div class="space-y-2">
                         @foreach(['Impact Score', 'Metadata Growth', 'Total Connections'] as $sort)
-                        <button class="w-full text-left px-5 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest border border-white/5 text-white/20 hover:border-white/10 hover:text-white transition-all">
+                        <button 
+                            wire:click="setSort('{{ $sort }}')"
+                            class="w-full text-left px-5 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $activeSort === $sort ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'border border-white/5 text-white/20 hover:border-white/10 hover:text-white' }}">
                             {{ $sort }}
                         </button>
                         @endforeach
@@ -81,14 +85,7 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-white/5">
-                                @php
-                                    $rankings = [
-                                        ['title' => 'The Anthem of Soul', 'cat' => 'Song', 'reach' => '2.4M', 'growth' => '+18%', 'impact' => 98, 'user' => 'Ali Khan'],
-                                        ['title' => 'Hyperpop Origins', 'cat' => 'Genre', 'reach' => '1.8M', 'growth' => '+24%', 'impact' => 94, 'user' => 'Sara J'],
-                                        ['title' => 'Midnight Resonance', 'cat' => 'Song', 'reach' => '950K', 'growth' => '+12%', 'impact' => 89, 'user' => 'Digital Nomad'],
-                                        ['title' => 'Luna Rivers', 'cat' => 'Artist', 'reach' => '4.2M', 'growth' => '+5%', 'impact' => 96, 'user' => 'Ali Khan'],
-                                    ];
-                                @endphp
+                                {{-- Dynamic Data Loaded from Component --}}
 
                                 <template x-if="!loaded">
                                     @for($i = 0; $i < 4; $i++)
@@ -130,7 +127,7 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-6 text-right">
-                                        <a href="#" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white/5 border border-white/5 rounded-xl text-[9px] font-black text-white/30 uppercase tracking-[0.2em] hover:bg-white/10 hover:text-white transition-all active:scale-95">
+                                        <a href="{{ route('wiki.show', $item['slug']) }}" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white/5 border border-white/5 rounded-xl text-[9px] font-black text-white/30 uppercase tracking-[0.2em] hover:bg-white/10 hover:text-white transition-all active:scale-95">
                                             Access Protocol
                                         </a>
                                     </td>

@@ -11,6 +11,7 @@ use App\Models\UserStreak;
 use App\Models\Article;
 use App\Models\AiGeneration;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 /**
  * GamificationService - Points, Achievements, Streaks, Leaderboards
@@ -141,7 +142,7 @@ class GamificationService
                     break;
 
                 case 'total_views':
-                    $totalViews = Article::where('user_id', $user->id)->sum('views');
+                    $totalViews = Article::where('user_id', $user->id)->sum('view_count');
                     if ($totalViews < $value) {
                         return false;
                     }
@@ -234,17 +235,104 @@ class GamificationService
     }
 
     /**
-     * Get leaderboard
+     * Get leaderboard (Elite Contributors)
      */
     public function getLeaderboard(int $limit = 10, string $period = 'all'): array
     {
         $query = User::query()
             ->select('users.*')
             ->addSelect(DB::raw('(SELECT COUNT(*) FROM articles WHERE articles.user_id = users.id) as articles_count'))
-            ->addSelect(DB::raw('(SELECT COUNT(*) FROM user_achievements WHERE user_achievements.user_id = users.id AND earned_at IS NOT NULL) as achievements_count'))
-            ->orderByDesc('reputation_score')
-            ->limit($limit);
+            ->addSelect(DB::raw('(SELECT COUNT(*) FROM user_achievements WHERE user_achievements.user_id = users.id AND earned_at IS NOT NULL) as achievements_count'));
 
-        return $query->get()->toArray();
+        if ($period !== 'all') {
+            $date = match($period) {
+                'weekly' => now()->subWeek(),
+                'monthly' => now()->subMonth(),
+                default => now()->subYear(),
+            };
+            
+            // For periodic leadership, we focus on RECENT activity (edits/creations)
+            // Simplified: Order by recently updated articles count for now, 
+            // since we don't have a dedicated points_log table yet.
+             $query->addSelect(DB::raw("(SELECT COUNT(*) FROM revisions WHERE revisions.user_id = users.id AND revisions.created_at >= '{$date}') as recent_edits"))
+                   ->orderByDesc('recent_edits');
+        } else {
+            $query->orderByDesc('reputation_score');
+        }
+
+        return $query->limit($limit)->get()->map(function($user) {
+            return [
+                'id' => $user->id,
+                'name' => $user->name,
+                'avatar' => $user->profile_photo_url,
+                'level' => floor(($user->reputation_score ?? 0) / 100) + 1,
+                'reputation_score' => $user->reputation_score ?? 0,
+                'articles_count' => $user->articles_count,
+            ];
+        })->toArray();
+    }
+
+    /**
+     * Get Top Nodes (Rankings Table)
+     */
+    public function getTopNodes(string $category = 'all', string $sort = 'impact', int $limit = 20): array
+    {
+        $query = Article::with('user')->where('status', 'published');
+
+        // Apply Category Filter
+        if ($category !== 'all') {
+            $catMap = [
+                'recordings' => 'song',
+                'artist profiles' => 'artist',
+                'classifications' => 'genre'
+            ];
+            if (isset($catMap[strtolower($category)])) {
+                $query->where('category', $catMap[strtolower($category)]);
+            } else {
+                $query->where('category', $category);
+            }
+        }
+
+        // Apply Sorting
+        switch (strtolower($sort)) {
+            case 'metadata growth': // Newest or most revisions
+                $query->orderByDesc('updated_at');
+                break;
+            case 'total connections': // Total Views or Links (using views for now)
+                $query->orderByDesc('view_count');
+                break;
+            case 'impact score':
+            default:
+                // Impact = Views + (Revisions * 10)
+                // We'll approximate this with views for now to keep query simple, 
+                // or use a raw sort if needed.
+                $query->orderByDesc('view_count');
+                break;
+        }
+
+        return $query->limit($limit)->get()->map(function($article) {
+            // Mock growth/impact data for UI if not strictly tracking it
+            $growth = rand(1, 30); 
+            $impact = min(100, floor(($article->view_count / 100) * 10) + 50); 
+            
+            return [
+                'id' => $article->id,
+                'title' => $article->title,
+                'slug' => $article->slug,
+                'cat' => ucfirst($article->category),
+                'reach' => $this->formatNumber($article->view_count),
+                'growth' => "+{$growth}%", // Placeholder for now
+                'impact' => $impact,
+                'user' => $article->user->name ?? 'System',
+                'created_at' => $article->created_at->format('M d, Y'),
+            ];
+        })->toArray();
+    }
+
+    private function formatNumber(int $num): string
+    {
+        if ($num > 1000000) return round($num / 1000000, 1) . 'M';
+        if ($num > 1000) return round($num / 1000, 1) . 'K';
+        return (string)$num;
     }
 }

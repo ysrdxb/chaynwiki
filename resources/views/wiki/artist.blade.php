@@ -155,8 +155,8 @@
 
             <!-- Right Column: Sidebar -->
             <div class="w-full lg:w-80 space-y-10">
-                 <!-- Artist Metadata -->
-                <div class="glass p-8 rounded-3xl border border-white/10 group bg-[#0D0D1A]">
+                <!-- Artist Metadata -->
+                <div class="glass p-8 rounded-3xl border border-white/10 group">
                     <h3 class="text-xl font-black text-white italic uppercase tracking-tighter mb-8">Metadata</h3>
                      <dl class="space-y-6">
                         <div class="flex justify-between items-end pb-3 border-b border-white/5">
@@ -174,13 +174,11 @@
                     </dl>
                     
                     <div class="mt-12 space-y-3">
-                        <button 
-                            @click="$dispatch('play-article', { articleId: {{ $article->id }} })"
+                        <livewire:article.play-button 
+                            :articleId="$article->id" 
+                            label="Sync Sonic DNA"
                             class="w-full py-4 bg-blue-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] transition-all flex items-center justify-center gap-3 relative overflow-hidden group shadow-xl shadow-blue-500/20"
-                        >
-                            <span class="relative z-10">Sync Sonic DNA</span>
-                            <svg class="w-3 h-3 relative z-10" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </button>
+                        />
 
                         <x-article.⚡add-to-crate :article="$article" />
 

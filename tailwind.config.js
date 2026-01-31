@@ -42,7 +42,9 @@ export default {
                     800: '#1e293b',
                     900: '#0f172a',
                     950: '#020617',
-                }
+                },
+                primary: '#050511', // Deep space dark
+                secondary: '#0A0A14', // Slightly lighter panel bg
             },
             backgroundImage: {
                 'hero-gradient': 'linear-gradient(to bottom, #050511, #020617)',

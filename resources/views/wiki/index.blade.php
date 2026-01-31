@@ -3,10 +3,10 @@
 @section('title', (request('q') ? 'Search: ' . request('q') : 'Archive Browser') . ' - ChaynWiki')
 
 @section('content')
-<div class="relative bg-primary min-h-screen" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
+<div class="relative min-h-screen" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
     
     <!-- HERO SECTION -->
-    <div class="relative pt-24 pb-12 bg-primary">
+    <div class="relative pt-32 pb-16 border-b border-white/5 bg-[#050511]">
         <div class="max-w-[1200px] mx-auto px-8 relative z-10">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
