@@ -17,7 +17,9 @@ class Article extends Model
     public function getFeaturedImageAttribute($value)
     {
         if ($value) {
-            return \Illuminate\Support\Facades\Storage::url($value);
+            return \Illuminate\Support\Str::startsWith($value, ['http://', 'https://']) 
+                ? $value 
+                : \Illuminate\Support\Facades\Storage::url($value);
         }
 
         // Return high-quality Unsplash placeholders based on category
@@ -85,6 +87,13 @@ class Article extends Model
     public function bookmarks()
     {
         return $this->hasMany(Bookmark::class);
+    }
+
+    public function crates()
+    {
+        return $this->belongsToMany(Crate::class, 'crate_articles')
+                    ->withPivot('notes')
+                    ->withTimestamps();
     }
 
     public function getMetaDescriptionAttribute(): string

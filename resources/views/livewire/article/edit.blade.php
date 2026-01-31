@@ -1,3 +1,4 @@
+<div class="min-h-screen bg-[#050510] pt-24 pb-12" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
     <!-- Background Decor -->
     <div class="fixed inset-0 z-0 pointer-events-none">
         <div class="absolute inset-0 bg-[#050511]"></div>

@@ -79,7 +79,7 @@
                     <div class="flex-1 min-w-0">
                         <article class="prose prose-invert prose-base max-w-none">
                             <div class="article-content text-white/50 leading-relaxed">
-                                {!! $article->content !!}
+                                {!! Str::markdown($article->content) !!}
                             </div>
                         </article>
 

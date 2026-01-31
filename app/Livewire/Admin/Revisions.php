@@ -12,13 +12,17 @@ class Revisions extends Component
 
     public $filterStatus = 'pending';
 
-    public function approve($id, \App\Services\ReputationService $reputation)
+    public function approve($id, \App\Services\ReputationService $reputation, \App\Services\CacheService $cache)
     {
         $revision = Revision::findOrFail($id);
         
         // Apply changes to article
         $article = $revision->article;
         $article->update($revision->content_snapshot);
+        
+        // Clear caches and reset AI analysis
+        $cache->clearArticleCache($article->id);
+        $article->analysis()?->delete();
         
         $revision->update([
             'status' => 'approved',
@@ -35,7 +39,7 @@ class Revisions extends Component
             );
         }
         
-        session()->flash('message', 'Revision approved, points awarded, and content synced!');
+        session()->flash('message', 'Revision approved, caches flushed, and AI re-analysis queued!');
     }
 
     public function reject($id)

@@ -8,6 +8,11 @@
     
     @push('styles')
         <style>
+            :root {
+                @if(isset($article) && $article->analysis && $article->analysis->ambient_signature)
+                    --ambient-gradient: {{ $article->analysis->ambient_gradient_css }};
+                @endif
+            }
             .reading-progress {
                 position: fixed;
                 top: 0;

@@ -40,6 +40,10 @@ Route::get('/wiki/{article:slug}/edit', \App\Livewire\Article\Edit::class)
     ->middleware(['auth'])
     ->name('wiki.edit');
 
+Route::get('/admin', function () {
+    return redirect()->route('admin.dashboard');
+})->middleware(['auth', 'can:admin']);
+
 Route::get('/user/{user:username}', \App\Livewire\UserProfile::class)->name('profile');
 
 // Custom Admin Panel (Livewire)

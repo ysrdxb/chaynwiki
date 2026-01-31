@@ -92,7 +92,9 @@
                             </span>
                         </td>
                         <td class="px-8 py-6">
-                            <div class="text-sm">{{ $article->user->name }}</div>
+                            <div class="text-sm font-medium text-slate-300">
+                                {{ $article->user->name ?? 'System / Deleted User' }}
+                            </div>
                         </td>
                         <td class="px-8 py-6">
                             <button wire:click="toggleFeatured({{ $article->id }})" class="focus:outline-none">

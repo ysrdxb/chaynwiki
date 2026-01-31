@@ -97,8 +97,8 @@
                         <div class="flex-1 h-px bg-white/5"></div>
                     </div>
                     <div class="article-content prose prose-invert prose-lg max-w-none">
-                        <div class="text-white/60 leading-relaxed font-medium">
-                            {!! $article->content !!}
+                        <div class="text-slate-300 leading-relaxed font-medium">
+                            {!! Str::markdown($article->content) !!}
                         </div>
                     </div>
                 </section>
@@ -136,29 +136,34 @@
                     
                     <dl class="space-y-6">
                         <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                            <dt class="text-[10px] font-black text-white/30 uppercase tracking-widest">Album</dt>
+                            <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Album</dt>
                             <dd class="text-xs text-white font-bold text-right">{{ $article->song->album ?? 'Single' }}</dd>
                         </div>
                         <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                            <dt class="text-[10px] font-black text-white/30 uppercase tracking-widest">Released</dt>
+                            <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Released</dt>
                             <dd class="text-xs text-white font-bold">{{ $article->song->release_date ?? 'N/A' }}</dd>
                         </div>
                          <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                            <dt class="text-[10px] font-black text-white/30 uppercase tracking-widest">Genre</dt>
+                            <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Genre</dt>
                             <dd class="text-xs text-blue-400 font-bold uppercase tracking-widest">{{ $article->genre ? $article->genre->name : 'General' }}</dd>
                         </div>
                     </dl>
 
-                    <div class="mt-12 space-y-4">
+                    <div class="mt-12 space-y-3">
+                        <livewire:article.play-button 
+                            :articleId="$article->id" 
+                            label="Play Sonic Pulse"
+                            class="w-full py-4 bg-blue-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
+                        />
+                        
+                        <x-article.⚡add-to-crate :article="$article" />
+
                         <div class="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                            <span class="text-[9px] font-black text-white/20 uppercase tracking-widest">Protocol Score</span>
+                            <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Protocol Score</span>
                              <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
-                        <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-4 bg-white text-black rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] transition-all flex items-center justify-center gap-3 relative overflow-hidden group">
-                            <span class="relative z-10">Edit Entry</span>
-                            <div class="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center relative z-10">
-                                <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
-                            </div>
+                        <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-3 border border-white/5 text-white/20 rounded-xl text-[9px] font-black uppercase tracking-widest hover:text-white hover:border-white/10 transition-all flex items-center justify-center gap-2">
+                            Modify Archive
                         </a>
                     </div>
                 </div>

@@ -10,7 +10,7 @@
         <div class="max-w-[1200px] mx-auto px-8 relative z-10">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <nav class="flex items-center gap-2 text-[10px] font-black text-white/10 uppercase tracking-[0.2em] mb-8 px-1">
+                    <nav class="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8 px-1">
                         <a href="{{ route('home') }}" class="hover:text-blue-500 transition-colors">Home</a>
                         <span>/</span>
                         <span class="text-blue-500/50">Archive Browser</span>
@@ -24,7 +24,7 @@
                         @endif
                     </h1>
 
-                    <p class="text-[10px] font-black text-white/10 uppercase tracking-[0.3em] px-1">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] px-1">
                         {{ isset($results) ? $results['total_count'] : (isset($articles) ? $articles->total() : '0') }} DISTRIBUTED RECORDS INDEXED
                     </p>
                 </div>
@@ -67,7 +67,7 @@
                             <div class="flex items-center gap-4 mb-8">
                                 <h2 class="text-xl font-black text-white italic uppercase tracking-tighter">{{ $label }}</h2>
                                 <div class="flex-1 h-px bg-white/5"></div>
-                                <a href="{{ route('wiki.index', ['q' => $search, 'category' => $key]) }}" class="text-[8px] font-black text-white/20 uppercase tracking-widest hover:text-blue-400 transition-colors">View All</a>
+                                <a href="{{ route('wiki.index', ['q' => $search, 'category' => $key]) }}" class="text-[8px] font-black text-slate-400 uppercase tracking-widest hover:text-blue-400 transition-colors">View All</a>
                             </div>
 
                             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -95,7 +95,7 @@
                     <div class="col-span-full py-24 text-center rounded-2xl border border-white/5 bg-white/[0.01]">
                         <div class="text-4xl mb-6">📂</div>
                         <h3 class="text-xl font-black text-white italic uppercase tracking-tighter mb-4">No Entries Found</h3>
-                        <p class="text-white/30 text-xs max-w-sm mx-auto mb-8">The specific node you're looking for hasn't been established in our archive yet.</p>
+                        <p class="text-slate-400 text-xs max-w-sm mx-auto mb-8">The specific node you're looking for hasn't been established in our archive yet.</p>
                         <a href="{{ route('wiki.create') }}" class="btn-primary-v2 pr-10 pl-8">Create Record</a>
                     </div>
                 @endforelse

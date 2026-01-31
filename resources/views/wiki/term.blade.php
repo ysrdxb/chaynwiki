@@ -11,7 +11,7 @@
         <!-- Actual Content -->
         <div x-show="loaded" x-transition:enter="transition duration-500">
             <!-- HERO SECTION -->
-            <div class="relative pt-24 pb-12 bg-primary section-divider overflow-hidden">
+            <div class="relative pt-32 pb-12 bg-primary section-divider overflow-hidden">
                 <div class="absolute inset-0 z-0">
                     <img src="{{ $featured_image }}" class="w-full h-full object-cover grayscale opacity-5 blur-xl scale-125">
                     <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent"></div>
@@ -64,8 +64,8 @@
                                 <span class="w-8 h-px bg-blue-500"></span>
                                 Definition & Usage
                             </h2>
-                            <div class="article-content text-white/50 leading-relaxed text-lg">
-                                {!! $article->content !!}
+                            <div class="article-content text-slate-300 leading-relaxed text-lg">
+                                {!! Str::markdown($article->content) !!}
                             </div>
                         </article>
 
@@ -80,10 +80,20 @@
                              <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-blue-500/10 transition-colors"></div>
                              
                              <div class="relative z-10">
-                                <h3 class="text-lg font-black text-white italic uppercase tracking-tighter mb-6">Archive Actions</h3>
+                                <h3 class="text-lg font-black text-white italic uppercase tracking-tighter mb-6">Archive Protocol</h3>
                                 <div class="space-y-3">
-                                    <livewire:article.vote-button :model="$article" wire:key="vote-article-{{ $article->id }}" />
-                                    <livewire:article.bookmark-button :article="$article" />
+                                    <livewire:article.play-button 
+                                        :articleId="$article->id" 
+                                        label="Listen"
+                                        class="w-full py-4 bg-blue-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
+                                    />
+
+                                    <x-article.⚡add-to-crate :article="$article" />
+
+                                    <div class="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
+                                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Protocol Utility</span>
+                                         <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
+                                    </div>
                                 </div>
                              </div>
                         </div>

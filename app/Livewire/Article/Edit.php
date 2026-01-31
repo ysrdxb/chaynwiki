@@ -38,7 +38,7 @@ class Edit extends Component
         $this->excerpt = $article->excerpt;
     }
 
-    public function submit()
+    public function submit(\App\Services\CacheService $cache)
     {
         $this->validate();
 
@@ -59,6 +59,10 @@ class Edit extends Component
             // Apply changes directly and create an approved revision record
             $this->article->update($data);
             
+            // Clear cache and reset AI
+            $cache->clearArticleCache($this->article->id);
+            $this->article->analysis()?->delete();
+
             Revision::create([
                 'article_id' => $this->article->id,
                 'user_id' => auth()->id(),

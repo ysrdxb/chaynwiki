@@ -112,8 +112,9 @@
 </head>
 <body class="font-sans antialiased bg-[#030308] min-h-screen text-slate-400 overflow-x-hidden selection:bg-blue-500 selection:text-white">
     <!-- Background Noise/Decor -->
-    <div class="fixed inset-0 z-0 pointer-events-none">
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-blue-900/5 via-[#050510] to-[#050510]"></div>
+        <div id="ambient-glow" class="absolute inset-0 opacity-40 blur-[150px] mix-blend-screen transition-all duration-1000" style="background: var(--ambient-gradient, transparent);"></div>
         <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02]"></div>
     </div>
 
@@ -125,6 +126,8 @@
     <!-- Global Components -->
     <x-toast-container />
     
+    <livewire:pulse-player />
+
     @auth
         <livewire:chat-assistant />
     @endauth

@@ -1,0 +1,7 @@
+<button 
+    wire:click="play"
+    {{ $attributes->merge(['class' => 'relative overflow-hidden group transition-all active:scale-95']) }}
+>
+    <span class="relative z-10">{{ $label }}</span>
+    <svg class="w-3 h-3 relative z-10" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+</button>

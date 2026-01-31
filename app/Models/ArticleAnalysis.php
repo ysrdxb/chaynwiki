@@ -22,6 +22,8 @@ class ArticleAnalysis extends Model
         'suggested_tags',
         'related_articles',
         'analyzed_at',
+        'ambient_signature',
+        'emotional_resonance',
     ];
 
     protected $casts = [
@@ -29,12 +31,23 @@ class ArticleAnalysis extends Model
         'literary_devices' => 'array',
         'suggested_tags' => 'array',
         'related_articles' => 'array',
+        'ambient_signature' => 'array',
         'analyzed_at' => 'datetime',
     ];
 
     public function article(): BelongsTo
     {
         return $this->belongsTo(Article::class);
+    }
+
+    public function getAmbientGradientCssAttribute(): string
+    {
+        $signature = $this->ambient_signature ?: [
+            'gradient' => ['#050510', '#0A0A1F', '#12123A', '#3b82f6']
+        ];
+
+        $colors = implode(', ', $signature['gradient'] ?? []);
+        return "linear-gradient(135deg, {$colors})";
     }
 
     public function getMoodColorAttribute(): string

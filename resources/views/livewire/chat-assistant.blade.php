@@ -45,14 +45,14 @@
             </button>
         </div>
 
-        {{-- Ollama Status Warning --}}
-        @if(!$ollamaAvailable)
+        {{-- AI Status Warning --}}
+        @if(!$aiAvailable)
             <div class="bg-amber-500/10 border-b border-amber-500/20 px-4 py-2 flex items-center gap-2 text-amber-400 text-xs">
                 <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                 </svg>
-                <span>AI offline. Start Ollama to enable chat.</span>
-                <button wire:click="checkOllama" class="ml-auto underline hover:no-underline">Retry</button>
+                <span>AI is currently offline. Enable a provider in .env or start Ollama.</span>
+                <button wire:click="checkAI" class="ml-auto underline hover:no-underline">Retry</button>
             </div>
         @endif
 
@@ -123,12 +123,12 @@
                     wire:model="message"
                     placeholder="Ask about music history..."
                     class="flex-1 bg-white/5 border border-white/5 rounded-xl px-5 py-3 text-white placeholder-white/10 text-xs font-black uppercase tracking-widest focus:border-blue-500/50 focus:ring-0 transition-all italic"
-                    @if(!$ollamaAvailable) disabled @endif
+                    @if(!$aiAvailable) disabled @endif
                 />
                 <button
                     type="submit"
                     class="w-11 h-11 bg-blue-600 hover:bg-blue-500 rounded-xl flex items-center justify-center text-white transition-all disabled:opacity-50 shadow-lg shadow-blue-500/20 active:scale-95"
-                    @if(!$ollamaAvailable || $isLoading) disabled @endif
+                    @if(!$aiAvailable || $isLoading) disabled @endif
                 >
                     <svg class="w-5 h-5 translate-x-px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>

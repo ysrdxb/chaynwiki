@@ -40,13 +40,14 @@
                     </h1>
                     
                     <div class="flex flex-wrap items-center gap-6 mb-10">
-                        <button class="btn-primary-v2 px-8 py-4">
-                            Listen Now
-                            <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
-                        </button>
+                        <livewire:article.play-button 
+                            :articleId="$article->id" 
+                            label="Listen Now"
+                            class="btn-primary-v2 px-8 py-4 flex items-center justify-center gap-3"
+                        />
                         <div class="flex items-center gap-3 px-6 py-2 bg-white/5 border border-white/10 rounded-2xl">
                              <livewire:article.vote-button :model="$article" wire:key="vote-article-{{ $article->id }}" />
-                             <span class="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Protocol Influence</span>
+                             <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Protocol Influence</span>
                         </div>
                     </div>
 
@@ -54,7 +55,7 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-t border-white/5">
                         <div class="flex flex-col">
                             <span class="text-white text-3xl font-black italic tracking-tight">{{ number_format(rand(10, 50)) }}M</span>
-                            <span class="text-[9px] text-white/30 font-black uppercase tracking-widest mt-1">Monthly Reach</span>
+                            <span class="text-[9px] text-slate-400 font-black uppercase tracking-widest mt-1">Monthly Reach</span>
                         </div>
                         <div class="flex flex-col">
                             <span class="text-white text-3xl font-black italic tracking-tight">{{ number_format(rand(100, 999)) }}M</span>
@@ -88,8 +89,8 @@
                         <div class="flex-1 h-px bg-white/5"></div>
                     </div>
                     <div class="article-content prose prose-invert prose-lg max-w-none">
-                        <div class="text-white/60 leading-relaxed font-medium">
-                            {!! $article->content !!}
+                        <div class="text-slate-300 leading-relaxed font-medium">
+                            {!! Str::markdown($article->content) !!}
                         </div>
                     </div>
                 </section>
@@ -155,33 +156,40 @@
             <!-- Right Column: Sidebar -->
             <div class="w-full lg:w-80 space-y-10">
                  <!-- Artist Metadata -->
-                <div class="glass p-8 rounded-3xl border border-white/10 group bg-secondary">
+                <div class="glass p-8 rounded-3xl border border-white/10 group bg-[#0D0D1A]">
                     <h3 class="text-xl font-black text-white italic uppercase tracking-tighter mb-8">Metadata</h3>
                      <dl class="space-y-6">
                         <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                            <dt class="text-[10px] font-black text-white/30 uppercase tracking-widest">Origin</dt>
+                            <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Origin</dt>
                             <dd class="text-xs text-white font-bold">International</dd>
                         </div>
                         <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                            <dt class="text-[10px] font-black text-white/30 uppercase tracking-widest">Active From</dt>
+                            <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active From</dt>
                             <dd class="text-xs text-white font-bold">Archive POS</dd>
                         </div>
                          <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                            <dt class="text-[10px] font-black text-white/30 uppercase tracking-widest">Status</dt>
+                            <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</dt>
                             <dd class="text-xs text-blue-400 font-bold uppercase tracking-widest">Active Node</dd>
                         </div>
                     </dl>
                     
-                    <div class="mt-12 space-y-4">
+                    <div class="mt-12 space-y-3">
+                        <button 
+                            @click="$dispatch('play-article', { articleId: {{ $article->id }} })"
+                            class="w-full py-4 bg-blue-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] transition-all flex items-center justify-center gap-3 relative overflow-hidden group shadow-xl shadow-blue-500/20"
+                        >
+                            <span class="relative z-10">Sync Sonic DNA</span>
+                            <svg class="w-3 h-3 relative z-10" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </button>
+
+                        <x-article.⚡add-to-crate :article="$article" />
+
                         <div class="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
                             <span class="text-[9px] font-black text-white/20 uppercase tracking-widest">Archive Utility</span>
                              <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
-                        <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-4 bg-white text-black rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] transition-all flex items-center justify-center gap-3 relative overflow-hidden group">
-                            <span class="relative z-10">Suggest Edit</span>
-                            <div class="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center relative z-10">
-                                <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
-                            </div>
+                        <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-3 border border-white/5 text-white/20 rounded-xl text-[9px] font-black uppercase tracking-widest hover:text-white hover:border-white/10 transition-all flex items-center justify-center gap-2">
+                            Suggest Revision
                         </a>
                     </div>
                 </div>

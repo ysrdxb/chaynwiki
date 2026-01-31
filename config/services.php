@@ -61,4 +61,20 @@ return [
         'timeout' => env('OLLAMA_TIMEOUT', 120),
     ],
 
+    'groq' => [
+        'key' => env('GROQ_API_KEY'),
+        'model' => env('GROQ_MODEL', 'llama-3.3-70b-versatile'),
+        'url' => 'https://api.groq.com/openai/v1',
+    ],
+
+    'openai' => [
+        'key' => env('OPENAI_API_KEY'),
+        'model' => env('OPENAI_MODEL', 'gpt-4o'),
+    ],
+
+    'ai' => [
+        'driver' => env('AI_DRIVER', 'ollama'), // options: ollama, groq, openai
+        'demo_mode' => env('AI_DEMO_MODE', false),
+    ],
+
 ];

@@ -38,6 +38,7 @@ class Articles extends Component
     public function render()
     {
         $articles = Article::query()
+            ->with('user')
             ->when($this->search, fn($q) => $q->where('title', 'like', "%{$this->search}%"))
             ->when($this->filterCategory, fn($q) => $q->where('category', $this->filterCategory))
             ->latest()

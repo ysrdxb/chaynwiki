@@ -3,14 +3,14 @@
 namespace App\Livewire;
 
 use App\Services\ChatService;
-use App\Services\OllamaService;
+use App\Services\AIService;
 use Livewire\Component;
 
 class ChatAssistant extends Component
 {
     public bool $isOpen = false;
     public bool $isLoading = false;
-    public bool $ollamaAvailable = false;
+    public bool $aiAvailable = false;
     
     public string $message = '';
     public array $messages = [];
@@ -26,7 +26,7 @@ class ChatAssistant extends Component
     public function mount(?string $articleContext = null): void
     {
         $this->articleContext = $articleContext;
-        $this->checkOllama();
+        $this->checkAI();
         $this->loadSuggestions();
     }
 
@@ -34,22 +34,20 @@ class ChatAssistant extends Component
     {
         $this->articleContext = $context;
         
-        // If chat is open and we just got new context, maybe add a small hint?
-        // For now, just silently update for the next message.
         if ($this->isOpen && $context) {
-            $this->loadSuggestions(); // Refresh suggestions based on new context
+            $this->loadSuggestions();
         }
     }
 
-    public function checkOllama(): void
+    public function checkAI(): void
     {
-        $this->ollamaAvailable = app(OllamaService::class)->isAvailable();
+        $this->aiAvailable = app(AIService::class)->isAvailable();
     }
 
     public function open(): void
     {
         $this->isOpen = true;
-        $this->checkOllama();
+        $this->checkAI();
     }
 
     public function close(): void
@@ -61,7 +59,7 @@ class ChatAssistant extends Component
     {
         $this->isOpen = !$this->isOpen;
         if ($this->isOpen) {
-            $this->checkOllama();
+            $this->checkAI();
         }
     }
 
@@ -71,10 +69,10 @@ class ChatAssistant extends Component
             return;
         }
 
-        if (!$this->ollamaAvailable) {
+        if (!$this->aiAvailable) {
             $this->messages[] = [
                 'role' => 'assistant',
-                'content' => 'Sorry, the AI service is not available right now. Please make sure Ollama is running.',
+                'content' => 'The AI service is currently in offline mode. Please check your connection or start your local AI server.',
             ];
             return;
         }
@@ -87,7 +85,6 @@ class ChatAssistant extends Component
         try {
             $chatService = app(ChatService::class);
             
-            // Get response with context
             $response = $chatService->chat(
                 $userMessage,
                 $this->messages,
@@ -96,8 +93,6 @@ class ChatAssistant extends Component
 
             if ($response) {
                 $this->messages[] = ['role' => 'assistant', 'content' => $response];
-                
-                // Update suggestions based on conversation
                 $this->suggestions = $chatService->getSuggestions($userMessage);
             } else {
                 $this->messages[] = [

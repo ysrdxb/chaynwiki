@@ -22,7 +22,7 @@ new #[Layout('layouts.guest')] class extends Component
 
         $user = auth()->user();
         if ($user->isModerator()) {
-            $this->redirectIntended(default: '/admin', navigate: true);
+            $this->redirectIntended(default: '/admin/dashboard', navigate: true);
             return;
         }
 
@@ -39,7 +39,7 @@ new #[Layout('layouts.guest')] class extends Component
     <form wire:submit="login" class="space-y-6">
         <!-- Email Address -->
         <div>
-            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+            <label for="email" class="block text-sm font-bold text-white/80 mb-2">Email</label>
             <input 
                 wire:model="form.email" 
                 id="email" 
@@ -49,14 +49,14 @@ new #[Layout('layouts.guest')] class extends Component
                 autofocus 
                 autocomplete="username"
                 placeholder="Enter Email Address"
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
             >
             <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div>
-            <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+            <label for="password" class="block text-sm font-bold text-white/80 mb-2">Password</label>
             <input 
                 wire:model="form.password" 
                 id="password" 
@@ -65,7 +65,7 @@ new #[Layout('layouts.guest')] class extends Component
                 required 
                 autocomplete="current-password"
                 placeholder="Enter your Password"
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
             >
             <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
         </div>

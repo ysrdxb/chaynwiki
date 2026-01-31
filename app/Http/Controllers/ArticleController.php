@@ -47,8 +47,13 @@ class ArticleController extends Controller
 
     public function show(\App\Models\Article $article, \App\Services\SmartLinkerService $linker)
     {
-        $article->load(['song.artist', 'artist', 'genre', 'playlist', 'term', 'user']);
+        $article->load(['song.artist', 'artist', 'genre', 'playlist', 'term', 'user', 'analysis']);
         
+        // Ensure Ambient Signature exists (Elite Phase 1)
+        if (!$article->analysis || !$article->analysis->ambient_signature) {
+            $this->ensureAmbientSignature($article);
+        }
+
         // Apply Smart Linking
         $article->content = $linker->injectLinks($article->content, $article->id);
         
@@ -66,5 +71,23 @@ class ArticleController extends Controller
         };
 
         return view($view, compact('article'));
+    }
+
+    private function ensureAmbientSignature(\App\Models\Article $article)
+    {
+        $ollama = app(\App\Services\OllamaService::class);
+        if (!$ollama->isAvailable()) return;
+
+        $signature = $ollama->generateAmbientSignature($article->content);
+        
+        $article->analysis()->updateOrCreate(
+            ['article_id' => $article->id],
+            [
+                'ambient_signature' => $signature,
+                'mood' => $signature['emotion'] ?? 'Dramatic',
+                'mood_score' => $signature['energy'] ?? 7,
+                'analyzed_at' => now(),
+            ]
+        );
     }
 }

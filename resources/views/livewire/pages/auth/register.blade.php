@@ -45,7 +45,7 @@ new #[Layout('layouts.guest')] class extends Component
     <form wire:submit="register" class="space-y-5">
         <!-- Full Name -->
         <div>
-            <label for="name" class="block text-sm font-medium text-gray-300 mb-2">Full Name</label>
+            <label for="name" class="block text-sm font-bold text-white/80 mb-2">Full Name</label>
             <input 
                 wire:model="name" 
                 id="name" 
@@ -55,14 +55,14 @@ new #[Layout('layouts.guest')] class extends Component
                 autofocus 
                 autocomplete="name"
                 placeholder="Enter your full name"
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
             >
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
         <div>
-            <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+            <label for="email" class="block text-sm font-bold text-white/80 mb-2">Email</label>
             <input 
                 wire:model="email" 
                 id="email" 
@@ -71,14 +71,14 @@ new #[Layout('layouts.guest')] class extends Component
                 required 
                 autocomplete="username"
                 placeholder="Enter Email Address"
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
             >
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div>
-            <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+            <label for="password" class="block text-sm font-bold text-white/80 mb-2">Password</label>
             <input 
                 wire:model="password" 
                 id="password" 
@@ -87,14 +87,14 @@ new #[Layout('layouts.guest')] class extends Component
                 required 
                 autocomplete="new-password"
                 placeholder="Enter your Password"
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
             >
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div>
-            <label for="password_confirmation" class="block text-sm font-medium text-gray-300 mb-2">Confirm Password</label>
+            <label for="password_confirmation" class="block text-sm font-bold text-white/80 mb-2">Confirm Password</label>
             <input 
                 wire:model="password_confirmation" 
                 id="password_confirmation" 
@@ -103,7 +103,7 @@ new #[Layout('layouts.guest')] class extends Component
                 required 
                 autocomplete="new-password"
                 placeholder="Enter your Password"
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
             >
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>

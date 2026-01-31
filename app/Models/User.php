@@ -81,6 +81,11 @@ class User extends Authenticatable
         return $this->hasMany(Bookmark::class);
     }
 
+    public function crates()
+    {
+        return $this->hasMany(Crate::class);
+    }
+
     public function revisions()
     {
         return $this->hasMany(Revision::class);
