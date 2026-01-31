@@ -45,6 +45,8 @@
                     'artist' => 'Artists',
                     'song' => 'Songs',
                     'genre' => 'Genres',
+                    'playlist' => 'Playlists',
+                    'term' => 'Terminology',
                 ];
             @endphp
             
@@ -59,7 +61,7 @@
         @if(isset($results))
             <!-- Search Results Mode -->
             <div class="space-y-16">
-                @foreach(['song' => 'Recordings', 'artist' => 'Artist Profiles', 'genre' => 'Classifications'] as $key => $label)
+                @foreach(['song' => 'Recordings', 'artist' => 'Artist Profiles', 'genre' => 'Classifications', 'playlist' => 'Curated Lists', 'term' => 'Glossary'] as $key => $label)
                     @if($results[$key.'s']->count() > 0)
                         <section>
                             <div class="flex items-center gap-4 mb-8">
@@ -94,7 +96,7 @@
                         <div class="text-4xl mb-6">📂</div>
                         <h3 class="text-xl font-black text-white italic uppercase tracking-tighter mb-4">No Entries Found</h3>
                         <p class="text-white/30 text-xs max-w-sm mx-auto mb-8">The specific node you're looking for hasn't been established in our archive yet.</p>
-                        <a href="{{ route('wiki.create') }}" class="btn-primary-v2 pr-10 pl-8">Initialize Record</a>
+                        <a href="{{ route('wiki.create') }}" class="btn-primary-v2 pr-10 pl-8">Create Record</a>
                     </div>
                 @endforelse
             </div>

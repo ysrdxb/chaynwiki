@@ -27,6 +27,8 @@ class ArticleController extends Controller
                     'songs' => (clone $baseQuery)->where('category', 'song')->limit(4)->get(),
                     'artists' => (clone $baseQuery)->where('category', 'artist')->limit(4)->get(),
                     'genres' => (clone $baseQuery)->where('category', 'genre')->limit(4)->get(),
+                    'playlists' => (clone $baseQuery)->where('category', 'playlist')->limit(4)->get(),
+                    'terms' => (clone $baseQuery)->where('category', 'term')->limit(4)->get(),
                     'total_count' => $baseQuery->count()
                 ];
                 return view('wiki.index', compact('results', 'search'));
@@ -45,7 +47,7 @@ class ArticleController extends Controller
 
     public function show(\App\Models\Article $article, \App\Services\SmartLinkerService $linker)
     {
-        $article->load(['song.artist', 'artist', 'genre', 'playlist', 'user']);
+        $article->load(['song.artist', 'artist', 'genre', 'playlist', 'term', 'user']);
         
         // Apply Smart Linking
         $article->content = $linker->injectLinks($article->content, $article->id);
@@ -58,6 +60,8 @@ class ArticleController extends Controller
             'song' => 'wiki.song',
             'artist' => 'wiki.artist',
             'genre' => 'wiki.genre',
+            'playlist' => 'wiki.playlist',
+            'term' => 'wiki.term',
             default => 'wiki.show',
         };
 

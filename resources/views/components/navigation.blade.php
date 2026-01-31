@@ -65,7 +65,7 @@
                             x-transition:leave="transition ease-in duration-150"
                             x-transition:leave-start="opacity-100 translate-y-0"
                             x-transition:leave-end="opacity-0 translate-y-2"
-                            class="absolute right-0 mt-3 w-80 bg-secondary border border-white/5 rounded-2xl shadow-2xl overflow-hidden"
+                            class="absolute right-0 mt-3 w-80 bg-[#080815] border border-white/5 rounded-2xl shadow-2xl overflow-hidden"
                             style="display: none;"
                         >
                             <div class="grid grid-cols-2 gap-0">
@@ -135,7 +135,7 @@
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/>
                     </svg>
-                    <span class="hidden md:inline">Initialize</span>
+                    <span class="hidden md:inline">Create</span>
                 </a>
 
                 {{-- Avatar/Auth --}}
@@ -150,7 +150,7 @@
                             
                             {{-- Dropdown --}}
                             <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" 
-                                class="absolute right-0 mt-3 w-56 bg-[#0D0D1A]/95 backdrop-blur-xl border border-white/10 rounded-xl shadow-2xl overflow-hidden" style="display: none;">
+                                class="absolute right-0 mt-3 w-56 bg-[#0D0D1A] border border-white/10 rounded-xl shadow-2xl overflow-hidden" style="display: none;">
                                 
                                 {{-- User Info --}}
                                 <div class="p-4 border-b border-white/10">

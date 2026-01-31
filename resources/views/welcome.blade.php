@@ -610,7 +610,7 @@
             
             <div class="flex flex-wrap items-center gap-4">
                 <a href="{{ route('wiki.create') }}" class="quick-action-pill group">
-                    <span class="text-white/60 text-sm font-bold group-hover:text-white transition-colors">Initialize Archive</span>
+                    <span class="text-white/60 text-sm font-bold group-hover:text-white transition-colors">Create Record</span>
                     <div class="icon-plus">
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                     </div>
@@ -895,8 +895,8 @@
                                 <div class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] text-blue-400 font-black uppercase tracking-widest">Global Music Pulse</div>
                                 <div class="h-px flex-1 bg-gradient-to-r from-blue-500/30 to-transparent"></div>
                             </div>
-                            <h2 class="text-4xl font-black text-white italic tracking-tight mb-3">TODAY'S LISTENING ATMOSPHERE</h2>
-                            <p class="text-white/40 leading-relaxed font-medium">Real-time indicators tracking the rise of subgenres and artist momentum across the world.</p>
+                            <h2 class="text-4xl font-black text-white italic tracking-tight mb-3">LISTENING PULSE INDEX</h2>
+                            <p class="text-white/40 leading-relaxed font-medium">This tactical visualization tracks real-time community engagement, artist momentum, and emerging subgenres across the ChaynWiki network.</p>
                         </div>
                         
                         <div class="flex items-center gap-4 p-4 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md">

@@ -14,10 +14,17 @@
                 <h1 class="text-7xl lg:text-9xl font-black text-white italic uppercase tracking-tighter mb-8 leading-none">
                     {{ $article->title }}
                 </h1>
-                <div class="flex items-center gap-4">
-                    <a href="{{ route('wiki.edit', $article->slug) }}" class="btn-primary-v2 px-8 py-3">
-                        Edit Classification
+                <div class="flex items-center gap-6">
+                    <a href="{{ route('wiki.edit', $article->slug) }}" class="px-8 py-3 bg-white text-black rounded-lg text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all flex items-center justify-center gap-3 relative overflow-hidden group">
+                        <span class="relative z-10">Edit Classification</span>
+                        <div class="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center relative z-10">
+                            <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+                        </div>
                     </a>
+                    <div class="flex items-center gap-3 px-6 py-2 bg-white/5 border border-white/10 rounded-2xl">
+                         <livewire:article.vote-button :model="$article" wire:key="vote-article-{{ $article->id }}" />
+                         <span class="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Protocol Tier</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -48,6 +55,10 @@
                         <div class="flex justify-between items-center py-3 border-b border-white/5">
                             <span class="text-[10px] font-black text-white/30 uppercase tracking-widest">Articles</span>
                             <span class="text-white font-bold">{{ rand(50, 200) }}</span>
+                        </div>
+                        <div class="flex justify-between items-center py-5">
+                            <span class="text-[9px] font-black text-white/20 uppercase tracking-widest">Archive Utility</span>
+                             <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
                     </div>
                 </div>

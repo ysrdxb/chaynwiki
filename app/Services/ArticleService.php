@@ -105,6 +105,11 @@ class ArticleService
                     'lyrics' => $data['lyrics'] ?? null,
                     'spotify_id' => $data['spotify_id'] ?? null,
                     'youtube_id' => $data['youtube_id'] ?? null,
+                    'songwriter' => $data['songwriters'] ?? null,
+                    'studio_recorded' => $data['studio_recorded'] ?? null,
+                    'behind_the_song' => $data['behind_the_song'] ?? null,
+                    'achievements' => $data['achievements'] ?? null,
+                    'lyrics_snippet' => $data['lyrics_snippet'] ?? null,
                 ]);
                 break;
             case 'artist':
@@ -112,11 +117,20 @@ class ArticleService
                     'name' => $article->title,
                     'biography' => $data['biography'] ?? $article->content,
                     'spotify_id' => $data['spotify_id'] ?? null,
+                    'active_years_string' => $data['active_years'] ?? null,
+                    'top_songs_meta' => $data['top_songs'] ?? null,
+                    'breakthrough_moment' => $data['breakthrough_moment'] ?? null,
+                    'live_performances' => $data['live_performances'] ?? null,
                 ]);
                 break;
             case 'genre':
                 $article->genre()->create([
                     'name' => $article->title,
+                    'origin_country' => $data['origin_country'] ?? null,
+                    'appearance_year' => $data['appearance_year'] ?? null,
+                    'popular_artists' => $data['popular_artists'] ?? null,
+                    'early_history' => $data['early_history'] ?? null,
+                    'cultural_impact' => $data['cultural_impact'] ?? null,
                 ]);
                 break;
             case 'playlist':
@@ -132,9 +146,18 @@ class ArticleService
     {
         // Allowed keys for each relation
         $allowed = [
-            'song' => ['artist_id', 'album', 'release_date', 'lyrics', 'spotify_id', 'youtube_id', 'bpm', 'key'],
-            'artist' => ['biography', 'spotify_id', 'website', 'social_links'],
-            'genre' => [],
+            'song' => [
+                'artist_id', 'album', 'release_date', 'lyrics', 'spotify_id', 'youtube_id', 
+                'bpm', 'key', 'songwriter', 'studio_recorded', 'behind_the_song', 
+                'achievements', 'lyrics_snippet'
+            ],
+            'artist' => [
+                'biography', 'spotify_id', 'website', 'social_links', 
+                'active_years_string', 'top_songs_meta', 'breakthrough_moment', 'live_performances'
+            ],
+            'genre' => [
+                'origin_country', 'appearance_year', 'popular_artists', 'early_history', 'cultural_impact'
+            ],
             'playlist' => ['spotify_id'],
         ];
 

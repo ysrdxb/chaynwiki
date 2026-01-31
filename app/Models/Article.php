@@ -57,6 +57,11 @@ class Article extends Model
         return $this->hasOne(Playlist::class);
     }
 
+    public function term()
+    {
+        return $this->hasOne(Term::class);
+    }
+
     public function analysis()
     {
         return $this->hasOne(ArticleAnalysis::class);

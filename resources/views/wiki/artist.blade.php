@@ -39,14 +39,15 @@
                         {{ $article->title }}
                     </h1>
                     
-                    <div class="flex flex-wrap items-center gap-4 mb-10">
+                    <div class="flex flex-wrap items-center gap-6 mb-10">
                         <button class="btn-primary-v2 px-8 py-4">
                             Listen Now
                             <span class="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></span>
                         </button>
-                        <button class="px-8 py-4 bg-white/5 border border-white/10 rounded-2xl text-white font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-all">
-                            Follow Archive
-                        </button>
+                        <div class="flex items-center gap-3 px-6 py-2 bg-white/5 border border-white/10 rounded-2xl">
+                             <livewire:article.vote-button :model="$article" wire:key="vote-article-{{ $article->id }}" />
+                             <span class="text-[10px] font-black uppercase tracking-[0.2em] text-white/20">Protocol Influence</span>
+                        </div>
                     </div>
 
                     <!-- Statistics Strip -->
@@ -171,10 +172,16 @@
                         </div>
                     </dl>
                     
-                    <div class="mt-12">
-                         <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-4 bg-white/5 border border-white/10 rounded-2xl text-[10px] text-white font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-2">
-                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-                             Suggest Edit
+                    <div class="mt-12 space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
+                            <span class="text-[9px] font-black text-white/20 uppercase tracking-widest">Archive Utility</span>
+                             <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
+                        </div>
+                        <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-4 bg-white text-black rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] transition-all flex items-center justify-center gap-3 relative overflow-hidden group">
+                            <span class="relative z-10">Suggest Edit</span>
+                            <div class="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center relative z-10">
+                                <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+                            </div>
                         </a>
                     </div>
                 </div>
