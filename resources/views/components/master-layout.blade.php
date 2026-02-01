@@ -87,6 +87,22 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        /* Global section backgrounds to match homepage */
+        .bg-primary { background-color: #050510; }
+        .bg-secondary { background-color: #080815; }
+        .section-divider { position: relative; }
+        .section-divider::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.15) 80%, transparent 100%);
+        }
+
         /* Skeleton Loading Animation */
         @keyframes skeleton-shimmer {
             0% { background-position: 200% 0; }

@@ -597,9 +597,9 @@
 
             {{-- Quick Stats --}}
             <div class="flex flex-wrap items-center gap-8 text-[13px] text-gray-500">
-                <span><strong class="text-white font-semibold">12,450+</strong> Articles</span>
-                <span><strong class="text-white font-semibold">3,200+</strong> Contributors</span>
-                <span><strong class="text-white font-semibold">890+</strong> Genres Covered</span>
+                <span><strong class="text-white font-semibold">{{ number_format($heroStats['articles'] ?? 0) }}</strong> Articles</span>
+                <span><strong class="text-white font-semibold">{{ number_format($heroStats['contributors'] ?? 0) }}</strong> Contributors</span>
+                <span><strong class="text-white font-semibold">{{ number_format($heroStats['genres'] ?? 0) }}</strong> Genres Covered</span>
             </div>
         </div>
     </section>
@@ -718,60 +718,22 @@
                 class="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth"
                 style="display: none; scrollbar-width: none; -ms-overflow-style: none;">
                 
-                @php
-                $premium_topics = [
-                    [
-                        'title' => 'Midnight Echoes',
-                        'cat' => 'Song',
-                        'desc' => 'A moody electronic-pop track blending atmospheric pads and deep vocal textures.',
-                        'img' => 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=800',
-                        'user' => 'Ali Khan',
-                        'date' => 'Nov 18, 2025',
-                        'views' => '254,920',
-                        'edits' => '4'
-                    ],
-                    [
-                        'title' => 'Luna Rivers',
-                        'cat' => 'Artist',
-                        'desc' => 'Emerging indie-pop vocalist known for dreamy harmonies and experimental production.',
-                        'img' => 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=800',
-                        'user' => 'Sara J',
-                        'date' => 'Nov 17, 2025',
-                        'views' => '254,920',
-                        'edits' => '4'
-                    ],
-                    [
-                        'title' => 'Electro Soul',
-                        'cat' => 'Genre',
-                        'desc' => 'A fusion of soul-inspired vocals with electronic beats and warm analog synth layers.',
-                        'img' => 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800',
-                        'user' => 'Ali Khan',
-                        'date' => 'Nov 18, 2025',
-                        'views' => '254,920',
-                        'edits' => '4'
-                    ],
-                    [
-                        'title' => 'Hyperpop Origins',
-                        'cat' => 'History',
-                        'desc' => 'Exploring the glitchy roots and key innovators of the hyperpop movement.',
-                        'img' => 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=800',
-                        'user' => 'Digital Nomad',
-                        'date' => 'Nov 15, 2025',
-                        'views' => '312,000',
-                        'edits' => '24'
-                    ]
-                ];
-                @endphp
-
-                @foreach($premium_topics as $topic)
-                <div class="flex-shrink-0 w-[320px] group cursor-pointer">
+                @if($newTopicCards->isEmpty())
+                    <div class="text-white/50 text-sm">No new topics yet. Be the first to publish a record.</div>
+                @else
+                @foreach($newTopicCards as $topic)
+                <a href="{{ $topic['url'] }}" class="flex-shrink-0 w-[320px] group">
                     <div class="relative h-[440px] rounded-3xl overflow-hidden bg-[#0D0D1A] border border-white/5 hover:border-white/10 transition-all duration-500">
                         {{-- Large Cover Image --}}
                         <div class="absolute inset-0">
-                            <img 
-                                src="{{ $topic['img'] }}" 
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
-                                alt="{{ $topic['title'] }}">
+                            @if($topic['image'])
+                                <img 
+                                    src="{{ $topic['image'] }}" 
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
+                                    alt="{{ $topic['title'] }}">
+                            @else
+                                <div class="w-full h-full bg-gradient-to-br from-blue-900/40 via-purple-900/30 to-black"></div>
+                            @endif
                             <div class="absolute inset-0 bg-gradient-to-t from-[#0D0D1A] via-[#0D0D1A]/60 to-transparent"></div>
                         </div>
 
@@ -780,7 +742,7 @@
                             {{-- Category Tag --}}
                             <div class="mb-3">
                                 <span class="inline-block px-3 py-1 bg-blue-600/20 backdrop-blur-sm border border-blue-500/30 rounded-lg text-blue-400 text-[10px] font-bold uppercase tracking-wider">
-                                    {{ $topic['cat'] }}
+                                    {{ $topic['category'] }}
                                 </span>
                             </div>
 
@@ -797,7 +759,7 @@
                             {{-- User Info --}}
                             <div class="flex items-center gap-2 mb-4">
                                 <div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                                    <span class="text-white text-[10px] font-bold">{{ substr($topic['user'], 0, 1) }}</span>
+                                    <span class="text-white text-[10px] font-bold">{{ strtoupper(substr($topic['user'], 0, 1)) }}</span>
                                 </div>
                                 <div class="flex-1">
                                     <span class="text-white text-xs font-medium">{{ $topic['user'] }}</span>
@@ -812,25 +774,26 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                     </svg>
-                                    <span class="text-white/60 text-xs font-medium">{{ $topic['views'] }}</span>
+                                    <span class="text-white/60 text-xs font-medium">{{ number_format($topic['views']) }}</span>
                                 </div>
                                 <div class="flex items-center gap-1.5">
                                     <svg class="w-4 h-4 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
-                                    <span class="text-white/60 text-xs font-medium">{{ $topic['edits'] }} edits</span>
+                                    <span class="text-white/60 text-xs font-medium">{{ number_format($topic['edits']) }} edits</span>
                                 </div>
                                 <div class="flex items-center gap-1.5 ml-auto">
                                     <svg class="w-4 h-4 text-white/40" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
-                                    <span class="text-white/60 text-xs font-medium">{{ $topic['edits'] }} edits</span>
+                                    <span class="text-white/60 text-xs font-medium">{{ number_format($topic['edits']) }} edits</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
                 @endforeach
+                @endif
             </div>
         </div>
     </section>
@@ -874,7 +837,7 @@
                         {{-- Center Core --}}
                         <div class="relative z-10 text-center">
                             <div class="relative">
-                                <span class="text-[44px] font-black text-white block leading-none tracking-tighter counting-number">86</span>
+                                <span class="text-[44px] font-black text-white block leading-none tracking-tighter counting-number">{{ $musicPulse['live_flow'] ?? 0 }}</span>
                                 <span class="absolute -top-1 -right-4 text-blue-500 font-bold">%</span>
                             </div>
                             <span class="text-[10px] text-blue-400 font-bold uppercase tracking-[0.2em] mt-1 block">Live Flow</span>
@@ -903,7 +866,7 @@
                             <div class="sync-blip"></div>
                             <div>
                                 <span class="text-white font-bold block leading-none mb-1">LIVE SYNCED</span>
-                                <span class="text-[10px] text-gray-500 font-black uppercase tracking-widest">Buffer: 45ms</span>
+                                <span class="text-[10px] text-gray-500 font-black uppercase tracking-widest">{{ number_format($musicPulse['edits_today'] ?? 0) }} edits today</span>
                             </div>
                         </div>
                     </div>
@@ -918,12 +881,12 @@
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                                     </div>
                                     <div class="text-right">
-                                        <span class="text-green-500 text-xs font-black uppercase tracking-widest">+24% RISE</span>
+                                        <span class="text-blue-400 text-xs font-black uppercase tracking-widest">{{ number_format($musicPulse['edits_week'] ?? 0) }} / 7d</span>
                                     </div>
                                 </div>
                                 <p class="text-white/40 text-[11px] font-black uppercase tracking-[0.15em] mb-1">Network Activity</p>
                                 <div class="flex items-baseline gap-2">
-                                    <span class="text-3xl font-black text-white italic">TRENDING</span>
+                                    <span class="text-3xl font-black text-white italic">{{ number_format($musicPulse['edits_week'] ?? 0) }} edits</span>
                                 </div>
                             </div>
                         </div>
@@ -937,12 +900,12 @@
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.99 7.99 0 0120 13a7.99 7.99 0 01-2.343 5.657z"/></svg>
                                     </div>
                                     <div class="text-right">
-                                        <span class="text-purple-400 text-xs font-black uppercase tracking-widest">12 BURSTING</span>
+                                        <span class="text-purple-400 text-xs font-black uppercase tracking-widest">{{ number_format($musicPulse['new_articles_week'] ?? 0) }} / 7d</span>
                                     </div>
                                 </div>
                                 <p class="text-white/40 text-[11px] font-black uppercase tracking-[0.15em] mb-1">Global Sentiment</p>
                                 <div class="flex items-baseline gap-2">
-                                    <span class="text-3xl font-black text-white italic">HIGH HEAT</span>
+                                    <span class="text-3xl font-black text-white italic">{{ number_format($musicPulse['new_articles_week'] ?? 0) }} new</span>
                                 </div>
                             </div>
                         </div>
@@ -956,12 +919,12 @@
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                                     </div>
                                     <div class="text-right">
-                                        <span class="text-pink-400 text-xs font-black uppercase tracking-widest">48 CONTRIBUTORS</span>
+                                        <span class="text-pink-400 text-xs font-black uppercase tracking-widest">{{ number_format($musicPulse['active_contributors_week'] ?? 0) }} active</span>
                                     </div>
                                 </div>
                                 <p class="text-white/40 text-[11px] font-black uppercase tracking-[0.15em] mb-1">Active Mentions</p>
                                 <div class="flex items-baseline gap-2">
-                                    <span class="text-3xl font-black text-white italic">VIBRANT</span>
+                                    <span class="text-3xl font-black text-white italic">{{ number_format($musicPulse['active_contributors_week'] ?? 0) }} people</span>
                                 </div>
                             </div>
                         </div>
@@ -975,71 +938,27 @@
          BROWSE BY CATEGORY V2 - INTERACTIVE TABS
          ========================================= --}}
     <section class="py-16 bg-secondary section-divider" 
-        x-data="{ 
-            activeTab: 'All', 
-            loading: false,
-            categories: {
-                'All': [
-                    { name: 'Artists', count: '2.4k', icon: '🎤' },
-                    { name: 'Songs', count: '8.1k', icon: '🎵' },
-                    { name: 'Genres', count: '890', icon: '🎸' },
-                    { name: 'Playlists', count: '1.2k', icon: '📀' },
-                    { name: 'Albums', count: '3.5k', icon: '💿' },
-                    { name: 'Labels', count: '450', icon: '🏷️' },
-                    { name: 'Producers', count: '780', icon: '🎛️' },
-                    { name: 'Writers', count: '620', icon: '✍️' }
-                ],
-                'Hip-Hop': [
-                    { name: 'Kendrick Lamar', count: '156 articles', icon: '🎤' },
-                    { name: 'Drake', count: '142 articles', icon: '🎤' },
-                    { name: 'J. Cole', count: '98 articles', icon: '🎤' },
-                    { name: 'Travis Scott', count: '87 articles', icon: '🎤' }
-                ],
-                'Pop': [
-                    { name: 'Taylor Swift', count: '234 articles', icon: '🎤' },
-                    { name: 'The Weeknd', count: '178 articles', icon: '🎤' },
-                    { name: 'Dua Lipa', count: '112 articles', icon: '🎤' },
-                    { name: 'Harry Styles', count: '95 articles', icon: '🎤' }
-                ],
-                'R&B': [
-                    { name: 'SZA', count: '89 articles', icon: '🎤' },
-                    { name: 'Frank Ocean', count: '134 articles', icon: '🎤' },
-                    { name: 'H.E.R.', count: '67 articles', icon: '🎤' },
-                    { name: 'Daniel Caesar', count: '54 articles', icon: '🎤' }
-                ],
-                'Electronic': [
-                    { name: 'Hyperpop', count: '245 articles', icon: '🎸' },
-                    { name: 'House', count: '312 articles', icon: '🎸' },
-                    { name: 'Techno', count: '189 articles', icon: '🎸' },
-                    { name: 'Dubstep', count: '134 articles', icon: '🎸' }
-                ],
-                'Rock': [
-                    { name: 'Indie Rock', count: '267 articles', icon: '🎸' },
-                    { name: 'Alternative', count: '198 articles', icon: '🎸' },
-                    { name: 'Classic Rock', count: '456 articles', icon: '🎸' },
-                    { name: 'Punk', count: '123 articles', icon: '🎸' }
-                ],
-                'Jazz': [
-                    { name: 'Bebop', count: '89 articles', icon: '🎷' },
-                    { name: 'Fusion', count: '67 articles', icon: '🎷' },
-                    { name: 'Smooth Jazz', count: '54 articles', icon: '🎷' },
-                    { name: 'Big Band', count: '112 articles', icon: '🎷' }
-                ]
-            },
-            switchTab(tab) {
-                if (this.activeTab === tab) return;
-                this.loading = true;
-                this.activeTab = tab;
-                setTimeout(() => { this.loading = false; }, 600);
-            }
-        }">
+        x-data='(() => {
+            const categories = @json($categoryTabs ?? []);
+            return {
+                activeTab: Object.keys(categories)[0] || "All",
+                loading: false,
+                categories,
+                switchTab(tab) {
+                    if (this.activeTab === tab) return;
+                    this.loading = true;
+                    this.activeTab = tab;
+                    setTimeout(() => { this.loading = false; }, 600);
+                }
+            };
+        })()'>
         <div class="max-w-[1200px] mx-auto px-8">
             <h2 class="text-section-heading text-white mb-2">Browse by Category</h2>
             <p class="text-section-subhead mb-8">Explore the encyclopedia by filtering content type or genre.</p>
             
             {{-- Interactive Category Pills --}}
             <div class="flex flex-wrap gap-2 mb-8">
-                <template x-for="tab in ['All', 'Hip-Hop', 'Pop', 'R&B', 'Electronic', 'Rock', 'Jazz']" :key="tab">
+                <template x-for="tab in Object.keys(categories)" :key="tab">
                     <button 
                         @click="switchTab(tab)"
                         :class="activeTab === tab ? 'pill-tab pill-tab-active' : 'pill-tab pill-tab-inactive'"
@@ -1063,8 +982,11 @@
 
             {{-- Dynamic Category Grid --}}
             <div x-show="!loading" x-transition:enter="transition ease-out duration-400" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <template x-if="!categories[activeTab] || categories[activeTab].length === 0">
+                    <div class="col-span-2 md:col-span-4 text-white/40 text-sm">No items available yet.</div>
+                </template>
                 <template x-for="(item, index) in categories[activeTab]" :key="index">
-                    <a :href="activeTab === 'All' ? '{{ route('wiki.index') }}?category=' + item.name.toLowerCase() : '{{ route('wiki.index') }}?q=' + encodeURIComponent(item.name)" class="card-v2 flex items-center justify-between p-4 group cursor-pointer">
+                    <a :href="item.url" class="card-v2 flex items-center justify-between p-4 group cursor-pointer">
                         <div class="flex items-center gap-3">
                             <span class="text-xl" x-text="item.icon"></span>
                             <div>
@@ -1089,60 +1011,29 @@
                 <p class="text-white/40 text-lg">From emerging underground subgenres to the mainstream's biggest shifts.</p>
             </div>
 
+            @php
+                $discoverIcons = [
+                    'artist' => '🎤',
+                    'song' => '🎵',
+                    'genre' => '🎸',
+                    'playlist' => '📀',
+                    'term' => '🧠',
+                ];
+            @endphp
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-                {{-- Column 1 --}}
-                <div class="space-y-8 md:space-y-12">
-                    {{-- Hyperpop --}}
-                    <div class="mosaic-card group cursor-pointer">
-                        <div class="mosaic-icon-circle">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                        </div>
-                        <h3 class="text-xl font-black text-white mb-4 uppercase tracking-[0.05em]">Hyperpop</h3>
-                        <p class="text-white/40 text-[14px]">+78% growth this week</p>
-                    </div>
-
-                    {{-- Burna Boy --}}
-                    <div class="mosaic-card group cursor-pointer md:mt-24">
-                        <div class="mosaic-icon-circle">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>
-                        </div>
-                        <h3 class="text-xl font-black text-white mb-4 uppercase tracking-[0.05em]">Burna Boy</h3>
-                        <p class="text-white/40 text-[14px]">#3 Global Momentum</p>
-                    </div>
-                </div>
-
-                {{-- Column 2 --}}
-                <div class="space-y-8 md:space-y-12 md:mt-16">
-                    {{-- Blinding Lights --}}
-                    <div class="mosaic-card group cursor-pointer">
-                        <div class="mosaic-icon-circle">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
-                        </div>
-                        <h3 class="text-xl font-black text-white mb-4 uppercase tracking-[0.05em]">Blinding Lights</h3>
-                        <p class="text-white/40 text-[14px]">Most edited today</p>
-                    </div>
-
-                    {{-- Afrofusion --}}
-                    <div class="mosaic-card group cursor-pointer md:mt-24">
-                        <div class="mosaic-icon-circle">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
-                        </div>
-                        <h3 class="text-xl font-black text-white mb-4 uppercase tracking-[0.05em]">Afrofusion</h3>
-                        <p class="text-white/40 text-[14px]">Emerging subgenre</p>
-                    </div>
-                </div>
-
-                {{-- Column 3 --}}
-                <div class="flex items-center">
-                    {{-- Emerging Subgenre --}}
-                    <div class="mosaic-card group cursor-pointer w-full">
-                        <div class="mosaic-icon-circle">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                        </div>
-                        <h3 class="text-xl font-black text-white mb-4 uppercase tracking-[0.05em]">Emerging Subgenre</h3>
-                        <p class="text-white/40 text-[14px]">New Remix</p>
-                    </div>
-                </div>
+                @if($trendingArticles->isEmpty())
+                    <div class="text-white/40 text-sm">No discoveries yet. Publish a topic to get things moving.</div>
+                @else
+                    @foreach($trendingArticles as $article)
+                        <a href="{{ route('wiki.show', $article->slug) }}" class="mosaic-card group cursor-pointer">
+                            <div class="mosaic-icon-circle">
+                                <span class="text-sm">{{ $discoverIcons[$article->category] ?? '📚' }}</span>
+                            </div>
+                            <h3 class="text-xl font-black text-white mb-4 uppercase tracking-[0.05em]">{{ $article->title }}</h3>
+                            <p class="text-white/40 text-[14px]">{{ number_format($article->view_count) }} views · {{ ucfirst($article->category) }}</p>
+                        </a>
+                    @endforeach
+                @endif
             </div>
         </div>
     </section>
@@ -1159,19 +1050,23 @@
                     </span>
                     <h2 class="text-section-heading text-white">Ranked Items</h2>
                 </div>
-                <a href="#" class="btn-secondary-v2 py-2 px-6">View Full Rankings</a>
+                <a href="{{ route('leaderboard') }}" class="btn-secondary-v2 py-2 px-6">View Full Rankings</a>
             </div>
 
             <div class="space-y-4">
                 @php
-                $ranked = [
-                    ['title' => 'Godly Flow', 'cat' => 'Song', 'color' => 'blue', 'views' => '156K', 'user' => 'jaybeats', 'change' => '+12%', 'icon' => '🎵'],
-                    ['title' => 'Psychopherion', 'cat' => 'Artist', 'color' => 'purple', 'views' => '142K', 'user' => 'musiclover99', 'change' => '+8%', 'icon' => '🎤'],
-                    ['title' => 'Billie Eilish', 'cat' => 'Artist', 'color' => 'purple', 'views' => '139K', 'user' => 'synthwave', 'change' => '+5%', 'icon' => '🎤'],
-                    ['title' => 'Hyperpop Origins', 'cat' => 'Discovery', 'color' => 'pink', 'views' => '128K', 'user' => 'curator_x', 'change' => '+15%', 'icon' => '⭐'],
-                ];
+                    $rankIcons = [
+                        'artist' => '🎤',
+                        'song' => '🎵',
+                        'genre' => '🎸',
+                        'playlist' => '📀',
+                        'term' => '🧠',
+                    ];
                 @endphp
-                @foreach($ranked as $i => $item)
+                @if($rankedArticles->isEmpty())
+                    <div class="text-white/40 text-sm">No rankings yet. Views will surface top items here.</div>
+                @else
+                @foreach($rankedArticles as $i => $article)
                 <div class="glass-list-item p-5 flex flex-col md:flex-row md:items-center justify-between gap-6 group">
                     <div class="flex items-center gap-6">
                         {{-- Rank Number --}}
@@ -1188,11 +1083,13 @@
                         {{-- Content --}}
                         <div class="flex items-center gap-4">
                             <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
-                                {{ $item['icon'] }}
+                                {{ $rankIcons[$article->category] ?? '📚' }}
                             </div>
                             <div>
-                                <h4 class="text-white font-bold group-hover:text-blue-400 transition-colors">{{ $item['title'] }}</h4>
-                                <span class="text-[11px] text-gray-500 uppercase tracking-widest">{{ $item['cat'] }}</span>
+                                <h4 class="text-white font-bold group-hover:text-blue-400 transition-colors">
+                                    <a href="{{ route('wiki.show', $article->slug) }}">{{ $article->title }}</a>
+                                </h4>
+                                <span class="text-[11px] text-gray-500 uppercase tracking-widest">{{ ucfirst($article->category) }}</span>
                             </div>
                         </div>
                     </div>
@@ -1201,21 +1098,23 @@
                         {{-- Metrics --}}
                         <div class="text-right">
                             <div class="flex items-center gap-2">
-                                <span class="text-white font-bold">{{ $item['views'] }}</span>
-                                <span class="text-green-500 text-[11px] font-bold">{{ $item['change'] }}</span>
+                                <span class="text-white font-bold">{{ number_format($article->view_count) }}</span>
+                                @if($article->trending_score > 0)
+                                    <span class="text-green-500 text-[11px] font-bold">{{ number_format($article->trending_score, 1) }}</span>
+                                @endif
                             </div>
-                            <span class="text-[11px] text-gray-500 uppercase tracking-widest text-right block">Total Views</span>
+                            <span class="text-[11px] text-gray-500 uppercase tracking-widest text-right block">Views / Trend</span>
                         </div>
                         
                         {{-- Contributor --}}
                         <div class="flex items-center gap-3 pr-4">
                             <div class="text-right">
-                                <span class="text-white/60 text-sm font-medium">{{ '@' . $item['user'] }}</span>
+                                <span class="text-white/60 text-sm font-medium">{{ $article->user ? '@' . $article->user->username : 'Community' }}</span>
                                 <span class="text-[10px] text-gray-600 uppercase tracking-widest block">Contributor</span>
                             </div>
                             <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-0.5">
                                 <div class="w-full h-full rounded-full bg-[#050511] flex items-center justify-center text-[10px] text-white">
-                                    {{ strtoupper(substr($item['user'], 0, 1)) }}
+                                    {{ strtoupper(substr($article->user?->username ?? 'C', 0, 1)) }}
                                 </div>
                             </div>
                         </div>
@@ -1227,6 +1126,7 @@
                     </div>
                 </div>
                 @endforeach
+                @endif
             </div>
         </div>
     </section>
@@ -1242,15 +1142,11 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @php
-                $insights = [
-                    ['label' => 'Most Edited Artist', 'value' => 'Trent Reznor', 'meta' => '847 edits this month', 'gradient' => 'grad-purple', 'icon' => '🎵', 'color' => '#8b5cf6', 'premium' => true],
-                    ['label' => 'Top Contributor', 'value' => '@synthwave_kid', 'meta' => '234 contributions', 'gradient' => 'grad-blue', 'icon' => '🏆', 'color' => '#3b82f6', 'premium' => false],
-                    ['label' => 'Featured Discovery', 'value' => 'Hyperpop Origins', 'meta' => 'Staff pick of the week', 'gradient' => 'grad-pink', 'icon' => '⭐', 'color' => '#ec4899', 'premium' => false],
-                ];
-                @endphp
-                @foreach($insights as $insight)
-                <div class="@if($insight['premium']) card-premium-v3 @else card-v2 @endif p-8 flex flex-col justify-between group h-[220px]">
+                @if($insightCards->isEmpty())
+                    <div class="text-white/40 text-sm">No insight data available yet.</div>
+                @else
+                @foreach($insightCards as $insight)
+                <a href="{{ $insight['url'] }}" class="@if($insight['premium']) card-premium-v3 @else card-v2 @endif p-8 flex flex-col justify-between group h-[220px]">
                     <div class="flex items-start justify-between">
                         <div>
                             <p class="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-4">{{ $insight['label'] }}</p>
@@ -1267,8 +1163,9 @@
                         <p class="text-sm text-white/40 font-medium">{{ $insight['meta'] }}</p>
                         <svg class="w-5 h-5 text-white/20 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </div>
-                </div>
+                </a>
                 @endforeach
+                @endif
             </div>
         </div>
     </section>

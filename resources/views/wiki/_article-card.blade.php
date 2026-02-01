@@ -1,17 +1,29 @@
 @php
+    $placeholder = match ($article->category) {
+        'artist' => 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=400',
+        'song' => 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=400',
+        'genre' => 'https://images.unsplash.com/photo-1514525253361-bee8a48740ad?auto=format&fit=crop&q=80&w=400',
+        'playlist' => 'https://images.unsplash.com/photo-1459749411177-042180ce6742?auto=format&fit=crop&q=80&w=400',
+        'term' => 'https://images.unsplash.com/photo-1514320299584-4bd06b02a04e?auto=format&fit=crop&q=80&w=400',
+        default => 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=400',
+    };
+
     $featured_image = $article->featured_image;
     if ($featured_image && !Str::startsWith($featured_image, ['http://', 'https://'])) {
         $featured_image = Storage::url($featured_image);
     }
-    // Fallback if no image or broken
-    $featured_image = $featured_image ?: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=400';
+    $featured_image = $featured_image ?: $placeholder;
 @endphp
 
 <a href="{{ route('wiki.show', $article->slug) }}" class="group block h-full">
     <div class="h-full flex flex-col bg-[#0D0D1A] border border-white/5 rounded-2xl p-4 hover:border-blue-500/20 transition-all duration-500 shadow-xl group-hover:-translate-y-1">
         <!-- Image Area -->
         <div class="relative aspect-[16/10] rounded-xl overflow-hidden mb-5">
-            <img src="{{ $featured_image }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="{{ $article->title }}">
+            <img
+                src="{{ $featured_image }}"
+                onerror="this.onerror=null;this.src='{{ $placeholder }}';"
+                class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                alt="{{ $article->title }}">
             <div class="absolute inset-0 bg-gradient-to-t from-secondary/80 via-transparent to-transparent"></div>
             
             <div class="absolute top-3 left-3">

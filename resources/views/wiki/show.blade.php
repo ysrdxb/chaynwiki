@@ -4,11 +4,20 @@
 
 @section('content')
     @php
+        $placeholder = match ($article->category) {
+            'artist' => 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=1200',
+            'song' => 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=1200',
+            'genre' => 'https://images.unsplash.com/photo-1514525253361-bee8a48740ad?auto=format&fit=crop&q=80&w=1200',
+            'playlist' => 'https://images.unsplash.com/photo-1459749411177-042180ce6742?auto=format&fit=crop&q=80&w=1200',
+            'term' => 'https://images.unsplash.com/photo-1514320299584-4bd06b02a04e?auto=format&fit=crop&q=80&w=1200',
+            default => 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=1200',
+        };
+
         $featured_image = $article->featured_image;
         if ($featured_image && !Str::startsWith($featured_image, ['http://', 'https://'])) {
             $featured_image = Storage::url($featured_image);
         }
-        $featured_image = $featured_image ?: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=1200';
+        $featured_image = $featured_image ?: $placeholder;
     @endphp
 
     <div x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
@@ -34,7 +43,7 @@
             <!-- HERO SECTION -->
             <div class="relative pt-24 pb-12 bg-primary section-divider overflow-hidden">
                 <div class="absolute inset-0 z-0">
-                    <img src="{{ $featured_image }}" class="w-full h-full object-cover grayscale opacity-5 blur-xl scale-125">
+                    <img src="{{ $featured_image }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover grayscale opacity-5 blur-xl scale-125">
                     <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent"></div>
                 </div>
                 
@@ -44,7 +53,7 @@
                             <nav class="flex items-center gap-2 text-[9px] font-black text-white/20 uppercase tracking-[0.2em] mb-6">
                                 <a href="{{ route('home') }}" class="hover:text-blue-400">Home</a>
                                 <span>/</span>
-                                <span class="text-blue-500">{{ $article->category }}</span>
+                                <span class="text-blue-500">{{ strtoupper($article->category) }}</span>
                             </nav>
 
                             <h1 class="text-4xl lg:text-6xl font-black text-white italic uppercase tracking-tighter mb-6 leading-none">
@@ -54,7 +63,7 @@
                             <div class="flex flex-wrap items-center gap-5 text-[10px] font-black text-white/20 uppercase tracking-widest mt-8">
                                 <div class="flex items-center gap-2">
                                     <span class="w-1 h-1 rounded-full bg-blue-500"></span>
-                                    Updated {{ $article->updated_at->format('M d, Y') }}
+                                    Updated {{ optional($article->updated_at)->format('M d, Y') ?? 'Unknown' }}
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <span class="w-1 h-1 rounded-full bg-white/5"></span>
@@ -65,7 +74,7 @@
 
                         <div class="lg:w-64 flex-shrink-0">
                             <div class="aspect-square rounded-2xl overflow-hidden border border-white/5 shadow-2xl relative group">
-                                <img src="{{ $featured_image }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                                <img src="{{ $featured_image }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
                             </div>
                         </div>
                     </div>
@@ -79,7 +88,11 @@
                     <div class="flex-1 min-w-0">
                         <article class="prose prose-invert prose-base max-w-none">
                             <div class="article-content text-white/50 leading-relaxed">
-                                {!! Str::markdown($article->content) !!}
+                                @if(!empty($article->content))
+                                    {!! Str::markdown($article->content) !!}
+                                @else
+                                    <p class="text-white/40">This record is still being authored. Check back soon for the full entry.</p>
+                                @endif
                             </div>
                         </article>
 
@@ -107,7 +120,7 @@
 
                         <div class="space-y-4">
                             <h3 class="text-[9px] font-black text-white/10 uppercase tracking-[0.2em]">Registry Index</h3>
-                            <x-table-of-contents :content="$article->content" />
+                            <x-table-of-contents :content="$article->content ?? ''" />
                         </div>
                     </aside>
                 </div>

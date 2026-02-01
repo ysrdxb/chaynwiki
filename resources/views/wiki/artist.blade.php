@@ -4,18 +4,19 @@
 
 @section('content')
     @php
+        $placeholder = 'https://images.unsplash.com/photo-1514525253344-f856717429fb?auto=format&fit=crop&q=80&w=1200';
         $featured_image = $article->featured_image;
         if ($featured_image && !Str::startsWith($featured_image, ['http://', 'https://'])) {
             $featured_image = Storage::url($featured_image);
         }
-        $featured_image = $featured_image ?: 'https://images.unsplash.com/photo-1514525253344-f856717429fb?auto=format&fit=crop&q=80&w=1200';
+        $featured_image = $featured_image ?: $placeholder;
     @endphp
 
     <!-- HERO SECTION -->
     <div class="relative min-h-[60vh] flex items-end pt-32 pb-20 overflow-hidden bg-primary section-divider">
         <!-- Background Layer -->
         <div class="absolute inset-0 z-0">
-            <img src="{{ $featured_image }}" class="w-full h-full object-cover grayscale opacity-20 blur-md scale-110">
+            <img src="{{ $featured_image }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover grayscale opacity-20 blur-md scale-110">
             <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent"></div>
         </div>
 
@@ -25,14 +26,18 @@
                 <div class="relative group">
                     <div class="absolute -inset-4 bg-blue-500/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
                     <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-[2.5rem] overflow-hidden border border-white/10 glass shadow-2xl relative z-10">
-                         <img src="{{ $featured_image }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000" alt="{{ $article->title }}">
+                        <img src="{{ $featured_image }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000" alt="{{ $article->title }}">
                     </div>
                 </div>
 
                 <!-- Artist Info -->
                 <div class="flex-1 pb-4">
                     <div class="flex items-center gap-4 mb-6">
-                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] text-blue-400 font-black uppercase tracking-widest">Verified Artist</span>
+                        @if(!empty($artistMeta['spotify_id']) || !empty($artistMeta['website']))
+                            <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] text-blue-400 font-black uppercase tracking-widest">Verified Artist</span>
+                        @else
+                            <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] text-white/40 font-black uppercase tracking-widest">Artist Profile</span>
+                        @endif
                     </div>
                     
                     <h1 class="text-6xl lg:text-8xl font-black text-white italic uppercase tracking-tighter mb-8">
@@ -54,19 +59,19 @@
                     <!-- Statistics Strip -->
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 py-8 border-t border-white/5">
                         <div class="flex flex-col">
-                            <span class="text-white text-3xl font-black italic tracking-tight">{{ number_format(rand(10, 50)) }}M</span>
-                            <span class="text-[9px] text-slate-400 font-black uppercase tracking-widest mt-1">Monthly Reach</span>
+                            <span class="text-white text-3xl font-black italic tracking-tight">{{ number_format($artistStats['views'] ?? 0) }}</span>
+                            <span class="text-[9px] text-slate-400 font-black uppercase tracking-widest mt-1">Article Views</span>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-white text-3xl font-black italic tracking-tight">{{ number_format(rand(100, 999)) }}M</span>
+                            <span class="text-white text-3xl font-black italic tracking-tight">{{ number_format($artistStats['streams'] ?? 0) }}</span>
                             <span class="text-[9px] text-white/30 font-black uppercase tracking-widest mt-1">Total Streams</span>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-blue-400 text-3xl font-black italic tracking-tight">9.8</span>
+                            <span class="text-blue-400 text-3xl font-black italic tracking-tight">{{ number_format($artistStats['impact'] ?? 0, 1) }}</span>
                             <span class="text-[9px] text-white/30 font-black uppercase tracking-widest mt-1">Impact Score</span>
                         </div>
                         <div class="flex flex-col">
-                            <span class="text-white text-3xl font-black italic tracking-tight">#{{ rand(1, 50) }}</span>
+                            <span class="text-white text-3xl font-black italic tracking-tight">#{{ number_format($artistStats['rank'] ?? 0) }}</span>
                             <span class="text-[9px] text-white/30 font-black uppercase tracking-widest mt-1">Global Rank</span>
                         </div>
                     </div>
@@ -76,8 +81,9 @@
     </div>
 
     <!-- MAIN CONTENT GRID -->
-    <div class="max-w-[1200px] mx-auto px-8 py-20 relative z-20">
-        <div class="flex flex-col lg:flex-row gap-16">
+    <section class="bg-secondary section-divider">
+        <div class="max-w-[1200px] mx-auto px-8 py-20 relative z-20">
+            <div class="flex flex-col lg:flex-row gap-16">
             
             <!-- Left Column: Primary Content -->
             <div class="flex-1 space-y-24">
@@ -90,7 +96,11 @@
                     </div>
                     <div class="article-content prose prose-invert prose-lg max-w-none">
                         <div class="text-slate-300 leading-relaxed font-medium">
-                            {!! Str::markdown($article->content) !!}
+                            @if(!empty($article->content))
+                                {!! Str::markdown($article->content) !!}
+                            @else
+                                <p class="text-white/40">This artist profile is still being built. Add a biography to complete the record.</p>
+                            @endif
                         </div>
                     </div>
                 </section>
@@ -99,52 +109,48 @@
                 <section>
                     <div class="flex items-center justify-between mb-12">
                         <h2 class="text-3xl font-black text-white italic uppercase tracking-tighter">Visual Archive</h2>
-                        <div class="flex items-center gap-3">
-                             <button class="nav-btn"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
-                             <button class="nav-btn"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
-                        </div>
+                        <div class="text-[10px] font-black text-white/30 uppercase tracking-widest">From published records</div>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        @php
-                            $gallery = [
-                                'Studio Sessions' => 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&q=80&w=800',
-                                'Live Performance' => 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&q=80&w=800',
-                                'Behind the Scenes' => 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=800'
-                            ];
-                        @endphp
-                        @foreach($gallery as $name => $url)
-                            <div class="relative aspect-[4/5] rounded-3xl overflow-hidden glass border border-white/10 group cursor-pointer shadow-xl">
-                                <img src="{{ $url }}" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105">
-                                <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                                <div class="absolute inset-x-0 bottom-0 p-6 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                                    <span class="text-white font-black text-[10px] uppercase tracking-widest">{{ $name }}</span>
+                    @if($artistGallery->isEmpty())
+                        <div class="text-white/40 text-sm">No gallery images yet. Add featured images to related songs to populate this archive.</div>
+                    @else
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            @foreach($artistGallery as $item)
+                                <div class="relative aspect-[4/5] rounded-3xl overflow-hidden glass border border-white/10 group cursor-pointer shadow-xl">
+                                    <img src="{{ $item['image'] }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                    <div class="absolute inset-x-0 bottom-0 p-6 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                                        <span class="text-white font-black text-[10px] uppercase tracking-widest">{{ $item['title'] }}</span>
+                                    </div>
                                 </div>
-                            </div>
-                        @endforeach
-                    </div>
+                            @endforeach
+                        </div>
+                    @endif
                 </section>
 
                 <!-- Discography -->
                 <section>
                     <div class="flex items-center justify-between mb-12">
                         <h2 class="text-3xl font-black text-white italic uppercase tracking-tighter">Discography</h2>
-                        <a href="#" class="text-[11px] font-black text-blue-400 uppercase tracking-widest hover:text-blue-300 transition-colors">See Complete History →</a>
+                        <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="text-[11px] font-black text-blue-400 uppercase tracking-widest hover:text-blue-300 transition-colors">Browse Songs →</a>
                     </div>
-                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                        @for($i = 2024; $i >= 2021; $i--)
-                             <div class="group cursor-pointer">
-                                <div class="aspect-square rounded-2xl overflow-hidden bg-white/5 border border-white/10 mb-5 relative group">
-                                    <div class="absolute inset-0 bg-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                    <div class="absolute inset-0 flex items-center justify-center opacity-10 group-hover:opacity-100 transition-all duration-500">
-                                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                    @if($artistDiscography->isEmpty())
+                        <div class="text-white/40 text-sm">No discography entries yet. Add songs to this artist to populate the archive.</div>
+                    @else
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                            @foreach($artistDiscography as $item)
+                                 <a href="{{ $item['url'] }}" class="group">
+                                    <div class="aspect-square rounded-2xl overflow-hidden bg-white/5 border border-white/10 mb-5 relative group">
+                                        <img src="{{ $item['image'] }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
+                                        <div class="absolute inset-0 bg-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     </div>
-                                </div>
-                                <h4 class="text-white font-bold truncate group-hover:text-blue-400 transition-colors uppercase tracking-tight text-sm">Collection Phase {{ $i }}</h4>
-                                <p class="text-[10px] font-black text-white/20 uppercase tracking-widest">Master Release // {{ $i }}</p>
-                             </div>
-                        @endfor
-                    </div>
+                                    <h4 class="text-white font-bold truncate group-hover:text-blue-400 transition-colors uppercase tracking-tight text-sm">{{ $item['title'] }}</h4>
+                                    <p class="text-[10px] font-black text-white/20 uppercase tracking-widest">{{ $item['year'] ?? 'Unknown' }}</p>
+                                 </a>
+                            @endforeach
+                        </div>
+                    @endif
                 </section>
 
                 <!-- Community Discussion -->
@@ -156,22 +162,40 @@
             <!-- Right Column: Sidebar -->
             <div class="w-full lg:w-80 space-y-10">
                 <!-- Artist Metadata -->
-                <div class="glass p-8 rounded-3xl border border-white/10 group">
+                <div class="bg-secondary border border-white/5 p-8 rounded-3xl group">
                     <h3 class="text-xl font-black text-white italic uppercase tracking-tighter mb-8">Metadata</h3>
-                     <dl class="space-y-6">
-                        <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                            <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Origin</dt>
-                            <dd class="text-xs text-white font-bold">International</dd>
-                        </div>
-                        <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                            <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active From</dt>
-                            <dd class="text-xs text-white font-bold">Archive POS</dd>
-                        </div>
-                         <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                            <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</dt>
-                            <dd class="text-xs text-blue-400 font-bold uppercase tracking-widest">Active Node</dd>
-                        </div>
-                    </dl>
+                     @if(empty(array_filter($artistMeta ?? [])))
+                        <div class="text-white/40 text-sm">No metadata available yet.</div>
+                     @else
+                        <dl class="space-y-6">
+                            @if(!empty($artistMeta['origin']))
+                                <div class="flex justify-between items-end pb-3 border-b border-white/5">
+                                    <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Origin</dt>
+                                    <dd class="text-xs text-white font-bold">{{ $artistMeta['origin'] }}</dd>
+                                </div>
+                            @endif
+                            @if(!empty($artistMeta['active_from']))
+                                <div class="flex justify-between items-end pb-3 border-b border-white/5">
+                                    <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active From</dt>
+                                    <dd class="text-xs text-white font-bold">{{ $artistMeta['active_from'] }}</dd>
+                                </div>
+                            @endif
+                            @if(!empty($artistMeta['active_to']))
+                                <div class="flex justify-between items-end pb-3 border-b border-white/5">
+                                    <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active To</dt>
+                                    <dd class="text-xs text-white font-bold">{{ $artistMeta['active_to'] }}</dd>
+                                </div>
+                            @endif
+                            @if(!empty($artistMeta['website']))
+                                <div class="flex justify-between items-end pb-3 border-b border-white/5">
+                                    <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Website</dt>
+                                    <dd class="text-xs text-blue-400 font-bold">
+                                        <a href="{{ $artistMeta['website'] }}" target="_blank" rel="noopener">Visit</a>
+                                    </dd>
+                                </div>
+                            @endif
+                        </dl>
+                     @endif
                     
                     <div class="mt-12 space-y-3">
                         <livewire:article.play-button 
@@ -186,9 +210,11 @@
                             <span class="text-[9px] font-black text-white/20 uppercase tracking-widest">Archive Utility</span>
                              <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
-                        <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-3 border border-white/5 text-white/20 rounded-xl text-[9px] font-black uppercase tracking-widest hover:text-white hover:border-white/10 transition-all flex items-center justify-center gap-2">
-                            Suggest Revision
-                        </a>
+                        @auth
+                            <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-3 border border-white/5 text-white/20 rounded-xl text-[9px] font-black uppercase tracking-widest hover:text-white hover:border-white/10 transition-all flex items-center justify-center gap-2">
+                                Suggest Revision
+                            </a>
+                        @endauth
                     </div>
                 </div>
 
@@ -196,20 +222,24 @@
                 <div class="space-y-8">
                     <h3 class="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">Network Proximity</h3>
                     <div class="space-y-6">
-                        @foreach($article->artist->songs->take(4) as $song)
-                            <a href="{{ route('wiki.show', $song->article) }}" class="flex items-center gap-4 group">
-                                <div class="w-14 h-14 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 group-hover:text-blue-500 group-hover:border-blue-500/30 transition-all overflow-hidden">
-                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors truncate uppercase tracking-tight">{{ $song->title }}</div>
-                                    <div class="text-[9px] font-black text-white/20 uppercase tracking-widest mt-1">Record Node</div>
-                                </div>
-                            </a>
-                        @endforeach
+                        @forelse($relatedSongs as $song)
+                            @if($song->article)
+                                <a href="{{ route('wiki.show', $song->article->slug) }}" class="flex items-center gap-4 group">
+                                    <div class="w-14 h-14 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 group-hover:text-blue-500 group-hover:border-blue-500/30 transition-all overflow-hidden">
+                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors truncate uppercase tracking-tight">{{ $song->title }}</div>
+                                        <div class="text-[9px] font-black text-white/20 uppercase tracking-widest mt-1">Record Node</div>
+                                    </div>
+                                </a>
+                            @endif
+                        @empty
+                            <div class="text-white/40 text-sm">No related songs yet.</div>
+                        @endforelse
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 @endsection

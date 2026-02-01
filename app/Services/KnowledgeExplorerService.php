@@ -47,19 +47,47 @@ class KnowledgeExplorerService
         $nodes = $genres->map(fn($g) => [
             'id' => $g->id,
             'label' => $g->name,
-            'color' => $g->color,
-            'size' => 10 + ($g->popularity_score / 5),
+            'color' => $g->color ?: '#3B82F6',
+            'size' => 12 + (($g->popularity_score ?? 0) / 5),
             'title' => $g->description ?? $g->name,
         ])->toArray();
+
+        if (empty($nodes)) {
+            $articles = Article::where('category', 'genre')
+                ->where('status', 'published')
+                ->orderByDesc('view_count')
+                ->limit(30)
+                ->get();
+
+            if ($articles->isEmpty()) {
+                $articles = Article::where('status', 'published')
+                    ->orderByDesc('view_count')
+                    ->limit(30)
+                    ->get();
+            }
+
+            $nodes = $articles->map(fn($a) => [
+                'id' => $a->id,
+                'label' => $a->title,
+                'color' => '#3B82F6',
+                'size' => 12 + min($a->view_count / 200, 20),
+                'title' => $a->title,
+            ])->toArray();
+        }
 
         $edges = $relationships->map(fn($r) => [
             'from' => $r->source_genre_id,
             'to' => $r->target_genre_id,
             'label' => $this->formatRelationType($r->relationship_type),
-            'width' => $r->strength / 25,
+            'width' => max(1, $r->strength / 25),
             'arrows' => $r->relationship_type === 'derived_from' ? 'to' : 'to,from',
             'color' => $this->getRelationColor($r->relationship_type),
         ])->toArray();
+
+        if (empty($edges) && count($nodes) > 1) {
+            $ids = array_column($nodes, 'id');
+            $edges = $this->buildChainEdges($ids, 'related');
+        }
 
         return [
             'nodes' => $nodes,
@@ -80,9 +108,22 @@ class KnowledgeExplorerService
                 ->limit($limit)
                 ->get();
 
+            if ($artists->isEmpty()) {
+                $fallback = Article::where('status', 'published')
+                    ->orderByDesc('view_count')
+                    ->limit($limit)
+                    ->get();
+
+                if ($fallback->isEmpty()) {
+                    return ['nodes' => [], 'edges' => []];
+                }
+
+                return $this->buildFallbackArtistNetwork($fallback);
+            }
+
             // Check if artist_collaborations table exists
             if (!Schema::hasTable('artist_collaborations')) {
-                return $this->getDemoArtistNetwork();
+                return $this->buildFallbackArtistNetwork($artists);
             }
 
             $collaborations = DB::table('artist_collaborations')
@@ -90,9 +131,8 @@ class KnowledgeExplorerService
                 ->orWhereIn('artist2_id', $artists->pluck('id'))
                 ->get();
 
-            // If no data, return demo
-            if ($artists->isEmpty() || $collaborations->isEmpty()) {
-                return $this->getDemoArtistNetwork();
+            if ($collaborations->isEmpty()) {
+                return $this->buildFallbackArtistNetwork($artists);
             }
 
             $nodes = $artists->map(fn($a) => [
@@ -116,49 +156,26 @@ class KnowledgeExplorerService
                 'edges' => $edges,
             ];
         } catch (\Exception $e) {
-            return $this->getDemoArtistNetwork();
+            return ['nodes' => [], 'edges' => []];
         }
     }
 
     /**
      * Get demo artist network for visualization
      */
-    private function getDemoArtistNetwork(): array
+    private function buildFallbackArtistNetwork($artists): array
     {
-        $artists = [
-            ['id' => 1, 'name' => 'The Beatles', 'influence' => 100],
-            ['id' => 2, 'name' => 'Led Zeppelin', 'influence' => 95],
-            ['id' => 3, 'name' => 'Pink Floyd', 'influence' => 90],
-            ['id' => 4, 'name' => 'Queen', 'influence' => 92],
-            ['id' => 5, 'name' => 'David Bowie', 'influence' => 88],
-            ['id' => 6, 'name' => 'The Rolling Stones', 'influence' => 94],
-            ['id' => 7, 'name' => 'Jimi Hendrix', 'influence' => 96],
-            ['id' => 8, 'name' => 'Bob Dylan', 'influence' => 89],
-        ];
-
-        $collaborations = [
-            ['from' => 1, 'to' => 6, 'type' => 'Influenced'],
-            ['from' => 7, 'to' => 2, 'type' => 'Influenced'],
-            ['from' => 1, 'to' => 5, 'type' => 'Collaborated'],
-            ['from' => 4, 'to' => 5, 'type' => 'Collaborated'],
-            ['from' => 8, 'to' => 1, 'type' => 'Influenced'],
-            ['from' => 3, 'to' => 5, 'type' => 'Similar Style'],
-        ];
-
-        $nodes = array_map(fn($a) => [
-            'id' => $a['id'],
-            'label' => $a['name'],
+        $nodes = $artists->map(fn($a) => [
+            'id' => $a->id,
+            'label' => $a->title,
             'color' => '#3B82F6',
-            'size' => 15 + ($a['influence'] / 5),
-            'title' => $a['name'],
-        ], $artists);
+            'size' => 15 + min($a->view_count / 100, 30),
+            'title' => $a->title,
+            'url' => route('wiki.show', $a),
+        ])->toArray();
 
-        $edges = array_map(fn($c) => [
-            'from' => $c['from'],
-            'to' => $c['to'],
-            'label' => $c['type'],
-            'color' => ['color' => '#6B7280'],
-        ], $collaborations);
+        $ids = array_column($nodes, 'id');
+        $edges = $this->buildChainEdges($ids, 'related');
 
         return [
             'nodes' => $nodes,
@@ -175,14 +192,50 @@ class KnowledgeExplorerService
             ->orderBy('era_start')
             ->get();
 
-        return $genres->map(fn($g) => [
-            'id' => $g->id,
-            'content' => $g->name,
-            'start' => "{$g->era_start}-01-01",
-            'end' => $g->era_end ? "{$g->era_end}-12-31" : null,
-            'style' => "background-color: {$g->color}",
-            'title' => $g->description ?? $g->name,
+        if ($genres->isNotEmpty()) {
+            return $genres->map(fn($g) => [
+                'id' => $g->id,
+                'content' => $g->name,
+                'start' => "{$g->era_start}-01-01",
+                'end' => $g->era_end ? "{$g->era_end}-12-31" : null,
+                'style' => "background-color: {$g->color}",
+                'title' => $g->description ?? $g->name,
+            ])->toArray();
+        }
+
+        $fallback = Article::where('category', 'genre')
+            ->where('status', 'published')
+            ->orderBy('created_at')
+            ->limit(30)
+            ->get();
+
+        if ($fallback->isEmpty()) {
+            $fallback = Article::where('status', 'published')
+                ->orderBy('created_at')
+                ->limit(30)
+                ->get();
+        }
+
+        return $fallback->map(fn($a) => [
+            'id' => $a->id,
+            'content' => $a->title,
+            'start' => ($a->published_at ?? $a->created_at)->format('Y-m-d'),
+            'style' => 'background-color: #3B82F6; color: #fff;'
         ])->toArray();
+    }
+
+    private function buildChainEdges(array $ids, string $label): array
+    {
+        $edges = [];
+        for ($i = 0; $i < count($ids) - 1; $i++) {
+            $edges[] = [
+                'from' => $ids[$i],
+                'to' => $ids[$i + 1],
+                'label' => $label,
+                'color' => ['color' => '#6B7280'],
+            ];
+        }
+        return $edges;
     }
 
     /**

@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Revision;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -14,98 +15,192 @@ class HomeController extends Controller
         $discoveryMix = $discovery->getDailyDiscovery();
         $hiddenGems = $discovery->getHiddenGems();
         // 1. New Topics (Latest Articles)
-        $newTopics = Article::with(['user', 'song.artist', 'genre'])
+        $newTopics = Article::with(['user'])
+            ->withCount('revisions')
             ->where('status', 'published')
             ->latest()
-            ->take(3)
+            ->take(6)
             ->get();
 
-        // 2. Statistics for "Browse Categories"
-        $stats = [
-            'songs' => Article::where('category', 'song')->where('status', 'published')->count(),
-            'artists' => Article::where('category', 'artist')->where('status', 'published')->count(),
+        $newTopicCards = $newTopics->map(function (Article $article) {
+            $rawImage = $article->getRawOriginal('featured_image');
+
+            return [
+                'title' => $article->title,
+                'category' => ucfirst($article->category),
+                'desc' => Str::limit($article->meta_description, 140),
+                'image' => $rawImage ? $article->featured_image : null,
+                'user' => $article->user?->name ?? 'Community',
+                'date' => optional($article->created_at)->format('M d, Y'),
+                'views' => $article->view_count,
+                'edits' => $article->revisions_count,
+                'url' => route('wiki.show', $article->slug),
+            ];
+        });
+
+        // 2. Statistics for hero counters
+        $heroStats = [
+            'articles' => Article::where('status', 'published')->count(),
+            'contributors' => User::count(),
             'genres' => Article::where('category', 'genre')->where('status', 'published')->count(),
         ];
 
-        // 3. Community Insights
-        $insights = [
-            'total_edits' => 100 + Article::sum('view_count'),
-            'new_wikis_today' => Article::whereDate('created_at', today())->count(),
-            'total_articles' => Article::where('status', 'published')->count(),
-            'total_users' => User::count(),
+        // 3. Category tabs for Browse section
+        $categoryCounts = Article::where('status', 'published')
+            ->select('category', DB::raw('count(*) as total'))
+            ->groupBy('category')
+            ->orderByDesc('total')
+            ->get();
+
+        $categoryIcons = [
+            'artist' => '🎤',
+            'song' => '🎵',
+            'genre' => '🎸',
+            'playlist' => '📀',
+            'term' => '🧠',
         ];
 
-        // 4. Music Weather (Mocked Data Layer - simulating real-time analytics)
-        $musicWeather = [
-            'rising_genres' => [
-                'count' => rand(12, 45),
-                'top' => Article::where('category', 'genre')->inRandomOrder()->take(2)->pluck('title')->toArray() ?: ['Hyperpop', 'Phonk'],
-            ],
-            'viral_artists' => [
-                'region' => 'South East Asia',
-                'name' => Article::where('category', 'artist')->inRandomOrder()->value('title') ?: 'Unknown Artist',
-            ],
-            'trending_songs' => [
-                'platform' => 'TikTok',
-                'count' => rand(800, 5000),
-            ]
-        ];
-
-        // 5. Discover Tags (Dynamic Fetch using Trending Score)
-        $trendingTags = Article::select('title', 'category', 'view_count', 'trending_score')
-            ->where('status', 'published')
-            ->orderByDesc('trending_score')
-            ->take(5)
-            ->get()
-            ->map(function($item) {
+        $categoryTabs = [
+            'All' => $categoryCounts->map(function ($row) use ($categoryIcons) {
                 return [
-                    'label' => $item->title,
-                    'sub' => $item->category,
-                    'stat' => $item->trending_score > 5 ? '+' . round($item->trending_score * 0.5, 1) . '% activity' : 'Stable',
-                    'style' => match($item->category) {
-                        'genre' => 'blue',
-                        'artist' => 'purple',
-                        'song' => 'teal',
-                        default => 'gray'
-                    }
+                    'name' => ucfirst($row->category),
+                    'count' => number_format($row->total) . ' articles',
+                    'icon' => $categoryIcons[$row->category] ?? '📚',
+                    'url' => route('wiki.index', ['category' => $row->category]),
                 ];
-            });
-        
-        if ($trendingTags->isEmpty()) {
-            $trendingTags = collect([
-                ['label' => 'Hyperpop', 'sub' => 'Genre', 'stat' => '+15%', 'style' => 'blue'],
-                ['label' => 'The Weeknd', 'sub' => 'Artist', 'stat' => 'Trending', 'style' => 'purple'],
-                ['label' => 'Afrofusion', 'sub' => 'Genre', 'stat' => 'New', 'style' => 'teal'],
-            ]);
+            })->values(),
+        ];
+
+        foreach ($categoryCounts->take(6) as $row) {
+            $articles = Article::where('status', 'published')
+                ->where('category', $row->category)
+                ->orderByDesc('view_count')
+                ->take(4)
+                ->get();
+
+            $categoryTabs[ucfirst($row->category)] = $articles->map(function (Article $article) use ($categoryIcons, $row) {
+                return [
+                    'name' => $article->title,
+                    'count' => number_format($article->view_count) . ' views',
+                    'icon' => $categoryIcons[$row->category] ?? '📚',
+                    'url' => route('wiki.show', $article->slug),
+                ];
+            })->values();
         }
- 
-        // 6. Featured Content (The Beat of the Moment - High Trending Score)
+
+        // 4. Music pulse (real metrics)
+        $editsWeek = Revision::where('created_at', '>=', now()->subDays(7))->count();
+        $editsToday = Revision::whereDate('created_at', today())->count();
+        $newArticlesWeek = Article::where('status', 'published')
+            ->where('created_at', '>=', now()->subDays(7))
+            ->count();
+        $activeContributorsWeek = Revision::where('created_at', '>=', now()->subDays(7))
+            ->distinct('user_id')
+            ->count('user_id');
+
+        $musicPulse = [
+            'edits_week' => $editsWeek,
+            'edits_today' => $editsToday,
+            'new_articles_week' => $newArticlesWeek,
+            'active_contributors_week' => $activeContributorsWeek,
+            'live_flow' => $editsWeek > 0 ? min(100, (int) round(($editsToday / $editsWeek) * 100)) : 0,
+        ];
+
+        // 5. Featured Content (The Beat of the Moment - High Trending Score)
         $trendingArticles = Article::where('status', 'published')
-            ->with(['song.artist', 'genre'])
+            ->with(['user'])
             ->orderByDesc('trending_score')
             ->take(6)
             ->get();
 
-        // 7. Recent Updates (Revisions)
-        $recentUpdates = \App\Models\Revision::with(['article', 'user'])
+        // 6. Recent Updates (Revisions)
+        $recentUpdates = Revision::with(['article', 'user'])
             ->latest()
             ->take(5)
             ->get();
 
-        // 8. Top Contributors
+        // 7. Top Contributors
         $topContributors = User::orderByDesc('reputation_score')
             ->take(5)
             ->get();
 
+        // 8. Ranked Items
+        $rankedArticles = Article::with('user')
+            ->where('status', 'published')
+            ->orderByDesc('view_count')
+            ->take(6)
+            ->get();
+
+        // 9. Community Insights
+        $topEdited = Revision::select('article_id', DB::raw('count(*) as edits'))
+            ->where('created_at', '>=', now()->subDays(30))
+            ->groupBy('article_id')
+            ->orderByDesc('edits')
+            ->first();
+
+        $topEditedArticle = $topEdited
+            ? Article::where('id', $topEdited->article_id)->first()
+            : null;
+
+        $topContributor = User::withCount(['revisions' => function ($q) {
+            $q->where('created_at', '>=', now()->subDays(30));
+        }])->orderByDesc('revisions_count')->first();
+
+        $featuredDiscovery = Article::where('status', 'published')
+            ->orderByDesc('trending_score')
+            ->first();
+
+        $insightCards = collect();
+
+        if ($topEditedArticle) {
+            $insightCards->push([
+                'label' => 'Most Edited (30d)',
+                'value' => $topEditedArticle->title,
+                'meta' => number_format($topEdited->edits) . ' edits',
+                'gradient' => 'grad-purple',
+                'icon' => '✍️',
+                'color' => '#8b5cf6',
+                'premium' => true,
+                'url' => route('wiki.show', $topEditedArticle->slug),
+            ]);
+        }
+
+        if ($topContributor) {
+            $insightCards->push([
+                'label' => 'Top Contributor (30d)',
+                'value' => '@' . $topContributor->username,
+                'meta' => number_format($topContributor->revisions_count) . ' edits',
+                'gradient' => 'grad-blue',
+                'icon' => '🏆',
+                'color' => '#3b82f6',
+                'premium' => false,
+                'url' => route('profile', $topContributor->username),
+            ]);
+        }
+
+        if ($featuredDiscovery) {
+            $insightCards->push([
+                'label' => 'Featured Discovery',
+                'value' => $featuredDiscovery->title,
+                'meta' => number_format($featuredDiscovery->view_count) . ' views',
+                'gradient' => 'grad-pink',
+                'icon' => '⭐',
+                'color' => '#ec4899',
+                'premium' => false,
+                'url' => route('wiki.show', $featuredDiscovery->slug),
+            ]);
+        }
+
         return view('welcome', compact(
-            'newTopics', 
-            'stats', 
-            'insights', 
-            'musicWeather', 
-            'trendingTags', 
-            'trendingArticles', 
-            'recentUpdates', 
+            'newTopicCards',
+            'heroStats',
+            'categoryTabs',
+            'musicPulse',
+            'trendingArticles',
+            'recentUpdates',
             'topContributors',
+            'rankedArticles',
+            'insightCards',
             'discoveryMix',
             'hiddenGems'
         ));

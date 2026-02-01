@@ -21,6 +21,8 @@ class KnowledgeExplorer extends Component
         $this->activeTab = $tab;
         $this->selectedGenre = null;
         $this->genreDetails = null;
+
+        $this->dispatch('explorer-tab-changed');
     }
 
     public function selectGenre(int $genreId): void

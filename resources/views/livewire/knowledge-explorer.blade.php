@@ -1,7 +1,16 @@
-<div class="min-h-screen bg-[#050511] pt-32" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 800)">
+@php
+    $genreNodeCount = count($genreNetwork['nodes'] ?? []);
+    $genreEdgeCount = count($genreNetwork['edges'] ?? []);
+    $artistNodeCount = count($artistNetwork['nodes'] ?? []);
+    $artistEdgeCount = count($artistNetwork['edges'] ?? []);
+    $timelineCount = count($timeline ?? []);
+@endphp
+
+<div class="min-h-screen bg-primary pt-32" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 800)">
     {{-- Header --}}
-    <div class="relative py-16 border-b border-white/5 overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-b from-blue-600/5 via-transparent to-transparent"></div>
+    <div class="relative py-16 border-b border-white/5 overflow-hidden section-divider">
+        <div class="absolute inset-0 bg-gradient-to-b from-blue-600/10 via-transparent to-transparent"></div>
+        <div class="absolute inset-0 opacity-20" style="background: radial-gradient(circle at 15% 20%, rgba(59,130,246,0.12), transparent 40%), radial-gradient(circle at 85% 30%, rgba(139,92,246,0.12), transparent 45%);"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-10">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/5 border border-blue-500/10 text-blue-500 text-[9px] font-black uppercase tracking-[0.2em] mb-6">
@@ -16,6 +25,24 @@
                 <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] max-w-xl mx-auto leading-relaxed">
                     Map the evolution of genres, track artist collaborations, and navigate the global music archive.
                 </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+                <div class="bg-secondary/60 border border-white/5 rounded-2xl p-4 text-center">
+                    <div class="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Genres</div>
+                    <div class="text-2xl font-black text-white mt-2">{{ number_format($genreNodeCount) }}</div>
+                    <div class="text-[10px] text-white/30">{{ number_format($genreEdgeCount) }} links</div>
+                </div>
+                <div class="bg-secondary/60 border border-white/5 rounded-2xl p-4 text-center">
+                    <div class="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Artists</div>
+                    <div class="text-2xl font-black text-white mt-2">{{ number_format($artistNodeCount) }}</div>
+                    <div class="text-[10px] text-white/30">{{ number_format($artistEdgeCount) }} links</div>
+                </div>
+                <div class="bg-secondary/60 border border-white/5 rounded-2xl p-4 text-center">
+                    <div class="text-[10px] font-black text-white/30 uppercase tracking-[0.2em]">Timeline</div>
+                    <div class="text-2xl font-black text-white mt-2">{{ number_format($timelineCount) }}</div>
+                    <div class="text-[10px] text-white/30">milestones</div>
+                </div>
             </div>
 
             {{-- Tab Navigation --}}
@@ -62,22 +89,41 @@
     <div x-show="loaded" x-transition:enter="transition ease-out duration-700 delay-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="flex flex-col lg:flex-row gap-8">
             <div class="flex-1 relative group">
-                <div class="bg-secondary border border-white/5 rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:border-blue-500/10" style="min-height: 600px;">
+                <div class="bg-secondary border border-white/5 rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:border-blue-500/10 relative" style="min-height: 640px;">
                     <div wire:loading wire:target="setTab" class="absolute inset-0 bg-black/40 backdrop-blur-sm z-20 flex items-center justify-center rounded-3xl">
                         <div class="flex flex-col items-center gap-3">
                             <div class="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
                             <span class="text-xs font-mono text-blue-400 uppercase tracking-widest">Recalculating...</span>
                         </div>
                     </div>
+                    <div class="absolute bottom-4 left-4 z-10 bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-[10px] text-white/60">
+                        Drag to move · Scroll to zoom · Click node to inspect
+                    </div>
+                    @if($activeTab === 'genres' || $activeTab === 'artists')
+                        <div class="absolute top-4 right-4 z-10 flex items-center gap-2 bg-black/40 border border-white/10 rounded-xl p-2">
+                            <button type="button" data-explorer-control="zoom-in" class="w-8 h-8 rounded-lg bg-white/5 text-white/60 hover:text-white hover:bg-white/10 transition">+</button>
+                            <button type="button" data-explorer-control="zoom-out" class="w-8 h-8 rounded-lg bg-white/5 text-white/60 hover:text-white hover:bg-white/10 transition">-</button>
+                            <button type="button" data-explorer-control="fit" class="px-3 h-8 rounded-lg bg-white/5 text-white/60 hover:text-white hover:bg-white/10 text-[10px] font-black uppercase tracking-widest transition">Fit</button>
+                        </div>
+                    @endif
                     @if($activeTab === 'genres')
-                        {{-- Genre Network --}}
-                        <div id="genre-network" class="w-full h-[600px]" wire:ignore></div>
+                        @if(empty($genreNetwork['nodes']))
+                            <div class="h-[600px] flex items-center justify-center text-white/30 text-sm">No genre data yet.</div>
+                        @else
+                            <div id="genre-network" class="w-full h-[640px]" wire:ignore></div>
+                        @endif
                     @elseif($activeTab === 'artists')
-                        {{-- Artist Network --}}
-                        <div id="artist-network" class="w-full h-[600px]" wire:ignore></div>
+                        @if(empty($artistNetwork['nodes']))
+                            <div class="h-[600px] flex items-center justify-center text-white/30 text-sm">No artist data yet.</div>
+                        @else
+                            <div id="artist-network" class="w-full h-[640px]" wire:ignore></div>
+                        @endif
                     @elseif($activeTab === 'timeline')
-                        {{-- Timeline --}}
-                        <div id="music-timeline" class="w-full h-[600px]" wire:ignore></div>
+                        @if(empty($timeline))
+                            <div class="h-[600px] flex items-center justify-center text-white/30 text-sm">No timeline data yet.</div>
+                        @else
+                            <div id="music-timeline" class="w-full h-[640px]" wire:ignore></div>
+                        @endif
                     @endif
                 </div>
 
@@ -176,6 +222,7 @@
     <script>
         document.addEventListener('livewire:navigated', initNetworks);
         document.addEventListener('DOMContentLoaded', initNetworks);
+        document.addEventListener('explorer-tab-changed', () => setTimeout(initNetworks, 60));
 
         function initNetworks() {
             const genreData = @json($genreNetwork);
@@ -229,23 +276,24 @@
                     enabled: true,
                     stabilization: {
                         enabled: true,
-                        iterations: 200,
+                        iterations: 250,
                         updateInterval: 25
                     },
                     barnesHut: {
-                        gravitationalConstant: -8000,
-                        centralGravity: 0.3,
-                        springLength: 150,
-                        springConstant: 0.04,
-                        damping: 0.09,
-                        avoidOverlap: 0.1
+                        gravitationalConstant: -5200,
+                        centralGravity: 0.25,
+                        springLength: 110,
+                        springConstant: 0.05,
+                        damping: 0.08,
+                        avoidOverlap: 0.2
                     }
                 },
                 interaction: {
                     hover: true,
                     tooltipDelay: 100,
                     hideEdgesOnDrag: false,
-                    hideEdgesOnZoom: false
+                    hideEdgesOnZoom: false,
+                    zoomView: true
                 },
                 layout: {
                     improvedLayout: true,
@@ -255,11 +303,28 @@
 
             // Genre Network
             const genreContainer = document.getElementById('genre-network');
+            window.explorerNetworks = window.explorerNetworks || {};
+            window.explorerTimelines = window.explorerTimelines || {};
+
+            if (window.explorerNetworks.genre) {
+                window.explorerNetworks.genre.destroy();
+                window.explorerNetworks.genre = null;
+            }
+            if (window.explorerNetworks.artist) {
+                window.explorerNetworks.artist.destroy();
+                window.explorerNetworks.artist = null;
+            }
+            if (window.explorerTimelines.timeline) {
+                window.explorerTimelines.timeline.destroy();
+                window.explorerTimelines.timeline = null;
+            }
+
             if (genreContainer && genreData.nodes.length > 0) {
                 const genreNetwork = new vis.Network(genreContainer, {
                     nodes: new vis.DataSet(genreData.nodes),
                     edges: new vis.DataSet(genreData.edges)
                 }, darkThemeOptions);
+                window.explorerNetworks.genre = genreNetwork;
 
                 genreNetwork.on('click', function(params) {
                     if (params.nodes.length > 0) {
@@ -275,6 +340,17 @@
                 genreNetwork.on('blurNode', function(params) {
                     genreContainer.style.cursor = 'default';
                 });
+
+                const fitGenre = () => {
+                    genreNetwork.redraw();
+                    genreNetwork.fit({
+                        animation: { duration: 500, easingFunction: 'easeInOutQuad' },
+                        padding: 110
+                    });
+                };
+
+                genreNetwork.once('stabilizationIterationsDone', fitGenre);
+                setTimeout(fitGenre, 150);
             }
 
             // Artist Network
@@ -287,9 +363,10 @@
                     ...darkThemeOptions,
                     physics: {
                         ...darkThemeOptions.physics,
-                        stabilization: { iterations: 250 }
+                        stabilization: { iterations: 280 }
                     }
                 });
+                window.explorerNetworks.artist = artistNetwork;
 
                 artistNetwork.on('hoverNode', function(params) {
                     artistContainer.style.cursor = 'pointer';
@@ -298,6 +375,17 @@
                 artistNetwork.on('blurNode', function(params) {
                     artistContainer.style.cursor = 'default';
                 });
+
+                const fitArtist = () => {
+                    artistNetwork.redraw();
+                    artistNetwork.fit({
+                        animation: { duration: 500, easingFunction: 'easeInOutQuad' },
+                        padding: 110
+                    });
+                };
+
+                artistNetwork.once('stabilizationIterationsDone', fitArtist);
+                setTimeout(fitArtist, 150);
             }
 
             // Timeline
@@ -308,7 +396,7 @@
                     group: 1
                 }));
 
-                new vis.Timeline(timelineContainer, new vis.DataSet(items), {
+                const timeline = new vis.Timeline(timelineContainer, new vis.DataSet(items), {
                     style: 'box',
                     zoomMin: 1000 * 60 * 60 * 24 * 365, // One year
                     margin: { item: 10 },
@@ -318,7 +406,33 @@
                         return `<div style="color: #fff; font-weight: 600;">${item.content}</div>`;
                     }
                 });
+                window.explorerTimelines.timeline = timeline;
             }
+        }
+
+        document.addEventListener('click', function(event) {
+            const control = event.target.closest('[data-explorer-control]');
+            if (!control) return;
+            const action = control.getAttribute('data-explorer-control');
+            const isArtist = document.getElementById('artist-network');
+            const network = isArtist ? window.explorerNetworks?.artist : window.explorerNetworks?.genre;
+            if (!network) return;
+
+            if (action === 'zoom-in') {
+                network.moveTo({ scale: network.getScale() * 1.2 });
+            }
+            if (action === 'zoom-out') {
+                network.moveTo({ scale: network.getScale() * 0.85 });
+            }
+            if (action === 'fit') {
+                network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' }, padding: 100 });
+            }
+        });
+
+        if (window.Livewire && Livewire.hook) {
+            Livewire.hook('message.processed', () => {
+                initNetworks();
+            });
         }
     </script>
     @endpush
