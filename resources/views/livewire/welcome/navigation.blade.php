@@ -10,7 +10,7 @@ new class extends Component
 <nav class="relative z-50 flex items-center justify-between px-4 sm:px-6 lg:px-8 py-6">
     <!-- Logo Section -->
     <div class="flex items-center gap-3">
-        <a href="{{ route('welcome') }}" class="flex items-center gap-3 group">
+        <a href="{{ route('home') }}" class="flex items-center gap-3 group">
             <!-- Logo Icon -->
             <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-105 transition-transform">
                 <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -29,13 +29,13 @@ new class extends Component
         <a href="{{ route('wiki.index') }}" class="text-sm font-medium text-white/70 hover:text-white transition-colors uppercase tracking-wider">
             Browse
         </a>
-        <a href="#" class="text-sm font-medium text-white/70 hover:text-white transition-colors uppercase tracking-wider">
+        <a href="{{ route('wiki.index', ['category' => 'genre']) }}" class="text-sm font-medium text-white/70 hover:text-white transition-colors uppercase tracking-wider">
             Categories
         </a>
-        <a href="#" class="text-sm font-medium text-white/70 hover:text-white transition-colors uppercase tracking-wider">
+        <a href="{{ route('leaderboard') }}" class="text-sm font-medium text-white/70 hover:text-white transition-colors uppercase tracking-wider">
             Community
         </a>
-        <a href="#" class="text-sm font-medium text-white/70 hover:text-white transition-colors uppercase tracking-wider">
+        <a href="{{ route('about') }}" class="text-sm font-medium text-white/70 hover:text-white transition-colors uppercase tracking-wider">
             About
         </a>
     </div>

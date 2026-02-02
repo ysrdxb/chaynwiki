@@ -32,6 +32,10 @@ Route::get('/leaderboard', \App\Livewire\Leaderboard::class)
 Route::get('/explore', \App\Livewire\KnowledgeExplorer::class)
     ->name('explore');
 
+Route::view('/about', 'about')->name('about');
+Route::view('/privacy', 'privacy')->name('privacy');
+Route::view('/legal', 'legal')->name('legal');
+
 Route::get('/search', \App\Livewire\SmartSearch::class)->name('search');
 Route::get('/browse', [\App\Http\Controllers\ArticleController::class, 'index'])->name('wiki.index');
 Route::get('/browse-old', [\App\Http\Controllers\ArticleController::class, 'index'])->name('browse');
