@@ -22,11 +22,11 @@ new #[Layout('layouts.guest')] class extends Component
 
         $user = auth()->user();
         if ($user->isModerator()) {
-            $this->redirectIntended(default: '/admin/dashboard', navigate: true);
+            $this->redirectIntended(default: route('admin.dashboard'), navigate: true);
             return;
         }
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $this->redirectIntended(default: route('dashboard'), navigate: true);
     }
 }; ?>
 
