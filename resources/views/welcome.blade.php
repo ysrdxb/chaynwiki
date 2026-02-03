@@ -716,7 +716,7 @@
     {{-- =========================================
          NEW TOPICS SECTION - FIGMA QUALITY
          ========================================= --}}
-    <section class="py-24 bg-[#1A1A2E] relative overflow-hidden" 
+    <section class="py-24 bg-[#0f1419] relative overflow-hidden" 
         x-data="{ 
             loaded: false,
             canScrollLeft: false,
@@ -1141,7 +1141,7 @@
                         {{-- Rank Number --}}
                         <div class="w-10 h-10 flex items-center justify-center">
                             @if($i < 3)
-                                <div class="w-8 h-8 rounded-lg bg-gradient-to-br @if($i==0) from-yellow-400 to-orange-500 @elseif($i==1) from-gray-300 to-gray-500 @else from-orange-400 to-red-600 @endif flex items-center justify-center shadow-lg @if($i==0) shadow-yellow-500/20 @endif">
+                                <div class="w-8 h-8 rounded-lg bg-gradient-to-br @if($i==0) from-[#38bdf8] to-[#0ea5e9] @elseif($i==1) from-[#a78bfa] to-[#8b5cf6] @else from-[#2dd4bf] to-[#14b8a6] @endif flex items-center justify-center shadow-lg @if($i==0) shadow-[#38bdf8]/20 @endif">
                                     <span class="text-white font-black text-sm">{{ $i + 1 }}</span>
                                 </div>
                             @else
