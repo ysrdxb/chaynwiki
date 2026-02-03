@@ -126,12 +126,23 @@ new #[Layout('layouts.guest')] class extends Component
         <!-- Submit Button -->
         <button 
             type="submit" 
-            class="w-full flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/25"
+            wire:loading.attr="disabled"
+            wire:target="register"
+            class="w-full flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/25 disabled:opacity-60 disabled:cursor-not-allowed"
         >
-            Sign Up
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-            </svg>
+            <span wire:loading.remove wire:target="register" class="flex items-center gap-2">
+                Create Account
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </span>
+            <span wire:loading wire:target="register" class="flex items-center gap-2">
+                <svg class="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
+                    <path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4" stroke-linecap="round"></path>
+                </svg>
+                Creating...
+            </span>
         </button>
     </form>
 
@@ -139,7 +150,7 @@ new #[Layout('layouts.guest')] class extends Component
     <p class="mt-8 text-center text-gray-400">
         Already have an account? 
         <a href="{{ route('login') }}" wire:navigate class="text-white font-semibold hover:text-blue-400 transition-colors">
-            Login now
+            Log in
         </a>
     </p>
 </div>

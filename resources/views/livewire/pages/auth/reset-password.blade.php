@@ -70,36 +70,75 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <form wire:submit="resetPassword">
-        <!-- Email Address -->
+    <h2 class="text-xl font-bold text-white mb-4">Set a new password</h2>
+    <p class="text-sm text-white/50 mb-6">Choose a strong password you haven’t used before.</p>
+
+    <form wire:submit="resetPassword" class="space-y-6">
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input wire:model="email" id="email" class="block mt-1 w-full" type="email" name="email" required autofocus autocomplete="username" />
+            <label for="email" class="block text-sm font-bold text-white/80 mb-2">Email</label>
+            <input 
+                wire:model="email" 
+                id="email" 
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
+                type="email" 
+                name="email" 
+                required 
+                autofocus 
+                autocomplete="username"
+                placeholder="Enter Email Address"
+            />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input wire:model="password" id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+        <div>
+            <label for="password" class="block text-sm font-bold text-white/80 mb-2">New Password</label>
+            <input 
+                wire:model="password" 
+                id="password" 
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
+                type="password" 
+                name="password" 
+                required 
+                autocomplete="new-password"
+                placeholder="Enter your Password"
+            />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input wire:model="password_confirmation" id="password_confirmation" class="block mt-1 w-full"
-                          type="password"
-                          name="password_confirmation" required autocomplete="new-password" />
-
+        <div>
+            <label for="password_confirmation" class="block text-sm font-bold text-white/80 mb-2">Confirm Password</label>
+            <input 
+                wire:model="password_confirmation" 
+                id="password_confirmation" 
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
+                type="password"
+                name="password_confirmation" 
+                required 
+                autocomplete="new-password"
+                placeholder="Confirm your Password"
+            />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
+        <button 
+            type="submit" 
+            wire:loading.attr="disabled" 
+            wire:target="resetPassword"
+            class="w-full flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/25 disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+            <span wire:loading.remove wire:target="resetPassword" class="flex items-center gap-2">
+                Reset Password
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </span>
+            <span wire:loading wire:target="resetPassword" class="flex items-center gap-2">
+                <svg class="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
+                    <path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4" stroke-linecap="round"></path>
+                </svg>
+                Updating...
+            </span>
+        </button>
     </form>
 </div>

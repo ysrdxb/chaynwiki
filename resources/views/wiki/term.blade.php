@@ -2,6 +2,20 @@
 
 @section('title', $article->title . ' - Music Terminology - ChaynWiki')
 
+@php
+    $seoDescription = $summary ?? Str::limit(strip_tags((string) $article->content), 160);
+    $seoImage = $article->getRawOriginal('featured_image');
+    if ($seoImage && !Str::startsWith($seoImage, ['http://', 'https://'])) {
+        $seoImage = Storage::url($seoImage);
+    }
+    $seoImage = $seoImage ?: asset('images/hero_background.png');
+@endphp
+
+@section('meta_description', $seoDescription)
+@section('meta_image', $seoImage)
+@section('canonical', route('wiki.show', $article->slug))
+@section('og_type', 'article')
+
 @section('content')
     @php
         $featured_image = $article->getRawOriginal('featured_image');
@@ -14,8 +28,9 @@
             <div class="relative pt-32 pb-12 bg-primary section-divider overflow-hidden">
                 <div class="absolute inset-0 z-0">
                     @if($featured_image)
-                        <img src="{{ $featured_image }}" class="w-full h-full object-cover grayscale opacity-5 blur-xl scale-125">
+                        <img src="{{ $featured_image }}" class="w-full h-full object-cover grayscale opacity-10 blur-xl scale-125">
                     @endif
+                    <div class="absolute inset-0 bg-primary/90"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent"></div>
                 </div>
                 
@@ -65,7 +80,7 @@
             </div>
 
             <!-- MAIN CONTENT AREA -->
-            <section class="bg-secondary section-divider">
+            <section class="bg-primary section-divider">
                 <div class="max-w-[1200px] mx-auto px-8 py-12">
                     <div class="flex flex-col lg:flex-row gap-12">
                     <!-- Main Column -->
@@ -73,8 +88,8 @@
                         <article class="prose prose-invert prose-base max-w-none">
                             @if($summary)
                                 <div class="mb-10 p-6 bg-secondary border border-white/5 rounded-2xl">
-                                    <div class="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-3">Definition Snapshot</div>
-                                    <p class="text-white/70 text-base leading-relaxed">{{ $summary }}</p>
+                                    <div class="text-xs font-semibold text-white/50 uppercase tracking-[0.2em] mb-3">Definition Snapshot</div>
+                                    <p class="text-white/70 text-sm leading-relaxed">{{ $summary }}</p>
                                 </div>
                             @endif
                             <h2 class="text-xl font-black text-white italic uppercase tracking-tighter mb-8 flex items-center gap-3">
@@ -122,13 +137,13 @@
                              <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-blue-500/10 transition-colors"></div>
                              
                              <div class="relative z-10">
-                                <h3 class="text-lg font-black text-white italic uppercase tracking-tighter mb-6">Archive Protocol</h3>
+                                <h3 class="text-base font-black text-white italic uppercase tracking-tighter mb-6">Archive Protocol</h3>
                                 <div class="flex flex-col gap-3">
                                     <div>
                                         <livewire:article.play-button 
                                             :articleId="$article->id" 
                                             label="Listen"
-                                            class="w-full py-4 bg-blue-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
+                                            class="w-full py-3.5 bg-blue-500 text-white rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
                                         />
                                     </div>
 
@@ -137,7 +152,7 @@
                                     </div>
 
                                     <div class="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                                        <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Protocol Utility</span>
+                                        <span class="text-[10px] font-semibold text-white/50 uppercase tracking-widest">Protocol Utility</span>
                                          <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                                     </div>
                                 </div>
@@ -145,18 +160,18 @@
                         </div>
 
                         <div class="space-y-4">
-                            <h3 class="text-[9px] font-black text-white/10 uppercase tracking-[0.2em]">Related Terms</h3>
+                            <h3 class="text-xs font-semibold text-white/50 uppercase tracking-[0.2em]">Related Terms</h3>
                             <div class="flex flex-wrap gap-2">
                                 @forelse($article->term->related_terms ?? [] as $related)
                                     @php
                                         $relatedArticle = $relatedTermArticles->get($related);
                                     @endphp
                                     @if($relatedArticle)
-                                        <a href="{{ route('wiki.show', $relatedArticle->slug) }}" class="px-4 py-2 bg-white/5 border border-white/5 rounded-xl text-[10px] text-white/40 hover:text-blue-400 hover:border-blue-500/30 transition-all uppercase font-black tracking-widest">
+                                        <a href="{{ route('wiki.show', $relatedArticle->slug) }}" class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] text-white/60 hover:text-blue-400 hover:border-blue-500/30 transition-all uppercase font-semibold tracking-widest">
                                             {{ $related }}
                                         </a>
                                     @else
-                                        <span class="px-4 py-2 bg-white/5 border border-white/5 rounded-xl text-[10px] text-white/30 uppercase font-black tracking-widest">
+                                        <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] text-white/40 uppercase font-semibold tracking-widest">
                                             {{ $related }}
                                         </span>
                                     @endif

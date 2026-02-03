@@ -2,6 +2,20 @@
 
 @section('title', $article->title . ' - ChaynWiki')
 
+@php
+    $seoDescription = $summary ?? Str::limit(strip_tags((string) $article->content), 160);
+    $seoImage = $article->featured_image;
+    if ($seoImage && !Str::startsWith($seoImage, ['http://', 'https://'])) {
+        $seoImage = Storage::url($seoImage);
+    }
+    $seoImage = $seoImage ?: asset('images/hero_background.png');
+@endphp
+
+@section('meta_description', $seoDescription)
+@section('meta_image', $seoImage)
+@section('canonical', route('wiki.show', $article->slug))
+@section('og_type', 'article')
+
 @section('content')
     @php
         $placeholder = match ($article->category) {
@@ -82,21 +96,21 @@
             </div>
 
             <!-- MAIN CONTENT AREA -->
-            <div class="max-w-[1200px] mx-auto px-8 py-12">
+            <div class="max-w-[1200px] mx-auto px-8 py-16">
                 <div class="flex flex-col lg:flex-row gap-12">
                     <!-- Main Column -->
                     <div class="flex-1 min-w-0">
                         <article class="prose prose-invert prose-base max-w-none">
-                            <div class="article-content text-white/50 leading-relaxed">
+                            <div class="article-content text-white/60 text-sm leading-relaxed">
                                 @if(!empty($article->content))
                                     {!! Str::markdown($article->content) !!}
                                 @else
-                                    <p class="text-white/40">This record is still being authored. Check back soon for the full entry.</p>
+                                    <p class="text-white/50 text-sm">This record is still being authored. Check back soon for the full entry.</p>
                                 @endif
                             </div>
                         </article>
 
-                        <section class="mt-16 pt-12 border-t border-white/5">
+                        <section class="mt-12 pt-10 border-t border-white/5">
                             <livewire:article.comments :article="$article" />
                         </section>
                     </div>
@@ -104,11 +118,11 @@
                     <!-- Sidebar -->
                     <aside class="w-full lg:w-72 space-y-8">
                         <div class="bg-secondary border border-white/5 p-6 rounded-2xl">
-                            <h3 class="text-lg font-black text-white italic uppercase tracking-tighter mb-6">Quick Actions</h3>
+                            <h3 class="text-base font-black text-white italic uppercase tracking-tighter mb-5">Quick Actions</h3>
                             <div class="space-y-3">
                                 @auth
                                     @if($article->user_id === auth()->id())
-                                        <a href="{{ route('wiki.edit', $article) }}" class="w-full py-3 bg-blue-500 text-white font-black text-[9px] uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 hover:bg-blue-600 transition-all shadow-xl shadow-blue-500/10">
+                                        <a href="{{ route('wiki.edit', $article) }}" class="w-full py-3.5 bg-blue-500 text-white font-semibold text-[10px] uppercase tracking-widest rounded-xl flex items-center justify-center gap-2 hover:bg-blue-600 transition-all shadow-xl shadow-blue-500/10">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                                             Modify Archive
                                         </a>
@@ -119,7 +133,7 @@
                         </div>
 
                         <div class="space-y-4">
-                            <h3 class="text-[9px] font-black text-white/10 uppercase tracking-[0.2em]">Registry Index</h3>
+                            <h3 class="text-xs font-semibold text-white/50 uppercase tracking-[0.2em]">Registry Index</h3>
                             <x-table-of-contents :content="$article->content ?? ''" />
                         </div>
                     </aside>

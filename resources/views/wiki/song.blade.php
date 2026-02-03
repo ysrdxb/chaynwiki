@@ -2,6 +2,20 @@
 
 @section('title', $article->title . ' — ' . ($article->song->artist->name ?? 'Artist'))
 
+@php
+    $seoDescription = $summary ?? Str::limit(strip_tags((string) $article->content), 160);
+    $seoImage = $article->featured_image;
+    if ($seoImage && !Str::startsWith($seoImage, ['http://', 'https://'])) {
+        $seoImage = Storage::url($seoImage);
+    }
+    $seoImage = $seoImage ?: asset('images/hero_background.png');
+@endphp
+
+@section('meta_description', $seoDescription)
+@section('meta_image', $seoImage)
+@section('canonical', route('wiki.show', $article->slug))
+@section('og_type', 'article')
+
 @section('content')
     @php
         $featured_image = $article->featured_image;
@@ -84,7 +98,7 @@
     </div>
 
     <!-- MAIN CONTENT GRID -->
-    <div class="max-w-[1200px] mx-auto px-8 py-20 relative z-20">
+    <div class="max-w-[1200px] mx-auto px-8 py-16 relative z-20">
         <div class="flex flex-col lg:flex-row gap-16">
             
             <!-- Left Column -->
@@ -92,12 +106,12 @@
                 
                 <!-- About the Track -->
                 <section>
-                    <div class="flex items-center gap-6 mb-12">
-                        <h2 class="text-3xl font-black text-white italic uppercase tracking-tighter">About the Track</h2>
+                    <div class="flex items-center gap-6 mb-10">
+                        <h2 class="text-2xl font-black text-white italic uppercase tracking-tighter">About the Track</h2>
                         <div class="flex-1 h-px bg-white/5"></div>
                     </div>
                     <div class="article-content prose prose-invert prose-lg max-w-none">
-                        <div class="text-slate-300 leading-relaxed font-medium">
+                        <div class="text-white/60 text-sm leading-relaxed">
                             {!! Str::markdown($article->content) !!}
                         </div>
                     </div>
@@ -106,9 +120,9 @@
                 <!-- Lyrics Section -->
                 @if($article->song && $article->song->lyrics)
                 <section>
-                    <div class="flex items-center justify-between mb-12">
-                        <h2 class="text-3xl font-black text-white italic uppercase tracking-tighter">Lyrical Content</h2>
-                        <button class="text-[10px] font-black text-white/20 uppercase tracking-widest hover:text-white transition-colors">Copy to Clipboard</button>
+                    <div class="flex items-center justify-between mb-10">
+                        <h2 class="text-2xl font-black text-white italic uppercase tracking-tighter">Lyrical Content</h2>
+                        <button class="text-xs font-semibold text-white/50 uppercase tracking-widest hover:text-white transition-colors">Copy to Clipboard</button>
                     </div>
                     <div class="bg-secondary border border-white/5 rounded-3xl p-12 lg:p-20 font-mono text-xl leading-relaxed text-white/80 shadow-2xl relative overflow-hidden group">
                         <div class="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity">
@@ -132,7 +146,7 @@
                 
                 <!-- Metadata Card -->
                 <div class="glass p-8 rounded-3xl border border-white/10 bg-secondary">
-                    <h3 class="text-xl font-black text-white italic uppercase tracking-tighter mb-8">Metadata</h3>
+                    <h3 class="text-lg font-black text-white italic uppercase tracking-tighter mb-6">Metadata</h3>
                     
                     <dl class="space-y-6">
                         <div class="flex justify-between items-end pb-3 border-b border-white/5">
@@ -153,7 +167,7 @@
                         <livewire:article.play-button 
                             :articleId="$article->id" 
                             label="Play Sonic Pulse"
-                            class="w-full py-4 bg-blue-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
+                            class="w-full py-3.5 bg-blue-500 text-white rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
                         />
                         
                         <x-article.⚡add-to-crate :article="$article" />
@@ -162,7 +176,7 @@
                             <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Protocol Score</span>
                              <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
-                        <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-3 border border-white/5 text-white/20 rounded-xl text-[9px] font-black uppercase tracking-widest hover:text-white hover:border-white/10 transition-all flex items-center justify-center gap-2">
+                        <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-3.5 border border-white/10 text-white/60 rounded-xl text-[10px] font-semibold uppercase tracking-widest hover:text-white hover:border-white/20 transition-all flex items-center justify-center gap-2">
                             Modify Archive
                         </a>
                     </div>
@@ -170,7 +184,7 @@
 
                 <!-- Contributors -->
                 <div class="space-y-6">
-                    <h3 class="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">Contributors</h3>
+                    <h3 class="text-xs font-semibold text-white/50 uppercase tracking-[0.2em]">Contributors</h3>
                     <div class="flex -space-x-3 overflow-hidden">
                         @for($i = 0; $i < 4; $i++)
                             <div class="inline-block h-10 w-10 rounded-xl ring-4 ring-primary bg-secondary border border-white/10 flex items-center justify-center text-[10px] font-black text-blue-500">

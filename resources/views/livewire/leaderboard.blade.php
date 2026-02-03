@@ -5,18 +5,18 @@
         <div class="relative pb-16 border-b border-white/5 mb-16 px-1">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
                 <div>
-                    <nav class="flex items-center gap-2 text-[10px] font-black text-white/10 uppercase tracking-[0.2em] mb-8">
+                    <nav class="flex items-center gap-2 text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-6">
                         <a href="{{ route('home') }}" class="hover:text-blue-500 transition-colors">Home</a>
                         <span>/</span>
-                        <span class="text-blue-500/50">Global Impact Index</span>
+                        <span class="text-blue-400">Global Impact Index</span>
                     </nav>
 
-                    <h1 class="text-5xl lg:text-7xl font-black text-white italic uppercase tracking-tighter mb-4 leading-none">
-                        TOP <span class="text-blue-500">PERFORMING</span> NODES
+                    <h1 class="text-4xl lg:text-6xl font-black text-white italic uppercase tracking-tighter mb-3 leading-none">
+                        Top <span class="text-blue-500">Contributors</span> & Entries
                     </h1>
 
-                    <p class="text-[10px] font-black text-white/10 uppercase tracking-[0.3em]">
-                        RANKED BY GLOBAL REACH, METADATA ACCURACY, AND RELIABILITY.
+                    <p class="text-sm text-white/50 max-w-2xl">
+                        Discover the most impactful entries and contributors based on reach, growth, and trusted revisions.
                     </p>
                 </div>
                 
@@ -25,8 +25,8 @@
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </div>
                     <div>
-                        <span class="text-white font-black block leading-none mb-1 text-[10px] uppercase tracking-wider">INDEX PROTOCOL</span>
-                        <span class="text-[8px] text-white/20 font-black uppercase tracking-widest">LIVE SYNC ACTIVE</span>
+                        <span class="text-white font-black block leading-none mb-1 text-[10px] uppercase tracking-wider">Index Protocol</span>
+                        <span class="text-[10px] text-white/50 font-semibold">Live sync active</span>
                     </div>
                 </div>
             </div>
@@ -37,12 +37,12 @@
             <!-- Sidebar Filters -->
             <div class="space-y-8">
                 <div>
-                    <h3 class="text-[9px] font-black text-white/10 uppercase tracking-[0.3em] mb-6 italic px-1">Archive Filter</h3>
+                    <h3 class="text-xs font-black text-white/50 uppercase tracking-[0.3em] mb-4 px-1">Filter by type</h3>
                     <div class="space-y-2">
                         @foreach(['All', 'Recordings', 'Artist Profiles', 'Classifications'] as $cat)
                         <button 
                             wire:click="setFilter('{{ $cat }}')"
-                            class="w-full text-left px-5 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $activeFilter === $cat ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/20 border border-white/5 hover:border-white/10 hover:text-white' }}">
+                            class="w-full text-left px-5 py-3.5 rounded-xl text-[11px] font-semibold tracking-wide transition-all {{ $activeFilter === $cat ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/60 border border-white/5 hover:border-white/10 hover:text-white' }}">
                             {{ $cat }}
                         </button>
                         @endforeach
@@ -50,12 +50,12 @@
                 </div>
 
                 <div>
-                    <h3 class="text-[9px] font-black text-white/10 uppercase tracking-[0.3em] mb-6 italic px-1">Sort Protocol</h3>
+                    <h3 class="text-xs font-black text-white/50 uppercase tracking-[0.3em] mb-4 px-1">Sort by</h3>
                     <div class="space-y-2">
                         @foreach(['Impact Score', 'Metadata Growth', 'Total Connections'] as $sort)
                         <button 
                             wire:click="setSort('{{ $sort }}')"
-                            class="w-full text-left px-5 py-3.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $activeSort === $sort ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'border border-white/5 text-white/20 hover:border-white/10 hover:text-white' }}">
+                            class="w-full text-left px-5 py-3.5 rounded-xl text-[11px] font-semibold tracking-wide transition-all {{ $activeSort === $sort ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'border border-white/5 text-white/60 hover:border-white/10 hover:text-white' }}">
                             {{ $sort }}
                         </button>
                         @endforeach
@@ -77,11 +77,11 @@
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse">
                             <thead>
-                                <tr class="border-b border-white/5">
-                                    <th class="px-6 py-4 text-[9px] font-black text-white/20 uppercase tracking-widest text-left">Archive Identity</th>
-                                    <th class="px-6 py-4 text-[9px] font-black text-white/20 uppercase tracking-widest text-left">Status</th>
-                                    <th class="px-6 py-4 text-[9px] font-black text-white/20 uppercase tracking-widest text-left">Impact Analytics</th>
-                                    <th class="px-6 py-4 text-[9px] font-black text-white/20 uppercase tracking-widest text-right">Commit</th>
+                                <tr class="border-b border-white/5 bg-white/[0.02]">
+                                    <th class="px-6 py-4 text-[10px] font-semibold text-white/60 uppercase tracking-widest text-left">Entry</th>
+                                    <th class="px-6 py-4 text-[10px] font-semibold text-white/60 uppercase tracking-widest text-left">Category</th>
+                                    <th class="px-6 py-4 text-[10px] font-semibold text-white/60 uppercase tracking-widest text-left">Impact</th>
+                                    <th class="px-6 py-4 text-[10px] font-semibold text-white/60 uppercase tracking-widest text-right">Open</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-white/5">
@@ -96,13 +96,13 @@
                                 </template>
 
                                 @foreach($rankings as $index => $item)
-                                <tr class="group hover:bg-white/[0.01] transition-all border-b border-white/[0.02] last:border-0">
+                                <tr class="group hover:bg-white/[0.03] transition-all border-b border-white/[0.03] last:border-0">
                                     <td class="px-6 py-6">
                                         <div class="flex items-center gap-6">
-                                            <span class="text-2xl font-black text-white/5 italic w-8">{{ $index + 1 }}</span>
+                                            <span class="text-2xl font-black text-white/20 italic w-8">{{ $index + 1 }}</span>
                                             <div>
-                                                <div class="text-white font-black italic uppercase tracking-tight group-hover:text-blue-500 transition-colors">{{ $item['title'] }}</div>
-                                                <div class="text-[8px] font-black text-white/10 uppercase tracking-widest mt-1.5 flex items-center gap-2">
+                                                <div class="text-white font-bold uppercase tracking-tight group-hover:text-blue-400 transition-colors">{{ $item['title'] }}</div>
+                                                <div class="text-[10px] font-semibold text-white/40 uppercase tracking-widest mt-1.5 flex items-center gap-2">
                                                     <span class="w-1 h-1 rounded-full bg-blue-500/20"></span>
                                                     Authorized by {{ $item['user'] }}
                                                 </div>
@@ -110,25 +110,25 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-6">
-                                        <span class="px-3 py-1 bg-blue-500/5 border border-blue-500/10 rounded-lg text-[8px] font-black text-blue-500 uppercase tracking-widest">
+                                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[9px] font-semibold text-blue-300 uppercase tracking-widest">
                                             {{ $item['cat'] }}
                                         </span>
                                     </td>
                                     <td class="px-6 py-6">
                                         <div class="flex items-center gap-8">
                                             <div class="flex flex-col">
-                                                <span class="text-white font-black text-xs">{{ $item['reach'] }}</span>
-                                                <span class="text-[8px] font-black text-white/10 uppercase tracking-widest mt-1">Global REACH</span>
+                                                <span class="text-white font-bold text-sm">{{ $item['reach'] }}</span>
+                                                <span class="text-[10px] font-semibold text-white/40 uppercase tracking-widest mt-1">Global reach</span>
                                             </div>
                                             <div class="flex flex-col">
-                                                <span class="text-blue-500 font-black text-xs">{{ $item['growth'] }}</span>
-                                                <span class="text-[8px] font-black text-white/10 uppercase tracking-widest mt-1">Growth</span>
+                                                <span class="text-blue-400 font-bold text-sm">{{ $item['growth'] }}</span>
+                                                <span class="text-[10px] font-semibold text-white/40 uppercase tracking-widest mt-1">Growth</span>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-6 text-right">
-                                        <a href="{{ route('wiki.show', $item['slug']) }}" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white/5 border border-white/5 rounded-xl text-[9px] font-black text-white/30 uppercase tracking-[0.2em] hover:bg-white/10 hover:text-white transition-all active:scale-95">
-                                            Access Protocol
+                                        <a href="{{ route('wiki.show', $item['slug']) }}" class="inline-flex items-center gap-2 px-6 py-2.5 bg-white/5 border border-white/10 rounded-xl text-[10px] font-semibold text-white/70 uppercase tracking-[0.2em] hover:bg-white/10 hover:text-white transition-all active:scale-95">
+                                            View Entry
                                         </a>
                                     </td>
                                 </tr>
@@ -142,7 +142,7 @@
                 @if(count($leaderboard) > 0)
                 <div class="mt-12">
                     <div class="flex items-center gap-4 mb-8">
-                        <h2 class="text-xl font-black text-white italic uppercase tracking-tighter">Elite Contributor Nodes</h2>
+                        <h2 class="text-xl font-black text-white italic uppercase tracking-tighter">Top Contributors</h2>
                         <div class="flex-1 h-px bg-white/5"></div>
                     </div>
 
@@ -152,7 +152,7 @@
                             <div class="flex items-center justify-between gap-4">
                                 <div class="flex items-center gap-3">
                                     <div class="relative">
-                                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-lg font-black text-white/10 italic group-hover:text-blue-500 transition-colors">
+                                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-lg font-black text-white/30 italic group-hover:text-blue-400 transition-colors">
                                             {{ strtoupper(substr($user['name'],0,1)) }}
                                         </div>
                                         @if($index < 3)
@@ -162,13 +162,13 @@
                                         @endif
                                     </div>
                                     <div>
-                                        <div class="text-white font-bold italic uppercase tracking-tight text-base leading-tight">{{ $user['name'] }}</div>
-                                        <div class="text-[8px] font-black text-blue-500/50 uppercase tracking-widest mt-1">LVL {{ $user['level'] }} Identity</div>
+                                        <div class="text-white font-semibold uppercase tracking-tight text-base leading-tight">{{ $user['name'] }}</div>
+                                        <div class="text-[10px] font-semibold text-white/40 uppercase tracking-widest mt-1">Level {{ $user['level'] }}</div>
                                     </div>
                                 </div>
                                 <div class="text-right">
-                                    <div class="text-white font-black text-base">{{ $user['reputation_score'] }}</div>
-                                    <div class="text-[8px] font-black text-white/10 uppercase tracking-widest">Impact Pts</div>
+                                    <div class="text-white font-bold text-base">{{ $user['reputation_score'] }}</div>
+                                    <div class="text-[10px] font-semibold text-white/40 uppercase tracking-widest">Impact points</div>
                                 </div>
                             </div>
                         </div>
@@ -182,9 +182,9 @@
         <!-- Join the Archive -->
         <div class="mt-20 pt-12 border-t border-white/5 text-center">
             <h2 class="text-2xl font-black text-white italic uppercase tracking-tighter mb-4">Contribute to the Archive</h2>
-            <p class="text-white/30 text-xs max-w-md mx-auto mb-8">Add new records, refine historical nodes, and increase your global archive standing.</p>
+            <p class="text-white/50 text-sm max-w-md mx-auto mb-8">Add new records, refine articles, and earn impact for verified contributions.</p>
             <a href="{{ route('wiki.create') }}" class="btn-primary-v2 pr-10 pl-8 py-3.5 shadow-xl shadow-blue-500/10">
-                Initialize New Record Node
+                Create a new entry
             </a>
         </div>
     </div>

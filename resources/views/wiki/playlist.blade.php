@@ -2,6 +2,20 @@
 
 @section('title', $article->title . ' - Curated Playlist - ChaynWiki')
 
+@php
+    $seoDescription = $summary ?? Str::limit(strip_tags((string) $article->content), 160);
+    $seoImage = $article->featured_image;
+    if ($seoImage && !Str::startsWith($seoImage, ['http://', 'https://'])) {
+        $seoImage = Storage::url($seoImage);
+    }
+    $seoImage = $seoImage ?: asset('images/hero_background.png');
+@endphp
+
+@section('meta_description', $seoDescription)
+@section('meta_image', $seoImage)
+@section('canonical', route('wiki.show', $article->slug))
+@section('og_type', 'article')
+
 @section('content')
     @php
         $placeholder = 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=1200';
@@ -79,32 +93,33 @@
             </div>
 
             <!-- CONTENT AREA -->
-            <div class="max-w-[1200px] mx-auto px-8 py-16">
-                <div class="grid lg:grid-cols-3 gap-16">
+            <section class="bg-primary section-divider">
+                <div class="max-w-[1200px] mx-auto px-8 py-16">
+                    <div class="grid lg:grid-cols-3 gap-16">
                     <!-- Sidebar: Curator Info -->
                     <div class="space-y-12">
                         <section>
-                            <h3 class="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em] mb-6">Curator Note</h3>
+                            <h3 class="text-xs font-semibold text-blue-400 uppercase tracking-[0.3em] mb-6">Curator Note</h3>
                             <div class="p-8 bg-secondary border border-white/5 rounded-3xl relative overflow-hidden group">
                                 <svg class="w-12 h-12 text-white/5 absolute -top-2 -left-2 rotate-12" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017V14H17.017C15.9124 14 15.017 13.1046 15.017 12V9C15.017 7.89543 15.9124 7 17.017 7H20.017V10H18.017V12H20.017C21.1216 12 22.017 12.8954 22.017 14V21H14.017ZM3 21V18C3 16.8954 3.89543 16 5 16H8V14H6C4.89543 14 4 13.1046 4 12V9C4 7.89543 4.89543 7 6 7H9V10H7V12H9C10.1046 12 11 12.8954 11 14V21H3Z"/></svg>
-                                <p class="text-slate-300 leading-relaxed italic relative z-10">
+                                <p class="text-white/60 text-sm leading-relaxed italic relative z-10">
                                     "{{ $playlist?->curator_note ?: 'This collection represents a specific moment in music history, curated for the ChaynWiki archive.' }}"
                                 </p>
                             </div>
                         </section>
 
                         <section class="space-y-3">
-                            <h3 class="text-[10px] font-black text-blue-500 uppercase tracking-[0.3em] mb-4">Transmission Core</h3>
+                            <h3 class="text-xs font-semibold text-blue-400 uppercase tracking-[0.3em] mb-4">Transmission Core</h3>
                             <livewire:article.play-button 
                                 :articleId="$article->id" 
                                 label="Stream Pulse"
-                                class="w-full py-4 bg-blue-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
+                                class="w-full py-3.5 bg-blue-500 text-white rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
                             />
 
                             <x-article.⚡add-to-crate :article="$article" />
 
                             <div class="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                                <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Protocol Utility</span>
+                                <span class="text-[10px] font-semibold text-white/50 uppercase tracking-widest">Protocol Utility</span>
                                  <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                             </div>
                         </section>
@@ -113,7 +128,7 @@
                     <!-- Main: Article Content & Playlist Embed -->
                     <div class="lg:col-span-2 space-y-16">
                         <article class="prose prose-invert prose-lg max-w-none">
-                            <div class="article-content text-slate-400 leading-relaxed">
+                            <div class="article-content text-white/60 text-sm leading-relaxed">
                                 @if(!empty($article->content))
                                     {!! Str::markdown($article->content) !!}
                                 @else
@@ -123,7 +138,7 @@
                         </article>
 
                         <section>
-                            <h3 class="text-xl font-black text-white italic uppercase tracking-tighter mb-8 flex items-center gap-4">
+                            <h3 class="text-lg font-black text-white italic uppercase tracking-tighter mb-8 flex items-center gap-4">
                                 <span class="w-10 h-px bg-green-500"></span>
                                 Spotify Synchronized
                             </h3>
@@ -145,8 +160,9 @@
                             <livewire:article.comments :article="$article" />
                         </section>
                     </div>
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 @endsection

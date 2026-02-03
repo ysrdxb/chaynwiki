@@ -42,6 +42,29 @@
         </div>
 
         <form wire:submit="save" class="space-y-12">
+            {{-- Global Validation Error Summary --}}
+            @if ($errors->any())
+                <div class="bg-red-500/10 border border-red-500/30 rounded-2xl px-6 py-4">
+                    <div class="flex items-center gap-3 mb-2">
+                        <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        <span class="text-red-400 font-bold text-sm">Please fix the following errors:</span>
+                    </div>
+                    <ul class="text-red-400/80 text-xs space-y-1 ml-8">
+                        @foreach ($errors->all() as $error)
+                            <li>• {{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            {{-- Success Message --}}
+            @if (session()->has('message'))
+                <div class="bg-green-500/10 border border-green-500/30 rounded-2xl px-6 py-4 flex items-center gap-3">
+                    <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    <span class="text-green-400 font-medium text-sm">{{ session('message') }}</span>
+                </div>
+            @endif
+
             @if($category)
                 {{-- Form Fields Grid --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
@@ -49,35 +72,31 @@
                     @if($category === 'song')
                         {{-- Song Fields --}}
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Add Title</label>
-                            <input wire:model="title" type="text" placeholder="e.g. Evolution of Synthwave in Modern Pop" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <label class="text-white text-sm font-bold block mb-1">Add Title <span class="text-red-400">*</span></label>
+                            <input wire:model="title" type="text" placeholder="e.g. Blinding Lights" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
+                            @error('title') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Artist</label>
-                            <input wire:model="meta.artist_name" type="text" placeholder="e.g. 'Wiz'" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <label class="text-white text-sm font-bold block mb-1">Artist <span class="text-red-400">*</span></label>
+                            <input wire:model="meta.artist_name" type="text" placeholder="e.g. The Weeknd" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.artist_name') border-red-500 @else border-custom-35 @enderror">
+                            @error('meta.artist_name') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Release Date</label>
-                            <input wire:model="meta.release_date" type="text" placeholder="e.g. Evolution of Synthwave in Modern Pop" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <input wire:model="meta.release_date" type="text" placeholder="e.g. 2020-11-29" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.release_date') border-red-500 @else border-custom-35 @enderror">
+                            @error('meta.release_date') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Genre</label>
-                            <div class="relative">
-                                <select wire:model="meta.genre" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm focus:border-white/20 appearance-none outline-none">
-                                    <option value="">Hip hop</option>
-                                    <option value="pop">Pop</option>
-                                    <option value="rock">Rock</option>
-                                </select>
-                                <svg class="w-4 h-4 text-white/40 absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                            </div>
+                            <label class="text-white text-sm font-bold block mb-1">Genre <span class="text-red-400">*</span></label>
+                            <input wire:model="meta.genre" type="text" placeholder="e.g. Synthwave, Pop" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.genre') border-red-500 @else border-custom-35 @enderror">
+                            @error('meta.genre') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Songwriters</label>
-                            <input wire:model="meta.songwriters" type="text" placeholder="e.g. Evolution of Synthwave in Modern Pop" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <input wire:model="meta.songwriters" type="text" placeholder="e.g. Abel Tesfaye, Max Martin" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Studio Recorded</label>
-                            <input wire:model="meta.studio_recorded" type="text" placeholder="e.g. 'Wiz'" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <input wire:model="meta.studio_recorded" type="text" placeholder="e.g. Conway Recording Studios" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
                         </div>
                         
                         {{-- Textareas --}}
@@ -90,8 +109,9 @@
                             <textarea wire:model="meta.achievements" rows="4" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
                         </div>
                         <div class="col-span-full space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Overview</label>
-                            <textarea wire:model="content" rows="6" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <label class="text-white text-sm font-bold block mb-1">Overview <span class="text-red-400">*</span></label>
+                            <textarea wire:model="content" rows="6" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
+                            @error('content') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-full space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Lyrics snippet</label>
@@ -101,37 +121,29 @@
                     @elseif($category === 'artist')
                         {{-- Artist Fields --}}
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Full Name</label>
-                            <input wire:model="title" type="text" placeholder="e.g. Evolution of Synthwave in Modern Pop" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <label class="text-white text-sm font-bold block mb-1">Full Name <span class="text-red-400">*</span></label>
+                            <input wire:model="title" type="text" placeholder="e.g. David Bowie" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
+                            @error('title') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Active Years</label>
-                            <input wire:model="meta.active_years" type="text" placeholder="e.g. 'Wiz'" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <label class="text-white text-sm font-bold block mb-1">Active Years <span class="text-red-400">*</span></label>
+                            <input wire:model="meta.active_years" type="text" placeholder="e.g. 1964–2016" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.active_years') border-red-500 @else border-custom-35 @enderror">
+                            @error('meta.active_years') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Genres</label>
-                            <div class="relative">
-                                <select wire:model="meta.genre" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm focus:border-white/20 appearance-none outline-none">
-                                    <option value="">Hip hop</option>
-                                </select>
-                                <svg class="w-4 h-4 text-white/40 absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                            </div>
+                            <label class="text-white text-sm font-bold block mb-1">Genres <span class="text-red-400">*</span></label>
+                            <input wire:model="meta.genre" type="text" placeholder="e.g. Art Rock, Glam Rock" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.genre') border-red-500 @else border-custom-35 @enderror">
+                            @error('meta.genre') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Top Songs</label>
-                            <div class="relative">
-                                <select wire:model="meta.top_songs" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm focus:border-white/20 appearance-none outline-none">
-                                    <option value="">Hip hop</option>
-                                </select>
-                                <svg class="w-4 h-4 text-blue-500 absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2l2.4 7.2h7.6l-6.1 4.5 2.3 7.3-6.2-4.5-6.2 4.5 2.3-7.3-6.1-4.5h7.6z"/>
-                                </svg>
-                            </div>
+                            <input wire:model="meta.top_songs" type="text" placeholder="e.g. Space Oddity, Heroes" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
                         </div>
 
                         <div class="col-span-full space-y-2 pt-4">
-                            <label class="text-white text-sm font-bold block mb-1">Bio</label>
-                            <textarea wire:model="content" rows="8" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <label class="text-white text-sm font-bold block mb-1">Bio <span class="text-red-400">*</span></label>
+                            <textarea wire:model="content" rows="8" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
+                            @error('content') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-full space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Breakthrough Moment</label>
@@ -145,25 +157,28 @@
                     @elseif($category === 'genre')
                         {{-- Genre Fields --}}
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Origin Country</label>
-                            <input wire:model="meta.origin_country" type="text" placeholder="e.g. Evolution of Synthwave in Modern Pop" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <label class="text-white text-sm font-bold block mb-1">Genre Name <span class="text-red-400">*</span></label>
+                            <input wire:model="title" type="text" placeholder="e.g. Synth-pop" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
+                            @error('title') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">First Appearance Year</label>
-                            <input wire:model="meta.appearance_year" type="text" placeholder="e.g. 'Wiz'" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <label class="text-white text-sm font-bold block mb-1">Origin Country <span class="text-red-400">*</span></label>
+                            <input wire:model="meta.origin_country" type="text" placeholder="e.g. United Kingdom" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.origin_country') border-red-500 @else border-custom-35 @enderror">
+                            @error('meta.origin_country') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Popular Artists</label>
-                            <input wire:model="meta.popular_artists" type="text" placeholder="e.g. Evolution of Synthwave in Modern Pop" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <label class="text-white text-sm font-bold block mb-1">First Appearance Year <span class="text-red-400">*</span></label>
+                            <input wire:model="meta.appearance_year" type="text" placeholder="e.g. 1977" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.appearance_year') border-red-500 @else border-custom-35 @enderror">
+                            @error('meta.appearance_year') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-white text-sm font-bold block mb-1">Popular Artists <span class="text-red-400">*</span></label>
+                            <input wire:model="meta.popular_artists" type="text" placeholder="e.g. Daft Punk, Justice" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.popular_artists') border-red-500 @else border-custom-35 @enderror">
+                            @error('meta.popular_artists') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Subgenres</label>
-                            <div class="relative">
-                                <select wire:model="meta.subgenres" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm focus:border-white/20 appearance-none outline-none">
-                                    <option value="">Hip-Hop</option>
-                                </select>
-                                <svg class="w-4 h-4 text-white/40 absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                            </div>
+                            <input wire:model="meta.subgenres" type="text" placeholder="e.g. French House, Electro" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
                         </div>
 
                         <div class="col-span-full space-y-2 pt-4">
@@ -175,41 +190,47 @@
                             <textarea wire:model="meta.cultural_impact" rows="4" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
                         </div>
                         <div class="col-span-full space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Description</label>
-                            <textarea wire:model="content" rows="8" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <label class="text-white text-sm font-bold block mb-1">Description <span class="text-red-400">*</span></label>
+                            <textarea wire:model="content" rows="8" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
+                            @error('content') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                     @elseif($category === 'playlist')
                         {{-- Playlist Fields --}}
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Playlist Title</label>
-                            <input wire:model="title" type="text" placeholder="e.g. Summer Vibes 2026" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <label class="text-white text-sm font-bold block mb-1">Playlist Title <span class="text-red-400">*</span></label>
+                            <input wire:model="title" type="text" placeholder="e.g. Summer Vibes 2026" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
+                            @error('title') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Spotify ID / Link</label>
                             <input wire:model="meta.spotify_id" type="text" placeholder="e.g. spotify:playlist:..." class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Track Count</label>
-                            <input wire:model="meta.track_count" type="number" placeholder="e.g. 25" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <label class="text-white text-sm font-bold block mb-1">Track Count <span class="text-red-400">*</span></label>
+                            <input wire:model="meta.track_count" type="number" placeholder="e.g. 25" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.track_count') border-red-500 @else border-custom-35 @enderror">
+                            @error('meta.track_count') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-full space-y-2 pt-4">
                             <label class="text-white text-sm font-bold block mb-1">Curator Note</label>
                             <textarea wire:model="meta.curator_note" rows="4" placeholder="Why should people listen to this?" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
                         </div>
                         <div class="col-span-full space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Extended Description</label>
-                            <textarea wire:model="content" rows="6" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <label class="text-white text-sm font-bold block mb-1">Extended Description <span class="text-red-400">*</span></label>
+                            <textarea wire:model="content" rows="6" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
+                            @error('content') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                     @elseif($category === 'term')
                         {{-- Terminology Fields --}}
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Term Name</label>
-                            <input wire:model="title" type="text" placeholder="e.g. Reverb" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <label class="text-white text-sm font-bold block mb-1">Term Name <span class="text-red-400">*</span></label>
+                            <input wire:model="title" type="text" placeholder="e.g. Reverb" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
+                            @error('title') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
-                            <label class="text-white text-sm font-bold block mb-1">Category Type</label>
+                            <label class="text-white text-sm font-bold block mb-1">Category Type <span class="text-red-400">*</span></label>
                             <div class="relative">
-                                <select wire:model="meta.category_type" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm focus:border-white/20 appearance-none outline-none">
+                                <select wire:model="meta.category_type" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm focus:border-white/20 appearance-none outline-none @error('meta.category_type') border-red-500 @else border-custom-35 @enderror">
+                                    <option value="">Select a category...</option>
                                     <option value="theory">Music Theory</option>
                                     <option value="equipment">Equipment & Gear</option>
                                     <option value="industry">Industry Terms</option>
@@ -217,6 +238,7 @@
                                 </select>
                                 <svg class="w-4 h-4 text-white/40 absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                             </div>
+                            @error('meta.category_type') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Phonetic Pronunciation</label>
@@ -227,8 +249,9 @@
                             <input wire:model="meta.origin_language" type="text" placeholder="e.g. Latin" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
                         </div>
                         <div class="col-span-full space-y-2 pt-4">
-                            <label class="text-white text-sm font-bold block mb-1">Definition & Usage</label>
-                            <textarea wire:model="content" rows="8" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <label class="text-white text-sm font-bold block mb-1">Definition & Usage <span class="text-red-400">*</span></label>
+                            <textarea wire:model="content" rows="8" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
+                            @error('content') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                     @endif
 
@@ -269,9 +292,19 @@
                             <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
                         </div>
                     </button>
-                    <button type="submit" class="bg-white text-[#050510] font-bold text-sm px-8 py-3.5 rounded-full flex items-center gap-3 transition-transform hover:scale-105">
-                        Submit Review
-                        <div class="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
+                    <button type="submit" 
+                        wire:loading.attr="disabled"
+                        wire:target="save"
+                        class="bg-white text-[#050510] font-bold text-sm px-8 py-3.5 rounded-full flex items-center gap-3 transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+                        <span wire:loading.remove wire:target="save">Submit Review</span>
+                        <span wire:loading wire:target="save" class="flex items-center gap-2">
+                            <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Submitting...
+                        </span>
+                        <div wire:loading.remove wire:target="save" class="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
                             <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
                         </div>
                     </button>

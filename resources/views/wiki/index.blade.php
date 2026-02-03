@@ -32,11 +32,12 @@
         </div>
     </div>
 
-    <div class="max-w-[1200px] mx-auto px-8 py-12">
+    <section class="bg-primary section-divider">
+        <div class="max-w-[1200px] mx-auto px-8 py-12">
         <!-- Filter Bar -->
         <div class="flex flex-wrap items-center gap-3 mb-16 px-1">
             <a href="{{ route('wiki.index', ['q' => $search ?? null]) }}" 
-                class="px-6 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all {{ !request('category') ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/20 border border-white/5 hover:border-white/10 hover:text-white' }}">
+                class="px-6 py-3 rounded-xl text-[10px] font-semibold uppercase tracking-[0.2em] transition-all {{ !request('category') ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/60 border border-white/10 hover:border-white/20 hover:text-white' }}">
                 All Records
             </a>
             
@@ -52,7 +53,7 @@
             
             @foreach($categories as $key => $label)
                 <a href="{{ route('wiki.index', ['q' => $search ?? null, 'category' => $key]) }}" 
-                    class="px-6 py-2.5 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] transition-all {{ request('category') == $key ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/20 border border-white/5 hover:border-white/10 hover:text-white' }}">
+                    class="px-6 py-3 rounded-xl text-[10px] font-semibold uppercase tracking-[0.2em] transition-all {{ request('category') == $key ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/60 border border-white/10 hover:border-white/20 hover:text-white' }}">
                     {{ $label }}
                 </a>
             @endforeach
@@ -67,7 +68,7 @@
                             <div class="flex items-center gap-4 mb-8">
                                 <h2 class="text-xl font-black text-white italic uppercase tracking-tighter">{{ $label }}</h2>
                                 <div class="flex-1 h-px bg-white/5"></div>
-                                <a href="{{ route('wiki.index', ['q' => $search, 'category' => $key]) }}" class="text-[8px] font-black text-slate-400 uppercase tracking-widest hover:text-blue-400 transition-colors">View All</a>
+                                <a href="{{ route('wiki.index', ['q' => $search, 'category' => $key]) }}" class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest hover:text-blue-400 transition-colors">View All</a>
                             </div>
 
                             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -95,8 +96,8 @@
                     <div class="col-span-full py-24 text-center rounded-2xl border border-white/5 bg-white/[0.01]">
                         <div class="text-4xl mb-6">📂</div>
                         <h3 class="text-xl font-black text-white italic uppercase tracking-tighter mb-4">No Entries Found</h3>
-                        <p class="text-slate-400 text-xs max-w-sm mx-auto mb-8">The specific node you're looking for hasn't been established in our archive yet.</p>
-                        <a href="{{ route('wiki.create') }}" class="btn-primary-v2 pr-10 pl-8">Create Record</a>
+                        <p class="text-slate-400 text-sm max-w-sm mx-auto mb-8">The specific node you're looking for hasn't been established in our archive yet.</p>
+                        <a href="{{ route('wiki.create') }}" class="btn-primary-v2 pr-10 pl-8 py-3.5">Create Record</a>
                     </div>
                 @endforelse
             </div>
@@ -108,6 +109,7 @@
                 </div>
             @endif
         @endif
-    </div>
+        </div>
+    </section>
 </div>
 @endsection

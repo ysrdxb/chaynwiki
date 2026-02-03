@@ -127,7 +127,7 @@ class HomeController extends Controller
         // 8. Ranked Items
         $rankedArticles = Article::with('user')
             ->where('status', 'published')
-            ->orderByDesc('view_count')
+            ->orderByDesc(DB::raw('(COALESCE(trending_score, 0) * 100) + view_count'))
             ->take(6)
             ->get();
 

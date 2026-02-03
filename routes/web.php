@@ -35,6 +35,7 @@ Route::get('/explore', \App\Livewire\KnowledgeExplorer::class)
 Route::view('/about', 'about')->name('about');
 Route::view('/privacy', 'privacy')->name('privacy');
 Route::view('/legal', 'legal')->name('legal');
+Route::view('/guidelines', 'guidelines')->name('guidelines');
 
 Route::get('/search', \App\Livewire\SmartSearch::class)->name('search');
 Route::get('/browse', [\App\Http\Controllers\ArticleController::class, 'index'])->name('wiki.index');

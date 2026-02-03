@@ -573,7 +573,7 @@
             
             {{-- Disclaimer --}}
             <p class="text-section-subhead mb-10 max-w-lg">
-                Independent, unbiased, and powered by listeners. We're a community-run platform dedicated to archiving music history, free from the algorithms of major streaming services.
+                Independent, unbiased, and powered by listeners. We're a community-run platform dedicated to archiving music history, free from the algorithms of major streaming services. Not affiliated with SoundCloud.
             </p>
             
             {{-- Search Bar --}}

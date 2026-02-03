@@ -2,6 +2,20 @@
 
 @section('title', $article->title)
 
+@php
+    $seoDescription = $summary ?? Str::limit(strip_tags((string) $article->content), 160);
+    $seoImage = $article->featured_image;
+    if ($seoImage && !Str::startsWith($seoImage, ['http://', 'https://'])) {
+        $seoImage = Storage::url($seoImage);
+    }
+    $seoImage = $seoImage ?: asset('images/hero_background.png');
+@endphp
+
+@section('meta_description', $seoDescription)
+@section('meta_image', $seoImage)
+@section('canonical', route('wiki.show', $article->slug))
+@section('og_type', 'article')
+
 @section('content')
     @php
         $placeholder = 'https://images.unsplash.com/photo-1514525253344-f856717429fb?auto=format&fit=crop&q=80&w=1200';
@@ -16,8 +30,9 @@
     <div class="relative min-h-[60vh] flex items-end pt-32 pb-20 overflow-hidden bg-primary section-divider">
         <!-- Background Layer -->
         <div class="absolute inset-0 z-0">
-            <img src="{{ $featured_image }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover grayscale opacity-20 blur-md scale-110">
-            <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent"></div>
+            <img src="{{ $featured_image }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover grayscale opacity-10 blur-md scale-110">
+            <div class="absolute inset-0 bg-primary/90"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/90 to-transparent"></div>
         </div>
 
         <div class="relative z-10 max-w-[1200px] mx-auto px-8 w-full">
@@ -44,13 +59,13 @@
                         {{ $article->title }}
                     </h1>
                     
-                    <div class="flex flex-wrap items-center gap-6 mb-10">
+                    <div class="flex flex-wrap items-center gap-4 mb-10">
                         <livewire:article.play-button 
                             :articleId="$article->id" 
                             label="Listen Now"
-                            class="btn-primary-v2 px-8 py-4 flex items-center justify-center gap-3"
+                            class="btn-primary-v2 px-7 py-3.5 flex items-center justify-center gap-3 min-h-[48px]"
                         />
-                        <div class="flex items-center gap-3 px-6 py-2 bg-white/5 border border-white/10 rounded-2xl">
+                        <div class="flex items-center gap-3 px-5 py-3 bg-white/5 border border-white/10 rounded-2xl min-h-[48px]">
                              <livewire:article.vote-button :model="$article" wire:key="vote-article-{{ $article->id }}" />
                              <span class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Protocol Influence</span>
                         </div>
@@ -81,7 +96,7 @@
     </div>
 
     <!-- MAIN CONTENT GRID -->
-    <section class="bg-secondary section-divider">
+    <section class="bg-primary section-divider">
         <div class="max-w-[1200px] mx-auto px-8 py-20 relative z-20">
             <div class="flex flex-col lg:flex-row gap-16">
             
@@ -90,8 +105,8 @@
                 
                 <!-- Artist Biography -->
                 <section>
-                    <div class="flex items-center gap-6 mb-12">
-                        <h2 class="text-3xl font-black text-white italic uppercase tracking-tighter">Artist Biography</h2>
+                    <div class="flex items-center gap-6 mb-10">
+                        <h2 class="text-2xl font-black text-white italic uppercase tracking-tighter">Artist Biography</h2>
                         <div class="flex-1 h-px bg-white/5"></div>
                     </div>
                     <div class="article-content prose prose-invert prose-lg max-w-none">
@@ -99,7 +114,7 @@
                             @if(!empty($article->content))
                                 {!! Str::markdown($article->content) !!}
                             @else
-                                <p class="text-white/40">This artist profile is still being built. Add a biography to complete the record.</p>
+                                <p class="text-white/50 text-sm">This artist profile is still being built. Add a biography to complete the record.</p>
                             @endif
                         </div>
                     </div>
@@ -107,9 +122,9 @@
 
                 <!-- Photo Gallery -->
                 <section>
-                    <div class="flex items-center justify-between mb-12">
-                        <h2 class="text-3xl font-black text-white italic uppercase tracking-tighter">Visual Archive</h2>
-                        <div class="text-[10px] font-black text-white/30 uppercase tracking-widest">From published records</div>
+                    <div class="flex items-center justify-between mb-10">
+                        <h2 class="text-2xl font-black text-white italic uppercase tracking-tighter">Visual Archive</h2>
+                        <div class="text-xs font-semibold text-white/40 uppercase tracking-widest">From published records</div>
                     </div>
                     
                     @if($artistGallery->isEmpty())
@@ -131,9 +146,9 @@
 
                 <!-- Discography -->
                 <section>
-                    <div class="flex items-center justify-between mb-12">
-                        <h2 class="text-3xl font-black text-white italic uppercase tracking-tighter">Discography</h2>
-                        <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="text-[11px] font-black text-blue-400 uppercase tracking-widest hover:text-blue-300 transition-colors">Browse Songs →</a>
+                    <div class="flex items-center justify-between mb-10">
+                        <h2 class="text-2xl font-black text-white italic uppercase tracking-tighter">Discography</h2>
+                        <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="text-xs font-semibold text-blue-400 uppercase tracking-widest hover:text-blue-300 transition-colors">Browse Songs →</a>
                     </div>
                     @if($artistDiscography->isEmpty())
                         <div class="text-white/40 text-sm">No discography entries yet. Add songs to this artist to populate the archive.</div>
@@ -146,7 +161,7 @@
                                         <div class="absolute inset-0 bg-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     </div>
                                     <h4 class="text-white font-bold truncate group-hover:text-blue-400 transition-colors uppercase tracking-tight text-sm">{{ $item['title'] }}</h4>
-                                    <p class="text-[10px] font-black text-white/20 uppercase tracking-widest">{{ $item['year'] ?? 'Unknown' }}</p>
+                                    <p class="text-xs font-semibold text-white/40 uppercase tracking-widest">{{ $item['year'] ?? 'Unknown' }}</p>
                                  </a>
                             @endforeach
                         </div>
@@ -163,32 +178,32 @@
             <div class="w-full lg:w-80 space-y-10">
                 <!-- Artist Metadata -->
                 <div class="bg-secondary border border-white/5 p-8 rounded-3xl group">
-                    <h3 class="text-xl font-black text-white italic uppercase tracking-tighter mb-8">Metadata</h3>
+                    <h3 class="text-lg font-black text-white italic uppercase tracking-tighter mb-6">Metadata</h3>
                      @if(empty(array_filter($artistMeta ?? [])))
                         <div class="text-white/40 text-sm">No metadata available yet.</div>
                      @else
                         <dl class="space-y-6">
                             @if(!empty($artistMeta['origin']))
                                 <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                                    <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Origin</dt>
+                                    <dt class="text-xs font-semibold text-white/50 uppercase tracking-widest">Origin</dt>
                                     <dd class="text-xs text-white font-bold">{{ $artistMeta['origin'] }}</dd>
                                 </div>
                             @endif
                             @if(!empty($artistMeta['active_from']))
                                 <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                                    <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active From</dt>
+                                    <dt class="text-xs font-semibold text-white/50 uppercase tracking-widest">Active From</dt>
                                     <dd class="text-xs text-white font-bold">{{ $artistMeta['active_from'] }}</dd>
                                 </div>
                             @endif
                             @if(!empty($artistMeta['active_to']))
                                 <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                                    <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active To</dt>
+                                    <dt class="text-xs font-semibold text-white/50 uppercase tracking-widest">Active To</dt>
                                     <dd class="text-xs text-white font-bold">{{ $artistMeta['active_to'] }}</dd>
                                 </div>
                             @endif
                             @if(!empty($artistMeta['website']))
                                 <div class="flex justify-between items-end pb-3 border-b border-white/5">
-                                    <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Website</dt>
+                                    <dt class="text-xs font-semibold text-white/50 uppercase tracking-widest">Website</dt>
                                     <dd class="text-xs text-blue-400 font-bold">
                                         <a href="{{ $artistMeta['website'] }}" target="_blank" rel="noopener">Visit</a>
                                     </dd>
@@ -201,17 +216,17 @@
                         <livewire:article.play-button 
                             :articleId="$article->id" 
                             label="Sync Sonic DNA"
-                            class="w-full py-4 bg-blue-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest hover:scale-[1.02] transition-all flex items-center justify-center gap-3 relative overflow-hidden group shadow-xl shadow-blue-500/20"
+                            class="w-full py-3.5 bg-blue-500 text-white rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] transition-all flex items-center justify-center gap-3 relative overflow-hidden group shadow-xl shadow-blue-500/20"
                         />
 
                         <x-article.⚡add-to-crate :article="$article" />
 
                         <div class="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                            <span class="text-[9px] font-black text-white/20 uppercase tracking-widest">Archive Utility</span>
+                            <span class="text-[10px] font-semibold text-white/40 uppercase tracking-widest">Archive Utility</span>
                              <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
                         @auth
-                            <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-3 border border-white/5 text-white/20 rounded-xl text-[9px] font-black uppercase tracking-widest hover:text-white hover:border-white/10 transition-all flex items-center justify-center gap-2">
+                            <a href="{{ route('wiki.edit', $article->slug) }}" class="w-full py-3.5 border border-white/10 text-white/60 rounded-xl text-[10px] font-semibold uppercase tracking-widest hover:text-white hover:border-white/20 transition-all flex items-center justify-center gap-2">
                                 Suggest Revision
                             </a>
                         @endauth
@@ -220,7 +235,7 @@
 
                 <!-- Related Connectivity -->
                 <div class="space-y-8">
-                    <h3 class="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">Network Proximity</h3>
+                    <h3 class="text-xs font-semibold text-white/50 uppercase tracking-[0.2em]">Network Proximity</h3>
                     <div class="space-y-6">
                         @forelse($relatedSongs as $song)
                             @if($song->article)
@@ -230,7 +245,7 @@
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <div class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors truncate uppercase tracking-tight">{{ $song->title }}</div>
-                                        <div class="text-[9px] font-black text-white/20 uppercase tracking-widest mt-1">Record Node</div>
+                                        <div class="text-xs font-semibold text-white/40 uppercase tracking-widest mt-1">Record Node</div>
                                     </div>
                                 </a>
                             @endif

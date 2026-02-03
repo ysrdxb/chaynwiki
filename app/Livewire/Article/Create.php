@@ -40,17 +40,57 @@ class Create extends Component
 
         if ($this->step == 2) {
             if ($this->category == 'song') {
-                $rules['meta.artist_id'] = 'nullable'; // TODO: Validation
-                $rules['meta.spotify_id'] = 'nullable';
-                $rules['meta.lyrics'] = 'nullable';
+                $rules['meta.artist_name'] = 'required|string|min:2|max:255';
+                $rules['meta.release_date'] = 'required|string|max:50';
+                $rules['meta.genre'] = 'required|string|min:2|max:100';
+                $rules['meta.spotify_id'] = 'nullable|string|max:255';
+                $rules['meta.lyrics_snippet'] = 'nullable|string';
             }
             if ($this->category == 'artist') {
-                $rules['meta.biography'] = 'nullable';
+                $rules['meta.active_years'] = 'required|string|max:100';
+                $rules['meta.genre'] = 'required|string|min:2|max:150';
+                $rules['meta.top_songs'] = 'nullable|string|max:255';
+            }
+            if ($this->category == 'genre') {
+                $rules['meta.origin_country'] = 'required|string|min:2|max:150';
+                $rules['meta.appearance_year'] = 'required|string|max:50';
+                $rules['meta.popular_artists'] = 'required|string|min:2|max:255';
+                $rules['meta.subgenres'] = 'nullable|string|max:255';
+            }
+            if ($this->category == 'playlist') {
+                $rules['meta.track_count'] = 'required|integer|min:1';
+                $rules['meta.spotify_id'] = 'nullable|string|max:255';
+            }
+            if ($this->category == 'term') {
+                $rules['meta.category_type'] = 'required|string|max:50';
+                $rules['meta.phonetic'] = 'nullable|string|max:100';
+                $rules['meta.origin_language'] = 'nullable|string|max:100';
             }
         }
 
         return $rules;
-        return $rules;
+    }
+
+    protected function messages()
+    {
+        return [
+            'category.required' => 'Please select a category before submitting.',
+            'title.required' => 'The title is required.',
+            'title.min' => 'The title must be at least 2 characters.',
+            'content.required' => 'The content/description is required.',
+            'content.min' => 'The content must be at least 10 characters.',
+            'meta.artist_name.required' => 'The artist name is required for songs.',
+            'meta.release_date.required' => 'The release date is required.',
+            'meta.genre.required' => 'The genre is required.',
+            'meta.active_years.required' => 'Active years is required for artists.',
+            'meta.origin_country.required' => 'Origin country is required for genres.',
+            'meta.appearance_year.required' => 'First appearance year is required.',
+            'meta.popular_artists.required' => 'Popular artists is required for genres.',
+            'meta.track_count.required' => 'Track count is required for playlists.',
+            'meta.track_count.integer' => 'Track count must be a number.',
+            'meta.track_count.min' => 'Track count must be at least 1.',
+            'meta.category_type.required' => 'Category type is required for terminology.',
+        ];
     }
 
     public function fetchFromLink(\App\Services\DataIntelligenceService $intelligence)
@@ -126,7 +166,7 @@ class Create extends Component
         // Redirect to the newly created article
         // return redirect()->route('wiki.show', ['category' => $this->category, 'slug' => $article->slug]);
         session()->flash('message', 'Article created successfully!');
-        return redirect()->to('/dashboard'); // Temporary
+        return redirect()->to(route('dashboard')); // Temporary
     }
 
     public function render()

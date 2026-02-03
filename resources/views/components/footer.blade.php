@@ -19,7 +19,7 @@
             </h2>
             
             {{-- Tagline --}}
-            <p class="text-white/10 text-[10px] font-black uppercase tracking-[0.3em] mb-12 text-center max-w-md">
+            <p class="text-white/30 text-[10px] font-black uppercase tracking-[0.3em] mb-12 text-center max-w-md">
                 Distributed Knowledge Archive Protocol
             </p>
             
@@ -56,7 +56,7 @@
                 <a href="{{ route('wiki.index') }}" class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] hover:text-white transition-colors">Browse</a>
                 <a href="{{ route('wiki.create') }}" class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] hover:text-white transition-colors">Contribute</a>
                 <a href="{{ route('explore') }}" class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] hover:text-white transition-colors">Library</a>
-                <a href="{{ route('about') }}" class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] hover:text-white transition-colors">Protocol</a>
+                <a href="{{ route('guidelines') }}" class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] hover:text-white transition-colors">Guidelines</a>
                 <a href="{{ route('privacy') }}" class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] hover:text-white transition-colors">Privacy</a>
                 <a href="{{ route('legal') }}" class="text-[10px] font-black text-white/60 uppercase tracking-[0.2em] hover:text-white transition-colors">Legal</a>
             </div>
@@ -65,7 +65,7 @@
             <div class="w-full max-w-sm h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8"></div>
             
             {{-- Copyright --}}
-            <p class="text-[9px] font-black text-white/10 uppercase tracking-[0.4em]">
+            <p class="text-[9px] font-black text-white/40 uppercase tracking-[0.4em]">
                 © {{ date('Y') }} CHAYN.CORE - SECURED NODE
             </p>
         </div>

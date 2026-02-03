@@ -7,8 +7,32 @@
 
     <title>@yield('title', config('app.name', 'ChaynWiki'))</title>
     
+    @php
+        $seoTitle = trim(strip_tags($__env->yieldContent('title', config('app.name', 'ChaynWiki'))));
+        $seoDescription = trim(strip_tags($__env->yieldContent('meta_description', 'The community-driven music encyclopedia.')));
+        $seoImage = trim(strip_tags($__env->yieldContent('meta_image', asset('images/hero_background.png'))));
+        $seoCanonical = trim(strip_tags($__env->yieldContent('canonical', url()->current())));
+    @endphp
+
     <!-- Meta -->
-    <meta name="description" content="@yield('meta_description', 'The community-driven music encyclopedia.')">
+    <meta name="description" content="{{ $seoDescription }}">
+    <meta name="robots" content="@yield('meta_robots', 'index, follow')">
+    <link rel="canonical" href="{{ $seoCanonical }}">
+
+    <!-- Open Graph -->
+    <meta property="og:site_name" content="{{ config('app.name', 'ChaynWiki') }}">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:title" content="{{ $seoTitle }}">
+    <meta property="og:description" content="{{ $seoDescription }}">
+    <meta property="og:url" content="{{ $seoCanonical }}">
+    <meta property="og:image" content="{{ $seoImage }}">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seoTitle }}">
+    <meta name="twitter:description" content="{{ $seoDescription }}">
+    <meta name="twitter:image" content="{{ $seoImage }}">
+
     @stack('seo')
 
     <!-- Fonts -->
