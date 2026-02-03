@@ -18,7 +18,7 @@
                 top: 0;
                 left: 0;
                 height: 3px;
-                background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+                background: linear-gradient(90deg, #2a91ff, #a855f7, #ec4899);
                 z-index: 9999;
                 transition: width 0.1s linear;
             }
@@ -28,6 +28,10 @@
                 -webkit-box-orient: vertical;
                 overflow: hidden;
             }
+            /* Refined base colors for wiki layout */
+            .bg-primary { background-color: #0a0a12; }
+            .bg-secondary { background-color: #0f0f1a; }
+            .bg-tertiary { background-color: #151522; }
         </style>
     @endpush
 

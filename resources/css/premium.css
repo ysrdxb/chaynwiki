@@ -211,24 +211,24 @@
    ================================ */
 
 .glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(21, 21, 34, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .glass-dark {
-    background: rgba(10, 10, 20, 0.8);
+    background: rgba(15, 15, 26, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .glass-brand {
-    background: rgba(59, 130, 246, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    background: rgba(42, 145, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(42, 145, 255, 0.2);
 }
 
 /* ================================
@@ -237,7 +237,7 @@
 
 .card-premium {
     position: relative;
-    background: rgba(10, 10, 20, 0.6);
+    background: linear-gradient(145deg, rgba(21,21,34,0.8) 0%, rgba(15,15,26,0.9) 100%);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 1rem;
     overflow: hidden;
@@ -249,17 +249,17 @@
     position: absolute;
     inset: 0;
     background: linear-gradient(135deg,
-            rgba(59, 130, 246, 0.1) 0%,
+            rgba(42, 145, 255, 0.08) 0%,
             transparent 50%,
-            rgba(139, 92, 246, 0.1) 100%);
+            rgba(168, 85, 247, 0.08) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
 
 .card-premium:hover {
-    border-color: rgba(59, 130, 246, 0.3);
+    border-color: rgba(42, 145, 255, 0.25);
     transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
 }
 
 .card-premium:hover::before {
@@ -269,7 +269,7 @@
 /* Gradient border card */
 .card-gradient-border {
     position: relative;
-    background: #0A0A14;
+    background: #151522;
     border-radius: 1rem;
 }
 
@@ -277,7 +277,7 @@
     content: '';
     position: absolute;
     inset: -2px;
-    background: linear-gradient(45deg, #3B82F6, #8B5CF6, #EC4899, #3B82F6);
+    background: linear-gradient(45deg, #2a91ff, #a855f7, #ec4899, #2a91ff);
     background-size: 300% 300%;
     border-radius: 1.125rem;
     z-index: -1;
@@ -375,7 +375,7 @@
    ================================ */
 
 .text-gradient-brand {
-    background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #EC4899 100%);
+    background: linear-gradient(135deg, #2a91ff 0%, #a855f7 50%, #ec4899 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -393,11 +393,11 @@
    ================================ */
 
 .glow-brand {
-    box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 0 40px rgba(42, 145, 255, 0.3);
 }
 
 .glow-purple {
-    box-shadow: 0 0 30px rgba(139, 92, 246, 0.3);
+    box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
 }
 
 .glow-pink {

@@ -5,16 +5,20 @@
 @push('styles')
 <style>
     /* =============================================
-       CHAYNWIKI V2 - PREMIUM DESIGN SYSTEM
+       CHAYNWIKI V3 - REFINED DESIGN SYSTEM
+       More depth, less harsh, better contrast
        ============================================= */
     
-    /* === BACKGROUNDS === */
-    .bg-primary { background-color: #050510; }
-    .bg-secondary { background-color: #080815; }
-    .bg-card { background-color: #0D0D1A; }
-    .bg-card-hover { background-color: #12121F; }
+    /* === CORE BACKGROUNDS - Refined Palette === */
+    .bg-primary { background-color: #0a0a12; }
+    .bg-secondary { background-color: #0f0f1a; }
+    .bg-tertiary { background-color: #151522; }
+    .bg-surface { background-color: #1a1a2e; }
+    .bg-card { background-color: #12121f; }
+    .bg-card-hover { background-color: #1a1a2e; }
+    .bg-elevated { background: linear-gradient(135deg, #151522 0%, #1a1a2e 100%); }
     
-    /* === SECTION BORDERS - Visible === */
+    /* === SECTION BORDERS - Refined === */
     .section-divider {
         position: relative;
     }
@@ -27,7 +31,7 @@
         width: 100%;
         max-width: 1200px;
         height: 1px;
-        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.15) 80%, transparent 100%);
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 20%, rgba(255,255,255,0.1) 80%, transparent 100%);
     }
     
     /* === TYPOGRAPHY V2 === */
@@ -71,16 +75,17 @@
     
     /* === PREMIUM CARD V2 === */
     .card-v2 {
-        background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        backdrop-filter: blur(8px);
+        background: linear-gradient(145deg, rgba(21,21,34,0.9) 0%, rgba(26,26,46,0.8) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        backdrop-filter: blur(12px);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .card-v2:hover {
-        border-color: rgba(255, 255, 255, 0.15);
-        transform: translateY(-1px);
-        box-shadow: 0 16px 32px rgba(0,0,0,0.4);
+        border-color: rgba(255, 255, 255, 0.18);
+        background: linear-gradient(145deg, rgba(26,26,46,0.95) 0%, rgba(32,32,56,0.9) 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
     
     /* === GRADIENT CARDS - Vibrant === */
@@ -119,78 +124,101 @@
         100% { filter: hue-rotate(360deg); }
     }
     
-    /* === BUTTONS V2 === */
+    /* === BUTTONS V2 - More Vibrant === */
     .btn-primary-v2 {
-        background: white;
-        color: #0D0D1A;
-        font-weight: 700;
-        padding: 10px 20px;
+        background: linear-gradient(135deg, #2a91ff 0%, #1a73f5 100%);
+        color: white;
+        font-weight: 600;
+        padding: 12px 24px;
         border-radius: 100px;
         font-size: 13px;
-        transition: all 0.2s;
+        transition: all 0.25s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        box-shadow: 0 4px 15px rgba(42, 145, 255, 0.25);
+    }
+    .btn-primary-v2:hover {
+        background: linear-gradient(135deg, #52b5ff 0%, #2a91ff 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(42, 145, 255, 0.35);
+    }
+    .btn-primary-white {
+        background: white;
+        color: #0a0a12;
+        font-weight: 600;
+        padding: 12px 24px;
+        border-radius: 100px;
+        font-size: 13px;
+        transition: all 0.25s ease;
         display: inline-flex;
         align-items: center;
         gap: 8px;
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
-    .btn-primary-v2:hover {
+    .btn-primary-white:hover {
         background: #f0f0f0;
-        transform: scale(1.02);
+        transform: translateY(-1px);
     }
     .btn-secondary-v2 {
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.15);
         color: white;
         font-weight: 500;
         padding: 12px 24px;
         border-radius: 50px;
         font-size: 14px;
-        transition: all 0.2s;
+        transition: all 0.25s ease;
         display: inline-flex;
         align-items: center;
         gap: 8px;
     }
     .btn-secondary-v2:hover {
-        background: rgba(255,255,255,0.1);
-        border-color: rgba(255,255,255,0.2);
+        background: rgba(255,255,255,0.12);
+        border-color: rgba(255,255,255,0.25);
     }
     
-    /* === SEARCH BAR V2 === */
+    /* === SEARCH BAR V2 - Better Visibility === */
     .search-bar-v2 {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.06);
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
         border-radius: 100px;
         transition: all 0.3s;
     }
     .search-bar-v2:focus-within {
-        border-color: rgba(59, 130, 246, 0.3);
-        background: rgba(255,255,255,0.05);
+        border-color: rgba(42, 145, 255, 0.4);
+        background: rgba(255,255,255,0.08);
+        box-shadow: 0 0 20px rgba(42, 145, 255, 0.1);
     }
     
-    /* === PILL TABS === */
+    /* === PILL TABS - Enhanced === */
     .pill-tab {
-        padding: 10px 20px;
+        padding: 10px 22px;
         border-radius: 50px;
         font-size: 13px;
         font-weight: 500;
-        transition: all 0.2s;
+        transition: all 0.25s ease;
     }
     .pill-tab-active {
-        background: white;
-        color: #0D0D1A;
+        background: linear-gradient(135deg, #2a91ff 0%, #1a73f5 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(42, 145, 255, 0.3);
     }
     .pill-tab-inactive {
-        background: rgba(255,255,255,0.05);
-        color: rgba(255,255,255,0.6);
-        border: 1px solid rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.06);
+        color: rgba(255,255,255,0.7);
+        border: 1px solid rgba(255,255,255,0.1);
     }
     .pill-tab-inactive:hover {
-        background: rgba(255,255,255,0.08);
+        background: rgba(255,255,255,0.1);
         color: white;
+        border-color: rgba(255,255,255,0.15);
     }
     
-    /* === TABLE V2 === */
+    /* === TABLE V2 - Enhanced === */
     .table-v2 {
         border-collapse: separate;
         border-spacing: 0;
@@ -200,17 +228,17 @@
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 0.08em;
-        color: rgba(255,255,255,0.4);
+        color: rgba(255,255,255,0.5);
         padding: 16px 20px;
-        border-bottom: 1px solid rgba(255,255,255,0.08);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
     }
     .table-v2 td {
         padding: 16px 20px;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
         font-size: 14px;
     }
     .table-v2 tr:hover td {
-        background: rgba(255,255,255,0.02);
+        background: rgba(42, 145, 255, 0.05);
     }
     
     /* === ANIMATIONS === */
@@ -222,10 +250,11 @@
         animation: fade-up 0.6s ease-out forwards;
     }
     
-    /* === GLOW EFFECTS === */
-    .glow-blue { box-shadow: 0 0 40px rgba(59, 130, 246, 0.15); }
-    .glow-purple { box-shadow: 0 0 40px rgba(139, 92, 246, 0.15); }
-    .glow-pink { box-shadow: 0 0 40px rgba(236, 72, 153, 0.15); }
+    /* === GLOW EFFECTS - Enhanced === */
+    .glow-blue { box-shadow: 0 0 50px rgba(42, 145, 255, 0.2); }
+    .glow-purple { box-shadow: 0 0 50px rgba(168, 85, 247, 0.2); }
+    .glow-pink { box-shadow: 0 0 50px rgba(236, 72, 153, 0.2); }
+    .glow-cyan { box-shadow: 0 0 50px rgba(34, 211, 238, 0.2); }
     
     /* === SKELETON LOADING === */
     .skeleton-v2 {

@@ -6,7 +6,7 @@
 
 @layer base {
     body {
-        @apply bg-[#030712] text-white font-sans antialiased;
+        @apply bg-[#0a0a12] text-white font-sans antialiased;
     }
 
     h1,
@@ -17,4 +17,21 @@
     h6 {
         @apply font-display;
     }
+}
+
+/* === GLOBAL COLOR SCHEME REFINEMENTS === */
+@layer utilities {
+    /* Core backgrounds - less harsh */
+    .bg-primary { background-color: #0a0a12; }
+    .bg-secondary { background-color: #0f0f1a; }
+    .bg-tertiary { background-color: #151522; }
+    .bg-surface { background-color: #1a1a2e; }
+    
+    /* Better text contrast */
+    .text-muted { color: rgba(255, 255, 255, 0.6); }
+    .text-subtle { color: rgba(255, 255, 255, 0.4); }
+    
+    /* Enhanced borders */
+    .border-subtle { border-color: rgba(255, 255, 255, 0.08); }
+    .border-visible { border-color: rgba(255, 255, 255, 0.12); }
 }

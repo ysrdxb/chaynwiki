@@ -1,10 +1,16 @@
-<div class="min-h-screen bg-[#050510] pt-24 pb-12" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
+<div class="min-h-screen bg-[#0a0a12] pt-24 pb-12" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
     <style>
         .bg-custom-9 {
-            background-color: rgb(255 255 255 / 9%) !important;
+            background-color: rgba(255, 255, 255, 0.06) !important;
         }
         .border-custom-35 {
-            border-color: rgb(255 255 255 / 35%) !important;
+            border-color: rgba(255, 255, 255, 0.12) !important;
+        }
+        .card-type {
+            background: linear-gradient(145deg, rgba(21,21,34,0.6) 0%, rgba(15,15,26,0.8) 100%);
+        }
+        .card-type:hover {
+            background: linear-gradient(145deg, rgba(26,26,46,0.7) 0%, rgba(21,21,34,0.9) 100%);
         }
     </style>
 
@@ -12,11 +18,11 @@
         
         <!-- Header -->
         <div class="mb-12">
-            <span class="text-white/40 text-sm font-medium mb-3 block">Select Type</span>
+            <span class="text-white/50 text-sm font-medium mb-3 block">Select Type</span>
             <h1 class="text-[52px] font-black text-white uppercase tracking-tight leading-none mb-4">
                 WHAT ARE YOU ADDING?
             </h1>
-            <p class="text-white/40 text-sm">Choose one content type — fields will adapt automatically.</p>
+            <p class="text-white/50 text-sm">Choose one content type — fields will adapt automatically.</p>
         </div>
 
         <!-- Category Selector Cards -->
@@ -29,14 +35,14 @@
                 ['id' => 'term', 'title' => 'Terminology', 'desc' => 'Define music theory, equipment, or industry terms', 'icon' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253']
             ] as $cat)
             <button wire:click="setCategory('{{ $cat['id'] }}')" 
-                class="flex flex-col p-8 rounded-[24px] transition-all text-left group relative {{ $category === $cat['id'] ? 'bg-white/5 border border-white/10' : 'bg-white/[0.02] border border-custom-35 hover:border-white/10' }}">
+                class="flex flex-col p-8 rounded-[20px] transition-all text-left group relative card-type {{ $category === $cat['id'] ? 'bg-white/8 border border-blue-500/30 shadow-lg shadow-blue-500/10' : 'border border-white/10 hover:border-white/20' }}">
                 <div class="flex items-center justify-between mb-4">
-                    <div class="w-6 h-6 rounded bg-blue-500/10 flex items-center justify-center">
-                        <svg class="w-4 h-4 {{ $category === $cat['id'] ? 'text-blue-500' : 'text-white/20' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="{{ $cat['icon'] }}"/></svg>
+                    <div class="w-8 h-8 rounded-lg {{ $category === $cat['id'] ? 'bg-blue-500/20' : 'bg-white/5' }} flex items-center justify-center">
+                        <svg class="w-4 h-4 {{ $category === $cat['id'] ? 'text-blue-400' : 'text-white/40' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $cat['icon'] }}"/></svg>
                     </div>
                 </div>
                 <h3 class="text-lg font-bold text-white mb-2">{{ $cat['title'] }}</h3>
-                <p class="text-xs text-white/20 leading-relaxed">{{ $cat['desc'] }}</p>
+                <p class="text-xs text-white/50 leading-relaxed">{{ $cat['desc'] }}</p>
             </button>
             @endforeach
         </div>
@@ -73,157 +79,157 @@
                         {{-- Song Fields --}}
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Add Title <span class="text-red-400">*</span></label>
-                            <input wire:model="title" type="text" placeholder="e.g. Blinding Lights" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="title" type="text" placeholder="e.g. Blinding Lights" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
                             @error('title') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Artist <span class="text-red-400">*</span></label>
-                            <input wire:model="meta.artist_name" type="text" placeholder="e.g. The Weeknd" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.artist_name') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="meta.artist_name" type="text" placeholder="e.g. The Weeknd" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('meta.artist_name') border-red-500 @else border-custom-35 @enderror">
                             @error('meta.artist_name') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
-                            <input wire:model="meta.release_date" type="text" placeholder="e.g. 2020-11-29" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.release_date') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="meta.release_date" type="text" placeholder="e.g. 2020-11-29" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('meta.release_date') border-red-500 @else border-custom-35 @enderror">
                             @error('meta.release_date') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Genre <span class="text-red-400">*</span></label>
-                            <input wire:model="meta.genre" type="text" placeholder="e.g. Synthwave, Pop" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.genre') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="meta.genre" type="text" placeholder="e.g. Synthwave, Pop" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('meta.genre') border-red-500 @else border-custom-35 @enderror">
                             @error('meta.genre') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Songwriters</label>
-                            <input wire:model="meta.songwriters" type="text" placeholder="e.g. Abel Tesfaye, Max Martin" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <input wire:model="meta.songwriters" type="text" placeholder="e.g. Abel Tesfaye, Max Martin" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none">
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Studio Recorded</label>
-                            <input wire:model="meta.studio_recorded" type="text" placeholder="e.g. Conway Recording Studios" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <input wire:model="meta.studio_recorded" type="text" placeholder="e.g. Conway Recording Studios" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none">
                         </div>
                         
                         {{-- Textareas --}}
                         <div class="col-span-full space-y-2 pt-4">
                             <label class="text-white text-sm font-bold block mb-1">Behind the Song</label>
-                            <textarea wire:model="meta.behind_the_song" rows="4" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <textarea wire:model="meta.behind_the_song" rows="4" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none"></textarea>
                         </div>
                         <div class="col-span-full space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Achievements</label>
-                            <textarea wire:model="meta.achievements" rows="4" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <textarea wire:model="meta.achievements" rows="4" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none"></textarea>
                         </div>
                         <div class="col-span-full space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Overview <span class="text-red-400">*</span></label>
-                            <textarea wire:model="content" rows="6" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
+                            <textarea wire:model="content" rows="6" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
                             @error('content') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-full space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Lyrics snippet</label>
-                            <textarea wire:model="meta.lyrics_snippet" rows="6" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <textarea wire:model="meta.lyrics_snippet" rows="6" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none"></textarea>
                         </div>
 
                     @elseif($category === 'artist')
                         {{-- Artist Fields --}}
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Full Name <span class="text-red-400">*</span></label>
-                            <input wire:model="title" type="text" placeholder="e.g. David Bowie" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="title" type="text" placeholder="e.g. David Bowie" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
                             @error('title') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Active Years <span class="text-red-400">*</span></label>
-                            <input wire:model="meta.active_years" type="text" placeholder="e.g. 1964–2016" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.active_years') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="meta.active_years" type="text" placeholder="e.g. 1964–2016" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('meta.active_years') border-red-500 @else border-custom-35 @enderror">
                             @error('meta.active_years') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Genres <span class="text-red-400">*</span></label>
-                            <input wire:model="meta.genre" type="text" placeholder="e.g. Art Rock, Glam Rock" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.genre') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="meta.genre" type="text" placeholder="e.g. Art Rock, Glam Rock" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('meta.genre') border-red-500 @else border-custom-35 @enderror">
                             @error('meta.genre') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Top Songs</label>
-                            <input wire:model="meta.top_songs" type="text" placeholder="e.g. Space Oddity, Heroes" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <input wire:model="meta.top_songs" type="text" placeholder="e.g. Space Oddity, Heroes" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none">
                         </div>
 
                         <div class="col-span-full space-y-2 pt-4">
                             <label class="text-white text-sm font-bold block mb-1">Bio <span class="text-red-400">*</span></label>
-                            <textarea wire:model="content" rows="8" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
+                            <textarea wire:model="content" rows="8" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
                             @error('content') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-full space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Breakthrough Moment</label>
-                            <textarea wire:model="meta.breakthrough_moment" rows="4" placeholder="Released debut album at age 18, which became a commercial hit and earned critical acclaim." class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <textarea wire:model="meta.breakthrough_moment" rows="4" placeholder="Released debut album at age 18, which became a commercial hit and earned critical acclaim." class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none"></textarea>
                         </div>
                         <div class="col-span-full space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Live Performances</label>
-                            <textarea wire:model="meta.live_performances" rows="4" placeholder="World Tour 2015, Summer Live Festival 2017, International Arena Tour 2019" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <textarea wire:model="meta.live_performances" rows="4" placeholder="World Tour 2015, Summer Live Festival 2017, International Arena Tour 2019" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none"></textarea>
                         </div>
 
                     @elseif($category === 'genre')
                         {{-- Genre Fields --}}
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Genre Name <span class="text-red-400">*</span></label>
-                            <input wire:model="title" type="text" placeholder="e.g. Synth-pop" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="title" type="text" placeholder="e.g. Synth-pop" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
                             @error('title') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Origin Country <span class="text-red-400">*</span></label>
-                            <input wire:model="meta.origin_country" type="text" placeholder="e.g. United Kingdom" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.origin_country') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="meta.origin_country" type="text" placeholder="e.g. United Kingdom" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('meta.origin_country') border-red-500 @else border-custom-35 @enderror">
                             @error('meta.origin_country') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">First Appearance Year <span class="text-red-400">*</span></label>
-                            <input wire:model="meta.appearance_year" type="text" placeholder="e.g. 1977" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.appearance_year') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="meta.appearance_year" type="text" placeholder="e.g. 1977" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('meta.appearance_year') border-red-500 @else border-custom-35 @enderror">
                             @error('meta.appearance_year') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Popular Artists <span class="text-red-400">*</span></label>
-                            <input wire:model="meta.popular_artists" type="text" placeholder="e.g. Daft Punk, Justice" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.popular_artists') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="meta.popular_artists" type="text" placeholder="e.g. Daft Punk, Justice" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('meta.popular_artists') border-red-500 @else border-custom-35 @enderror">
                             @error('meta.popular_artists') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Subgenres</label>
-                            <input wire:model="meta.subgenres" type="text" placeholder="e.g. French House, Electro" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <input wire:model="meta.subgenres" type="text" placeholder="e.g. French House, Electro" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none">
                         </div>
 
                         <div class="col-span-full space-y-2 pt-4">
                             <label class="text-white text-sm font-bold block mb-1">Early History</label>
-                            <textarea wire:model="meta.early_history" rows="4" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <textarea wire:model="meta.early_history" rows="4" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none"></textarea>
                         </div>
                         <div class="col-span-full space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Cultural Impact</label>
-                            <textarea wire:model="meta.cultural_impact" rows="4" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <textarea wire:model="meta.cultural_impact" rows="4" placeholder="Type here" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none"></textarea>
                         </div>
                         <div class="col-span-full space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Description <span class="text-red-400">*</span></label>
-                            <textarea wire:model="content" rows="8" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
+                            <textarea wire:model="content" rows="8" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
                             @error('content') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                     @elseif($category === 'playlist')
                         {{-- Playlist Fields --}}
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Playlist Title <span class="text-red-400">*</span></label>
-                            <input wire:model="title" type="text" placeholder="e.g. Summer Vibes 2026" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="title" type="text" placeholder="e.g. Summer Vibes 2026" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
                             @error('title') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Spotify ID / Link</label>
-                            <input wire:model="meta.spotify_id" type="text" placeholder="e.g. spotify:playlist:..." class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <input wire:model="meta.spotify_id" type="text" placeholder="e.g. spotify:playlist:..." class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none">
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Track Count <span class="text-red-400">*</span></label>
-                            <input wire:model="meta.track_count" type="number" placeholder="e.g. 25" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('meta.track_count') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="meta.track_count" type="number" placeholder="e.g. 25" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('meta.track_count') border-red-500 @else border-custom-35 @enderror">
                             @error('meta.track_count') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="col-span-full space-y-2 pt-4">
                             <label class="text-white text-sm font-bold block mb-1">Curator Note</label>
-                            <textarea wire:model="meta.curator_note" rows="4" placeholder="Why should people listen to this?" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none"></textarea>
+                            <textarea wire:model="meta.curator_note" rows="4" placeholder="Why should people listen to this?" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none"></textarea>
                         </div>
                         <div class="col-span-full space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Extended Description <span class="text-red-400">*</span></label>
-                            <textarea wire:model="content" rows="6" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
+                            <textarea wire:model="content" rows="6" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
                             @error('content') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                     @elseif($category === 'term')
                         {{-- Terminology Fields --}}
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Term Name <span class="text-red-400">*</span></label>
-                            <input wire:model="title" type="text" placeholder="e.g. Reverb" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
+                            <input wire:model="title" type="text" placeholder="e.g. Reverb" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none @error('title') border-red-500 @else border-custom-35 @enderror">
                             @error('title') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                         <div class="space-y-2">
@@ -242,15 +248,15 @@
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Phonetic Pronunciation</label>
-                            <input wire:model="meta.phonetic" type="text" placeholder="e.g. /rɪˈvɜːb/" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <input wire:model="meta.phonetic" type="text" placeholder="e.g. /rɪˈvɜːb/" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none">
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Origin Language</label>
-                            <input wire:model="meta.origin_language" type="text" placeholder="e.g. Latin" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/10 focus:border-white/20 transition-all outline-none">
+                            <input wire:model="meta.origin_language" type="text" placeholder="e.g. Latin" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none">
                         </div>
                         <div class="col-span-full space-y-2 pt-4">
                             <label class="text-white text-sm font-bold block mb-1">Definition & Usage <span class="text-red-400">*</span></label>
-                            <textarea wire:model="content" rows="8" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/10 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
+                            <textarea wire:model="content" rows="8" placeholder="Type here" class="w-full bg-custom-9 border rounded-xl px-6 py-5 text-white text-sm placeholder:text-white/40 focus:border-white/20 outline-none resize-none @error('content') border-red-500 @else border-custom-35 @enderror"></textarea>
                             @error('content') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                     @endif
