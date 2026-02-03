@@ -97,11 +97,11 @@
 
     <!-- MAIN CONTENT GRID -->
     <section class="bg-primary section-divider">
-        <div class="max-w-[1200px] mx-auto px-8 py-20 relative z-20">
-            <div class="flex flex-col lg:flex-row gap-16">
+        <div class="max-w-[1200px] mx-auto px-8 py-24 relative z-20">
+            <div class="flex flex-col lg:flex-row gap-20">
             
             <!-- Left Column: Primary Content -->
-            <div class="flex-1 space-y-24">
+            <div class="flex-1 space-y-28">
                 
                 <!-- Artist Biography -->
                 <section>
@@ -175,9 +175,9 @@
             </div>
 
             <!-- Right Column: Sidebar -->
-            <div class="w-full lg:w-80 space-y-10">
+            <div class="w-full lg:w-80 space-y-12">
                 <!-- Artist Metadata -->
-                <div class="bg-secondary border border-white/5 p-8 rounded-3xl group">
+                <div class="bg-secondary border border-white/5 p-10 rounded-3xl group">
                     <h3 class="text-lg font-black text-white italic uppercase tracking-tighter mb-6">Metadata</h3>
                      @if(empty(array_filter($artistMeta ?? [])))
                         <div class="text-white/40 text-sm">No metadata available yet.</div>
@@ -212,7 +212,7 @@
                         </dl>
                      @endif
                     
-                    <div class="mt-12 space-y-3">
+                    <div class="mt-14 space-y-4">
                         <livewire:article.play-button 
                             :articleId="$article->id" 
                             label="Sync Sonic DNA"
