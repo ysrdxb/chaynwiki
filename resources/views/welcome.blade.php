@@ -5,20 +5,20 @@
 @push('styles')
 <style>
     /* =============================================
-       CHAYNWIKI V3 - REFINED DESIGN SYSTEM
-       More depth, less harsh, better contrast
+       CHAYNWIKI V3 - OCEAN DEPTH THEME
+       Premium depth, refined contrast, fluid visuals
        ============================================= */
     
-    /* === CORE BACKGROUNDS - Refined Palette === */
-    .bg-primary { background-color: #0a0a12; }
-    .bg-secondary { background-color: #0f0f1a; }
-    .bg-tertiary { background-color: #151522; }
-    .bg-surface { background-color: #1a1a2e; }
-    .bg-card { background-color: #12121f; }
-    .bg-card-hover { background-color: #1a1a2e; }
-    .bg-elevated { background: linear-gradient(135deg, #151522 0%, #1a1a2e 100%); }
+    /* === CORE BACKGROUNDS - Ocean Depth Palette === */
+    .bg-primary { background-color: #0a0e14; }
+    .bg-secondary { background-color: #0f1419; }
+    .bg-tertiary { background-color: #151c24; }
+    .bg-surface { background-color: #1c2630; }
+    .bg-card { background-color: #151c24; }
+    .bg-card-hover { background-color: #1c2630; }
+    .bg-elevated { background: linear-gradient(135deg, #151c24 0%, #1c2630 100%); }
     
-    /* === SECTION BORDERS - Refined === */
+    /* === SECTION BORDERS - Ocean Depth === */
     .section-divider {
         position: relative;
     }
@@ -31,7 +31,7 @@
         width: 100%;
         max-width: 1200px;
         height: 1px;
-        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.1) 20%, rgba(255,255,255,0.1) 80%, transparent 100%);
+        background: linear-gradient(90deg, transparent 0%, rgba(56,189,248,0.2) 20%, rgba(56,189,248,0.2) 80%, transparent 100%);
     }
     
     /* === TYPOGRAPHY V2 === */
@@ -73,39 +73,39 @@
         letter-spacing: -0.02em;
     }
     
-    /* === PREMIUM CARD V2 === */
+    /* === PREMIUM CARD V2 - Ocean Depth === */
     .card-v2 {
-        background: linear-gradient(145deg, rgba(21,21,34,0.9) 0%, rgba(26,26,46,0.8) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: linear-gradient(145deg, rgba(21,28,36,0.9) 0%, rgba(28,38,48,0.8) 100%);
+        border: 1px solid rgba(56, 189, 248, 0.1);
         border-radius: 16px;
         backdrop-filter: blur(12px);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .card-v2:hover {
-        border-color: rgba(255, 255, 255, 0.18);
-        background: linear-gradient(145deg, rgba(26,26,46,0.95) 0%, rgba(32,32,56,0.9) 100%);
+        border-color: rgba(56, 189, 248, 0.25);
+        background: linear-gradient(145deg, rgba(28,38,48,0.95) 0%, rgba(35,45,58,0.9) 100%);
         transform: translateY(-2px);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(56,189,248,0.1);
     }
     
-    /* === GRADIENT CARDS - Vibrant === */
-    .grad-purple { background: linear-gradient(145deg, #3b1d6b 0%, #5b21b6 50%, #7c3aed 100%); }
-    .grad-blue { background: linear-gradient(145deg, #0c4a6e 0%, #0369a1 50%, #0ea5e9 100%); }
+    /* === GRADIENT CARDS - Ocean Depth Unified === */
+    .grad-purple { background: linear-gradient(145deg, #3b1d6b 0%, #5b21b6 50%, #a78bfa 100%); }
+    .grad-blue { background: linear-gradient(145deg, #0c4a6e 0%, #0369a1 50%, #38bdf8 100%); }
     .grad-pink { background: linear-gradient(145deg, #701a45 0%, #be185d 50%, #f472b6 100%); }
     .grad-cyan { background: linear-gradient(145deg, #115e59 0%, #0d9488 50%, #2dd4bf 100%); }
-    .grad-orange { background: linear-gradient(145deg, #7c2d12 0%, #c2410c 50%, #f97316 100%); }
-    .grad-green { background: linear-gradient(145deg, #14532d 0%, #15803d 50%, #22c55e 100%); }
+    .grad-orange { background: linear-gradient(145deg, #115e59 0%, #0d9488 50%, #2dd4bf 100%); } /* Use seafoam instead of orange */
+    .grad-green { background: linear-gradient(145deg, #115e59 0%, #0d9488 50%, #2dd4bf 100%); } /* Use seafoam instead of green */
     
-    /* === ANIMATED CIRCULAR PROGRESS === */
+    /* === ANIMATED CIRCULAR PROGRESS - Ocean Depth === */
     .progress-ring {
         width: 120px;
         height: 120px;
         border-radius: 50%;
         background: conic-gradient(
             from 0deg,
-            #3b82f6 0deg 120deg,
-            #8b5cf6 120deg 240deg,
-            #ec4899 240deg 360deg
+            #38bdf8 0deg 120deg,
+            #a78bfa 120deg 240deg,
+            #f472b6 240deg 360deg
         );
         padding: 4px;
         animation: rotate-glow 8s linear infinite;
@@ -114,7 +114,7 @@
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        background: #050510;
+        background: #0a0e14;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -124,10 +124,10 @@
         100% { filter: hue-rotate(360deg); }
     }
     
-    /* === BUTTONS V2 - More Vibrant === */
+    /* === BUTTONS V2 - Ocean Depth === */
     .btn-primary-v2 {
-        background: linear-gradient(135deg, #2a91ff 0%, #1a73f5 100%);
-        color: white;
+        background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+        color: #0a0e14;
         font-weight: 600;
         padding: 12px 24px;
         border-radius: 100px;
@@ -138,16 +138,16 @@
         gap: 8px;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        box-shadow: 0 4px 15px rgba(42, 145, 255, 0.25);
+        box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
     }
     .btn-primary-v2:hover {
-        background: linear-gradient(135deg, #52b5ff 0%, #2a91ff 100%);
+        background: linear-gradient(135deg, #7dd3fc 0%, #38bdf8 100%);
         transform: translateY(-1px);
-        box-shadow: 0 6px 20px rgba(42, 145, 255, 0.35);
+        box-shadow: 0 6px 25px rgba(56, 189, 248, 0.4);
     }
     .btn-primary-white {
         background: white;
-        color: #0a0a12;
+        color: #0a0e14;
         font-weight: 600;
         padding: 12px 24px;
         border-radius: 100px;
@@ -164,8 +164,8 @@
         transform: translateY(-1px);
     }
     .btn-secondary-v2 {
-        background: rgba(255,255,255,0.06);
-        border: 1px solid rgba(255,255,255,0.15);
+        background: rgba(56,189,248,0.1);
+        border: 1px solid rgba(56,189,248,0.2);
         color: white;
         font-weight: 500;
         padding: 12px 24px;
@@ -177,24 +177,24 @@
         gap: 8px;
     }
     .btn-secondary-v2:hover {
-        background: rgba(255,255,255,0.12);
-        border-color: rgba(255,255,255,0.25);
+        background: rgba(56,189,248,0.2);
+        border-color: rgba(56,189,248,0.4);
     }
     
-    /* === SEARCH BAR V2 - Better Visibility === */
+    /* === SEARCH BAR V2 - Ocean Depth === */
     .search-bar-v2 {
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(56,189,248,0.05);
+        border: 1px solid rgba(56,189,248,0.15);
         border-radius: 100px;
         transition: all 0.3s;
     }
     .search-bar-v2:focus-within {
-        border-color: rgba(42, 145, 255, 0.4);
-        background: rgba(255,255,255,0.08);
-        box-shadow: 0 0 20px rgba(42, 145, 255, 0.1);
+        border-color: rgba(56, 189, 248, 0.4);
+        background: rgba(56,189,248,0.1);
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
     }
     
-    /* === PILL TABS - Enhanced === */
+    /* === PILL TABS - Ocean Depth === */
     .pill-tab {
         padding: 10px 22px;
         border-radius: 50px;
@@ -203,22 +203,22 @@
         transition: all 0.25s ease;
     }
     .pill-tab-active {
-        background: linear-gradient(135deg, #2a91ff 0%, #1a73f5 100%);
-        color: white;
-        box-shadow: 0 4px 12px rgba(42, 145, 255, 0.3);
+        background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+        color: #0a0e14;
+        box-shadow: 0 4px 12px rgba(56, 189, 248, 0.35);
     }
     .pill-tab-inactive {
-        background: rgba(255,255,255,0.06);
+        background: rgba(56,189,248,0.08);
         color: rgba(255,255,255,0.7);
-        border: 1px solid rgba(255,255,255,0.1);
+        border: 1px solid rgba(56,189,248,0.15);
     }
     .pill-tab-inactive:hover {
-        background: rgba(255,255,255,0.1);
+        background: rgba(56,189,248,0.15);
         color: white;
-        border-color: rgba(255,255,255,0.15);
+        border-color: rgba(56,189,248,0.25);
     }
     
-    /* === TABLE V2 - Enhanced === */
+    /* === TABLE V2 - Ocean Depth === */
     .table-v2 {
         border-collapse: separate;
         border-spacing: 0;
@@ -230,15 +230,15 @@
         letter-spacing: 0.08em;
         color: rgba(255,255,255,0.5);
         padding: 16px 20px;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-bottom: 1px solid rgba(56,189,248,0.15);
     }
     .table-v2 td {
         padding: 16px 20px;
-        border-bottom: 1px solid rgba(255,255,255,0.06);
+        border-bottom: 1px solid rgba(56,189,248,0.08);
         font-size: 14px;
     }
     .table-v2 tr:hover td {
-        background: rgba(42, 145, 255, 0.05);
+        background: rgba(56, 189, 248, 0.05);
     }
     
     /* === ANIMATIONS === */
@@ -250,11 +250,12 @@
         animation: fade-up 0.6s ease-out forwards;
     }
     
-    /* === GLOW EFFECTS - Enhanced === */
-    .glow-blue { box-shadow: 0 0 50px rgba(42, 145, 255, 0.2); }
-    .glow-purple { box-shadow: 0 0 50px rgba(168, 85, 247, 0.2); }
-    .glow-pink { box-shadow: 0 0 50px rgba(236, 72, 153, 0.2); }
-    .glow-cyan { box-shadow: 0 0 50px rgba(34, 211, 238, 0.2); }
+    /* === GLOW EFFECTS - Ocean Depth === */
+    .glow-blue { box-shadow: 0 0 50px rgba(56, 189, 248, 0.25); }
+    .glow-purple { box-shadow: 0 0 50px rgba(167, 139, 250, 0.25); }
+    .glow-pink { box-shadow: 0 0 50px rgba(244, 114, 182, 0.25); }
+    .glow-cyan { box-shadow: 0 0 50px rgba(45, 212, 191, 0.25); }
+    .glow-orange { box-shadow: 0 0 50px rgba(45, 212, 191, 0.25); } /* Use seafoam instead of orange */
     
     /* === SKELETON LOADING === */
     .skeleton-v2 {
@@ -273,7 +274,7 @@
     /* Rotating Gradient Border Card */
     .card-premium-v3 {
         position: relative;
-        background: #0D0D1A;
+        background: #0f1419;
         border-radius: 20px;
         z-index: 1;
         overflow: hidden;
@@ -285,7 +286,7 @@
         left: -50%;
         width: 200%;
         height: 200%;
-        background: conic-gradient(from 0deg, transparent 0deg 300deg, #3b82f6 360deg);
+        background: conic-gradient(from 0deg, transparent 0deg 300deg, #38bdf8 360deg);
         animation: rotate-border 4s linear infinite;
         z-index: -1;
         opacity: 0;
@@ -298,7 +299,7 @@
         content: '';
         position: absolute;
         inset: 2px;
-        background: #0D0D1A;
+        background: #0f1419;
         border-radius: 18px;
         z-index: -1;
     }
@@ -313,7 +314,7 @@
         width: 180px;
         height: 180px;
         border-radius: 50%;
-        background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%);
         border: 1px solid rgba(255,255,255,0.05);
         display: flex;
         align-items: center;
@@ -325,7 +326,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: conic-gradient(from 0deg, rgba(59,130,246,0.4) 0deg, transparent 90deg);
+        background: conic-gradient(from 0deg, rgba(56,189,248,0.4) 0deg, transparent 90deg);
         border-radius: 50%;
         animation: rotate-border 4s linear infinite;
         pointer-events: none;
@@ -339,9 +340,9 @@
         position: absolute;
         width: 6px;
         height: 6px;
-        background: #3b82f6;
+        background: #38bdf8;
         border-radius: 50%;
-        box-shadow: 0 0 10px #3b82f6;
+        box-shadow: 0 0 10px #38bdf8;
         animation: pulse-dot 2s infinite;
     }
     @keyframes pulse-dot {
@@ -393,8 +394,8 @@
 
     /* Mosaic Layout */
     .mosaic-card {
-        background: #0D0D1A;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        background: #0f1419;
+        border: 1px solid rgba(56, 189, 248, 0.08);
         border-radius: 24px;
         padding: 24px;
         transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -402,22 +403,43 @@
         overflow: hidden;
     }
     .mosaic-card:hover {
-        background: #12121F;
-        border-color: rgba(59, 130, 246, 0.3);
+        background: #151c24;
+        border-color: rgba(56, 189, 248, 0.25);
         transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(59, 130, 246, 0.1);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(56, 189, 248, 0.1);
     }
     .mosaic-icon-circle {
         width: 32px;
         height: 32px;
         border-radius: 50%;
-        background: #3b82f6;
+        background: #38bdf8;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
+        color: #0a0e14;
         margin-bottom: 20px;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+    }
+    /* Alternate icon colors for visual rhythm - Ocean Depth palette only */
+    .mosaic-card:nth-child(2) .mosaic-icon-circle {
+        background: #2dd4bf;
+        box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3);
+    }
+    .mosaic-card:nth-child(3) .mosaic-icon-circle {
+        background: #a78bfa;
+        box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
+    }
+    .mosaic-card:nth-child(4) .mosaic-icon-circle {
+        background: #f472b6;
+        box-shadow: 0 4px 12px rgba(244, 114, 182, 0.3);
+    }
+    .mosaic-card:nth-child(5) .mosaic-icon-circle {
+        background: #38bdf8;
+        box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+    }
+    .mosaic-card:nth-child(6) .mosaic-icon-circle {
+        background: #2dd4bf;
+        box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3);
     }
 
     /* Hyper-Premium Weather Radar */
@@ -432,7 +454,7 @@
     .scan-ring {
         position: absolute;
         border-radius: 50%;
-        border: 1px solid rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.1);
         transition: all 0.5s ease;
     }
     .scan-ring-outer {
@@ -446,7 +468,7 @@
     .scan-ring-mid {
         width: 75%;
         height: 75%;
-        border-color: rgba(139, 92, 246, 0.15);
+        border-color: rgba(45, 212, 191, 0.15);
         animation: rotate-border 12s linear infinite reverse;
     }
     .scan-ring-inner {
@@ -459,14 +481,14 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        background: conic-gradient(from 0deg, rgba(59, 130, 246, 0.15) 0deg, transparent 60deg);
+        background: conic-gradient(from 0deg, rgba(56, 189, 248, 0.15) 0deg, transparent 60deg);
         border-radius: 50%;
         animation: rotate-border 4s linear infinite;
     }
     .projection-line {
         position: absolute;
         height: 1px;
-        background: linear-gradient(90deg, rgba(59, 130, 246, 0.5), transparent);
+        background: linear-gradient(90deg, rgba(56, 189, 248, 0.5), transparent);
         transform-origin: left center;
         pointer-events: none;
         opacity: 0.3;
@@ -479,14 +501,14 @@
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: #10b981;
+        background: #2dd4bf;
         position: relative;
     }
     .sync-blip::after {
         content: '';
         position: absolute;
         inset: -4px;
-        border: 1px solid #10b981;
+        border: 1px solid #2dd4bf;
         border-radius: 50%;
         animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
     }
@@ -507,22 +529,22 @@
     .topic-card-premium {
         flex: 0 0 400px;
         scroll-snap-align: start;
-        background: #080815;
-        border: 1px solid rgba(255, 255, 255, 0.03);
+        background: #0f1419;
+        border: 1px solid rgba(56, 189, 248, 0.05);
         border-radius: 20px;
         overflow: hidden;
         transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     }
     .topic-card-premium:hover {
-        border-color: rgba(59, 130, 246, 0.3);
+        border-color: rgba(56, 189, 248, 0.25);
         transform: translateY(-8px);
-        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.1);
     }
     .topic-category-tag {
         font-size: 11px;
         font-weight: 700;
         text-transform: capitalize;
-        color: #3b82f6;
+        color: #38bdf8;
     }
     .nav-btn {
         width: 44px;
@@ -570,14 +592,32 @@
     .quick-action-pill .icon-plus {
         width: 20px;
         height: 20px;
-        background: #3b82f6;
+        background: #38bdf8;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
+        color: #0a0e14;
         font-size: 14px;
         font-weight: bold;
+    }
+    .quick-action-pill .icon-purple {
+        width: 20px;
+        height: 20px;
+        background: #a78bfa;
+        border-radius: 50%;
+    }
+    .quick-action-pill .icon-coral {
+        width: 20px;
+        height: 20px;
+        background: #f472b6;
+        border-radius: 50%;
+    }
+    .quick-action-pill .icon-seafoam {
+        width: 20px;
+        height: 20px;
+        background: #2dd4bf;
+        border-radius: 50%;
     }
 </style>
 @endpush
@@ -589,9 +629,9 @@
     <section class="pt-28 pb-16 bg-primary section-divider">
         <div class="max-w-[1200px] mx-auto px-8">
             {{-- Badge --}}
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
-                <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-                <span class="text-blue-400 text-tag">Community Driven</span>
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#38bdf8]/10 border border-[#38bdf8]/20 mb-6">
+                <span class="w-2 h-2 bg-[#38bdf8] rounded-full animate-pulse"></span>
+                <span class="text-[#38bdf8] text-tag">Community Driven</span>
             </div>
             
             {{-- Title --}}
@@ -619,13 +659,13 @@
                     >
                     <button type="submit" class="btn-primary-v2 m-1.5">
                         Search
-                        <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                        <span class="w-2 h-2 bg-[#38bdf8] rounded-full"></span>
                     </button>
                 </div>
             </form>
 
             {{-- Quick Stats --}}
-            <div class="flex flex-wrap items-center gap-8 text-[13px] text-gray-500">
+            <div class="flex flex-wrap items-center gap-8 text-[13px] text-[#64748b]">
                 <span><strong class="text-white font-semibold">{{ number_format($heroStats['articles'] ?? 0) }}</strong> Articles</span>
                 <span><strong class="text-white font-semibold">{{ number_format($heroStats['contributors'] ?? 0) }}</strong> Contributors</span>
                 <span><strong class="text-white font-semibold">{{ number_format($heroStats['genres'] ?? 0) }}</strong> Genres Covered</span>
@@ -633,29 +673,29 @@
         </div>
     </section>
 
-    <section class="py-10 bg-secondary section-divider border-t border-white/5">
+    <section class="py-10 bg-secondary section-divider border-t border-[#38bdf8]/10">
         <div class="max-w-[1200px] mx-auto px-8 flex flex-col md:flex-row items-center gap-10">
-            <span class="text-[11px] font-black text-white/30 uppercase tracking-[0.2em] whitespace-nowrap">Global Operations</span>
+            <span class="text-[11px] font-black text-[#64748b] uppercase tracking-[0.2em] whitespace-nowrap">Global Operations</span>
             
             <div class="flex flex-wrap items-center gap-4">
                 <a href="{{ route('wiki.create') }}" class="quick-action-pill group">
-                    <span class="text-white/60 text-sm font-bold group-hover:text-white transition-colors">Create Record</span>
+                    <span class="text-white/60 text-sm font-bold group-hover:text-[#38bdf8] transition-colors">Create Record</span>
                     <div class="icon-plus">
                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                     </div>
                 </a>
                 
                 <a href="{{ route('wiki.index') }}" class="quick-action-pill group">
-                    <span class="text-white/60 text-sm font-bold group-hover:text-white transition-colors">Archive Browser</span>
-                    <div class="icon-plus">
-                        <svg class="w-2 h-2" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
+                    <span class="text-white/60 text-sm font-bold group-hover:text-[#a78bfa] transition-colors">Archive Browser</span>
+                    <div class="icon-purple rounded-full flex items-center justify-center">
+                        <svg class="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/></svg>
                     </div>
                 </a>
                 
                 <a href="{{ route('leaderboard') }}" class="quick-action-pill group">
-                    <span class="text-white/60 text-sm font-bold group-hover:text-white transition-colors">Impact Index</span>
-                    <div class="icon-plus">
-                        <svg class="w-2 h-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <span class="text-white/60 text-sm font-bold group-hover:text-[#f472b6] transition-colors">Impact Index</span>
+                    <div class="icon-coral rounded-full flex items-center justify-center">
+                        <svg class="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </div>
                 </a>
                 
@@ -752,7 +792,7 @@
                 @else
                 @foreach($newTopicCards as $topic)
                 <a href="{{ $topic['url'] }}" class="flex-shrink-0 w-[320px] group">
-                    <div class="relative h-[440px] rounded-3xl overflow-hidden bg-[#0D0D1A] border border-white/5 hover:border-white/10 transition-all duration-500">
+                    <div class="relative h-[440px] rounded-3xl overflow-hidden bg-[#0f1419] border border-[#38bdf8]/10 hover:border-[#38bdf8]/25 transition-all duration-500">
                         {{-- Large Cover Image --}}
                         <div class="absolute inset-0">
                             @if($topic['image'])
@@ -761,16 +801,16 @@
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" 
                                     alt="{{ $topic['title'] }}">
                             @else
-                                <div class="w-full h-full bg-gradient-to-br from-blue-900/40 via-purple-900/30 to-black"></div>
+                                <div class="w-full h-full bg-gradient-to-br from-[#38bdf8]/20 via-[#a78bfa]/15 to-[#0a0e14]"></div>
                             @endif
-                            <div class="absolute inset-0 bg-gradient-to-t from-[#0D0D1A] via-[#0D0D1A]/60 to-transparent"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0e14] via-[#0a0e14]/60 to-transparent"></div>
                         </div>
 
                         {{-- Content Overlay --}}
                         <div class="absolute inset-0 p-6 flex flex-col justify-end">
                             {{-- Category Tag --}}
                             <div class="mb-3">
-                                <span class="inline-block px-3 py-1 bg-blue-600/20 backdrop-blur-sm border border-blue-500/30 rounded-lg text-blue-400 text-[10px] font-bold uppercase tracking-wider">
+                                <span class="inline-block px-3 py-1 bg-[#38bdf8]/15 backdrop-blur-sm border border-[#38bdf8]/30 rounded-lg text-[#38bdf8] text-[10px] font-bold uppercase tracking-wider">
                                     {{ $topic['category'] }}
                                 </span>
                             </div>
@@ -787,7 +827,7 @@
 
                             {{-- User Info --}}
                             <div class="flex items-center gap-2 mb-4">
-                                <div class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                                <div class="w-6 h-6 rounded-full bg-gradient-to-br from-[#38bdf8] to-[#a78bfa] flex items-center justify-center">
                                     <span class="text-white text-[10px] font-bold">{{ strtoupper(substr($topic['user'], 0, 1)) }}</span>
                                 </div>
                                 <div class="flex-1">
@@ -867,9 +907,9 @@
                         <div class="relative z-10 text-center">
                             <div class="relative">
                                 <span class="text-[44px] font-black text-white block leading-none tracking-tighter counting-number">{{ $musicPulse['live_flow'] ?? 0 }}</span>
-                                <span class="absolute -top-1 -right-4 text-blue-500 font-bold">%</span>
+                                <span class="absolute -top-1 -right-4 text-[#38bdf8] font-bold">%</span>
                             </div>
-                            <span class="text-[10px] text-blue-400 font-bold uppercase tracking-[0.2em] mt-1 block">Live Flow</span>
+                            <span class="text-[10px] text-[#38bdf8] font-bold uppercase tracking-[0.2em] mt-1 block">Live Flow</span>
                         </div>
                     </div>
                     
@@ -884,8 +924,8 @@
                     <div class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
                         <div class="max-w-md">
                             <div class="flex items-center gap-4 mb-4">
-                                <div class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] text-blue-400 font-black uppercase tracking-widest">Global Music Pulse</div>
-                                <div class="h-px flex-1 bg-gradient-to-r from-blue-500/30 to-transparent"></div>
+                                <div class="px-3 py-1 bg-[#38bdf8]/10 border border-[#38bdf8]/20 rounded-lg text-[10px] text-[#38bdf8] font-black uppercase tracking-widest">Global Music Pulse</div>
+                                <div class="h-px flex-1 bg-gradient-to-r from-[#38bdf8]/30 to-transparent"></div>
                             </div>
                             <h2 class="text-4xl font-black text-white italic tracking-tight mb-3">LISTENING PULSE INDEX</h2>
                             <p class="text-white/40 leading-relaxed font-medium">This tactical visualization tracks real-time community engagement, artist momentum, and emerging subgenres across the ChaynWiki network.</p>
@@ -903,14 +943,14 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {{-- Stat 1 --}}
                         <div class="group relative">
-                            <div class="absolute inset-0 bg-blue-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <div class="card-v2 p-8 relative z-10 border-blue-500/10 group-hover:border-blue-500/30">
+                            <div class="absolute inset-0 bg-[#38bdf8]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="card-v2 p-8 relative z-10 border-[#38bdf8]/10 group-hover:border-[#38bdf8]/30">
                                 <div class="flex items-start justify-between mb-8">
-                                    <div class="p-3 bg-blue-500/10 rounded-xl text-blue-400 border border-blue-500/10">
+                                    <div class="p-3 bg-[#38bdf8]/10 rounded-xl text-[#38bdf8] border border-[#38bdf8]/10">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                                     </div>
                                     <div class="text-right">
-                                        <span class="text-blue-400 text-xs font-black uppercase tracking-widest">{{ number_format($musicPulse['edits_week'] ?? 0) }} / 7d</span>
+                                        <span class="text-[#38bdf8] text-xs font-black uppercase tracking-widest">{{ number_format($musicPulse['edits_week'] ?? 0) }} / 7d</span>
                                     </div>
                                 </div>
                                 <p class="text-white/40 text-[11px] font-black uppercase tracking-[0.15em] mb-1">Network Activity</p>
@@ -922,14 +962,14 @@
                         
                         {{-- Stat 2 --}}
                         <div class="group relative">
-                            <div class="absolute inset-0 bg-purple-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <div class="card-v2 p-8 relative z-10 border-purple-500/10 group-hover:border-purple-500/30">
+                            <div class="absolute inset-0 bg-[#2dd4bf]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="card-v2 p-8 relative z-10 border-[#2dd4bf]/10 group-hover:border-[#2dd4bf]/30">
                                 <div class="flex items-start justify-between mb-8">
-                                    <div class="p-3 bg-purple-500/10 rounded-xl text-purple-400 border border-purple-500/10">
+                                    <div class="p-3 bg-[#2dd4bf]/10 rounded-xl text-[#2dd4bf] border border-[#2dd4bf]/10">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.99 7.99 0 0120 13a7.99 7.99 0 01-2.343 5.657z"/></svg>
                                     </div>
                                     <div class="text-right">
-                                        <span class="text-purple-400 text-xs font-black uppercase tracking-widest">{{ number_format($musicPulse['new_articles_week'] ?? 0) }} / 7d</span>
+                                        <span class="text-[#2dd4bf] text-xs font-black uppercase tracking-widest">{{ number_format($musicPulse['new_articles_week'] ?? 0) }} / 7d</span>
                                     </div>
                                 </div>
                                 <p class="text-white/40 text-[11px] font-black uppercase tracking-[0.15em] mb-1">Global Sentiment</p>
@@ -941,14 +981,14 @@
 
                         {{-- Stat 3 --}}
                         <div class="group relative">
-                            <div class="absolute inset-0 bg-pink-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            <div class="card-v2 p-8 relative z-10 border-pink-500/10 group-hover:border-pink-500/30">
+                            <div class="absolute inset-0 bg-[#a78bfa]/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="card-v2 p-8 relative z-10 border-[#a78bfa]/10 group-hover:border-[#a78bfa]/30">
                                 <div class="flex items-start justify-between mb-8">
-                                    <div class="p-3 bg-pink-500/10 rounded-xl text-pink-400 border border-pink-500/10">
+                                    <div class="p-3 bg-[#a78bfa]/10 rounded-xl text-[#a78bfa] border border-[#a78bfa]/10">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
                                     </div>
                                     <div class="text-right">
-                                        <span class="text-pink-400 text-xs font-black uppercase tracking-widest">{{ number_format($musicPulse['active_contributors_week'] ?? 0) }} active</span>
+                                        <span class="text-[#a78bfa] text-xs font-black uppercase tracking-widest">{{ number_format($musicPulse['active_contributors_week'] ?? 0) }} active</span>
                                     </div>
                                 </div>
                                 <p class="text-white/40 text-[11px] font-black uppercase tracking-[0.15em] mb-1">Active Mentions</p>
@@ -1019,11 +1059,11 @@
                         <div class="flex items-center gap-3">
                             <span class="text-xl" x-text="item.icon"></span>
                             <div>
-                                <span class="text-[14px] text-white group-hover:text-blue-400 transition-colors" x-text="item.name"></span>
-                                <span class="block text-[12px] text-gray-600" x-text="item.count"></span>
+                                <span class="text-[14px] text-white group-hover:text-[#38bdf8] transition-colors" x-text="item.name"></span>
+                                <span class="block text-[12px] text-[#64748b]" x-text="item.count"></span>
                             </div>
                         </div>
-                        <svg class="w-4 h-4 text-gray-600 group-hover:text-blue-400 group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        <svg class="w-4 h-4 text-[#64748b] group-hover:text-[#38bdf8] group-hover:translate-x-1 transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </a>
                 </template>
             </div>
@@ -1074,7 +1114,7 @@
         <div class="max-w-[1200px] mx-auto px-8">
             <div class="flex items-center justify-between mb-10">
                 <div class="flex items-center gap-3">
-                    <span class="w-10 h-10 bg-yellow-500/10 rounded-xl flex items-center justify-center text-yellow-500">
+                    <span class="w-10 h-10 bg-[#38bdf8]/10 rounded-xl flex items-center justify-center text-[#38bdf8]">
                         <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </span>
                     <h2 class="text-section-heading text-white">Ranked Items</h2>
@@ -1115,7 +1155,7 @@
                                 {{ $rankIcons[$article->category] ?? '📚' }}
                             </div>
                             <div>
-                                <h4 class="text-white font-bold group-hover:text-blue-400 transition-colors">
+                                <h4 class="text-white font-bold group-hover:text-[#38bdf8] transition-colors">
                                     <a href="{{ route('wiki.show', $article->slug) }}">{{ $article->title }}</a>
                                 </h4>
                                 <span class="text-[11px] text-gray-500 uppercase tracking-widest">{{ ucfirst($article->category) }}</span>
@@ -1129,7 +1169,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="text-white font-bold">{{ number_format($article->view_count) }}</span>
                                 @if($article->trending_score > 0)
-                                    <span class="text-green-500 text-[11px] font-bold">{{ number_format($article->trending_score, 1) }}</span>
+                                    <span class="text-[#2dd4bf] text-[11px] font-bold">{{ number_format($article->trending_score, 1) }}</span>
                                 @endif
                             </div>
                             <span class="text-[11px] text-gray-500 uppercase tracking-widest text-right block">Views / Trend</span>
@@ -1139,17 +1179,17 @@
                         <div class="flex items-center gap-3 pr-4">
                             <div class="text-right">
                                 <span class="text-white/60 text-sm font-medium">{{ $article->user ? '@' . $article->user->username : 'Community' }}</span>
-                                <span class="text-[10px] text-gray-600 uppercase tracking-widest block">Contributor</span>
+                                <span class="text-[10px] text-[#64748b] uppercase tracking-widest block">Contributor</span>
                             </div>
-                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-0.5">
-                                <div class="w-full h-full rounded-full bg-[#050511] flex items-center justify-center text-[10px] text-white">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-[#38bdf8] to-[#a78bfa] p-0.5">
+                                <div class="w-full h-full rounded-full bg-[#0a0e14] flex items-center justify-center text-[10px] text-white">
                                     {{ strtoupper(substr($article->user?->username ?? 'C', 0, 1)) }}
                                 </div>
                             </div>
                         </div>
 
                         {{-- Action --}}
-                        <button class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/40 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-500 transition-all">
+                        <button class="w-10 h-10 rounded-full bg-[#38bdf8]/5 border border-[#38bdf8]/10 flex items-center justify-center text-white/40 group-hover:bg-[#38bdf8] group-hover:text-[#0a0e14] group-hover:border-[#38bdf8] transition-all">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                         </button>
                     </div>
@@ -1166,7 +1206,7 @@
     <section class="py-16 bg-primary section-divider">
         <div class="max-w-[1200px] mx-auto px-8">
             <div class="flex items-center gap-3 mb-10">
-                <div class="w-1.5 h-8 bg-blue-500/40 rounded-full"></div>
+                <div class="w-1.5 h-8 bg-[#38bdf8]/40 rounded-full"></div>
                 <h2 class="text-section-heading text-white">Community Insights</h2>
             </div>
 
@@ -1179,7 +1219,7 @@
                     <div class="flex items-start justify-between">
                         <div>
                             <p class="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-4">{{ $insight['label'] }}</p>
-                            <h3 class="text-2xl font-black text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r @if($insight['gradient'] == 'grad-purple') from-purple-400 to-pink-500 @elseif($insight['gradient'] == 'grad-blue') from-blue-400 to-cyan-500 @else from-pink-400 to-orange-500 @endif transition-all">
+                            <h3 class="text-2xl font-black text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r @if($insight['gradient'] == 'grad-purple') from-[#a78bfa] to-[#f472b6] @elseif($insight['gradient'] == 'grad-blue') from-[#38bdf8] to-[#2dd4bf] @else from-[#f472b6] to-[#38bdf8] @endif transition-all">
                                 {{ $insight['value'] }}
                             </h3>
                         </div>

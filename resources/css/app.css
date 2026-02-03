@@ -4,9 +4,37 @@
 @tailwind components;
 @tailwind utilities;
 
+/* === Ocean Depth Theme - Base Styles === */
 @layer base {
+    :root {
+        /* Core Background Colors */
+        --bg-primary: #0a0e14;
+        --bg-secondary: #0f1419;
+        --bg-surface: #151c24;
+        --bg-elevated: #1c2630;
+        --bg-muted: #2a3544;
+        
+        /* Accent Colors */
+        --accent-primary: #38bdf8;
+        --accent-secondary: #2dd4bf;
+        --accent-tertiary: #f472b6;
+        --accent-purple: #a78bfa;
+        --accent-orange: #fb923c;
+        
+        /* Text Colors */
+        --text-primary: #f1f5f9;
+        --text-secondary: #cbd5e1;
+        --text-muted: #64748b;
+        
+        /* Border Colors */
+        --border-subtle: rgba(56, 189, 248, 0.1);
+        --border-visible: rgba(56, 189, 248, 0.2);
+    }
+    
     body {
-        @apply bg-[#0a0a12] text-white font-sans antialiased;
+        @apply bg-primary text-white font-sans antialiased;
+        background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        background-attachment: fixed;
     }
 
     h1,
@@ -16,22 +44,39 @@
     h5,
     h6 {
         @apply font-display;
+        color: var(--text-primary);
     }
 }
 
-/* === GLOBAL COLOR SCHEME REFINEMENTS === */
+/* === Ocean Depth Utility Classes === */
 @layer utilities {
-    /* Core backgrounds - less harsh */
-    .bg-primary { background-color: #0a0a12; }
-    .bg-secondary { background-color: #0f0f1a; }
-    .bg-tertiary { background-color: #151522; }
-    .bg-surface { background-color: #1a1a2e; }
+    /* Core backgrounds */
+    .bg-primary { background-color: var(--bg-primary); }
+    .bg-secondary { background-color: var(--bg-secondary); }
+    .bg-surface { background-color: var(--bg-surface); }
+    .bg-elevated { background-color: var(--bg-elevated); }
     
-    /* Better text contrast */
-    .text-muted { color: rgba(255, 255, 255, 0.6); }
+    /* Accent colors */
+    .text-accent { color: var(--accent-primary); }
+    .text-accent-secondary { color: var(--accent-secondary); }
+    .text-accent-tertiary { color: var(--accent-tertiary); }
+    
+    /* Text hierarchy */
+    .text-primary { color: var(--text-primary); }
+    .text-secondary { color: var(--text-secondary); }
+    .text-muted { color: var(--text-muted); }
     .text-subtle { color: rgba(255, 255, 255, 0.4); }
     
     /* Enhanced borders */
-    .border-subtle { border-color: rgba(255, 255, 255, 0.08); }
-    .border-visible { border-color: rgba(255, 255, 255, 0.12); }
+    .border-subtle { border-color: var(--border-subtle); }
+    .border-visible { border-color: var(--border-visible); }
+    .border-accent { border-color: var(--accent-primary); }
+    
+    /* Ocean glow effects */
+    .glow-accent {
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+    }
+    .glow-accent-strong {
+        box-shadow: 0 0 30px rgba(56, 189, 248, 0.4), 0 0 60px rgba(56, 189, 248, 0.2);
+    }
 }

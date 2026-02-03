@@ -159,7 +159,7 @@ class HomeController extends Controller
                 'meta' => number_format($topEdited->edits) . ' edits',
                 'gradient' => 'grad-purple',
                 'icon' => '✍️',
-                'color' => '#8b5cf6',
+                'color' => '#a78bfa', // Soft Purple (Ocean Depth)
                 'premium' => true,
                 'url' => route('wiki.show', $topEditedArticle->slug),
             ]);
@@ -172,7 +172,7 @@ class HomeController extends Controller
                 'meta' => number_format($topContributor->revisions_count) . ' edits',
                 'gradient' => 'grad-blue',
                 'icon' => '🏆',
-                'color' => '#3b82f6',
+                'color' => '#38bdf8', // Ocean Blue (Ocean Depth)
                 'premium' => false,
                 'url' => route('profile', $topContributor->username),
             ]);
@@ -185,7 +185,7 @@ class HomeController extends Controller
                 'meta' => number_format($featuredDiscovery->view_count) . ' views',
                 'gradient' => 'grad-pink',
                 'icon' => '⭐',
-                'color' => '#ec4899',
+                'color' => '#f472b6', // Coral Pink (Ocean Depth)
                 'premium' => false,
                 'url' => route('wiki.show', $featuredDiscovery->slug),
             ]);

@@ -21,25 +21,27 @@ export default {
                 display: ['Outfit', 'Inter', ...defaultTheme.fontFamily.sans],
             },
             colors: {
+                // Ocean Depth Theme - Premium Music Encyclopedia
                 brand: {
-                    50: '#eef8ff',
-                    100: '#d8eeff',
-                    200: '#b9e2ff',
-                    300: '#89d1ff',
-                    400: '#52b5ff',
-                    500: '#2a91ff',
-                    600: '#1a73f5',
-                    700: '#1259d9',
-                    800: '#154aaf',
-                    900: '#17408a',
-                    950: '#122954',
+                    50: '#f0f9ff',
+                    100: '#e0f2fe',
+                    200: '#bae6fd',
+                    300: '#7dd3fc',
+                    400: '#38bdf8',
+                    500: '#0ea5e9',
+                    600: '#0284c7',
+                    700: '#0369a1',
+                    800: '#075985',
+                    900: '#0c4a6e',
+                    950: '#082f49',
                 },
                 accent: {
-                    purple: '#a855f7',
-                    pink: '#ec4899',
-                    cyan: '#22d3ee',
-                    orange: '#f97316',
-                    green: '#22c55e',
+                    primary: '#38bdf8',    // Ocean blue
+                    secondary: '#2dd4bf',  // Seafoam teal
+                    tertiary: '#f472b6',   // Coral pink
+                    purple: '#a78bfa',     // Soft purple
+                    orange: '#fb923c',     // Warm orange
+                    green: '#22c55e',      // Fresh green
                 },
                 dark: {
                     400: '#94a3b8',
@@ -50,17 +52,19 @@ export default {
                     900: '#0f172a',
                     950: '#020617',
                 },
-                // New refined color palette - less harsh, more depth
-                primary: '#0a0a12', // Rich deep dark (less harsh than pure black)
-                secondary: '#0f0f1a', // Elevated surface
-                tertiary: '#151522', // Card background
-                surface: '#1a1a2e', // Lighter cards/panels
-                muted: '#252538', // Subtle backgrounds
-                border: 'rgba(255, 255, 255, 0.08)', // Consistent border color
+                // Core background palette
+                primary: '#0a0e14',    // Deep ocean - main bg
+                secondary: '#0f1419',  // Dark teal - sections
+                tertiary: '#151c24',   // Night blue - cards
+                surface: '#1c2630',    // Slate - elevated
+                elevated: '#232d3a',   // Lighter panels
+                muted: '#2a3544',      // Subtle backgrounds
             },
             backgroundImage: {
-                'hero-gradient': 'linear-gradient(to bottom, #050511, #020617)',
-                'glow': 'conic-gradient(from 180deg at 50% 50%, #2a8af6 0deg, #a853ba 180deg, #e92a67 360deg)',
+                'hero-gradient': 'linear-gradient(to bottom, #0a0e14, #0f1419)',
+                'glow': 'conic-gradient(from 180deg at 50% 50%, #38bdf8 0deg, #a78bfa 180deg, #f472b6 360deg)',
+                'card-gradient': 'linear-gradient(145deg, rgba(21,28,36,0.9) 0%, rgba(28,38,48,0.8) 100%)',
+                'accent-gradient': 'linear-gradient(135deg, #38bdf8 0%, #2dd4bf 100%)',
             },
             animation: {
                 'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

@@ -76,16 +76,16 @@
     }
 }
 
-/* Pulse glow */
+/* Pulse glow - Ocean Depth */
 @keyframes pulseGlow {
 
     0%,
     100% {
-        box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
     }
 
     50% {
-        box-shadow: 0 0 40px rgba(59, 130, 246, 0.5);
+        box-shadow: 0 0 40px rgba(56, 189, 248, 0.5);
     }
 }
 
@@ -207,38 +207,38 @@
 }
 
 /* ================================
-   GLASSMORPHISM EFFECTS
+   GLASSMORPHISM EFFECTS - Ocean Depth
    ================================ */
 
 .glass {
-    background: rgba(21, 21, 34, 0.7);
+    background: rgba(21, 28, 36, 0.7);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.1);
 }
 
 .glass-dark {
-    background: rgba(15, 15, 26, 0.85);
+    background: rgba(15, 20, 25, 0.85);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(56, 189, 248, 0.08);
 }
 
 .glass-brand {
-    background: rgba(42, 145, 255, 0.1);
+    background: rgba(56, 189, 248, 0.1);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(42, 145, 255, 0.2);
+    border: 1px solid rgba(56, 189, 248, 0.2);
 }
 
 /* ================================
-   PREMIUM CARD EFFECTS
+   PREMIUM CARD EFFECTS - Ocean Depth
    ================================ */
 
 .card-premium {
     position: relative;
-    background: linear-gradient(145deg, rgba(21,21,34,0.8) 0%, rgba(15,15,26,0.9) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(145deg, rgba(21,28,36,0.9) 0%, rgba(28,38,48,0.8) 100%);
+    border: 1px solid rgba(56, 189, 248, 0.1);
     border-radius: 1rem;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -249,27 +249,27 @@
     position: absolute;
     inset: 0;
     background: linear-gradient(135deg,
-            rgba(42, 145, 255, 0.08) 0%,
+            rgba(56, 189, 248, 0.08) 0%,
             transparent 50%,
-            rgba(168, 85, 247, 0.08) 100%);
+            rgba(167, 139, 250, 0.08) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
 
 .card-premium:hover {
-    border-color: rgba(42, 145, 255, 0.25);
+    border-color: rgba(56, 189, 248, 0.3);
     transform: translateY(-4px);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(56, 189, 248, 0.1);
 }
 
 .card-premium:hover::before {
     opacity: 1;
 }
 
-/* Gradient border card */
+/* Gradient border card - Ocean Depth */
 .card-gradient-border {
     position: relative;
-    background: #151522;
+    background: #151c24;
     border-radius: 1rem;
 }
 
@@ -277,7 +277,7 @@
     content: '';
     position: absolute;
     inset: -2px;
-    background: linear-gradient(45deg, #2a91ff, #a855f7, #ec4899, #2a91ff);
+    background: linear-gradient(45deg, #38bdf8, #a78bfa, #f472b6, #2dd4bf, #38bdf8);
     background-size: 300% 300%;
     border-radius: 1.125rem;
     z-index: -1;
@@ -371,11 +371,18 @@
 }
 
 /* ================================
-   GRADIENT TEXT
+   GRADIENT TEXT - Ocean Depth
    ================================ */
 
 .text-gradient-brand {
-    background: linear-gradient(135deg, #2a91ff 0%, #a855f7 50%, #ec4899 100%);
+    background: linear-gradient(135deg, #38bdf8 0%, #a78bfa 50%, #f472b6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-ocean {
+    background: linear-gradient(135deg, #38bdf8 0%, #2dd4bf 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -389,23 +396,27 @@
 }
 
 /* ================================
-   GLOW EFFECTS
+   GLOW EFFECTS - Ocean Depth
    ================================ */
 
 .glow-brand {
-    box-shadow: 0 0 40px rgba(42, 145, 255, 0.3);
+    box-shadow: 0 0 40px rgba(56, 189, 248, 0.3);
+}
+
+.glow-ocean {
+    box-shadow: 0 0 40px rgba(45, 212, 191, 0.3);
 }
 
 .glow-purple {
-    box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+    box-shadow: 0 0 40px rgba(167, 139, 250, 0.3);
 }
 
 .glow-pink {
-    box-shadow: 0 0 30px rgba(236, 72, 153, 0.3);
+    box-shadow: 0 0 30px rgba(244, 114, 182, 0.3);
 }
 
 /* ================================
-   READING PROGRESS BAR
+   READING PROGRESS BAR - Ocean Depth
    ================================ */
 
 .reading-progress {
@@ -413,7 +424,7 @@
     top: 0;
     left: 0;
     height: 3px;
-    background: linear-gradient(90deg, #3B82F6, #8B5CF6);
+    background: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6);
     z-index: 9999;
     transition: width 0.1s ease;
 }
