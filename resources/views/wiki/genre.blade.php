@@ -20,19 +20,19 @@
     <!-- HERO SECTION -->
     <div class="relative min-h-[40vh] flex items-center bg-primary section-divider overflow-hidden pt-32">
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-blue-500/5 via-transparent to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#38bdf8]/5 via-transparent to-transparent"></div>
         
         <div class="relative z-10 max-w-[1200px] mx-auto px-8 w-full">
             <div class="max-w-3xl">
-                <span class="text-xs font-semibold text-blue-400 uppercase tracking-[0.3em] mb-4 block">Archive Classification</span>
+                <span class="text-xs font-semibold text-[#38bdf8] uppercase tracking-[0.3em] mb-4 block">Archive Classification</span>
                 <h1 class="text-7xl lg:text-9xl font-black text-white italic uppercase tracking-tighter mb-8 leading-none">
                     {{ $article->title }}
                 </h1>
                 <div class="flex flex-wrap items-center gap-4">
                     <a href="{{ route('wiki.edit', $article->slug) }}" class="px-7 py-3.5 bg-white text-black rounded-xl text-[11px] font-semibold uppercase tracking-widest hover:scale-105 transition-all flex items-center justify-center gap-3 relative overflow-hidden group">
                         <span class="relative z-10">Edit Classification</span>
-                        <div class="w-4 h-4 rounded-full bg-blue-500/20 flex items-center justify-center relative z-10">
-                            <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+                        <div class="w-4 h-4 rounded-full bg-[#38bdf8]/20 flex items-center justify-center relative z-10">
+                            <div class="w-1.5 h-1.5 rounded-full bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.8)]"></div>
                         </div>
                     </a>
                     <div class="flex items-center gap-3 px-5 py-3 bg-white/8 border border-white/15 rounded-2xl min-h-[48px] mb-2">
@@ -61,7 +61,7 @@
             </div>
             
             <div class="w-full lg:w-80">
-                <div class="glass p-8 rounded-3xl border border-white/10 bg-[#0D0D1A]">
+                <div class="glass p-8 rounded-3xl border border-white/10 bg-[#0f1419]">
                     <h3 class="text-lg font-black text-white italic uppercase tracking-tighter mb-6">Quick Facts</h3>
                     <p class="text-white/50 text-sm leading-relaxed mb-8">
                         This genre represents a core node in our music archive. Contributors are encouraged to document sub-genres and historical origins.
@@ -71,7 +71,7 @@
                         <livewire:article.play-button 
                             :articleId="$article->id" 
                             label="Listen to Audio Pulse"
-                            class="w-full py-3.5 bg-blue-500 text-white rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
+                            class="w-full py-3.5 bg-[#38bdf8] text-[#0a0e14] rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-[#38bdf8]/20"
                         />
 
                         <x-article.⚡add-to-crate :article="$article" />

@@ -1,8 +1,8 @@
 <div class="animate-fade-in relative" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 600)">
     {{-- Background Glows --}}
     <div class="fixed inset-0 pointer-events-none z-0">
-        <div class="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-1/4 -right-32 w-[600px] h-[600px] bg-purple-500/5 rounded-full blur-[120px]"></div>
+        <div class="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-[#38bdf8]/5 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-1/4 -right-32 w-[600px] h-[600px] bg-[#a78bfa]/5 rounded-full blur-[120px]"></div>
     </div>
 
     {{-- Skeleton Loading State --}}
@@ -64,7 +64,7 @@
     <div x-show="loaded" x-transition:enter="transition ease-out duration-500" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" class="relative z-10 space-y-8" style="display: none;">
         {{-- Profile Header Card --}}
         <div class="bg-secondary border border-white/5 rounded-2xl p-8 md:p-12 overflow-hidden relative group shadow-2xl">
-            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/5 blur-[100px] -mr-40 -mt-40 transition-all duration-1000 group-hover:bg-blue-500/10"></div>
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-[#38bdf8]/5 blur-[100px] -mr-40 -mt-40 transition-all duration-1000 group-hover:bg-[#38bdf8]/10"></div>
             
             <div class="flex flex-col md:flex-row items-center gap-10 relative z-10">
                 <div class="relative">
@@ -77,14 +77,14 @@
                             @endif
                         </div>
                     </div>
-                    <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-blue-600 text-white text-[9px] font-black uppercase tracking-[0.2em] rounded-xl shadow-2xl border border-[#050511] shadow-blue-500/20">
+                    <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 px-4 py-1.5 bg-[#38bdf8] text-[#0a0e14] text-[9px] font-black uppercase tracking-[0.2em] rounded-xl shadow-2xl border border-[#050511] shadow-[#38bdf8]/20">
                         LVL {{ $user->level }}
                     </div>
                 </div>
 
                 <div class="text-center md:text-left flex-1">
                     <div class="mb-4">
-                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-blue-500/5 border border-blue-500/10 text-[8px] font-black text-blue-500 uppercase tracking-[0.2em] mb-3">
+                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-lg bg-[#38bdf8]/5 border border-[#38bdf8]/10 text-[8px] font-black text-[#38bdf8] uppercase tracking-[0.2em] mb-3">
                             Authorized Node Identity
                         </div>
                         <h1 class="text-4xl md:text-6xl font-black text-white uppercase italic tracking-tighter mb-2 leading-none">
@@ -92,7 +92,7 @@
                         </h1>
                         <div class="flex flex-wrap justify-center md:justify-start gap-3 items-center">
                             <span class="text-white/20 text-[10px] font-black uppercase tracking-[0.3em] flex items-center gap-2">
-                                <span class="w-1 h-1 rounded-full bg-blue-500 animate-pulse"></span>
+                                <span class="w-1 h-1 rounded-full bg-[#38bdf8] animate-pulse"></span>
                                 {{ $user->rank_name ?? 'ELITE OPERATOR' }}
                             </span>
                             <span class="text-white/10 text-[10px] font-black uppercase tracking-[0.3em] flex items-center gap-2">
@@ -117,8 +117,8 @@
             <div class="bg-secondary border border-white/5 rounded-2xl p-6 relative overflow-hidden group/stat shadow-xl">
                 <div class="text-[9px] font-black text-white/5 uppercase tracking-[0.2em] mb-4">Reputation Score</div>
                 <div class="flex items-end gap-2">
-                    <div class="text-4xl font-black text-white italic tracking-tighter group-hover/stat:text-blue-500 transition-colors">{{ number_format($stats['reputation']) }}</div>
-                    <div class="text-blue-500/40 text-[9px] font-black mb-2 uppercase tracking-widest">PTS</div>
+                    <div class="text-4xl font-black text-white italic tracking-tighter group-hover/stat:text-[#38bdf8] transition-colors">{{ number_format($stats['reputation']) }}</div>
+                    <div class="text-[#38bdf8]/40 text-[9px] font-black mb-2 uppercase tracking-widest">PTS</div>
                 </div>
             </div>
 
@@ -126,8 +126,8 @@
             <div class="bg-secondary border border-white/5 rounded-2xl p-6 relative overflow-hidden group/stat shadow-xl">
                 <div class="text-[9px] font-black text-white/5 uppercase tracking-[0.2em] mb-4">Archive Commits</div>
                 <div class="flex items-end gap-2">
-                    <div class="text-4xl font-black text-white italic tracking-tighter group-hover/stat:text-blue-500 transition-colors">{{ $stats['contributions'] }}</div>
-                    <div class="text-blue-500/40 text-[9px] font-black mb-2 uppercase tracking-widest">NODES</div>
+                    <div class="text-4xl font-black text-white italic tracking-tighter group-hover/stat:text-[#38bdf8] transition-colors">{{ $stats['contributions'] }}</div>
+                    <div class="text-[#38bdf8]/40 text-[9px] font-black mb-2 uppercase tracking-widest">NODES</div>
                 </div>
             </div>
 
@@ -135,8 +135,8 @@
             <div class="bg-secondary border border-white/5 rounded-2xl p-6 relative overflow-hidden group/stat shadow-xl">
                 <div class="text-[9px] font-black text-white/5 uppercase tracking-[0.2em] mb-4">Saved Registry</div>
                 <div class="flex items-end gap-2">
-                    <div class="text-4xl font-black text-white italic tracking-tighter group-hover/stat:text-blue-500 transition-colors">{{ $stats['bookmarks'] }}</div>
-                    <div class="text-blue-500/40 text-[9px] font-black mb-2 uppercase tracking-widest">RECORDS</div>
+                    <div class="text-4xl font-black text-white italic tracking-tighter group-hover/stat:text-[#38bdf8] transition-colors">{{ $stats['bookmarks'] }}</div>
+                    <div class="text-[#38bdf8]/40 text-[9px] font-black mb-2 uppercase tracking-widest">RECORDS</div>
                 </div>
             </div>
 
@@ -144,10 +144,10 @@
             <div class="bg-secondary border border-white/5 rounded-2xl p-6 relative overflow-hidden group shadow-xl flex flex-col justify-between">
                 <div class="text-[9px] font-black text-white/5 uppercase tracking-[0.2em] mb-2">Sync Progress</div>
                 <div class="w-full bg-white/5 rounded-full h-1.5 mb-2 overflow-hidden">
-                    <div class="bg-blue-600 h-full rounded-full shadow-lg shadow-blue-500/40 transition-all duration-1000" style="width: {{ ($stats['reputation'] % 100) }}%"></div>
+                    <div class="bg-[#38bdf8] h-full rounded-full shadow-lg shadow-[#38bdf8]/40 transition-all duration-1000" style="width: {{ ($stats['reputation'] % 100) }}%"></div>
                 </div>
                 <div class="flex justify-between text-[8px] font-black uppercase tracking-[0.2em]">
-                    <span class="text-blue-500">{{ ($stats['reputation'] % 100) }} / 100 XP</span>
+                    <span class="text-[#38bdf8]">{{ ($stats['reputation'] % 100) }} / 100 XP</span>
                     <span class="text-white/5">NODE LVL {{ $user->level + 1 }}</span>
                 </div>
             </div>
@@ -164,7 +164,7 @@
                 <div class="space-y-4">
                     @forelse($activities as $act)
                         <div class="flex items-center gap-6 p-6 rounded-2xl bg-secondary border border-white/5 hover:border-blue-500/20 transition-all duration-500 group shadow-xl">
-                            <div class="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 {{ $act['type'] === 'contribution' ? 'bg-blue-500/5 text-blue-500 group-hover:bg-blue-600 group-hover:text-white' : 'bg-blue-500/5 text-blue-500 group-hover:bg-blue-600 group-hover:text-white' }} shadow-lg">
+                            <div class="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 {{ $act['type'] === 'contribution' ? 'bg-[#38bdf8]/5 text-[#38bdf8] group-hover:bg-[#38bdf8] group-hover:text-[#0a0e14]' : 'bg-[#38bdf8]/5 text-[#38bdf8] group-hover:bg-[#38bdf8] group-hover:text-[#0a0e14]' }} shadow-lg">
                                 @if($act['icon'] === 'pencil')
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                                 @else
@@ -201,13 +201,13 @@
                                 @if($rec->featured_image)
                                     <img src="{{ Storage::url($rec->featured_image) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center bg-blue-500/5 text-blue-500">
+                                    <div class="w-full h-full flex items-center justify-center bg-[#38bdf8]/5 text-[#38bdf8]">
                                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
                                     </div>
                                 @endif
                             </div>
                             <div class="overflow-hidden">
-                                <div class="text-white font-black text-[13px] truncate group-hover:text-blue-500 transition-colors uppercase italic tracking-tight mb-1">{{ $rec->title }}</div>
+                                <div class="text-white font-black text-[13px] truncate group-hover:text-[#38bdf8] transition-colors uppercase italic tracking-tight mb-1">{{ $rec->title }}</div>
                                 <div class="text-white/10 text-[9px] font-black uppercase tracking-[0.2em] italic">{{ $rec->category }} Protocol</div>
                             </div>
                         </a>
@@ -215,14 +215,14 @@
                 </div>
 
                 {{-- Action Card --}}
-                <div class="p-8 rounded-2xl bg-blue-600 shadow-2xl overflow-hidden relative group shadow-blue-500/10">
+                <div class="p-8 rounded-2xl bg-[#38bdf8] shadow-2xl overflow-hidden relative group shadow-[#38bdf8]/10">
                     {{-- Decorative Circle --}}
                     <div class="absolute -right-16 -top-16 w-48 h-48 bg-white/10 rounded-full blur-3xl transition-all duration-1000 group-hover:scale-150"></div>
                     
                     <div class="relative z-10 text-center">
                         <div class="text-[10px] font-black text-white/40 uppercase tracking-[0.3em] mb-4 italic">Registry Protocol</div>
                         <h3 class="text-xl font-black text-white uppercase italic tracking-tighter mb-8 leading-tight">INITIALIZE NEW ARCHIVE NODES</h3>
-                        <a href="{{ route('wiki.create') }}" wire:navigate class="inline-block px-10 py-4 bg-white text-blue-900 text-[10px] font-black uppercase tracking-[0.2em] rounded-xl hover:scale-105 transition-all shadow-2xl active:scale-95">
+                        <a href="{{ route('wiki.create') }}" wire:navigate class="inline-block px-10 py-4 bg-white text-[#0a0e14] text-[10px] font-black uppercase tracking-[0.2em] rounded-xl hover:scale-105 transition-all shadow-2xl active:scale-95">
                             START SESSION
                         </a>
                     </div>

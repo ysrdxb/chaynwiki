@@ -60,11 +60,11 @@
 
                         <div class="flex-1 text-center lg:text-left">
                             <nav class="flex items-center justify-center lg:justify-start gap-2 text-[9px] font-black text-white/20 uppercase tracking-[0.2em] mb-8">
-                                <a href="{{ route('home') }}" class="hover:text-blue-400">Home</a>
+                                <a href="{{ route('home') }}" class="hover:text-[#38bdf8]">Home</a>
                                 <span>/</span>
-                                <a href="{{ route('wiki.index', ['category' => 'playlist']) }}" class="hover:text-blue-400">Playlists</a>
+                                <a href="{{ route('wiki.index', ['category' => 'playlist']) }}" class="hover:text-[#38bdf8]">Playlists</a>
                                 <span>/</span>
-                                <span class="text-blue-500">Curated Archive</span>
+                                <span class="text-[#38bdf8]">Curated Archive</span>
                             </nav>
 
                             <h1 class="text-5xl lg:text-8xl font-black text-white italic uppercase tracking-tighter mb-8 leading-none">
@@ -99,7 +99,7 @@
                     <!-- Sidebar: Curator Info -->
                     <div class="space-y-12">
                         <section>
-                            <h3 class="text-xs font-semibold text-blue-400 uppercase tracking-[0.3em] mb-6">Curator Note</h3>
+                            <h3 class="text-xs font-semibold text-[#38bdf8] uppercase tracking-[0.3em] mb-6">Curator Note</h3>
                             <div class="p-8 bg-secondary border border-white/5 rounded-3xl relative overflow-hidden group">
                                 <svg class="w-12 h-12 text-white/5 absolute -top-2 -left-2 rotate-12" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017V14H17.017C15.9124 14 15.017 13.1046 15.017 12V9C15.017 7.89543 15.9124 7 17.017 7H20.017V10H18.017V12H20.017C21.1216 12 22.017 12.8954 22.017 14V21H14.017ZM3 21V18C3 16.8954 3.89543 16 5 16H8V14H6C4.89543 14 4 13.1046 4 12V9C4 7.89543 4.89543 7 6 7H9V10H7V12H9C10.1046 12 11 12.8954 11 14V21H3Z"/></svg>
                                 <p class="text-white/60 text-sm leading-relaxed italic relative z-10">
@@ -109,11 +109,11 @@
                         </section>
 
                         <section class="space-y-3">
-                            <h3 class="text-xs font-semibold text-blue-400 uppercase tracking-[0.3em] mb-4">Transmission Core</h3>
+                            <h3 class="text-xs font-semibold text-[#38bdf8] uppercase tracking-[0.3em] mb-4">Transmission Core</h3>
                             <livewire:article.play-button 
                                 :articleId="$article->id" 
                                 label="Stream Pulse"
-                                class="w-full py-3.5 bg-blue-500 text-white rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
+                                class="w-full py-3.5 bg-[#38bdf8] text-[#0a0e14] rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-[#38bdf8]/20"
                             />
 
                             <x-article.⚡add-to-crate :article="$article" />

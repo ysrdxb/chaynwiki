@@ -53,7 +53,7 @@ new #[Layout('layouts.guest')] class extends Component
             wire:click="sendVerification"
             wire:loading.attr="disabled"
             wire:target="sendVerification"
-            class="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3.5 px-6 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/25 disabled:opacity-60 disabled:cursor-not-allowed"
+            class="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#0a0e14] font-bold py-3.5 px-6 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#38bdf8]/25 disabled:opacity-60 disabled:cursor-not-allowed"
         >
             <span wire:loading.remove wire:target="sendVerification" class="flex items-center gap-2">
                 Resend verification email

@@ -12,13 +12,13 @@
         <div class="flex gap-6">
             <div class="relative shrink-0">
                 <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=0D0D1A&color=fff" class="w-12 h-12 rounded-2xl border border-white/10">
-                <div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-blue-500 border-2 border-[#050510]"></div>
+                <div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#38bdf8] border-2 border-[#050510]"></div>
             </div>
             <div class="flex-1">
                 <form wire:submit="submit" class="space-y-4">
                     <div class="relative group">
                         <textarea wire:model="content" rows="3" 
-                            class="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-sm text-white placeholder:text-white/10 focus:border-blue-500/50 transition-all outline-none resize-none" 
+                            class="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-sm text-white placeholder:text-white/10 focus:border-[#38bdf8]/50 transition-all outline-none resize-none" 
                             placeholder="Initialize contribution to the thread..."></textarea>
                         <div class="absolute bottom-4 right-4 text-[8px] font-black text-slate-500 tracking-widest uppercase pointer-events-none">Signal Ready</div>
                     </div>
@@ -54,7 +54,7 @@
                     <div class="relative">
                         <img src="https://ui-avatars.com/api/?name={{ $comment->user->name }}&background=0D0D1A&color=fff" class="w-10 h-10 rounded-xl border border-white/5 group-hover/comment:border-white/20 transition-colors">
                         @if($comment->user->reputation_score > 500)
-                        <div class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center border-2 border-[#050510]">
+                        <div class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#38bdf8] flex items-center justify-center border-2 border-[#050510]">
                             <svg class="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.64.304 1.25.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"/></svg>
                         </div>
                         @endif
@@ -70,7 +70,7 @@
                         <div class="flex items-center gap-3">
                             <span class="text-[11px] font-black text-white uppercase tracking-wider">{{ $comment->user->name }}</span>
                             @if($comment->user->rank_name !== 'Novice')
-                                <span class="px-2 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[7px] font-black text-blue-400 uppercase tracking-[0.2em]">
+                                <span class="px-2 py-0.5 rounded-full bg-[#38bdf8]/10 border border-[#38bdf8]/20 text-[7px] font-black text-[#38bdf8] uppercase tracking-[0.2em]">
                                     {{ $comment->user->rank_name }}
                                 </span>
                             @endif
@@ -89,7 +89,7 @@
 
                     <!-- Actions -->
                     <div class="flex items-center gap-6 mt-4">
-                        <button wire:click="setReply({{ $comment->id }})" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-blue-500 transition-colors">Echo Response</button>
+                        <button wire:click="setReply({{ $comment->id }})" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-[#38bdf8] transition-colors">Echo Response</button>
                         @if($comment->user_id === auth()->id())
                         <button wire:click="delete({{ $comment->id }})" class="text-[10px] font-black uppercase tracking-widest text-red-500/50 hover:text-red-500 transition-colors">Decommission</button>
                         @endif
@@ -97,13 +97,13 @@
 
                     <!-- Local Reply Form -->
                     @if($showReplyForm === $comment->id)
-                    <div class="mt-6 ml-4 p-6 bg-blue-500/5 border border-blue-500/10 rounded-2xl animate-fade-in">
+                    <div class="mt-6 ml-4 p-6 bg-[#38bdf8]/5 border border-[#38bdf8]/10 rounded-2xl animate-fade-in">
                         <form wire:submit="submit" class="space-y-4">
                             <textarea wire:model="content" rows="2" 
-                                class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/10 focus:border-blue-500/50 outline-none resize-none" 
+                                class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/10 focus:border-[#38bdf8]/50 outline-none resize-none" 
                                 placeholder="Entering sub-stream data..."></textarea>
                             <div class="flex gap-3">
-                                <button type="submit" class="px-5 py-2 bg-blue-500 text-white rounded-lg text-[10px] font-black uppercase tracking-widest">Connect</button>
+                                <button type="submit" class="px-5 py-2 bg-[#38bdf8] text-[#0a0e14] rounded-lg text-[10px] font-black uppercase tracking-widest">Connect</button>
                                 <button type="button" wire:click="cancelReply" class="px-5 py-2 bg-white/5 text-white/20 rounded-lg text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors">Abort</button>
                             </div>
                         </form>

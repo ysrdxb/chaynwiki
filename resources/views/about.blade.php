@@ -14,17 +14,17 @@
 
     <section class="py-16 bg-secondary section-divider">
         <div class="max-w-[1200px] mx-auto px-8 grid md:grid-cols-3 gap-8">
-            <div class="bg-[#0D0D1A] border border-white/5 rounded-2xl p-6">
+            <div class="bg-[#0f1419] border border-white/5 rounded-2xl p-6">
                 <h2 class="text-white font-black uppercase tracking-widest text-sm mb-3">Open Archive</h2>
-                <p class="text-white/50 text-sm">Every record is editable, traceable, and backed by contributor history.</p>
+                <p class="text-[#64748b] text-sm">Every record is editable, traceable, and backed by contributor history.</p>
             </div>
-            <div class="bg-[#0D0D1A] border border-white/5 rounded-2xl p-6">
+            <div class="bg-[#0f1419] border border-white/5 rounded-2xl p-6">
                 <h2 class="text-white font-black uppercase tracking-widest text-sm mb-3">Transparent Metrics</h2>
-                <p class="text-white/50 text-sm">Views, edits, and contributions are displayed to maintain clarity.</p>
+                <p class="text-[#64748b] text-sm">Views, edits, and contributions are displayed to maintain clarity.</p>
             </div>
-            <div class="bg-[#0D0D1A] border border-white/5 rounded-2xl p-6">
+            <div class="bg-[#0f1419] border border-white/5 rounded-2xl p-6">
                 <h2 class="text-white font-black uppercase tracking-widest text-sm mb-3">Community First</h2>
-                <p class="text-white/50 text-sm">Built for listeners, creators, and researchers with shared ownership.</p>
+                <p class="text-[#64748b] text-sm">Built for listeners, creators, and researchers with shared ownership.</p>
             </div>
         </div>
     </section>

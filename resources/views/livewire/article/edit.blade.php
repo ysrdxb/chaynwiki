@@ -8,7 +8,7 @@
     <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 px-2">
             <h1 class="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter leading-none mb-4">
-                Modify Registry: <span class="text-blue-500">{{ $article->title }}</span>
+                Modify Registry: <span class="text-[#38bdf8]">{{ $article->title }}</span>
             </h1>
             <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">
                 Authorized revision sequence for {{ $article->category }} node
@@ -106,7 +106,7 @@
 
                 <div class="flex items-center justify-between gap-6 pt-6">
                     <a href="{{ route('wiki.show', $article->slug) }}" class="text-[9px] font-black text-white/20 uppercase tracking-widest hover:text-white transition-all underline decoration-white/5 underline-offset-8">Abort Sequence</a>
-                    <button type="submit" wire:loading.attr="disabled" class="bg-blue-600 text-white rounded-xl px-10 py-4 font-black text-[10px] uppercase tracking-widest hover:bg-blue-500 transition-all shadow-xl shadow-blue-500/10 flex items-center gap-4">
+                    <button type="submit" wire:loading.attr="disabled" class="bg-[#38bdf8] text-[#0a0e14] rounded-xl px-10 py-4 font-black text-[10px] uppercase tracking-widest hover:bg-[#7dd3fc] transition-all shadow-xl shadow-[#38bdf8]/10 flex items-center gap-4">
                         <span wire:loading.remove>Commit Revision</span>
                         <span wire:loading>Processing...</span>
                         <div class="w-6 h-6 bg-white/10 rounded-lg flex items-center justify-center">

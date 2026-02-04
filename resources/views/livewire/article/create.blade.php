@@ -35,10 +35,10 @@
                 ['id' => 'term', 'title' => 'Terminology', 'desc' => 'Define music theory, equipment, or industry terms', 'icon' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253']
             ] as $cat)
             <button wire:click="setCategory('{{ $cat['id'] }}')" 
-                class="flex flex-col p-8 rounded-[20px] transition-all text-left group relative card-type {{ $category === $cat['id'] ? 'bg-white/8 border border-blue-500/30 shadow-lg shadow-blue-500/10' : 'border border-white/10 hover:border-white/20' }}">
+                class="flex flex-col p-8 rounded-[20px] transition-all text-left group relative card-type {{ $category === $cat['id'] ? 'bg-white/8 border border-[#38bdf8]/30 shadow-lg shadow-[#38bdf8]/10' : 'border border-white/10 hover:border-white/20' }}">
                 <div class="flex items-center justify-between mb-4">
-                    <div class="w-8 h-8 rounded-lg {{ $category === $cat['id'] ? 'bg-blue-500/20' : 'bg-white/5' }} flex items-center justify-center">
-                        <svg class="w-4 h-4 {{ $category === $cat['id'] ? 'text-blue-400' : 'text-white/40' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $cat['icon'] }}"/></svg>
+                    <div class="w-8 h-8 rounded-lg {{ $category === $cat['id'] ? 'bg-[#38bdf8]/20' : 'bg-white/5' }} flex items-center justify-center">
+                        <svg class="w-4 h-4 {{ $category === $cat['id'] ? 'text-[#38bdf8]' : 'text-white/40' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $cat['icon'] }}"/></svg>
                     </div>
                 </div>
                 <h3 class="text-lg font-bold text-white mb-2">{{ $cat['title'] }}</h3>
@@ -288,14 +288,14 @@
                 <div class="flex items-center gap-4 pt-12 pb-20">
                     <button type="button" class="bg-white text-[#050510] font-bold text-sm px-8 py-3.5 rounded-full flex items-center gap-3 transition-transform hover:scale-105">
                         Save Draft
-                        <div class="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
-                            <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+                        <div class="w-5 h-5 rounded-full bg-[#38bdf8]/20 flex items-center justify-center">
+                            <div class="w-1.5 h-1.5 rounded-full bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.8)]"></div>
                         </div>
                     </button>
                     <button type="button" class="bg-white text-[#050510] font-bold text-sm px-8 py-3.5 rounded-full flex items-center gap-3 transition-transform hover:scale-105">
                         Preview
-                        <div class="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
-                            <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+                        <div class="w-5 h-5 rounded-full bg-[#38bdf8]/20 flex items-center justify-center">
+                            <div class="w-1.5 h-1.5 rounded-full bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.8)]"></div>
                         </div>
                     </button>
                     <button type="submit" 
@@ -310,8 +310,8 @@
                             </svg>
                             Submitting...
                         </span>
-                        <div wire:loading.remove wire:target="save" class="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
-                            <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+                        <div wire:loading.remove wire:target="save" class="w-5 h-5 rounded-full bg-[#38bdf8]/20 flex items-center justify-center">
+                            <div class="w-1.5 h-1.5 rounded-full bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.8)]"></div>
                         </div>
                     </button>
                 </div>

@@ -9,18 +9,18 @@
 <div class="min-h-screen bg-primary pt-32" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 800)">
     {{-- Header --}}
     <div class="relative py-16 border-b border-white/5 overflow-hidden section-divider">
-        <div class="absolute inset-0 bg-gradient-to-b from-blue-600/10 via-transparent to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-[#38bdf8]/10 via-transparent to-transparent"></div>
         <div class="absolute inset-0 opacity-20" style="background: radial-gradient(circle at 15% 20%, rgba(59,130,246,0.12), transparent 40%), radial-gradient(circle at 85% 30%, rgba(139,92,246,0.12), transparent 45%);"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="text-center mb-10">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/5 border border-blue-500/10 text-blue-500 text-[9px] font-black uppercase tracking-[0.2em] mb-6">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#38bdf8]/5 border border-[#38bdf8]/10 text-[#38bdf8] text-[9px] font-black uppercase tracking-[0.2em] mb-6">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
                     </svg>
                     Interactive Explorer Node
                 </div>
                 <h1 class="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter mb-4 leading-none">
-                    KNOWLEDGE <span class="text-blue-500">EXPLORER</span>
+                    KNOWLEDGE <span class="text-[#38bdf8]">EXPLORER</span>
                 </h1>
                 <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] max-w-xl mx-auto leading-relaxed">
                     Map the evolution of genres, track artist collaborations, and navigate the global music archive.
@@ -50,7 +50,7 @@
                 @foreach(['genres' => 'Genre Map', 'artists' => 'Artist Network', 'timeline' => 'Chronology'] as $tab => $label)
                 <button
                     wire:click="setTab('{{ $tab }}')"
-                    class="px-6 py-2.5 rounded-xl font-black text-[9px] uppercase tracking-[0.2em] transition-all {{ $activeTab === $tab ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/20 border border-white/5 hover:border-white/10 hover:text-white' }}"
+                    class="px-6 py-2.5 rounded-xl font-black text-[9px] uppercase tracking-[0.2em] transition-all {{ $activeTab === $tab ? 'bg-[#38bdf8] text-[#0a0e14] shadow-xl shadow-[#38bdf8]/10' : 'bg-white/5 text-white/20 border border-white/5 hover:border-white/10 hover:text-white' }}"
                 >
                     <span class="flex items-center gap-2">
                         @if($tab === 'genres')
@@ -89,11 +89,11 @@
     <div x-show="loaded" x-transition:enter="transition ease-out duration-700 delay-300" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="flex flex-col lg:flex-row gap-8">
             <div class="flex-1 relative group">
-                <div class="bg-secondary border border-white/5 rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:border-blue-500/10 relative" style="min-height: 640px;">
+                <div class="bg-secondary border border-white/5 rounded-2xl overflow-hidden shadow-2xl transition-all duration-500 hover:border-[#38bdf8]/10 relative" style="min-height: 640px;">
                     <div wire:loading wire:target="setTab" class="absolute inset-0 bg-black/40 backdrop-blur-sm z-20 flex items-center justify-center rounded-3xl">
                         <div class="flex flex-col items-center gap-3">
-                            <div class="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
-                            <span class="text-xs font-mono text-blue-400 uppercase tracking-widest">Recalculating...</span>
+                            <div class="w-10 h-10 border-4 border-[#38bdf8]/20 border-t-[#38bdf8] rounded-full animate-spin"></div>
+                            <span class="text-xs font-mono text-[#38bdf8] uppercase tracking-widest">Recalculating...</span>
                         </div>
                     </div>
                     <div class="absolute bottom-4 left-4 z-10 bg-black/40 border border-white/10 rounded-xl px-3 py-2 text-[10px] text-white/60">
@@ -139,7 +139,7 @@
                             <span>Derived From</span>
                         </div>
                         <div class="flex items-center gap-2">
-                            <span class="w-3 h-3 rounded-full bg-purple-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-[#a78bfa]"></span>
                             <span>Fusion</span>
                         </div>
                     @endif
@@ -189,7 +189,7 @@
                             <div class="text-xs font-mono uppercase text-gray-500 mb-2">Related Articles</div>
                             <div class="space-y-2">
                                 @foreach(array_slice($genreDetails['articles'], 0, 5) as $article)
-                                    <a href="{{ route('wiki.show', ['article' => $article['slug']]) }}" class="block text-sm text-gray-300 hover:text-purple-400 truncate">
+                                    <a href="{{ route('wiki.show', ['article' => $article['slug']]) }}" class="block text-sm text-gray-300 hover:text-[#a78bfa] truncate">
                                         {{ $article['title'] ?? 'Untitled' }}
                                     </a>
                                 @endforeach

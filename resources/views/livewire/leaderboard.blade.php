@@ -6,13 +6,13 @@
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
                 <div>
                     <nav class="flex items-center gap-2 text-[10px] font-black text-white/40 uppercase tracking-[0.2em] mb-6">
-                        <a href="{{ route('home') }}" class="hover:text-blue-500 transition-colors">Home</a>
+                        <a href="{{ route('home') }}" class="hover:text-[#38bdf8] transition-colors">Home</a>
                         <span>/</span>
-                        <span class="text-blue-400">Global Impact Index</span>
+                        <span class="text-[#38bdf8]">Global Impact Index</span>
                     </nav>
 
                     <h1 class="text-4xl lg:text-6xl font-black text-white italic uppercase tracking-tighter mb-3 leading-none">
-                        Top <span class="text-blue-500">Contributors</span> & Entries
+                        Top <span class="text-[#38bdf8]">Contributors</span> & Entries
                     </h1>
 
                     <p class="text-sm text-white/50 max-w-2xl">
@@ -21,7 +21,7 @@
                 </div>
                 
                 <div class="flex items-center gap-3 p-3.5 bg-secondary border border-white/5 rounded-xl shadow-xl">
-                    <div class="w-9 h-9 rounded-lg bg-blue-500/5 border border-blue-500/10 flex items-center justify-center text-blue-500">
+                    <div class="w-9 h-9 rounded-lg bg-[#38bdf8]/5 border border-[#38bdf8]/10 flex items-center justify-center text-[#38bdf8]">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                     </div>
                     <div>
@@ -42,7 +42,7 @@
                         @foreach(['All', 'Recordings', 'Artist Profiles', 'Classifications'] as $cat)
                         <button 
                             wire:click="setFilter('{{ $cat }}')"
-                            class="w-full text-left px-5 py-3.5 rounded-xl text-[11px] font-semibold tracking-wide transition-all {{ $activeFilter === $cat ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/60 border border-white/5 hover:border-white/10 hover:text-white' }}">
+                            class="w-full text-left px-5 py-3.5 rounded-xl text-[11px] font-semibold tracking-wide transition-all {{ $activeFilter === $cat ? 'bg-[#38bdf8] text-[#0a0e14] shadow-xl shadow-[#38bdf8]/10' : 'bg-white/5 text-white/60 border border-white/5 hover:border-white/10 hover:text-white' }}">
                             {{ $cat }}
                         </button>
                         @endforeach
@@ -55,7 +55,7 @@
                         @foreach(['Impact Score', 'Metadata Growth', 'Total Connections'] as $sort)
                         <button 
                             wire:click="setSort('{{ $sort }}')"
-                            class="w-full text-left px-5 py-3.5 rounded-xl text-[11px] font-semibold tracking-wide transition-all {{ $activeSort === $sort ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'border border-white/5 text-white/60 hover:border-white/10 hover:text-white' }}">
+                            class="w-full text-left px-5 py-3.5 rounded-xl text-[11px] font-semibold tracking-wide transition-all {{ $activeSort === $sort ? 'bg-[#38bdf8] text-[#0a0e14] shadow-xl shadow-[#38bdf8]/10' : 'border border-white/5 text-white/60 hover:border-white/10 hover:text-white' }}">
                             {{ $sort }}
                         </button>
                         @endforeach
@@ -68,8 +68,8 @@
                 <div class="bg-secondary border border-white/5 rounded-2xl overflow-hidden shadow-2xl relative">
                     <div wire:loading class="absolute inset-0 bg-black/60 backdrop-blur-md z-20 flex items-center justify-center">
                         <div class="flex flex-col items-center gap-4">
-                            <div class="w-12 h-12 border-4 border-blue-500/10 border-t-blue-500 rounded-full animate-spin"></div>
-                            <span class="text-[10px] font-black text-blue-400 uppercase tracking-widest">Re-Indexing Records...</span>
+                            <div class="w-12 h-12 border-4 border-[#38bdf8]/10 border-t-[#38bdf8] rounded-full animate-spin"></div>
+                            <span class="text-[10px] font-black text-[#38bdf8] uppercase tracking-widest">Re-Indexing Records...</span>
                         </div>
                     </div>
 
@@ -101,16 +101,16 @@
                                         <div class="flex items-center gap-6">
                                             <span class="text-2xl font-black text-white/20 italic w-8">{{ $index + 1 }}</span>
                                             <div>
-                                                <div class="text-white font-bold uppercase tracking-tight group-hover:text-blue-400 transition-colors">{{ $item['title'] }}</div>
+                                                <div class="text-white font-bold uppercase tracking-tight group-hover:text-[#38bdf8] transition-colors">{{ $item['title'] }}</div>
                                                 <div class="text-[10px] font-semibold text-white/40 uppercase tracking-widest mt-1.5 flex items-center gap-2">
-                                                    <span class="w-1 h-1 rounded-full bg-blue-500/20"></span>
+                                                    <span class="w-1 h-1 rounded-full bg-[#38bdf8]/20"></span>
                                                     Authorized by {{ $item['user'] }}
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="px-6 py-6">
-                                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[9px] font-semibold text-blue-300 uppercase tracking-widest">
+                                        <span class="px-3 py-1 bg-[#38bdf8]/10 border border-[#38bdf8]/20 rounded-lg text-[9px] font-semibold text-[#7dd3fc] uppercase tracking-widest">
                                             {{ $item['cat'] }}
                                         </span>
                                     </td>
@@ -121,7 +121,7 @@
                                                 <span class="text-[10px] font-semibold text-white/40 uppercase tracking-widest mt-1">Global reach</span>
                                             </div>
                                             <div class="flex flex-col">
-                                                <span class="text-blue-400 font-bold text-sm">{{ $item['growth'] }}</span>
+                                                <span class="text-[#38bdf8] font-bold text-sm">{{ $item['growth'] }}</span>
                                                 <span class="text-[10px] font-semibold text-white/40 uppercase tracking-widest mt-1">Growth</span>
                                             </div>
                                         </div>
@@ -148,15 +148,15 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         @foreach($leaderboard as $index => $user)
-                        <div class="card-v2 p-5 bg-secondary border-white/5 group hover:border-blue-500/20">
+                        <div class="card-v2 p-5 bg-secondary border-white/5 group hover:border-[#38bdf8]/20">
                             <div class="flex items-center justify-between gap-4">
                                 <div class="flex items-center gap-3">
                                     <div class="relative">
-                                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-lg font-black text-white/30 italic group-hover:text-blue-400 transition-colors">
+                                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-lg font-black text-white/30 italic group-hover:text-[#38bdf8] transition-colors">
                                             {{ strtoupper(substr($user['name'],0,1)) }}
                                         </div>
                                         @if($index < 3)
-                                        <div class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-blue-500 flex items-center justify-center text-[9px] text-white font-black shadow-lg shadow-blue-500/10">
+                                        <div class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-[#38bdf8] flex items-center justify-center text-[9px] text-[#0a0e14] font-black shadow-lg shadow-[#38bdf8]/10">
                                             {{ $index + 1 }}
                                         </div>
                                         @endif
@@ -183,7 +183,7 @@
         <div class="mt-20 pt-12 border-t border-white/5 text-center">
             <h2 class="text-2xl font-black text-white italic uppercase tracking-tighter mb-4">Contribute to the Archive</h2>
             <p class="text-white/50 text-sm max-w-md mx-auto mb-8">Add new records, refine articles, and earn impact for verified contributions.</p>
-            <a href="{{ route('wiki.create') }}" class="btn-primary-v2 pr-10 pl-8 py-3.5 shadow-xl shadow-blue-500/10">
+            <a href="{{ route('wiki.create') }}" class="btn-primary-v2 pr-10 pl-8 py-3.5 shadow-xl shadow-[#38bdf8]/10">
                 Create a new entry
             </a>
         </div>

@@ -56,7 +56,7 @@ new #[Layout('layouts.guest')] class extends Component
                 required 
                 autofocus
                 placeholder="Enter Email Address"
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
+                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-[#64748b] focus:border-[#38bdf8] focus:ring-2 focus:ring-[#38bdf8]/20 transition-all font-medium"
             >
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
@@ -65,7 +65,7 @@ new #[Layout('layouts.guest')] class extends Component
             type="submit" 
             wire:loading.attr="disabled"
             wire:target="sendPasswordResetLink"
-            class="w-full flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-500/25 disabled:opacity-60 disabled:cursor-not-allowed"
+            class="w-full flex items-center justify-center gap-2 bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#0a0e14] font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#38bdf8]/25 disabled:opacity-60 disabled:cursor-not-allowed"
         >
             <span wire:loading.remove wire:target="sendPasswordResetLink" class="flex items-center gap-2">
                 Email reset link
@@ -83,9 +83,9 @@ new #[Layout('layouts.guest')] class extends Component
         </button>
     </form>
 
-    <p class="mt-8 text-center text-gray-400">
+    <p class="mt-8 text-center text-[#64748b]">
         Remembered it?
-        <a href="{{ route('login') }}" wire:navigate class="text-white font-semibold hover:text-blue-400 transition-colors">
+        <a href="{{ route('login') }}" wire:navigate class="text-white font-semibold hover:text-[#38bdf8] transition-colors">
             Log in
         </a>
     </p>

@@ -6,25 +6,25 @@
 <div class="relative min-h-screen" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
     
     <!-- HERO SECTION -->
-    <div class="relative pt-32 pb-16 border-b border-white/5 bg-[#050511]">
+    <div class="relative pt-32 pb-16 border-b border-white/5 bg-[#0a0e14]">
         <div class="max-w-[1200px] mx-auto px-8 relative z-10">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <nav class="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-8 px-1">
-                        <a href="{{ route('home') }}" class="hover:text-blue-500 transition-colors">Home</a>
+                    <nav class="flex items-center gap-2 text-[10px] font-black text-[#64748b] uppercase tracking-[0.2em] mb-8 px-1">
+                        <a href="{{ route('home') }}" class="hover:text-[#38bdf8] transition-colors">Home</a>
                         <span>/</span>
-                        <span class="text-blue-500/50">Archive Browser</span>
+                        <span class="text-[#38bdf8]/50">Archive Browser</span>
                     </nav>
 
                     <h1 class="text-4xl lg:text-7xl font-black text-white italic uppercase tracking-tighter mb-4 leading-none">
                         @if(isset($search) && $search)
-                            RESULTS FOR: <span class="text-blue-500">{{ $search }}</span>
+                            RESULTS FOR: <span class="text-[#38bdf8]">{{ $search }}</span>
                         @else
-                            {{ strtoupper(request('category', 'GLOBAL')) }} <span class="text-blue-500">ARCHIVE</span>
+                            {{ strtoupper(request('category', 'GLOBAL')) }} <span class="text-[#38bdf8]">ARCHIVE</span>
                         @endif
                     </h1>
 
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] px-1">
+                    <p class="text-[10px] font-black text-[#64748b] uppercase tracking-[0.3em] px-1">
                         {{ isset($results) ? $results['total_count'] : (isset($articles) ? $articles->total() : '0') }} DISTRIBUTED RECORDS INDEXED
                     </p>
                 </div>
@@ -37,7 +37,7 @@
         <!-- Filter Bar -->
         <div class="flex flex-wrap items-center gap-3 mb-16 px-1">
             <a href="{{ route('wiki.index', ['q' => $search ?? null]) }}" 
-                class="px-6 py-3 rounded-xl text-[10px] font-semibold uppercase tracking-[0.2em] transition-all {{ !request('category') ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/60 border border-white/10 hover:border-white/20 hover:text-white' }}">
+                class="px-6 py-3 rounded-xl text-[10px] font-semibold uppercase tracking-[0.2em] transition-all {{ !request('category') ? 'bg-[#38bdf8] text-[#0a0e14] shadow-xl shadow-[#38bdf8]/10' : 'bg-white/5 text-white/60 border border-white/10 hover:border-[#38bdf8]/30 hover:text-white' }}">
                 All Records
             </a>
             
@@ -53,7 +53,7 @@
             
             @foreach($categories as $key => $label)
                 <a href="{{ route('wiki.index', ['q' => $search ?? null, 'category' => $key]) }}" 
-                    class="px-6 py-3 rounded-xl text-[10px] font-semibold uppercase tracking-[0.2em] transition-all {{ request('category') == $key ? 'bg-blue-600 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 text-white/60 border border-white/10 hover:border-white/20 hover:text-white' }}">
+                    class="px-6 py-3 rounded-xl text-[10px] font-semibold uppercase tracking-[0.2em] transition-all {{ request('category') == $key ? 'bg-[#38bdf8] text-[#0a0e14] shadow-xl shadow-[#38bdf8]/10' : 'bg-white/5 text-white/60 border border-white/10 hover:border-[#38bdf8]/30 hover:text-white' }}">
                     {{ $label }}
                 </a>
             @endforeach
@@ -68,7 +68,7 @@
                             <div class="flex items-center gap-4 mb-8">
                                 <h2 class="text-xl font-black text-white italic uppercase tracking-tighter">{{ $label }}</h2>
                                 <div class="flex-1 h-px bg-white/5"></div>
-                                <a href="{{ route('wiki.index', ['q' => $search, 'category' => $key]) }}" class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest hover:text-blue-400 transition-colors">View All</a>
+                                <a href="{{ route('wiki.index', ['q' => $search, 'category' => $key]) }}" class="text-[10px] font-semibold text-[#64748b] uppercase tracking-widest hover:text-[#38bdf8] transition-colors">View All</a>
                             </div>
 
                             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
