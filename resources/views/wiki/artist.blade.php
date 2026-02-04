@@ -39,7 +39,7 @@
             <div class="flex flex-col lg:flex-row items-end gap-12">
                 <!-- Artist Portrait -->
                 <div class="relative group">
-                    <div class="absolute -inset-4 bg-blue-500/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                    <div class="absolute -inset-4 bg-[#38bdf8]/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
                     <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-[2.5rem] overflow-hidden border border-white/10 glass shadow-2xl relative z-10">
                         <img src="{{ $featured_image }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000" alt="{{ $article->title }}">
                     </div>
@@ -49,7 +49,7 @@
                 <div class="flex-1 pb-4">
                     <div class="flex items-center gap-4 mb-6">
                         @if(!empty($artistMeta['spotify_id']) || !empty($artistMeta['website']))
-                            <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] text-blue-400 font-black uppercase tracking-widest">Verified Artist</span>
+                            <span class="px-3 py-1 bg-[#38bdf8]/10 border border-[#38bdf8]/20 rounded-lg text-[10px] text-[#38bdf8] font-black uppercase tracking-widest">Verified Artist</span>
                         @else
                             <span class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] text-white/40 font-black uppercase tracking-widest">Artist Profile</span>
                         @endif
@@ -148,7 +148,7 @@
                 <section>
                     <div class="flex items-center justify-between mb-10">
                         <h2 class="text-2xl font-black text-white italic uppercase tracking-tighter">Discography</h2>
-                        <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="text-xs font-semibold text-blue-400 uppercase tracking-widest hover:text-blue-300 transition-colors">Browse Songs →</a>
+                        <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="text-xs font-semibold text-[#38bdf8] uppercase tracking-widest hover:text-[#7dd3fc] transition-colors">Browse Songs →</a>
                     </div>
                     @if($artistDiscography->isEmpty())
                         <div class="text-white/40 text-sm">No discography entries yet. Add songs to this artist to populate the archive.</div>
@@ -158,9 +158,9 @@
                                  <a href="{{ $item['url'] }}" class="group">
                                     <div class="aspect-square rounded-2xl overflow-hidden bg-white/5 border border-white/10 mb-5 relative group">
                                         <img src="{{ $item['image'] }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover group-hover:scale-105 transition duration-700">
-                                        <div class="absolute inset-0 bg-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                        <div class="absolute inset-0 bg-[#38bdf8]/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                     </div>
-                                    <h4 class="text-white font-bold truncate group-hover:text-blue-400 transition-colors uppercase tracking-tight text-sm">{{ $item['title'] }}</h4>
+                                    <h4 class="text-white font-bold truncate group-hover:text-[#38bdf8] transition-colors uppercase tracking-tight text-sm">{{ $item['title'] }}</h4>
                                     <p class="text-xs font-semibold text-white/40 uppercase tracking-widest">{{ $item['year'] ?? 'Unknown' }}</p>
                                  </a>
                             @endforeach
@@ -204,7 +204,7 @@
                             @if(!empty($artistMeta['website']))
                                 <div class="flex justify-between items-end pb-3 border-b border-white/5">
                                     <dt class="text-xs font-semibold text-white/50 uppercase tracking-widest">Website</dt>
-                                    <dd class="text-xs text-blue-400 font-bold">
+                                    <dd class="text-xs text-[#38bdf8] font-bold">
                                         <a href="{{ $artistMeta['website'] }}" target="_blank" rel="noopener">Visit</a>
                                     </dd>
                                 </div>
@@ -216,7 +216,7 @@
                         <livewire:article.play-button 
                             :articleId="$article->id" 
                             label="Sync Sonic DNA"
-                            class="w-full py-3.5 bg-blue-500 text-white rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] transition-all flex items-center justify-center gap-3 relative overflow-hidden group shadow-xl shadow-blue-500/20"
+                            class="w-full py-3.5 bg-[#38bdf8] text-[#0a0e14] rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] transition-all flex items-center justify-center gap-3 relative overflow-hidden group shadow-xl shadow-[#38bdf8]/20"
                         />
 
                         <x-article.⚡add-to-crate :article="$article" />
@@ -240,11 +240,11 @@
                         @forelse($relatedSongs as $song)
                             @if($song->article)
                                 <a href="{{ route('wiki.show', $song->article->slug) }}" class="flex items-center gap-4 group">
-                                    <div class="w-14 h-14 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 group-hover:text-blue-500 group-hover:border-blue-500/30 transition-all overflow-hidden">
+                                    <div class="w-14 h-14 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/20 group-hover:text-[#38bdf8] group-hover:border-[#38bdf8]/30 transition-all overflow-hidden">
                                          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <div class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors truncate uppercase tracking-tight">{{ $song->title }}</div>
+                                        <div class="text-sm font-bold text-white group-hover:text-[#38bdf8] transition-colors truncate uppercase tracking-tight">{{ $song->title }}</div>
                                         <div class="text-xs font-semibold text-white/40 uppercase tracking-widest mt-1">Record Node</div>
                                     </div>
                                 </a>

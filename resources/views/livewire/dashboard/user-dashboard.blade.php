@@ -163,7 +163,7 @@
 
                 <div class="space-y-4">
                     @forelse($activities as $act)
-                        <div class="flex items-center gap-6 p-6 rounded-2xl bg-secondary border border-white/5 hover:border-blue-500/20 transition-all duration-500 group shadow-xl">
+                        <div class="flex items-center gap-6 p-6 rounded-2xl bg-secondary border border-white/5 hover:border-[#38bdf8]/20 transition-all duration-500 group shadow-xl">
                             <div class="w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 {{ $act['type'] === 'contribution' ? 'bg-[#38bdf8]/5 text-[#38bdf8] group-hover:bg-[#38bdf8] group-hover:text-[#0a0e14]' : 'bg-[#38bdf8]/5 text-[#38bdf8] group-hover:bg-[#38bdf8] group-hover:text-[#0a0e14]' }} shadow-lg">
                                 @if($act['icon'] === 'pencil')
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
@@ -172,7 +172,7 @@
                                 @endif
                             </div>
                             <div class="flex-1">
-                                <div class="text-white font-black text-base tracking-tight group-hover:text-blue-500 transition-colors uppercase italic mb-1">{{ $act['title'] }}</div>
+                                <div class="text-white font-black text-base tracking-tight group-hover:text-[#38bdf8] transition-colors uppercase italic mb-1">{{ $act['title'] }}</div>
                                 <div class="text-white/5 text-[10px] font-black uppercase tracking-[0.3em] italic">{{ $act['date']->diffForHumans() }}</div>
                             </div>
                             <div>
@@ -196,7 +196,7 @@
                 <h2 class="text-xl font-black text-white uppercase italic tracking-tighter pb-3 border-b border-white/5">Discovery</h2>
                 <div class="space-y-4">
                     @foreach($recommendations as $rec)
-                        <a href="{{ route('wiki.show', $rec->slug) }}" wire:navigate class="flex items-center gap-5 p-4 rounded-2xl bg-secondary hover:border-blue-500/20 transition-all duration-500 border border-white/5 group shadow-xl">
+                        <a href="{{ route('wiki.show', $rec->slug) }}" wire:navigate class="flex items-center gap-5 p-4 rounded-2xl bg-secondary hover:border-[#38bdf8]/20 transition-all duration-500 border border-white/5 group shadow-xl">
                             <div class="w-14 h-14 rounded-xl bg-white/5 flex-shrink-0 relative overflow-hidden shadow-lg">
                                 @if($rec->featured_image)
                                     <img src="{{ Storage::url($rec->featured_image) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">

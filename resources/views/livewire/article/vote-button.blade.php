@@ -16,14 +16,14 @@
     {{-- Upvote --}}
     <button @click="vote(1)" 
         class="relative group p-2 rounded-full transition-all duration-300"
-        :class="userVote === 1 ? 'text-blue-500 bg-blue-500/10' : 'text-white/40 hover:text-white hover:bg-white/5'">
+        :class="userVote === 1 ? 'text-[#38bdf8] bg-[#38bdf8]/10' : 'text-white/40 hover:text-white hover:bg-white/5'">
         <div class="relative z-10 transition-transform group-active:scale-125">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
             </svg>
         </div>
         <template x-if="userVote === 1">
-            <div class="absolute inset-0 bg-blue-500/20 blur-md rounded-full animate-pulse"></div>
+            <div class="absolute inset-0 bg-[#38bdf8]/20 blur-md rounded-full animate-pulse"></div>
         </template>
     </button>
 

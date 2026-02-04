@@ -145,10 +145,10 @@
                     <div class="absolute -bottom-1 flex gap-1">
                         <button @click.stop="narrationMode = 'summary'; if(playing) narrate()" 
                             class="w-1.5 h-1.5 rounded-full transition-all"
-                            :class="narrationMode === 'summary' ? 'bg-blue-500 scale-125' : 'bg-white/20'"></button>
+                            :class="narrationMode === 'summary' ? 'bg-[#38bdf8] scale-125' : 'bg-white/20'"></button>
                         <button @click.stop="narrationMode = 'full'; if(playing) narrate()" 
                             class="w-1.5 h-1.5 rounded-full transition-all"
-                            :class="narrationMode === 'full' ? 'bg-blue-500 scale-125' : 'bg-white/20'"></button>
+                            :class="narrationMode === 'full' ? 'bg-[#38bdf8] scale-125' : 'bg-white/20'"></button>
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@
                     <h4 class="text-[11px] font-black text-white italic uppercase tracking-tighter truncate">
                         {{ $currentArticle?->title ?? 'Transmission Active' }}
                     </h4>
-                    <span class="px-2 py-0.5 bg-blue-500/10 border border-blue-500/20 rounded text-[7px] font-black text-blue-400 uppercase tracking-widest">
+                    <span class="px-2 py-0.5 bg-[#38bdf8]/10 border border-[#38bdf8]/20 rounded text-[7px] font-black text-[#38bdf8] uppercase tracking-widest">
                         LIVE PULSE
                     </span>
                 </div>
@@ -204,7 +204,7 @@
         {{-- Progress Rail --}}
         <div class="absolute -bottom-1 inset-x-12 h-0.5 bg-white/5 rounded-full overflow-hidden">
             <div 
-                class="h-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)] transition-all duration-300"
+                class="h-full bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.8)] transition-all duration-300"
                 style="width: {{ $progress }}%"
             ></div>
         </div>

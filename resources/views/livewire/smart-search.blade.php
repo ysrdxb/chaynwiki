@@ -197,7 +197,7 @@
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach($songs->take(3) as $article)
-                            <a href="{{ route('wiki.show', $article) }}" wire:navigate class="group bg-secondary border border-white/5 rounded-2xl overflow-hidden hover:border-blue-500/20 transition-all shadow-xl">
+                            <a href="{{ route('wiki.show', $article) }}" wire:navigate class="group bg-secondary border border-white/5 rounded-2xl overflow-hidden hover:border-[#38bdf8]/20 transition-all shadow-xl">
                                 <div class="aspect-video bg-white/5 relative overflow-hidden">
                                     <!-- Fallback Icon (always present) -->
                                     <div class="w-full h-full flex items-center justify-center absolute inset-0 z-0" id="search-fallback-{{ $article->id }}">

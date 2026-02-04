@@ -28,7 +28,7 @@
                 'bg-green-500/20 border-green-500/30 text-green-400': toast.type === 'success',
                 'bg-red-500/20 border-red-500/30 text-red-400': toast.type === 'error',
                 'bg-yellow-500/20 border-yellow-500/30 text-yellow-400': toast.type === 'warning',
-                'bg-blue-500/20 border-blue-500/30 text-blue-400': toast.type === 'info' || !toast.type,
+                'bg-[#38bdf8]/20 border-[#38bdf8]/30 text-[#38bdf8]': toast.type === 'info' || !toast.type,
             }"
         >
             {{-- Icon --}}

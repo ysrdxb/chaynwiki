@@ -38,14 +38,14 @@
                     <div class="flex flex-col lg:flex-row gap-10 items-end">
                         <div class="flex-1">
                             <nav class="flex items-center gap-2 text-[9px] font-black text-white/20 uppercase tracking-[0.2em] mb-6">
-                                <a href="{{ route('home') }}" class="hover:text-blue-400">Home</a>
+                                <a href="{{ route('home') }}" class="hover:text-[#38bdf8]">Home</a>
                                 <span>/</span>
-                                <a href="{{ route('wiki.index', ['category' => 'term']) }}" class="hover:text-blue-400">Glossary</a>
+                                <a href="{{ route('wiki.index', ['category' => 'term']) }}" class="hover:text-[#38bdf8]">Glossary</a>
                                 <span>/</span>
                                 @if($article->term?->category_type)
-                                    <span class="text-blue-500">{{ $article->term->category_type }}</span>
+                                    <span class="text-[#38bdf8]">{{ $article->term->category_type }}</span>
                                 @else
-                                    <span class="text-blue-500">Term</span>
+                                    <span class="text-[#38bdf8]">Term</span>
                                 @endif
                             </nav>
 
@@ -54,13 +54,13 @@
                             </h1>
                             
                             @if($article->term->phonetic)
-                                <p class="text-blue-500 font-mono text-lg mb-6">{{ $article->term->phonetic }}</p>
+                                <p class="text-[#38bdf8] font-mono text-lg mb-6">{{ $article->term->phonetic }}</p>
                             @endif
 
                             <div class="flex flex-wrap items-center gap-5 text-[10px] font-black text-white/20 uppercase tracking-widest mt-8">
                                 @if($article->term?->origin_language)
                                 <div class="flex items-center gap-2">
-                                    <span class="w-1 h-1 rounded-full bg-blue-500"></span>
+                                    <span class="w-1 h-1 rounded-full bg-[#38bdf8]"></span>
                                     Origin: {{ $article->term->origin_language }}
                                 </div>
                                 @endif
@@ -93,7 +93,7 @@
                                 </div>
                             @endif
                             <h2 class="text-xl font-black text-white italic uppercase tracking-tighter mb-8 flex items-center gap-3">
-                                <span class="w-8 h-px bg-blue-500"></span>
+                                <span class="w-8 h-px bg-[#38bdf8]"></span>
                                 Definition & Usage
                             </h2>
                             <div class="article-content text-slate-300 leading-relaxed text-lg">
@@ -134,7 +134,7 @@
                             </div>
                         </div>
                         <div class="bg-secondary border border-white/5 p-8 rounded-2xl relative overflow-hidden group">
-                             <div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-blue-500/10 transition-colors"></div>
+                             <div class="absolute top-0 right-0 w-32 h-32 bg-[#38bdf8]/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-[#38bdf8]/10 transition-colors"></div>
                              
                              <div class="relative z-10">
                                 <h3 class="text-base font-black text-white italic uppercase tracking-tighter mb-6">Archive Protocol</h3>
@@ -143,7 +143,7 @@
                                         <livewire:article.play-button 
                                             :articleId="$article->id" 
                                             label="Listen"
-                                            class="w-full py-3.5 bg-blue-500 text-white rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
+                                            class="w-full py-3.5 bg-[#38bdf8] text-[#0a0e14] rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-[#38bdf8]/20"
                                         />
                                     </div>
 
@@ -167,7 +167,7 @@
                                         $relatedArticle = $relatedTermArticles->get($related);
                                     @endphp
                                     @if($relatedArticle)
-                                        <a href="{{ route('wiki.show', $relatedArticle->slug) }}" class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] text-white/60 hover:text-blue-400 hover:border-blue-500/30 transition-all uppercase font-semibold tracking-widest">
+                                        <a href="{{ route('wiki.show', $relatedArticle->slug) }}" class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] text-white/60 hover:text-[#38bdf8] hover:border-[#38bdf8]/30 transition-all uppercase font-semibold tracking-widest">
                                             {{ $related }}
                                         </a>
                                     @else

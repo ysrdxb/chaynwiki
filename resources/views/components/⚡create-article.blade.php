@@ -122,10 +122,10 @@ new #[Layout('layouts.app')] class extends Component
                 </button>
 
                 {{-- Genre --}}
-                <button wire:click="setCategory('genre')" class="group relative p-8 bg-white/5 border border-white/10 hover:bg-white/10 rounded-3xl text-left transition-all hover:scale-[1.02] hover:border-blue-500/50">
-                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 rounded-3xl transition"></div>
+                <button wire:click="setCategory('genre')" class="group relative p-8 bg-white/5 border border-white/10 hover:bg-white/10 rounded-3xl text-left transition-all hover:scale-[1.02] hover:border-[#38bdf8]/50">
+                    <div class="absolute inset-0 bg-gradient-to-br from-[#38bdf8]/10 to-transparent opacity-0 group-hover:opacity-100 rounded-3xl transition"></div>
                     <div class="relative space-y-4">
-                        <div class="w-16 h-16 bg-blue-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-110 transition">
+                        <div class="w-16 h-16 bg-[#38bdf8] rounded-2xl flex items-center justify-center text-[#0a0e14] shadow-lg shadow-[#38bdf8]/20 group-hover:scale-110 transition">
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
                         </div>
                         <div>

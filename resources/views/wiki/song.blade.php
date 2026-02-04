@@ -37,11 +37,11 @@
             <div class="flex flex-col lg:flex-row items-end gap-12">
                 <!-- Song Cover Node -->
                 <div class="relative group">
-                    <div class="absolute -inset-4 bg-blue-500/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
+                    <div class="absolute -inset-4 bg-[#38bdf8]/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
                     <div class="w-64 h-64 lg:w-80 lg:h-80 rounded-[2.5rem] overflow-hidden border border-white/10 glass shadow-2xl relative z-10">
                          <img src="{{ $featured_image }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000" alt="{{ $article->title }}">
                          <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-500">
-                             <div class="w-16 h-16 rounded-full bg-blue-500 text-white flex items-center justify-center hover:scale-110 transition shadow-2xl">
+                             <div class="w-16 h-16 rounded-full bg-[#38bdf8] text-[#0a0e14] flex items-center justify-center hover:scale-110 transition shadow-2xl">
                                  <svg class="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                              </div>
                          </div>
@@ -51,7 +51,7 @@
                 <!-- Song Info -->
                 <div class="flex-1 pb-4">
                     <div class="flex items-center gap-4 mb-6">
-                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] text-blue-400 font-black uppercase tracking-widest">Master Recording</span>
+                        <span class="px-3 py-1 bg-[#38bdf8]/10 border border-[#38bdf8]/20 rounded-lg text-[10px] text-[#38bdf8] font-black uppercase tracking-widest">Master Recording</span>
                     </div>
                     
                     <h1 class="text-6xl lg:text-8xl font-black text-white italic uppercase tracking-tighter mb-8 leading-none">
@@ -61,7 +61,7 @@
                     <div class="flex flex-wrap items-center gap-6 text-white/40 font-bold mb-10">
                         @if($article->song && $article->song->artist)
                              <a href="{{ route('wiki.show', $article->song->artist->article) }}" class="hover:text-white transition flex items-center gap-3">
-                                 <span class="text-lg text-white underline underline-offset-8 decoration-blue-500/30">{{ $article->song->artist->name }}</span>
+                                 <span class="text-lg text-white underline underline-offset-8 decoration-[#38bdf8]/30">{{ $article->song->artist->name }}</span>
                              </a>
                         @endif
                         <span class="w-1.5 h-1.5 rounded-full bg-white/10"></span>
@@ -128,7 +128,7 @@
                         <div class="absolute top-0 right-0 p-10 opacity-5 group-hover:opacity-10 transition-opacity">
                             <svg class="w-32 h-32" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path></svg>
                         </div>
-                        <div class="relative z-10 selection:bg-blue-500/30">
+                        <div class="relative z-10 selection:bg-[#38bdf8]/30">
                             {!! nl2br(e($article->song->lyrics)) !!}
                         </div>
                     </div>
@@ -159,7 +159,7 @@
                         </div>
                          <div class="flex justify-between items-end pb-3 border-b border-white/5">
                             <dt class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Genre</dt>
-                            <dd class="text-xs text-blue-400 font-bold uppercase tracking-widest">{{ $article->genre ? $article->genre->name : 'General' }}</dd>
+                            <dd class="text-xs text-[#38bdf8] font-bold uppercase tracking-widest">{{ $article->genre ? $article->genre->name : 'General' }}</dd>
                         </div>
                     </dl>
 
@@ -167,7 +167,7 @@
                         <livewire:article.play-button 
                             :articleId="$article->id" 
                             label="Play Sonic Pulse"
-                            class="w-full py-3.5 bg-blue-500 text-white rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-blue-500/20"
+                            class="w-full py-3.5 bg-[#38bdf8] text-[#0a0e14] rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-[#38bdf8]/20"
                         />
                         
                         <x-article.⚡add-to-crate :article="$article" />
@@ -187,11 +187,11 @@
                     <h3 class="text-xs font-semibold text-white/50 uppercase tracking-[0.2em]">Contributors</h3>
                     <div class="flex -space-x-3 overflow-hidden">
                         @for($i = 0; $i < 4; $i++)
-                            <div class="inline-block h-10 w-10 rounded-xl ring-4 ring-primary bg-secondary border border-white/10 flex items-center justify-center text-[10px] font-black text-blue-500">
+                            <div class="inline-block h-10 w-10 rounded-xl ring-4 ring-primary bg-secondary border border-white/10 flex items-center justify-center text-[10px] font-black text-[#38bdf8]">
                                 {{ chr(65 + $i) }}
                             </div>
                         @endfor
-                        <div class="h-10 w-10 rounded-xl ring-4 ring-primary bg-blue-500 flex items-center justify-center text-[8px] font-black text-white">+8</div>
+                        <div class="h-10 w-10 rounded-xl ring-4 ring-primary bg-[#38bdf8] flex items-center justify-center text-[8px] font-black text-[#0a0e14]">+8</div>
                     </div>
                 </div>
 
