@@ -21,19 +21,7 @@
 
             {{-- Center: Search (Desktop) --}}
             <div class="hidden md:flex flex-1 max-w-sm mx-12">
-                <form action="{{ route('search') }}" method="GET" class="w-full">
-                    <div class="relative group">
-                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/20 group-focus-within:text-[#38bdf8] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                        </svg>
-                        <input 
-                            type="text" 
-                            name="q" 
-                            placeholder="Registry search..." 
-                            class="w-full bg-[#38bdf8]/[0.05] border border-[#38bdf8]/10 rounded-xl pl-11 pr-4 py-2 text-[11px] font-black uppercase tracking-widest text-white placeholder-white/30 focus:outline-none focus:border-[#38bdf8]/30 focus:bg-[#38bdf8]/[0.08] transition-all"
-                        >
-                    </div>
-                </form>
+                @livewire('header-search')
             </div>
 
             {{-- Right: Nav + Actions --}}
@@ -215,9 +203,9 @@
         class="lg:hidden absolute top-full left-0 right-0 bg-[#0a0e14]/98 backdrop-blur-xl border-b border-[#38bdf8]/10" style="display: none;">
         <div class="max-w-[1200px] mx-auto px-6 py-4 space-y-2">
             {{-- Mobile Search --}}
-            <form action="{{ route('search') }}" method="GET" class="mb-4">
-                <input type="text" name="q" placeholder="Search..." class="w-full bg-[#38bdf8]/[0.05] border border-[#38bdf8]/15 rounded-full px-4 py-3 text-[14px] text-white placeholder-[#64748b] focus:outline-none focus:border-[#38bdf8]/40">
-            </form>
+            <div class="mb-4">
+                @livewire('header-search')
+            </div>
             
             {{-- Mobile Nav Links --}}
             <a href="{{ route('wiki.index') }}?category=artist" class="block px-4 py-3 text-[14px] text-gray-400 hover:text-white hover:bg-[#38bdf8]/[0.08] rounded-lg transition-all">Artists</a>

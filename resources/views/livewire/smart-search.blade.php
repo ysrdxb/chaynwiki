@@ -1,378 +1,285 @@
-    <!-- Background Glow Effects -->
-    <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div class="absolute top-20 left-1/4 w-[600px] h-[600px] bg-[#38bdf8]/5 blur-[150px]"></div>
-        <div class="absolute bottom-20 right-1/4 w-[400px] h-[400px] bg-[#a78bfa]/5 blur-[120px]"></div>
-    </div>
+<div>
+    {{-- Clean Background --}}
+    <div class="fixed inset-0 bg-gradient-to-b from-[#0a0e14] via-[#0f1419] to-[#0a0e14]" style="z-index: 0;"></div>
+    
+    {{-- Subtle accent glow --}}
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#38bdf8]/5 rounded-full blur-[150px] pointer-events-none" style="z-index: 0;"></div>
 
-    <!-- Header with Search Query -->
-    <div class="relative z-10 max-w-7xl mx-auto px-6 py-8">
-        <!-- Query & Results Count - Premium Header -->
-        <div class="text-center mb-16">
-            @if($query)
-                <span class="inline-block px-4 py-1.5 bg-[#38bdf8]/5 border border-[#38bdf8]/10 rounded-full text-[#38bdf8] text-[9px] font-black uppercase tracking-[0.2em] mb-4">
-                    Registry Results
-                </span>
-                <h1 class="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter mb-4 leading-none">
-                    "{{ $query }}"
-                </h1>
-            @else
-                <h1 class="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter mb-4 leading-none">
-                    EXPLORE THE <span class="text-[#38bdf8]">ARCHIVE</span>
-                </h1>
-            @endif
-            @if($results && $results->count() > 0)
-                <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">
-                    Found <span class="text-[#38bdf8]">{{ $results->total() }}</span> distributed records
-                </p>
-            @elseif($query)
-                <p class="text-[10px] font-black text-red-500/40 uppercase tracking-[0.2em]">Zero matches detected</p>
-            @else
-                <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">Access the global music knowledge protocol</p>
-            @endif
-        </div>
+    {{-- Main Content --}}
+    <div class="relative min-h-screen pt-28" style="z-index: 1;">
+        <div class="max-w-5xl mx-auto px-6 sm:px-8 lg:px-10 py-8">
+            
+            {{-- SEARCH HEADER --}}
+            <div class="text-center mb-10">
+                
+                @if(!empty($query))
+                    {{-- Results Header --}}
+                    <h1 class="text-2xl sm:text-3xl font-bold text-white mb-4">
+                        Results for "<span class="text-[#38bdf8]">{{ $query }}</span>"
+                    </h1>
+                    <p class="text-sm text-white/40">
+                        Found <span class="text-white font-medium">{{ $results ? $results->total() : 0 }}</span> entries
+                    </p>
+                @else
+                    {{-- Welcome State --}}
+                    <h1 class="text-3xl sm:text-4xl font-bold text-white mb-3">
+                        Search <span class="text-[#38bdf8]">ChaynWiki</span>
+                    </h1>
+                    <p class="text-base text-white/40 max-w-xl mx-auto">
+                        Find songs, artists, genres, and music knowledge
+                    </p>
+                @endif
+            </div>
 
-        <!-- Search Input - Premium Style -->
-        <div class="max-w-2xl mx-auto mb-12" x-data="{ open: @entangle('showSuggestions'), focused: false }">
-            <form wire:submit="search" class="relative px-4 sm:px-0">
-                <div class="relative group">
-                    <input
-                        type="text"
-                        wire:model.live.debounce.300ms="query"
-                        placeholder="Search artists, songs, genres..."
-                        @focus="focused = true"
-                        @blur="focused = false"
-                        class="w-full bg-secondary border border-white/5 rounded-xl px-6 py-4.5 pl-14 text-lg text-white placeholder-white/10 focus:border-[#38bdf8]/20 focus:ring-0 focus:bg-white/[0.04] transition-all shadow-2xl"
-                        autocomplete="off"
-                    >
-                    <svg class="absolute left-6 top-1/2 -translate-y-1/2 w-4 h-4 text-white/10 group-focus-within:text-[#38bdf8] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                    <!-- Loading Indicator -->
-                    <div wire:loading wire:target="query" class="absolute right-5 top-1/2 -translate-y-1/2">
-                        <div class="w-5 h-5 border-2 border-[#38bdf8]/30 border-t-[#38bdf8] rounded-full animate-spin"></div>
-                    </div>
-                    @if($query)
-                        <button wire:loading.remove wire:target="query" type="button" wire:click="clearSearch" class="absolute right-5 top-1/2 -translate-y-1/2 text-gray-500 hover:text-white transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                        </button>
-                    @endif
-                </div>
-            </form>
-
-            <div
-                x-show="open && $wire.suggestions.length > 0"
-                x-transition:enter="transition ease-out duration-200"
-                x-transition:enter-start="opacity-0 translate-y-2"
-                x-transition:enter-end="opacity-100 translate-y-0"
-                @click.away="open = false"
-                class="absolute z-50 w-full max-w-2xl mt-3 bg-secondary border border-white/5 rounded-2xl shadow-2xl overflow-hidden"
-            >
-                @foreach($suggestions as $suggestion)
-                    <button
-                        wire:click="selectSuggestion('{{ addslashes($suggestion) }}')"
-                        class="w-full px-6 py-4 text-left text-[11px] font-black uppercase tracking-widest text-white/30 hover:bg-white/5 hover:text-white transition-colors flex items-center gap-3 border-b border-white/5 last:border-0"
-                    >
-                        <svg class="w-3.5 h-3.5 text-[#38bdf8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            {{-- ═══════════════════════════════════════════════════════════ --}}
+            {{-- SEARCH INPUT --}}
+            <div class="max-w-2xl mx-auto mb-10" x-data="{ open: @entangle('showSuggestions'), focused: false }">
+                <form wire:submit="search" class="relative">
+                    {{-- Input Container --}}
+                    <div class="relative bg-[#151c24] border border-white/10 rounded-xl overflow-hidden focus-within:border-[#38bdf8]/40 transition-colors">
+                        <input
+                            type="text"
+                            wire:model.live.debounce.300ms="query"
+                            placeholder="Search songs, artists, genres..."
+                            @focus="focused = true; open = true"
+                            @blur="setTimeout(() => { focused = false }, 200)"
+                            class="w-full bg-transparent px-5 py-4 pl-12 pr-28 text-base text-white placeholder-white/30 focus:outline-none focus:ring-0 border-0"
+                            autocomplete="off"
+                        >
+                        
+                        {{-- Search Icon --}}
+                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
-                        <span class="font-medium">{{ $suggestion }}</span>
+                        
+                        {{-- Search Button --}}
+                        <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-2 bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#0a0e14] font-semibold text-sm rounded-lg transition-colors">
+                            Search
+                        </button>
+                    </div>
+                    
+                    {{-- Live Suggestions Dropdown --}}
+                    @if(!empty($suggestions))
+                        <div
+                            x-show="open && focused"
+                            x-transition:enter="transition ease-out duration-150"
+                            x-transition:enter-start="opacity-0 translate-y-1"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-100"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 translate-y-1"
+                            class="absolute top-full left-0 right-0 mt-2 bg-[#151c24] border border-white/10 rounded-xl shadow-xl overflow-hidden z-50"
+                            style="display: none;"
+                        >
+                            @foreach($suggestions as $suggestion)
+                                <button
+                                    type="button"
+                                    wire:click="selectSuggestion('{{ addslashes($suggestion) }}')"
+                                    @click="open = false"
+                                    class="w-full px-4 py-3 text-left hover:bg-white/5 transition-colors flex items-center gap-3 text-white/70 hover:text-white"
+                                >
+                                    <svg class="w-4 h-4 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    {{ $suggestion }}
+                                </button>
+                            @endforeach
+                        </div>
+                    @endif
+                </form>
+            </div>
+
+            {{-- FILTER BAR --}}
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-10">
+                {{-- Category Filter Pills --}}
+                <div class="flex items-center gap-1 p-1 bg-white/5 border border-white/5 rounded-lg">
+                    <button wire:click="$set('category', 'all')" class="px-4 py-2 rounded-md text-sm transition-colors {{ $category === 'all' ? 'bg-[#38bdf8] text-[#0a0e14] font-medium' : 'text-white/60 hover:text-white' }}">All</button>
+                    <button wire:click="$set('category', 'song')" class="px-4 py-2 rounded-md text-sm transition-colors {{ $category === 'song' ? 'bg-[#38bdf8] text-[#0a0e14] font-medium' : 'text-white/60 hover:text-white' }}">Songs</button>
+                    <button wire:click="$set('category', 'artist')" class="px-4 py-2 rounded-md text-sm transition-colors {{ $category === 'artist' ? 'bg-[#38bdf8] text-[#0a0e14] font-medium' : 'text-white/60 hover:text-white' }}">Artists</button>
+                    <button wire:click="$set('category', 'genre')" class="px-4 py-2 rounded-md text-sm transition-colors {{ $category === 'genre' ? 'bg-[#38bdf8] text-[#0a0e14] font-medium' : 'text-white/60 hover:text-white' }}">Genres</button>
+                </div>
+                
+                {{-- Sort Dropdown --}}
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" class="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-lg text-sm text-white/60 hover:text-white transition-colors">
+                        <span>{{ $sortBy === 'relevance' ? 'Trending' : ($sortBy === 'newest' ? 'Newest' : 'Most Viewed') }}</span>
+                        <svg class="w-4 h-4" :class="open && 'rotate-180'" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
-                @endforeach
-            </div>
-        </div>
-
-        <!-- Filters Row - Custom Dropdowns -->
-        <div class="flex items-center justify-center gap-4 mb-12">
-            <!-- Category Dropdown -->
-            <div class="relative" x-data="{ open: false }">
-                <button 
-                    @click="open = !open" 
-                    @click.away="open = false"
-                    class="flex items-center gap-3 bg-secondary border border-white/5 hover:border-white/10 rounded-xl px-5 py-3 transition-all"
-                >
-                    <span class="text-white/20 text-[9px] font-black uppercase tracking-widest italic">Category</span>
-                    <span class="text-white text-[10px] font-black uppercase tracking-widest">
-                        @switch($category)
-                            @case('all') All @break
-                            @case('song') Songs @break
-                            @case('artist') Artists @break
-                            @case('genre') Genres @break
-                            @case('playlist') Playlists @break
-                        @endswitch
-                    </span>
-                    <svg class="w-3 h-3 text-white/20 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
-                <div 
-                    x-show="open" 
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 translate-y-2"
-                    x-transition:enter-end="opacity-100 translate-y-0"
-                    x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100 translate-y-0"
-                    x-transition:leave-end="opacity-0 translate-y-2"
-                    class="absolute top-full left-0 mt-2 w-48 bg-secondary border border-white/5 rounded-xl shadow-2xl overflow-hidden z-50"
-                    style="display: none;"
-                >
-                    <button wire:click="$set('category', 'all')" @click="open = false" class="w-full px-5 py-3 text-left text-[9px] font-black uppercase tracking-widest hover:bg-white/5 transition-colors {{ $category === 'all' ? 'text-[#38bdf8] bg-white/5' : 'text-white/30' }}">All</button>
-                    <button wire:click="$set('category', 'song')" @click="open = false" class="w-full px-5 py-3 text-left text-[9px] font-black uppercase tracking-widest hover:bg-white/5 transition-colors {{ $category === 'song' ? 'text-[#38bdf8] bg-white/5' : 'text-white/30' }}">Songs</button>
-                    <button wire:click="$set('category', 'artist')" @click="open = false" class="w-full px-5 py-3 text-left text-[9px] font-black uppercase tracking-widest hover:bg-white/5 transition-colors {{ $category === 'artist' ? 'text-[#38bdf8] bg-white/5' : 'text-white/30' }}">Artists</button>
-                    <button wire:click="$set('category', 'genre')" @click="open = false" class="w-full px-5 py-3 text-left text-[9px] font-black uppercase tracking-widest hover:bg-white/5 transition-colors {{ $category === 'genre' ? 'text-[#38bdf8] bg-white/5' : 'text-white/30' }}">Genres</button>
-                    <button wire:click="$set('category', 'playlist')" @click="open = false" class="w-full px-5 py-3 text-left text-[9px] font-black uppercase tracking-widest hover:bg-white/5 transition-colors {{ $category === 'playlist' ? 'text-[#38bdf8] bg-white/5' : 'text-white/30' }}">Playlists</button>
-                </div>
-            </div>
-
-            <!-- Sort Dropdown -->
-            <div class="relative" x-data="{ open: false }">
-                <button 
-                    @click="open = !open" 
-                    @click.away="open = false"
-                    class="flex items-center gap-3 bg-secondary border border-white/5 hover:border-white/10 rounded-xl px-5 py-3 transition-all"
-                >
-                    <span class="text-white/20 text-[9px] font-black uppercase tracking-widest italic">Sort</span>
-                    <span class="text-white text-[10px] font-black uppercase tracking-widest">
-                        @switch($sortBy)
-                            @case('relevance') Trending @break
-                            @case('newest') Newest @break
-                            @case('views') Most Viewed @break
-                        @endswitch
-                    </span>
-                    <svg class="w-3 h-3 text-white/20 transition-transform" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-                    </svg>
-                </button>
-                <div 
-                    x-show="open" 
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 scale-95"
-                    x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100 scale-100"
-                    x-transition:leave-end="opacity-0 scale-95"
-                    class="absolute top-full left-0 mt-2 w-48 bg-[#0A0A14] border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50"
-                    style="display: none;"
-                >
-                    <button wire:click="$set('sortBy', 'relevance')" @click="open = false" class="w-full px-5 py-3 text-left text-sm hover:bg-[#38bdf8]/10 transition-colors {{ $sortBy === 'relevance' ? 'text-[#38bdf8] bg-[#38bdf8]/5' : 'text-gray-300' }}">Trending</button>
-                    <button wire:click="$set('sortBy', 'newest')" @click="open = false" class="w-full px-5 py-3 text-left text-sm hover:bg-[#38bdf8]/10 transition-colors {{ $sortBy === 'newest' ? 'text-[#38bdf8] bg-[#38bdf8]/5' : 'text-gray-300' }}">Newest</button>
-                    <button wire:click="$set('sortBy', 'views')" @click="open = false" class="w-full px-5 py-3 text-left text-sm hover:bg-[#38bdf8]/10 transition-colors {{ $sortBy === 'views' ? 'text-[#38bdf8] bg-[#38bdf8]/5' : 'text-gray-300' }}">Most Viewed</button>
-                </div>
-            </div>
-        </div>
-
-        @if(empty($query))
-            <!-- Trending Searches (when no query) -->
-            @if(!empty($trending))
-                <div class="text-center py-12">
-                    <h2 class="text-[9px] font-black uppercase tracking-[0.3em] text-white/10 mb-6 italic">Hot Protocols</h2>
-                    <div class="flex flex-wrap justify-center gap-3">
-                        @foreach($trending as $term)
-                            <button
-                                wire:click="selectSuggestion('{{ addslashes($term) }}')"
-                                class="px-5 py-2.5 bg-secondary hover:bg-[#38bdf8] border border-white/5 hover:border-[#38bdf8]/20 rounded-xl text-white/30 hover:text-[#0a0e14] text-[10px] font-black uppercase tracking-widest transition-all"
-                            >
-                                {{ $term }}
-                            </button>
-                        @endforeach
+                    
+                    <div x-show="open" @click.away="open = false" x-transition class="absolute top-full right-0 mt-2 w-40 bg-[#151c24] border border-white/10 rounded-lg shadow-xl overflow-hidden z-50" style="display: none;">
+                        <button wire:click="$set('sortBy', 'relevance')" @click="open = false" class="w-full px-4 py-2.5 text-left text-sm hover:bg-white/5 {{ $sortBy === 'relevance' ? 'text-[#38bdf8]' : 'text-white/70' }}">Trending</button>
+                        <button wire:click="$set('sortBy', 'newest')" @click="open = false" class="w-full px-4 py-2.5 text-left text-sm hover:bg-white/5 {{ $sortBy === 'newest' ? 'text-[#38bdf8]' : 'text-white/70' }}">Newest</button>
+                        <button wire:click="$set('sortBy', 'views')" @click="open = false" class="w-full px-4 py-2.5 text-left text-sm hover:bg-white/5 {{ $sortBy === 'views' ? 'text-[#38bdf8]' : 'text-white/70' }}">Most Viewed</button>
                     </div>
                 </div>
-            @endif
-        @elseif($results && $results->count() > 0)
-            @php
-                $songs = $results->where('category', 'song');
-                $artists = $results->where('category', 'artist');
-                $genres = $results->where('category', 'genre');
-                $others = $results->whereNotIn('category', ['song', 'artist', 'genre']);
-            @endphp
-
-            <!-- Songs Matching Section -->
-            @if($songs->count() > 0)
-                <section class="mb-20">
-                    <div class="flex items-center justify-between mb-8 px-2">
-                        <h2 class="text-xl font-black text-white italic uppercase tracking-tighter">
-                            Songs Matching: <span class="text-[#38bdf8]">"{{ $query }}"</span>
-                        </h2>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach($songs->take(3) as $article)
-                            <a href="{{ route('wiki.show', $article) }}" wire:navigate class="group bg-secondary border border-white/5 rounded-2xl overflow-hidden hover:border-[#38bdf8]/20 transition-all shadow-xl">
-                                <div class="aspect-video bg-white/5 relative overflow-hidden">
-                                    <!-- Fallback Icon (always present) -->
-                                    <div class="w-full h-full flex items-center justify-center absolute inset-0 z-0" id="search-fallback-{{ $article->id }}">
-                                        <svg class="w-12 h-12 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-                                    </div>
-                                    @if($article->featured_image)
-                                        <img 
-                                            src="{{ $article->featured_image }}" 
-                                            alt="{{ $article->title }}" 
-                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 relative z-10"
-                                            onerror="this.style.display='none'"
-                                            onload="document.getElementById('search-fallback-{{ $article->id }}')?.classList.add('hidden')"
-                                        >
-                                    @endif
-                                    <div class="absolute top-3 left-3">
-                                        <span class="px-2 py-1 bg-[#38bdf8]/80 text-[#0a0e14] text-xs font-bold rounded-full">{{ $article->category }}</span>
-                                    </div>
-                                </div>
-                                <div class="p-6">
-                                    <h3 class="font-black text-white group-hover:text-[#38bdf8] transition-colors mb-1 uppercase tracking-tight">{{ $article->title }}</h3>
-                                    <p class="text-[9px] font-black text-white/20 uppercase tracking-widest mb-4 italic">{{ $article->song->artist->name ?? 'Unknown Identity' }}</p>
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-[#38bdf8] text-sm font-medium">View Details</span>
-                                        <span class="text-xs text-gray-600 flex items-center gap-1">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                            {{ number_format($article->view_count ?? 0) }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                </section>
-            @endif
-
-            <!-- Artists Matching Section -->
-            @if($artists->count() > 0)
-                <section class="mb-20">
-                    <div class="flex items-center justify-between mb-8 px-2">
-                        <h2 class="text-xl font-black text-white italic uppercase tracking-tighter">
-                            Artists Matching: <span class="text-[#38bdf8]">"{{ $query }}"</span>
-                        </h2>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach($artists->take(3) as $article)
-                            <a href="{{ route('wiki.show', $article) }}" wire:navigate class="group bg-secondary border border-white/5 rounded-2xl overflow-hidden hover:border-[#38bdf8]/20 transition-all shadow-xl">
-                                <div class="aspect-video bg-white/5 relative overflow-hidden">
-                                    <!-- Fallback Icon (always present) -->
-                                    <div class="w-full h-full flex items-center justify-center absolute inset-0 z-0" id="artist-fallback-{{ $article->id }}">
-                                        <svg class="w-12 h-12 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                                    </div>
-                                    @if($article->featured_image)
-                                        <img 
-                                            src="{{ $article->featured_image }}" 
-                                            alt="{{ $article->title }}" 
-                                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 relative z-10"
-                                            onerror="this.style.display='none'"
-                                            onload="document.getElementById('artist-fallback-{{ $article->id }}')?.classList.add('hidden')"
-                                        >
-                                    @endif
-                                    <div class="absolute top-3 left-3">
-                                        <span class="px-2 py-1 bg-[#a78bfa]/80 text-[#0a0e14] text-xs font-bold rounded-full">Artist</span>
-                                    </div>
-                                </div>
-                                <div class="p-6">
-                                    <h3 class="font-black text-white group-hover:text-[#38bdf8] transition-colors mb-1 uppercase tracking-tight">{{ $article->title }}</h3>
-                                    <p class="text-[9px] font-black text-white/20 uppercase tracking-widest mb-4 italic leading-loose">{{ Str::limit($article->excerpt, 60) ?? 'View authorized profile' }}</p>
-                                    <div class="flex items-center justify-between">
-                                        <span class="text-[#38bdf8] text-sm font-medium">View Artist Profile</span>
-                                        <span class="text-xs text-gray-600 flex items-center gap-1">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                                            {{ number_format($article->view_count ?? 0) }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </a>
-                        @endforeach
-                    </div>
-                </section>
-            @endif
-
-            <!-- Genres Related Section -->
-            @if($genres->count() > 0)
-                <section class="mb-16">
-                    <div class="flex items-center justify-between mb-6">
-                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
-                            <span class="text-gray-500">+</span>
-                            Genres Related to "{{ $query }}"
-                        </h2>
-                        <span class="text-2xl text-gray-700">+</span>
-                    </div>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        @foreach($genres->take(4) as $article)
-                            <a href="{{ route('wiki.show', $article) }}" wire:navigate class="group bg-[#0A0A14] border border-white/10 rounded-2xl p-5 hover:border-[#38bdf8]/50 transition-all">
-                                <span class="text-xs text-gray-600 mb-1 block">{{ $article->subcategory ?? 'genre' }}</span>
-                                <h3 class="font-bold text-white group-hover:text-[#38bdf8] transition-colors mb-2">{{ $article->title }}</h3>
-                                <p class="text-xs text-gray-500 line-clamp-2 mb-3">{{ Str::limit(strip_tags($article->content), 60) }}</p>
-                                <div class="flex items-center gap-2 text-xs text-gray-600">
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13"/></svg>
-                                    {{ rand(10, 50) }} Artists • {{ rand(100, 999) }} Songs
-                                </div>
-                                <span class="text-[#38bdf8] text-sm font-medium mt-3 block">View Article</span>
-                            </a>
-                        @endforeach
-                    </div>
-                </section>
-            @endif
-
-            <!-- Other Results -->
-            @if($others->count() > 0)
-                <section class="mb-16">
-                    <h2 class="text-lg font-bold text-white mb-6">Other Results</h2>
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        @foreach($others as $article)
-                            <a href="{{ route('wiki.show', $article) }}" wire:navigate class="group bg-[#0A0A14] border border-white/10 rounded-2xl p-6 hover:border-[#38bdf8]/50 transition-all">
-                                <span class="px-2 py-1 bg-white/10 text-gray-400 text-xs font-bold rounded mb-3 inline-block">{{ $article->category }}</span>
-                                <h3 class="font-bold text-white group-hover:text-[#38bdf8] transition-colors">{{ $article->title }}</h3>
-                            </a>
-                        @endforeach
-                    </div>
-                </section>
-            @endif
-
-            <!-- Pagination -->
-            <div class="mt-12">
-                {{ $results->links() }}
             </div>
-        @elseif($results && $results->count() === 0)
-            <!-- No Results - Premium Empty State -->
-            <div class="text-center py-24">
-                <!-- Animated Icon -->
-                <div class="relative w-32 h-32 mx-auto mb-8">
-                    <div class="absolute inset-0 bg-[#38bdf8]/10 rounded-full animate-pulse"></div>
-                    <div class="absolute inset-4 bg-[#0A0A14] rounded-full flex items-center justify-center border border-white/10">
-                        <svg class="w-12 h-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+            {{-- SEARCH RESULTS / EMPTY STATES --}}
+            
+            @if(empty($query))
+                {{-- Trending Section --}}
+                @if(!empty($trending))
+                    <div class="mb-12">
+                        <h3 class="text-sm font-medium text-white/50 mb-4 text-center">Trending searches</h3>
+                        <div class="flex flex-wrap justify-center gap-2">
+                            @foreach($trending as $term)
+                                <button wire:click="selectSuggestion('{{ addslashes($term) }}')" class="px-4 py-2 bg-white/5 hover:bg-[#38bdf8] border border-white/10 hover:border-[#38bdf8] rounded-lg text-sm text-white/60 hover:text-[#0a0e14] transition-colors">
+                                    {{ $term }}
+                                </button>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+                
+                {{-- Quick Access --}}
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                    <a href="{{ route('wiki.create') }}" class="group p-6 bg-white/5 border border-white/5 rounded-xl hover:border-[#38bdf8]/30 transition-colors text-center">
+                        <svg class="w-8 h-8 text-[#38bdf8] mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                        <h3 class="font-medium text-white mb-1">Create</h3>
+                        <p class="text-xs text-white/40">Add new content</p>
+                    </a>
+                    <a href="{{ route('wiki.index') }}" class="group p-6 bg-white/5 border border-white/5 rounded-xl hover:border-[#a78bfa]/30 transition-colors text-center">
+                        <svg class="w-8 h-8 text-[#a78bfa] mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                        <h3 class="font-medium text-white mb-1">Browse</h3>
+                        <p class="text-xs text-white/40">Explore archive</p>
+                    </a>
+                    <a href="{{ route('wiki.artists') }}" class="group p-6 bg-white/5 border border-white/5 rounded-xl hover:border-[#2dd4bf]/30 transition-colors text-center">
+                        <svg class="w-8 h-8 text-[#2dd4bf] mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                        <h3 class="font-medium text-white mb-1">Artists</h3>
+                        <p class="text-xs text-white/40">View profiles</p>
+                    </a>
+                </div>
+                
+            @elseif($results && $results->count() > 0)
+                @php
+                    $songs = $results->where('category', 'song');
+                    $artists = $results->where('category', 'artist');
+                    $genres = $results->where('category', 'genre');
+                    $others = $results->whereNotIn('category', ['song', 'artist', 'genre']);
+                @endphp
+
+                {{-- Songs Section --}}
+                @if($songs->count() > 0)
+                    <section class="mb-10">
+                        <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="w-2 h-2 bg-[#38bdf8] rounded-full"></span>
+                            Songs <span class="text-white/40 font-normal">({{ $songs->count() }})</span>
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            @foreach($songs->take(6) as $article)
+                                <a href="{{ route('wiki.show', $article) }}" wire:navigate class="group flex gap-4 p-4 bg-white/5 border border-white/5 rounded-xl hover:border-[#38bdf8]/30 transition-colors">
+                                    <div class="w-16 h-16 flex-shrink-0 bg-[#38bdf8]/10 rounded-lg flex items-center justify-center overflow-hidden">
+                                        @if($article->featured_image)
+                                            <img src="{{ $article->featured_image }}" alt="{{ $article->title }}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<svg class=\'w-6 h-6 text-[#38bdf8]/50\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3\'/></svg>'">
+                                        @else
+                                            <svg class="w-6 h-6 text-[#38bdf8]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                                        @endif
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h3 class="font-medium text-white group-hover:text-[#38bdf8] transition-colors truncate">{{ $article->title }}</h3>
+                                        <p class="text-sm text-white/40 truncate">{{ $article->song->artist->name ?? 'Unknown Artist' }}</p>
+                                        <span class="text-xs text-white/20">{{ number_format($article->view_count ?? 0) }} views</span>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+                    </section>
+                @endif
+
+                {{-- Artists Section --}}
+                @if($artists->count() > 0)
+                    <section class="mb-10">
+                        <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="w-2 h-2 bg-[#a78bfa] rounded-full"></span>
+                            Artists <span class="text-white/40 font-normal">({{ $artists->count() }})</span>
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            @foreach($artists->take(6) as $article)
+                                <a href="{{ route('wiki.show', $article) }}" wire:navigate class="group flex gap-4 p-4 bg-white/5 border border-white/5 rounded-xl hover:border-[#a78bfa]/30 transition-colors">
+                                    <div class="w-16 h-16 flex-shrink-0 bg-[#a78bfa]/10 rounded-lg flex items-center justify-center overflow-hidden">
+                                        @if($article->featured_image)
+                                            <img src="{{ $article->featured_image }}" alt="{{ $article->title }}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='<svg class=\'w-6 h-6 text-[#a78bfa]/50\' fill=\'none\' stroke=\'currentColor\' viewBox=\'0 0 24 24\'><path stroke-linecap=\'round\' stroke-linejoin=\'round\' stroke-width=\'2\' d=\'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z\'/></svg>'">
+                                        @else
+                                            <svg class="w-6 h-6 text-[#a78bfa]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                                        @endif
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <h3 class="font-medium text-white group-hover:text-[#a78bfa] transition-colors truncate">{{ $article->title }}</h3>
+                                        <p class="text-sm text-white/40 truncate">{{ Str::limit($article->excerpt, 50) ?? 'View profile' }}</p>
+                                        <span class="text-xs text-white/20">{{ number_format($article->view_count ?? 0) }} views</span>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+                    </section>
+                @endif
+
+                {{-- Genres Section --}}
+                @if($genres->count() > 0)
+                    <section class="mb-10">
+                        <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="w-2 h-2 bg-[#2dd4bf] rounded-full"></span>
+                            Genres <span class="text-white/40 font-normal">({{ $genres->count() }})</span>
+                        </h2>
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                            @foreach($genres->take(8) as $article)
+                                <a href="{{ route('wiki.show', $article) }}" wire:navigate class="group p-4 bg-white/5 border border-white/5 rounded-xl hover:border-[#2dd4bf]/30 transition-colors">
+                                    <h3 class="font-medium text-white group-hover:text-[#2dd4bf] transition-colors truncate">{{ $article->title }}</h3>
+                                    <p class="text-xs text-white/30 truncate mt-1">{{ Str::limit(strip_tags($article->content), 40) }}</p>
+                                </a>
+                            @endforeach
+                        </div>
+                    </section>
+                @endif
+
+                {{-- Other Results --}}
+                @if($others->count() > 0)
+                    <section class="mb-10">
+                        <h2 class="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                            <span class="w-2 h-2 bg-white/40 rounded-full"></span>
+                            Other <span class="text-white/40 font-normal">({{ $others->count() }})</span>
+                        </h2>
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+                            @foreach($others as $article)
+                                <a href="{{ route('wiki.show', $article) }}" wire:navigate class="group flex items-center gap-3 p-3 bg-white/5 border border-white/5 rounded-lg hover:border-white/10 transition-colors">
+                                    <span class="px-2 py-0.5 bg-white/5 text-white/40 text-xs rounded">{{ $article->category }}</span>
+                                    <h3 class="text-sm text-white group-hover:text-[#38bdf8] transition-colors truncate flex-1">{{ $article->title }}</h3>
+                                </a>
+                            @endforeach
+                        </div>
+                    </section>
+                @endif
+
+                {{-- Pagination --}}
+                <div class="mt-8">
+                    {{ $results->links() }}
+                </div>
+                
+            @elseif($results && $results->count() === 0)
+                {{-- No Results --}}
+                <div class="text-center py-16">
+                    <div class="w-20 h-20 mx-auto mb-6 bg-white/5 rounded-full flex items-center justify-center">
+                        <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
                     </div>
+                    
+                    <h3 class="text-xl font-semibold text-white mb-2">No results found</h3>
+                    <p class="text-white/40 mb-8 max-w-md mx-auto">
+                        We couldn't find anything matching "<span class="text-[#38bdf8]">{{ $query }}</span>"
+                    </p>
+                    
+                    <div class="flex items-center justify-center gap-3">
+                        <button wire:click="clearSearch" class="px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 text-white text-sm rounded-lg transition-colors">
+                            Clear search
+                        </button>
+                        <a href="{{ route('wiki.create') }}" class="px-5 py-2.5 bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#0a0e14] text-sm font-medium rounded-lg transition-colors">
+                            Create entry
+                        </a>
+                    </div>
                 </div>
-                
-                <h3 class="text-3xl font-display font-black text-white uppercase tracking-tight mb-3">No Results Found</h3>
-                <p class="text-gray-500 mb-8 max-w-md mx-auto">
-                    We couldn't find anything matching "<span class="text-[#38bdf8] font-medium">{{ $query }}</span>" in our database yet.
-                </p>
-                
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
-                    <button wire:click="clearSearch" class="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/5 text-white font-black text-[10px] uppercase tracking-widest rounded-xl transition-all flex items-center gap-3">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-                        Initialize New Protocol
-                    </button>
-                    <a href="{{ route('wiki.create') }}" class="px-8 py-4 bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#0a0e14] font-black text-[10px] uppercase tracking-[0.3em] rounded-xl transition-all flex items-center gap-3 shadow-xl shadow-[#38bdf8]/10 active:scale-95">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
-                        Create Dataset: "{{ $query }}"
-                    </a>
-                </div>
+            @endif
 
-                <!-- Suggested Actions Card -->
-                <div class="max-w-lg mx-auto bg-[#0A0A14] border border-white/10 rounded-3xl p-8 text-left">
-                    <h4 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-4">Suggestions</h4>
-                    <ul class="space-y-3 text-gray-500 text-sm">
-                        <li class="flex items-center gap-3">
-                            <span class="w-6 h-6 rounded-full bg-[#38bdf8]/10 flex items-center justify-center text-[#38bdf8] text-xs">1</span>
-                            Check your spelling or try different keywords
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="w-6 h-6 rounded-full bg-[#38bdf8]/10 flex items-center justify-center text-[#38bdf8] text-xs">2</span>
-                            Try searching with fewer or more general terms
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <span class="w-6 h-6 rounded-full bg-[#38bdf8]/10 flex items-center justify-center text-[#38bdf8] text-xs">3</span>
-                            Be the first to contribute this topic to ChaynWiki!
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        @endif
+        </div>
     </div>
 </div>
