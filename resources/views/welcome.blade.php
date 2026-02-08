@@ -605,13 +605,7 @@
                     <div class="card-premium-unified min-w-[340px] md:min-w-[420px] p-0 border-none group bg-transparent">
                         <a href="{{ route('wiki.show', $article->slug) }}" class="block h-full">
                             <div class="relative aspect-video rounded-2xl overflow-hidden mb-6">
-                                @if($article->image_url)
-                                    <img src="{{ $article->image_url }}" class="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="{{ $article->title }}">
-                                @else
-                                    <div class="w-full h-full bg-gradient-to-br from-blue-900/40 to-black flex items-center justify-center">
-                                        <svg class="w-12 h-12 text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-                                    </div>
-                                @endif
+                                <img src="{{ $article->featured_image }}" class="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="{{ $article->title }}">
                                 
                                 {{-- Rank Number overlay --}}
                                 <div class="absolute top-4 left-4">

@@ -29,7 +29,7 @@ class HomeController extends Controller
                 'title' => $article->title,
                 'category' => ucfirst($article->category),
                 'desc' => Str::limit($article->meta_description, 140),
-                'image' => $rawImage ? $article->featured_image : null,
+                'image' => $article->featured_image,
                 'user' => $article->user?->name ?? 'Community',
                 'date' => optional($article->created_at)->format('M d, Y'),
                 'views' => $article->view_count,

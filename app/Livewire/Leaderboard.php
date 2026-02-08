@@ -12,8 +12,8 @@ class Leaderboard extends Component
     
     // Filters
     public string $period = 'all'; // all, weekly, monthly
-    public string $activeFilter = 'All'; // All, Recordings, Artist Profiles, Classifications
-    public string $activeSort = 'Impact Score'; // Impact Score, Metadata Growth, Total Connections
+    public string $activeFilter = 'All'; // All, Song, Artist, Genre
+    public string $activeSort = 'newest'; // newest, views, relevance
 
     public bool $isLoading = false;
 

@@ -70,16 +70,17 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <h2 class="text-xl font-bold text-white mb-4">Set a new password</h2>
-    <p class="text-sm text-white/50 mb-6 font-medium">Choose a strong password you haven’t used before.</p>
+    <h2 class="text-xl font-bold text-white mb-4 tracking-tight">Set a new password</h2>
+    <p class="text-sm text-white/50 mb-8 font-medium">Choose a strong password you haven’t used before.</p>
 
     <form wire:submit="resetPassword" class="space-y-6">
+        <!-- Email Address -->
         <div>
-            <label for="email" class="block text-sm font-bold text-white/80 mb-2">Email</label>
+            <label for="email" class="block text-sm font-bold text-white mb-2 tracking-wide">Email</label>
             <input 
                 wire:model="email" 
                 id="email" 
-                class="block w-full px-4 py-3.5 bg-[#161b22] border border-white/5 rounded-xl text-white placeholder-white/40 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
+                class="block w-full px-5 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white placeholder-white/20 focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium outline-none"
                 type="email" 
                 name="email" 
                 required 
@@ -90,12 +91,13 @@ new #[Layout('layouts.guest')] class extends Component
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
+        <!-- New Password -->
         <div>
-            <label for="password" class="block text-sm font-bold text-white/80 mb-2">New Password</label>
+            <label for="password" class="block text-sm font-bold text-white mb-2 tracking-wide">New Password</label>
             <input 
                 wire:model="password" 
                 id="password" 
-                class="block w-full px-4 py-3.5 bg-[#161b22] border border-white/5 rounded-xl text-white placeholder-white/40 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
+                class="block w-full px-5 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white placeholder-white/20 focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium outline-none"
                 type="password" 
                 name="password" 
                 required 
@@ -105,12 +107,13 @@ new #[Layout('layouts.guest')] class extends Component
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
+        <!-- Confirm Password -->
         <div>
-            <label for="password_confirmation" class="block text-sm font-bold text-white/80 mb-2">Confirm Password</label>
+            <label for="password_confirmation" class="block text-sm font-bold text-white mb-2 tracking-wide">Confirm Password</label>
             <input 
                 wire:model="password_confirmation" 
                 id="password_confirmation" 
-                class="block w-full px-4 py-3.5 bg-[#161b22] border border-white/5 rounded-xl text-white placeholder-white/40 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
+                class="block w-full px-5 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white placeholder-white/20 focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium outline-none"
                 type="password"
                 name="password_confirmation" 
                 required 
@@ -120,25 +123,29 @@ new #[Layout('layouts.guest')] class extends Component
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
+        <!-- Submit Button -->
         <button 
             type="submit" 
             wire:loading.attr="disabled" 
             wire:target="resetPassword"
-            class="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-900/20 disabled:opacity-60 disabled:cursor-not-allowed"
+            class="group w-full flex items-center justify-center bg-white hover:bg-gray-100 text-[#0d1117] font-black py-1.5 px-1.5 rounded-full transition-all hover:scale-[1.01] active:scale-[0.99] shadow-xl shadow-black/20 disabled:opacity-70 disabled:cursor-not-allowed"
         >
-            <span wire:loading.remove wire:target="resetPassword" class="flex items-center gap-2">
-                Reset Password
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            <div class="flex-1 py-3 px-6 flex items-center justify-center gap-2">
+                <span wire:loading.remove wire:target="resetPassword">Reset Password</span>
+                <span wire:loading wire:target="resetPassword" class="flex items-center gap-2">
+                    <svg class="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
+                        <path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4" stroke-linecap="round"></path>
+                    </svg>
+                    Updating...
+                </span>
+            </div>
+            
+            <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center shrink-0 shadow-inner">
+                <svg class="w-5 h-5 text-white transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                 </svg>
-            </span>
-            <span wire:loading wire:target="resetPassword" class="flex items-center gap-2">
-                <svg class="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
-                    <path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4" stroke-linecap="round"></path>
-                </svg>
-                Updating...
-            </span>
+            </div>
         </button>
     </form>
 </div>

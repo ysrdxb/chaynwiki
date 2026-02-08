@@ -280,14 +280,18 @@ class GamificationService
         $query = Article::with('user')->where('status', 'published');
 
         // Apply Category Filter
+        $category = strtolower($category);
         if ($category !== 'all') {
             $catMap = [
                 'recordings' => 'song',
                 'artist profiles' => 'artist',
-                'classifications' => 'genre'
+                'classifications' => 'genre',
+                'song' => 'song',
+                'artist' => 'artist',
+                'genre' => 'genre'
             ];
-            if (isset($catMap[strtolower($category)])) {
-                $query->where('category', $catMap[strtolower($category)]);
+            if (isset($catMap[$category])) {
+                $query->where('category', $catMap[$category]);
             } else {
                 $query->where('category', $category);
             }
@@ -295,17 +299,19 @@ class GamificationService
 
         // Apply Sorting
         switch (strtolower($sort)) {
-            case 'metadata growth': // Newest or most revisions
-                $query->orderByDesc('updated_at');
+            case 'metadata growth': 
+            case 'newest':
+                $query->orderByDesc('created_at');
                 break;
-            case 'total connections': // Total Views or Links (using views for now)
+            case 'total connections':
+            case 'views':
                 $query->orderByDesc('view_count');
                 break;
             case 'impact score':
+            case 'relevance':
+            case 'trending':
             default:
                 // Impact = Views + (Revisions * 10)
-                // We'll approximate this with views for now to keep query simple, 
-                // or use a raw sort if needed.
                 $query->orderByDesc('view_count');
                 break;
         }
@@ -324,6 +330,7 @@ class GamificationService
                 'growth' => "+{$growth}%", // Placeholder for now
                 'impact' => $impact,
                 'user' => $article->user->name ?? 'System',
+                'description' => strip_tags($article->content),
                 'created_at' => $article->created_at->format('M d, Y'),
             ];
         })->toArray();

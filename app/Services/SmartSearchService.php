@@ -59,7 +59,7 @@ class SmartSearchService
                 $searchQuery->orderBy('created_at', 'asc');
                 break;
             case 'views':
-                $searchQuery->orderBy('views', 'desc');
+                $searchQuery->orderBy('view_count', 'desc');
                 break;
             case 'relevance':
             default:
@@ -69,7 +69,7 @@ class SmartSearchService
                         WHEN title LIKE ? THEN 0 
                         WHEN title LIKE ? THEN 1 
                         ELSE 2 
-                    END, views DESC",
+                    END, view_count DESC",
                     ["{$query}%", "%{$query}%"]
                 );
                 break;

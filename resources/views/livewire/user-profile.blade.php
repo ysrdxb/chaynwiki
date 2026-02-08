@@ -61,11 +61,12 @@
                     </div>
                 </div>
 
-                <!-- Contribution History Button -->
                 <div class="shrink-0">
-                    <button class="px-6 py-3 bg-[#161b22] hover:bg-[#1c2128] border border-white/5 hover:border-white/10 rounded-xl text-xs font-bold text-white uppercase tracking-widest transition-all flex items-center gap-2 group">
-                        <svg class="w-4 h-4 text-white/40 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-                        Contribution History
+                    <button class="flex items-center gap-3 bg-white hover:bg-gray-100 px-6 py-2.5 rounded-full transition-all group shadow-xl shadow-white/5">
+                        <span class="text-[#0d1117] text-[12px] font-black uppercase tracking-widest">Contribution History</span>
+                        <div class="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-inner">
+                            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                        </div>
                     </button>
                 </div>
             </div>
@@ -102,12 +103,12 @@
                 <h2 class="text-2xl font-black text-white uppercase tracking-tighter">Topics Added by {{ $user->name }}</h2>
                 
                 <!-- Navigation Arrows -->
-                <div class="flex items-center gap-2">
-                    <button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-white/20 hover:bg-white/5 transition-all text-white/40 hover:text-white">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                <div class="flex items-center gap-4">
+                    <button class="w-12 h-12 rounded-full bg-white hover:bg-gray-100 flex items-center justify-center transition-all text-[#0d1117] shadow-xl shadow-white/5 group">
+                        <svg class="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>
                     </button>
-                    <button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-white/20 hover:bg-white/5 transition-all text-white/40 hover:text-white">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    <button class="w-12 h-12 rounded-full bg-white hover:bg-gray-100 flex items-center justify-center transition-all text-[#0d1117] shadow-xl shadow-white/5 group">
+                        <svg class="w-6 h-6 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
                     </button>
                 </div>
             </div>
@@ -129,9 +130,11 @@
 
             @if($articles->count() >= 12)
             <div class="text-center mt-12">
-                <a href="{{ route('wiki.index', ['user' => $user->username]) }}" class="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-widest text-xs rounded-full inline-flex items-center gap-2 transition-all hover:scale-105 shadow-lg shadow-blue-600/20">
-                    View All Topics
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <a href="{{ route('wiki.index', ['user' => $user->username]) }}" class="inline-flex items-center gap-4 bg-white hover:bg-gray-100 px-8 py-3 rounded-full transition-all group shadow-2xl shadow-white/5">
+                    <span class="text-[#0d1117] text-[13px] font-black uppercase tracking-widest">View All Topics</span>
+                    <div class="w-7 h-7 bg-blue-600 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </div>
                 </a>
             </div>
             @endif
