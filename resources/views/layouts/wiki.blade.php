@@ -7,34 +7,16 @@
     @endpush
     
     @push('styles')
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=MODERNIZ:400,700&display=swap">
+    @push('styles')
         <style>
             :root {
                 @if(isset($article) && $article->analysis && $article->analysis->ambient_signature)
                     --ambient-gradient: {{ $article->analysis->ambient_gradient_css }};
                 @endif
             }
-            /* Ocean Depth Theme - Reading progress bar */
-            .reading-progress {
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 3px;
-                background: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6);
-                z-index: 9999;
-                transition: width 0.1s linear;
-            }
-            .line-clamp-2 {
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-            /* Ocean Depth base colors for wiki layout */
-            .bg-primary { background-color: #0a0e14; }
-            .bg-secondary { background-color: #0f1419; }
-            .bg-tertiary { background-color: #151c24; }
-            .bg-surface { background-color: #1c2630; }
         </style>
+    @endpush
     @endpush
 
     <!-- Navigation -->

@@ -106,6 +106,42 @@ class HomeController extends Controller
             'live_flow' => $editsWeek > 0 ? min(100, (int) round(($editsToday / $editsWeek) * 100)) : 0,
         ];
 
+        // 4b. Music Weather Radar Data (dynamic metrics for radar chart)
+        // Calculate normalized values (0-100) for each radar axis
+        $risingGenres = Article::where('category', 'genre')
+            ->where('status', 'published')
+            ->where('created_at', '>=', now()->subDays(30))
+            ->count();
+        
+        $viralArtists = Article::where('category', 'artist')
+            ->where('status', 'published')
+            ->where('trending_score', '>', 0)
+            ->count();
+        
+        $trendingSongs = Article::where('category', 'song')
+            ->where('status', 'published')
+            ->orderByDesc('view_count')
+            ->where('view_count', '>', 10)
+            ->count();
+        
+        $totalArticles = Article::where('status', 'published')->count();
+        $maxForNormalization = max($totalArticles, 1);
+        
+        // Normalize to 0-100 scale, with minimum of 20 for visual appeal
+        $musicWeather = [
+            'rising_genres' => min(100, max(20, ($risingGenres / max($maxForNormalization * 0.1, 1)) * 100)),
+            'viral_artists' => min(100, max(20, ($viralArtists / max($maxForNormalization * 0.15, 1)) * 100)),
+            'trending_songs' => min(100, max(20, ($trendingSongs / max($maxForNormalization * 0.1, 1)) * 100)),
+            'declining_trends' => min(100, max(20, 100 - (($newArticlesWeek / max($maxForNormalization * 0.05, 1)) * 50))),
+            // Raw counts for display
+            'raw' => [
+                'rising_genres' => $risingGenres,
+                'viral_artists' => $viralArtists,
+                'trending_songs' => $trendingSongs,
+                'total_articles' => $totalArticles,
+            ]
+        ];
+
         // 5. Featured Content (The Beat of the Moment - High Trending Score)
         $trendingArticles = Article::where('status', 'published')
             ->with(['user'])
@@ -195,7 +231,9 @@ class HomeController extends Controller
             'newTopicCards',
             'heroStats',
             'categoryTabs',
+            'categoryCounts',
             'musicPulse',
+            'musicWeather',
             'trendingArticles',
             'recentUpdates',
             'topContributors',

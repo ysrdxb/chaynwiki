@@ -49,7 +49,11 @@ Route::get('/admin', function () {
     return redirect()->route('admin.dashboard');
 })->middleware(['auth', 'can:admin']);
 
-Route::get('/user/{user:username}', \App\Livewire\UserProfile::class)->name('profile');
+Route::get('/user/{username}', function ($username) {
+    $user = \App\Models\User::all()->first(fn($u) => \Illuminate\Support\Str::slug($u->name) === $username);
+    if (!$user) abort(404);
+    return app(\App\Livewire\UserProfile::class, ['user' => $user])->run();
+})->name('profile');
 
 // Custom Admin Panel (Livewire)
 Route::middleware(['auth', 'can:admin'])->prefix('admin')->group(function () {
@@ -62,3 +66,4 @@ Route::middleware(['auth', 'can:admin'])->prefix('admin')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+

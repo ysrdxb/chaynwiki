@@ -51,23 +51,11 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#f0f7ff', 100: '#e0effe', 200: '#bae2fd', 300: '#7cc8fb', 400: '#38acf8',
-                            500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1', 800: '#075985', 900: '#0c4a6e', 950: '#082f49',
-                        },
-                        dark: {
-                            DEFAULT: '#05050a',
-                            surface: '#0c0c14',
-                            elevated: '#151522',
-                        }
+                        brand: { 500: '#3b82f6' },
+                        navy: { 900: '#0d1117', 950: '#0a0a0f' }
                     },
                     fontFamily: {
                         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-                        display: ['"Plus Jakarta Sans"', 'sans-serif'],
-                    },
-                    fontSize: {
-                        '10xl': '10rem',
-                        '11xl': '12rem',
                     },
                     letterSpacing: {
                         'tightest': '-0.06em',
@@ -80,88 +68,41 @@
         }
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
     
     <!-- Global Styles -->
     <style>
         ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #030308; }
+        ::-webkit-scrollbar-track { background: #0d1117; }
         ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 20px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
-        
         [x-cloak] { display: none !important; }
-        
-        .text-gradient {
-            background: linear-gradient(to bottom right, #fff 20%, #7dd3fc 50%, #38bdf8 80%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .glass-dark {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        /* Global section backgrounds to match homepage */
-        .bg-primary { background-color: #050510; }
-        .bg-secondary { background-color: #080815; }
-        .section-divider { position: relative; }
-        .section-divider::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 1200px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0.15) 80%, transparent 100%);
-        }
-
-        /* Skeleton Loading Animation */
-        @keyframes skeleton-shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        .skeleton-v2 {
-            background: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 100%);
-            background-size: 200% 100%;
-            animation: skeleton-shimmer 1.5s ease-in-out infinite;
-            border-radius: 8px;
-        }
-
-        /* Fade In Animation */
-        @keyframes fade-in {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fade-in 0.5s ease-out forwards;
-        }
     </style>
     @stack('styles')
 </head>
-<body class="font-sans antialiased bg-[#030308] min-h-screen text-slate-400 overflow-x-hidden selection:bg-[#38bdf8] selection:text-[#0a0e14]">
-    <!-- Background Noise/Decor -->
+<body class="font-sans antialiased bg-[#0d1117] min-h-screen text-white/70 overflow-x-hidden selection:bg-[#3b82f6] selection:text-white">
+    <!-- Background Decor -->
     <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-[#38bdf8]/5 via-[#050510] to-[#050510]"></div>
-        <div id="ambient-glow" class="absolute inset-0 opacity-40 blur-[150px] mix-blend-screen transition-all duration-1000" style="background: var(--ambient-gradient, transparent);"></div>
-        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02]"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-blue-500/5 via-[#0d1117] to-[#0d1117]"></div>
     </div>
 
     <!-- Main Content -->
-    <div class="relative z-10">
+    <div class="relative z-10 flex flex-col min-h-screen">
         {{ $slot }}
     </div>
+
+    <!-- Mouse Tracking Script for Unified Card Effect -->
+    <script>
+        document.addEventListener('mousemove', e => {
+            for(const card of document.getElementsByClassName('card-premium-unified')) {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            }
+        });
+    </script>
 
     <!-- Global Components -->
     <x-toast-container />

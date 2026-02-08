@@ -9,32 +9,27 @@
 ])
 
 @php
-    $baseClasses = 'inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-200 btn-premium';
+    $baseClasses = 'inline-flex items-center justify-center gap-2 font-extrabold rounded-full transition-all duration-300';
     
     $variantClasses = match ($variant) {
-        'primary' => 'bg-brand-600 hover:bg-brand-500 text-white shadow-lg shadow-brand-500/25',
-        'secondary' => 'bg-white/10 hover:bg-white/20 text-white',
-        'outline' => 'bg-transparent border border-white/20 hover:border-white/40 text-white hover:bg-white/5',
-        'ghost' => 'bg-transparent hover:bg-white/10 text-gray-400 hover:text-white',
-        'danger' => 'bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-500/25',
-        'success' => 'bg-green-600 hover:bg-green-500 text-white shadow-lg shadow-green-500/25',
-        default => 'bg-brand-600 hover:bg-brand-500 text-white',
+        'primary' => 'bg-white text-[#0d1117] hover:bg-gray-100 hover:scale-[1.02] shadow-xl',
+        'secondary' => 'bg-transparent border border-white/10 text-white hover:border-[#3b82f6] hover:bg-[#3b82f6]/5',
+        'outline' => 'bg-transparent border border-white/20 hover:border-white/40 text-white',
+        'ghost' => 'bg-transparent hover:bg-white/5 text-white/50 hover:text-white',
+        'danger' => 'bg-red-500 hover:bg-red-600 text-white',
+        default => 'bg-white text-[#0d1117]',
     };
     
     $sizeClasses = match ($size) {
-        'xs' => 'px-3 py-1.5 text-xs',
-        'sm' => 'px-4 py-2 text-sm',
-        'md' => 'px-5 py-2.5 text-sm',
-        'lg' => 'px-6 py-3 text-base',
-        'xl' => 'px-8 py-4 text-lg',
-        default => 'px-5 py-2.5 text-sm',
+        'xs' => 'px-4 py-1.5 text-xs',
+        'sm' => 'px-5 py-2 text-sm',
+        'md' => 'px-6 py-2.5 text-sm',
+        'lg' => 'px-8 py-3.5 text-base',
+        'xl' => 'px-10 py-4.5 text-lg',
+        default => 'px-6 py-2.5 text-sm',
     };
     
     $classes = $baseClasses . ' ' . $variantClasses . ' ' . $sizeClasses;
-    
-    if ($disabled || $loading) {
-        $classes .= ' opacity-50 cursor-not-allowed';
-    }
 @endphp
 
 @if($href && !$disabled)

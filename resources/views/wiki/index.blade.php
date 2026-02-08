@@ -6,25 +6,25 @@
 <div class="relative min-h-screen" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
     
     <!-- HERO SECTION -->
-    <div class="relative pt-32 pb-16 border-b border-white/5 bg-[#0a0e14]">
-        <div class="max-w-[1200px] mx-auto px-8 relative z-10">
+    <div class="relative pt-32 pb-16 border-b border-white/5 bg-[#0d1117]">
+        <div class="max-w-[1400px] mx-auto px-8 relative z-10">
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <nav class="flex items-center gap-2 text-[10px] font-black text-[#64748b] uppercase tracking-[0.2em] mb-8 px-1">
-                        <a href="{{ route('home') }}" class="hover:text-[#38bdf8] transition-colors">Home</a>
+                    <nav class="flex items-center gap-2 text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-8 px-1">
+                        <a href="{{ route('home') }}" class="hover:text-blue-400 transition-colors">Home</a>
                         <span>/</span>
-                        <span class="text-[#38bdf8]/50">Archive Browser</span>
+                        <span class="text-blue-400/50">Archive Browser</span>
                     </nav>
 
                     <h1 class="text-4xl lg:text-7xl font-black text-white italic uppercase tracking-tighter mb-4 leading-none">
                         @if(isset($search) && $search)
                             RESULTS FOR: <span class="text-[#38bdf8]">{{ $search }}</span>
                         @else
-                            {{ strtoupper(request('category', 'GLOBAL')) }} <span class="text-[#38bdf8]">ARCHIVE</span>
+                            {{ strtoupper(request('category', 'GLOBAL')) }} <span class="text-blue-400">ARCHIVE</span>
                         @endif
                     </h1>
 
-                    <p class="text-[10px] font-black text-[#64748b] uppercase tracking-[0.3em] px-1">
+                    <p class="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] px-1">
                         {{ isset($results) ? $results['total_count'] : (isset($articles) ? $articles->total() : '0') }} DISTRIBUTED RECORDS INDEXED
                     </p>
                 </div>
@@ -32,12 +32,13 @@
         </div>
     </div>
 
-    <section class="bg-primary section-divider">
-        <div class="max-w-[1200px] mx-auto px-8 py-12">
+    <section class="bg-[#0d1117] section-unified py-24 border-t border-white/5 relative z-10">
+        <div class="max-w-[1400px] mx-auto px-8 py-12">
         <!-- Filter Bar -->
         <div class="flex flex-wrap items-center gap-3 mb-16 px-1">
             <a href="{{ route('wiki.index', ['q' => $search ?? null]) }}" 
-                class="px-6 py-3 rounded-xl text-[10px] font-semibold uppercase tracking-[0.2em] transition-all {{ !request('category') ? 'bg-[#38bdf8] text-[#0a0e14] shadow-xl shadow-[#38bdf8]/10' : 'bg-white/5 text-white/60 border border-white/10 hover:border-[#38bdf8]/30 hover:text-white' }}">
+                class="action-pill {{ !request('category') ? 'bg-[#3b82f6] border-[#3b82f6] text-white' : '' }}">
+                <div class="pill-icon"></div>
                 All Records
             </a>
             
@@ -53,7 +54,8 @@
             
             @foreach($categories as $key => $label)
                 <a href="{{ route('wiki.index', ['q' => $search ?? null, 'category' => $key]) }}" 
-                    class="px-6 py-3 rounded-xl text-[10px] font-semibold uppercase tracking-[0.2em] transition-all {{ request('category') == $key ? 'bg-[#38bdf8] text-[#0a0e14] shadow-xl shadow-[#38bdf8]/10' : 'bg-white/5 text-white/60 border border-white/10 hover:border-[#38bdf8]/30 hover:text-white' }}">
+                    class="action-pill {{ request('category') == $key ? 'bg-[#3b82f6] border-[#3b82f6] text-white' : '' }}">
+                    <div class="pill-icon"></div>
                     {{ $label }}
                 </a>
             @endforeach
@@ -68,7 +70,7 @@
                             <div class="flex items-center gap-4 mb-8">
                                 <h2 class="text-xl font-black text-white italic uppercase tracking-tighter">{{ $label }}</h2>
                                 <div class="flex-1 h-px bg-white/5"></div>
-                                <a href="{{ route('wiki.index', ['q' => $search, 'category' => $key]) }}" class="text-[10px] font-semibold text-[#64748b] uppercase tracking-widest hover:text-[#38bdf8] transition-colors">View All</a>
+                                <a href="{{ route('wiki.index', ['q' => $search, 'category' => $key]) }}" class="text-[10px] font-semibold text-white/30 uppercase tracking-widest hover:text-blue-400 transition-colors">View All</a>
                             </div>
 
                             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -97,7 +99,7 @@
                         <div class="text-4xl mb-6">📂</div>
                         <h3 class="text-xl font-black text-white italic uppercase tracking-tighter mb-4">No Entries Found</h3>
                         <p class="text-slate-400 text-sm max-w-sm mx-auto mb-8">The specific node you're looking for hasn't been established in our archive yet.</p>
-                        <a href="{{ route('wiki.create') }}" class="btn-primary-v2 pr-10 pl-8 py-3.5">Create Record</a>
+                        <a href="{{ route('wiki.create') }}" class="btn-figma-primary">Create Record</a>
                     </div>
                 @endforelse
             </div>

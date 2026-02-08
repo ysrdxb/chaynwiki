@@ -11,19 +11,19 @@
     'icon' => null,
 ])
 
-<div {{ $attributes->only('class')->merge(['class' => 'space-y-2']) }}>
+<div {{ $attributes->only('class')->merge(['class' => 'space-y-3']) }}>
     @if($label)
-        <label for="{{ $name }}" class="block text-sm font-medium text-gray-300">
+        <label for="{{ $name }}" class="block text-[14px] font-bold text-white/50 uppercase tracking-widest" style="font-family: 'Plus Jakarta Sans', sans-serif;">
             {{ $label }}
             @if($required)
-                <span class="text-red-400">*</span>
+                <span class="text-blue-500">*</span>
             @endif
         </label>
     @endif
 
-    <div class="relative">
+    <div class="relative group">
         @if($icon)
-            <div class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">
+            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-blue-500 transition-colors">
                 {!! $icon !!}
             </div>
         @endif
@@ -37,9 +37,9 @@
             @if($required) required @endif
             @if($disabled) disabled @endif
             {{ $attributes->except(['class', 'wire:model', 'wire:model.live'])->merge([
-                'class' => 'w-full px-4 py-3 rounded-xl bg-[#0A0A14] border text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-brand-500/50 transition-all ' .
-                    ($icon ? 'pl-10 ' : '') .
-                    ($error ? 'border-red-500/50 focus:border-red-500' : 'border-white/10 focus:border-brand-500') .
+                'class' => 'w-full px-5 py-3.5 rounded-2xl bg-[#161b22]/50 border border-white/5 text-white placeholder-white/20 focus:outline-none focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 ' .
+                    ($icon ? 'pl-12 ' : '') .
+                    ($error ? 'border-red-500/50 focus:border-red-500' : '') .
                     ($disabled ? ' opacity-50 cursor-not-allowed' : '')
             ]) }}
             {{ $attributes->only(['wire:model', 'wire:model.live']) }}
