@@ -4,10 +4,10 @@
     {{-- Chat Toggle Button --}}
     <button
         wire:click="toggle"
-        class="w-16 h-16 rounded-2xl bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#0a0e14] shadow-2xl shadow-[#38bdf8]/20 flex items-center justify-center transition-all hover:scale-110 active:scale-95 border border-white/5"
+        class="w-16 h-16 rounded-2xl bg-white hover:bg-gray-50 text-blue-600 shadow-2xl shadow-blue-900/20 flex items-center justify-center transition-all hover:scale-110 active:scale-95 border border-white/10"
         :class="{ 'scale-0 opacity-0': show }"
     >
-        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
         </svg>
     </button>
@@ -25,29 +25,29 @@
         style="display: none;"
     >
         {{-- Header --}}
-        <div class="bg-gradient-to-r from-[#38bdf8] to-[#a78bfa] px-5 py-4 flex items-center justify-between border-b border-white/10 relative overflow-hidden">
-            <div class="absolute inset-0 bg-black/10"></div>
+        <div class="flex-shrink-0 bg-gradient-to-r from-blue-600 to-blue-700 px-5 py-4 flex items-center justify-between border-b border-white/10 relative overflow-hidden">
+            <div class="absolute inset-0 bg-blue-500/10"></div>
             <div class="flex items-center gap-4 relative z-10">
-                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/20">
+                <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center border border-white/20 shadow-inner">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                     </svg>
                 </div>
                 <div>
-                    <h3 class="text-white font-black text-[11px] uppercase tracking-[0.2em] italic">ChaynWiki AI</h3>
-                    <p class="text-white/40 text-[9px] font-black uppercase tracking-widest italic mt-0.5">Global Archive Assistant</p>
+                    <h3 class="text-white font-bold text-[16px] tracking-tight">ChaynWiki Assistant</h3>
+                    <p class="text-white/60 text-[11px] font-medium mt-0.5">Always here to help</p>
                 </div>
             </div>
-            <button wire:click="close" class="text-white/40 hover:text-white transition-colors relative z-10">
+            <button wire:click="close" class="text-white/60 hover:text-white transition-colors relative z-10 p-1 hover:bg-white/10 rounded-lg">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
         </div>
 
         {{-- AI Status Warning --}}
         @if(!$aiAvailable)
-            <div class="bg-amber-500/10 border-b border-amber-500/20 px-4 py-2 flex items-center gap-2 text-amber-400 text-xs">
+            <div class="bg-amber-500/10 border-b border-amber-500/20 px-4 py-2 flex items-center gap-2 text-amber-400 text-xs flex-shrink-0">
                 <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
                 </svg>
@@ -66,20 +66,20 @@
             {{-- Welcome Message --}}
             @if(empty($messages))
                 <div class="text-center py-8">
-                    <div class="w-16 h-16 rounded-full bg-brand-600/20 flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-16 h-16 rounded-full bg-blue-500/10 flex items-center justify-center mx-auto mb-4 border border-blue-500/20">
+                        <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                         </svg>
                     </div>
-                    <h4 class="text-white font-semibold mb-2">How can I help?</h4>
-                    <p class="text-gray-400 text-sm">Ask me anything about music, artists, or genres.</p>
+                    <h4 class="text-white font-bold mb-2">How can I help?</h4>
+                    <p class="text-white/40 text-sm">Ask me anything about music, artists, or genres.</p>
                 </div>
             @endif
 
             {{-- Message History --}}
             @foreach($messages as $msg)
                 <div class="flex {{ $msg['role'] === 'user' ? 'justify-end' : 'justify-start' }}" x-init="$nextTick(() => { $refs.messageContainer.scrollTop = $refs.messageContainer.scrollHeight })">
-                    <div class="max-w-[85%] {{ $msg['role'] === 'user' ? 'bg-[#38bdf8] text-[#0a0e14] shadow-lg shadow-[#38bdf8]/10' : 'bg-white/5 text-gray-200' }} rounded-2xl px-5 py-3.5 text-xs font-medium {{ $msg['role'] === 'user' ? 'rounded-br-sm' : 'rounded-bl-sm border border-white/5' }}">
+                    <div class="max-w-[85%] {{ $msg['role'] === 'user' ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20' : 'bg-white/5 text-gray-200 border border-white/5' }} rounded-2xl px-5 py-3.5 text-xs font-medium {{ $msg['role'] === 'user' ? 'rounded-br-sm' : 'rounded-bl-sm' }}">
                         <div class="prose prose-sm prose-invert max-w-none prose-p:leading-relaxed prose-pre:bg-black/30 prose-pre:border prose-pre:border-white/10 font-medium">
                             {!! Str::markdown($msg['content']) !!}
                         </div>
@@ -92,9 +92,9 @@
                 <div class="flex justify-start" x-init="$nextTick(() => { $refs.messageContainer.scrollTop = $refs.messageContainer.scrollHeight })">
                     <div class="bg-white/5 rounded-2xl rounded-bl-sm px-5 py-4 border border-white/5">
                         <div class="flex items-center gap-1.5">
-                            <div class="w-2 h-2 bg-[#38bdf8] rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-                            <div class="w-2 h-2 bg-[#38bdf8] rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                            <div class="w-2 h-2 bg-[#38bdf8] rounded-full animate-bounce"></div>
+                            <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+                            <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+                            <div class="w-2 h-2 bg-blue-500 rounded-full animate-bounce"></div>
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
 
         {{-- Suggestions --}}
         @if(empty($messages) && !empty($suggestions))
-            <div class="px-4 pb-2 flex flex-wrap gap-2">
+            <div class="px-4 pb-2 flex flex-wrap gap-2 flex-shrink-0">
                 @foreach($suggestions as $suggestion)
                     <button
                         wire:click="askSuggestion('{{ addslashes($suggestion) }}')"
@@ -116,18 +116,18 @@
         @endif
 
         {{-- Input Area --}}
-        <div class="border-t border-white/10 p-4 bg-secondary/50">
+        <div class="border-t border-white/10 p-4 bg-[#0A0A14]/50 flex-shrink-0">
             <form wire:submit="sendMessage" class="flex items-center gap-3">
                 <input
                     type="text"
                     wire:model="message"
                     placeholder="Ask about music history..."
-                    class="flex-1 bg-white/5 border border-white/5 rounded-xl px-5 py-3 text-white placeholder-white/10 text-xs font-black uppercase tracking-widest focus:border-[#38bdf8]/50 focus:ring-0 transition-all italic"
+                    class="flex-1 bg-white/5 border border-white/5 rounded-xl px-5 py-3 text-white placeholder-white/20 text-xs font-bold uppercase tracking-widest focus:border-blue-500/50 focus:ring-0 transition-all italic"
                     @if(!$aiAvailable) disabled @endif
                 />
                 <button
                     type="submit"
-                    class="w-11 h-11 bg-[#38bdf8] hover:bg-[#7dd3fc] rounded-xl flex items-center justify-center text-[#0a0e14] transition-all disabled:opacity-50 shadow-lg shadow-[#38bdf8]/20 active:scale-95"
+                    class="w-11 h-11 bg-white hover:bg-gray-100 rounded-xl flex items-center justify-center text-blue-600 transition-all disabled:opacity-50 shadow-lg shadow-black/20 active:scale-95"
                     @if(!$aiAvailable || $isLoading) disabled @endif
                 >
                     <svg class="w-5 h-5 translate-x-px" fill="none" stroke="currentColor" viewBox="0 0 24 24">
