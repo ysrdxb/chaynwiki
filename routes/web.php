@@ -52,7 +52,7 @@ Route::get('/admin', function () {
 Route::get('/user/{username}', function ($username) {
     $user = \App\Models\User::all()->first(fn($u) => \Illuminate\Support\Str::slug($u->name) === $username);
     if (!$user) abort(404);
-    return app(\App\Livewire\UserProfile::class, ['user' => $user])->run();
+    return view('profile-page', ['user' => $user]);
 })->name('profile');
 
 // Custom Admin Panel (Livewire)

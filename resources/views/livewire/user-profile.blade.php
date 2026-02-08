@@ -10,8 +10,14 @@
             <div class="flex flex-col md:flex-row items-start gap-8">
                 <!-- Avatar with Badge -->
                 <div class="relative shrink-0">
-                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white/5 shadow-2xl">
-                        <img src="{{ $avatar }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                    <div class="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white/10 shadow-2xl bg-[#161b22]">
+                        @if($user->avatar)
+                            <img src="{{ $user->avatar }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                        @else
+                            <div class="w-full h-full bg-blue-400/20 flex items-center justify-center">
+                                <span class="text-5xl md:text-6xl font-black text-blue-400">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+                            </div>
+                        @endif
                     </div>
                     <!-- Verified Badge -->
                     <div class="absolute bottom-0 right-0 w-10 h-10 rounded-full bg-blue-400 border-4 border-[#0d1117] flex items-center justify-center">

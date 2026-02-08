@@ -260,16 +260,32 @@
                     </div>
                 </div>
 
-                <!-- Contributors -->
-                <div class="space-y-6">
-                    <h3 class="text-xs font-semibold text-white/50 uppercase tracking-[0.2em]">Contributors</h3>
-                    <div class="flex -space-x-3 overflow-hidden">
-                        @for($i = 0; $i < 4; $i++)
-                            <div class="inline-block h-10 w-10 rounded-xl ring-4 ring-[#0d1117] bg-[#161b22] border border-white/10 flex items-center justify-center text-[10px] font-black text-blue-400">
-                                {{ chr(65 + $i) }}
-                            </div>
-                        @endfor
-                        <div class="h-10 w-10 rounded-xl ring-4 ring-[#0d1117] bg-blue-400 flex items-center justify-center text-[8px] font-black text-white">+8</div>
+                <!-- Contributor / Author -->
+                <div class="bg-[#161b22]/40 border border-white/5 rounded-[20px] p-6 hover:border-white/10 transition-all">
+                    <h3 class="text-xs font-semibold text-white/50 uppercase tracking-[0.2em] mb-4">Created By</h3>
+                    
+                    <a href="{{ route('profile', $article->user->username) }}" class="flex items-center gap-4 group">
+                        <div class="w-12 h-12 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-blue-400/50 transition-colors">
+                            @if($article->user->avatar)
+                                <img src="{{ $article->user->avatar }}" alt="{{ $article->user->name }}" class="w-full h-full object-cover">
+                            @else
+                                <div class="w-full h-full bg-blue-400/10 flex items-center justify-center text-blue-400 font-black text-sm">
+                                    {{ strtoupper(substr($article->user->name, 0, 1)) }}
+                                </div>
+                            @endif
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-white font-bold group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
+                            <p class="text-white/30 text-xs">{{ '@' . $article->user->username }}</p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-blue-400 group-hover:text-white transition-all text-white/30">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </div>
+                    </a>
+
+                    <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-[10px] text-white/30">
+                        <span>Contributor Since {{ $article->user->created_at->format('M Y') }}</span>
+                        <span class="text-blue-400">{{ $article->user->reputation_score ?? 0 }} pts</span>
                     </div>
                 </div>
 
