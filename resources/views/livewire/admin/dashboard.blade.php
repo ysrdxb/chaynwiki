@@ -170,7 +170,7 @@
     <div class="glass-card overflow-hidden">
         <div class="p-8 border-b border-white/5 flex justify-between items-center">
             <h4 class="text-xl font-display font-black">Recent Activity Sync</h4>
-            <a href="/admin/revisions" class="text-[10px] font-bold text-[#38bdf8] uppercase tracking-widest hover:underline">View All Task History</a>
+            <a href="{{ route('admin.revisions') }}" class="text-[10px] font-bold text-[#38bdf8] uppercase tracking-widest hover:underline">View All Task History</a>
         </div>
         <table class="w-full text-left">
             <thead>
