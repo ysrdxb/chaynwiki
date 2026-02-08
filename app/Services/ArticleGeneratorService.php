@@ -197,6 +197,47 @@ Include these sections with markdown headers (##):
 Write in an encyclopedic, neutral tone.
 PROMPT,
 
+            'playlist' => <<<PROMPT
+Write a comprehensive curator's note and description for a music playlist titled "{$topic}".
+
+Include these sections with markdown headers (##):
+## Concept
+- The central theme, mood, or idea behind this collection
+
+## Featured Artists
+- Key artists included in this playlist and their significance
+
+## Musical Journey
+- Flow of the playlist, progression of energy
+
+## Context
+- When/where to listen, historical context if applicable
+
+Write in a knowledgeable, curator-style tone.
+PROMPT,
+
+            'term' => <<<PROMPT
+Write a comprehensive music glossary definition for the term "{$topic}".
+
+Include these sections with markdown headers (##):
+## Definition
+- Clear, concise definition of the term
+
+## Etymology
+- Origin of the word/phrase
+
+## Usage in Music
+- How it is applied in music theory, production, or culture
+
+## Examples
+- Notable examples of this term in action
+
+## Related Terms
+- Similar or contrasting concepts
+
+Write in an encyclopedic, precise tone.
+PROMPT,
+
             'general' => <<<PROMPT
 Write a comprehensive music wiki article about "{$topic}".
 

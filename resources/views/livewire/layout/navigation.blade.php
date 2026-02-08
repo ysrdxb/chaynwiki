@@ -64,7 +64,7 @@ new class extends Component
                             {{ __('Settings') }}
                         </x-dropdown-link>
 
-                        <x-dropdown-link :href="route('profile', ['user' => auth()->user()->username])" wire:navigate>
+                        <x-dropdown-link :href="route('profile', ['username' => auth()->user()->username])" wire:navigate>
                             {{ __('Public Profile') }}
                         </x-dropdown-link>
                         @endauth
@@ -112,7 +112,7 @@ new class extends Component
                     {{ __('Settings') }}
                 </x-responsive-nav-link>
 
-                <x-responsive-nav-link :href="route('profile', ['user' => auth()->user()->username])" wire:navigate>
+                <x-responsive-nav-link :href="route('profile', ['username' => auth()->user()->username])" wire:navigate>
                     {{ __('Public Profile') }}
                 </x-responsive-nav-link>
 

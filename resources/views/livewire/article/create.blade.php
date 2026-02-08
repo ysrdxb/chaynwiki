@@ -35,10 +35,10 @@
                 ['id' => 'term', 'title' => 'Terminology', 'desc' => 'Define music theory, equipment, or industry terms', 'icon' => 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253']
             ] as $cat)
             <button wire:click="setCategory('{{ $cat['id'] }}')" 
-                class="flex flex-col p-8 rounded-[20px] transition-all text-left group relative card-type {{ $category === $cat['id'] ? 'bg-white/8 border border-[#38bdf8]/30 shadow-lg shadow-[#38bdf8]/10' : 'border border-white/10 hover:border-white/20' }}">
+                class="flex flex-col p-8 rounded-[20px] transition-all text-left group relative card-type {{ $category === $cat['id'] ? 'bg-white/8 border border-blue-500/30 shadow-lg shadow-blue-500/10' : 'border border-white/10 hover:border-white/20' }}">
                 <div class="flex items-center justify-between mb-4">
-                    <div class="w-8 h-8 rounded-lg {{ $category === $cat['id'] ? 'bg-[#38bdf8]/20' : 'bg-white/5' }} flex items-center justify-center">
-                        <svg class="w-4 h-4 {{ $category === $cat['id'] ? 'text-[#38bdf8]' : 'text-white/40' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $cat['icon'] }}"/></svg>
+                    <div class="w-8 h-8 rounded-lg {{ $category === $cat['id'] ? 'bg-blue-500/20' : 'bg-white/5' }} flex items-center justify-center">
+                        <svg class="w-4 h-4 {{ $category === $cat['id'] ? 'text-blue-400' : 'text-white/40' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $cat['icon'] }}"/></svg>
                     </div>
                 </div>
                 <h3 class="text-lg font-bold text-white mb-2">{{ $cat['title'] }}</h3>
@@ -234,13 +234,12 @@
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Category Type <span class="text-red-400">*</span></label>
-                            <div class="relative">
                                 <select wire:model="meta.category_type" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm focus:border-white/20 appearance-none outline-none @error('meta.category_type') border-red-500 @else border-custom-35 @enderror">
-                                    <option value="">Select a category...</option>
-                                    <option value="theory">Music Theory</option>
-                                    <option value="equipment">Equipment & Gear</option>
-                                    <option value="industry">Industry Terms</option>
-                                    <option value="culture">Music Culture</option>
+                                    <option value="" class="bg-[#151522] text-white">Select a category...</option>
+                                    <option value="theory" class="bg-[#151522] text-white">Music Theory</option>
+                                    <option value="equipment" class="bg-[#151522] text-white">Equipment & Gear</option>
+                                    <option value="industry" class="bg-[#151522] text-white">Industry Terms</option>
+                                    <option value="culture" class="bg-[#151522] text-white">Music Culture</option>
                                 </select>
                                 <svg class="w-4 h-4 text-white/40 absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                             </div>
@@ -285,29 +284,20 @@
                 </div>
 
                 {{-- Action Pillar Buttons --}}
-                <div class="flex items-center gap-4 pt-12 pb-20">
-                    <button type="button" class="bg-white text-[#050510] font-bold text-sm px-8 py-3.5 rounded-full flex items-center gap-3 transition-transform hover:scale-105">
+                <div class="flex items-center justify-end gap-4 pt-12 pb-20 border-t border-white/5 mt-12">
+                     <button type="button" class="bg-transparent border border-white/10 text-white font-bold text-sm px-8 py-3.5 rounded-full hover:bg-white/5 transition-all">
                         Save Draft
-                        <div class="w-5 h-5 rounded-full bg-[#38bdf8]/20 flex items-center justify-center">
-                            <div class="w-1.5 h-1.5 rounded-full bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.8)]"></div>
-                        </div>
                     </button>
-                    <button type="button" class="bg-white text-[#050510] font-bold text-sm px-8 py-3.5 rounded-full flex items-center gap-3 transition-transform hover:scale-105">
+                    <button type="button" class="bg-transparent border border-white/10 text-white font-bold text-sm px-8 py-3.5 rounded-full hover:bg-white/5 transition-all">
                         Preview
-                        <div class="w-5 h-5 rounded-full bg-[#38bdf8]/20 flex items-center justify-center">
-                            <div class="w-1.5 h-1.5 rounded-full bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.8)]"></div>
-                        </div>
                     </button>
                     <button type="submit" 
                         wire:loading.attr="disabled"
                         wire:target="save"
-                        class="bg-white text-[#050510] font-bold text-sm px-8 py-3.5 rounded-full flex items-center gap-3 transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+                        class="bg-white text-[#050510] font-bold text-sm px-10 py-3.5 rounded-full flex items-center gap-3 transition-transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 shadow-[0_0_20px_rgba(255,255,255,0.1)]">
                         <span wire:loading.remove wire:target="save">Submit Review</span>
                         <span wire:loading wire:target="save" class="flex items-center gap-2">
-                            <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
+                            <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                             Submitting...
                         </span>
                         <div wire:loading.remove wire:target="save" class="w-5 h-5 rounded-full bg-[#38bdf8]/20 flex items-center justify-center">

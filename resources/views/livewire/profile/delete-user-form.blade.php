@@ -25,54 +25,54 @@ new class extends Component
 
 <section class="space-y-6">
     <header>
-        <h2 class="text-xl font-black text-white uppercase italic tracking-tighter">
-            {{ __('Node Termination') }}
+        <h2 class="text-xl font-black text-white uppercase tracking-tight">
+            {{ __('Delete Account') }}
         </h2>
 
-        <p class="mt-2 text-[10px] font-black text-white/20 uppercase tracking-widest leading-loose">
-            {{ __('Termination of this node will permanently purge all associated metadata and neural associations from the archive. This action is irreversible.') }}
+        <p class="mt-2 text-xs font-bold text-white/40 uppercase tracking-wider leading-relaxed">
+            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted.') }}
         </p>
     </header>
 
     <x-danger-button
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-        class="px-8 py-3 rounded-xl font-black text-[9px] uppercase tracking-widest"
-    >{{ __('Initialize Shutdown') }}</x-danger-button>
+        class="px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-red-600 hover:bg-red-500 border-0"
+    >{{ __('Delete Account') }}</x-danger-button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->isNotEmpty()" focusable>
-        <form wire:submit="deleteUser" class="p-8 bg-secondary border border-white/5 rounded-2xl overflow-hidden">
+        <form wire:submit="deleteUser" class="p-8 bg-[#161b22] border border-white/5 rounded-2xl overflow-hidden">
 
-            <h2 class="text-xl font-black text-white uppercase italic tracking-tighter">
-                {{ __('Confirm Termination') }}
+            <h2 class="text-xl font-black text-white uppercase tracking-tight">
+                {{ __('Are you sure you want to delete your account?') }}
             </h2>
 
-            <p class="mt-4 text-[10px] font-black text-white/20 uppercase tracking-widest leading-loose">
-                {{ __('Enter your authorization cipher to permanently de-initialize this node and purge all associated records.') }}
+            <p class="mt-4 text-xs font-bold text-white/40 uppercase tracking-wider leading-relaxed">
+                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
             </p>
 
             <div class="mt-8">
-                <x-input-label for="password" value="{{ __('Cipher') }}" class="sr-only" />
+                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
 
                 <x-text-input
                     wire:model="password"
                     id="password"
                     name="password"
                     type="password"
-                    class="block w-full"
-                    placeholder="{{ __('Enter Cipher') }}"
+                    class="block w-full bg-[#0d1117] border-white/10 focus:border-red-500 focus:ring-red-500/20 rounded-xl"
+                    placeholder="{{ __('Password') }}"
                 />
 
                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
             </div>
 
-            <div class="mt-10 flex justify-end gap-3">
-                <x-secondary-button x-on:click="$dispatch('close')" class="px-6 py-2.5 rounded-xl font-black text-[9px] uppercase tracking-widest border-white/5 bg-white/5 text-white">
-                    {{ __('Abort') }}
+            <div class="mt-8 flex justify-end gap-3">
+                <x-secondary-button x-on:click="$dispatch('close')" class="px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider border-white/10 bg-white/5 text-white hover:bg-white/10">
+                    {{ __('Cancel') }}
                 </x-secondary-button>
 
-                <x-danger-button class="px-6 py-2.5 rounded-xl font-black text-[9px] uppercase tracking-widest">
-                    {{ __('Execute Purge') }}
+                <x-danger-button class="px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-red-600 hover:bg-red-500 border-0">
+                    {{ __('Delete Account') }}
                 </x-danger-button>
             </div>
         </form>

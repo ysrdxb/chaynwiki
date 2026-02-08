@@ -21,6 +21,8 @@ class GenerateArticle extends Component
         'song' => 'Song',
         'artist' => 'Artist / Band',
         'genre' => 'Music Genre',
+        'playlist' => 'Curated Playlist',
+        'term' => 'Terminology',
     ];
 
     public function mount(): void

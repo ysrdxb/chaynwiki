@@ -8,6 +8,7 @@
     if ($seoImage && !Str::startsWith($seoImage, ['http://', 'https://'])) {
         $seoImage = Storage::url($seoImage);
     }
+    // Use a default image for SEO if none exists, but we'll handle the UI fallback differently
     $seoImage = $seoImage ?: asset('images/hero_background.png');
 @endphp
 
@@ -26,13 +27,11 @@
         'term' => ['label' => 'Terminology', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>'],
     ];
 
-    $placeholder = 'https://images.unsplash.com/photo-1514320299584-4bd06b02a04e?auto=format&fit=crop&q=80&w=1200';
-    
     $featured_image = $article->featured_image;
     if ($featured_image && !Str::startsWith($featured_image, ['http://', 'https://'])) {
         $featured_image = Storage::url($featured_image);
     }
-    $featured_image = $featured_image ?: $placeholder;
+    // We do NOT set a placeholder here anymore, we check existence in the view
 @endphp
 
 <div class="min-h-screen bg-[#0d1117] flex justify-center">
@@ -79,13 +78,19 @@
             <!-- Hero Area -->
             <div class="relative w-full aspect-[21/9] rounded-[2rem] overflow-hidden mb-10 border border-white/5 group">
                  @if($featured_image)
-                    <img src="{{ $featured_image }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover group-hover:scale-105 transition duration-1000">
+                    <img src="{{ $featured_image }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-1000">
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-[#0d1117]/80 to-transparent"></div>
+                 @else
+                    <!-- Professional Fallback Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-[#161b22] via-[#0d1117] to-black"></div>
+                    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
+                    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] -mr-32 -mt-32"></div>
+                    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[120px] -ml-32 -mb-32"></div>
                  @endif
-                 <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] to-transparent opacity-80"></div>
                  
-                 <div class="absolute bottom-0 left-0 p-10 w-full">
+                 <div class="absolute bottom-0 left-0 p-10 w-full z-10">
                      @if($article->term?->category_type)
-                     <span class="px-3 py-1 bg-blue-400 text-[#0d1117] rounded-lg text-[10px] font-black uppercase tracking-widest inline-block mb-4">
+                     <span class="px-3 py-1 bg-white/10 backdrop-blur-md border border-white/10 text-white rounded-lg text-[10px] font-black uppercase tracking-widest inline-block mb-4">
                         {{ strtoupper($article->term->category_type) }}
                     </span>
                     @endif
@@ -98,13 +103,13 @@
                         <p class="text-blue-400 font-mono text-xl mb-6">{{ $article->term->phonetic }}</p>
                     @endif
 
-                    <div class="flex items-center gap-6 text-xs font-bold text-white/60">
+                    <div class="flex items-center gap-6 text-xs font-bold text-white/50 uppercase tracking-wider">
                          @if($article->term?->origin_language)
                          <div class="flex items-center gap-2">
-                            <span>Origin: {{ $article->term->origin_language }}</span>
+                            <span>Origin: <span class="text-white">{{ $article->term->origin_language }}</span></span>
                          </div>
                          @endif
-                         <span>Views: {{ number_format($article->view_count ?? 0) }}</span>
+                         <span>Views: <span class="text-white">{{ number_format($article->view_count ?? 0) }}</span></span>
                     </div>
                  </div>
             </div>
@@ -114,9 +119,12 @@
                 <div class="flex-1 min-w-0 space-y-12">
                      <article class="prose prose-invert prose-lg max-w-none">
                         @if($summary)
-                            <div class="mb-10 p-8 bg-blue-400/5 border border-blue-400/20 rounded-[20px]">
-                                <div class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Definition Snapshot</div>
-                                <p class="text-white text-lg leading-relaxed m-0 font-medium">{{ $summary }}</p>
+                            <div class="mb-10 p-8 bg-blue-400/5 border border-blue-400/20 rounded-[20px] relative overflow-hidden">
+                                <div class="absolute top-0 right-0 w-32 h-32 bg-blue-400/5 rounded-full blur-2xl -mr-10 -mt-10"></div>
+                                <div class="relative z-10">
+                                    <div class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Definition Snapshot</div>
+                                    <p class="text-white text-lg leading-relaxed m-0 font-medium">{{ $summary }}</p>
+                                </div>
                             </div>
                         @endif
                         
@@ -167,10 +175,8 @@
                     @endif
 
                     <!-- Actions -->
-                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6">
-                         <div class="space-y-3">
-                            <livewire:article.bookmark-button :article="$article" />
-                         </div>
+                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6 flex flex-col gap-4">
+                        <div><livewire:article.bookmark-button :article="$article" /></div>
                     </div>
 
                     <!-- Contributor -->

@@ -144,17 +144,15 @@
                     </div>
 
                     <!-- Actions -->
-                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6">
-                         <div class="space-y-3">
-                            <livewire:article.bookmark-button :article="$article" />
-                             @auth
-                                @if($article->user_id === auth()->id())
-                                    <a href="{{ route('wiki.edit', $article) }}" class="flex items-center justify-center w-full py-3 rounded-xl border border-white/10 text-xs font-bold text-white uppercase tracking-wider hover:bg-white/5 transition-all">
-                                        Edit Article
-                                    </a>
-                                @endif
-                            @endauth
-                         </div>
+                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6 flex flex-col gap-4">
+                        <div><livewire:article.bookmark-button :article="$article" /></div>
+                         @auth
+                            @if($article->user_id === auth()->id())
+                                <a href="{{ route('wiki.edit', $article) }}" class="flex items-center justify-center w-full py-3 rounded-xl border border-white/10 text-xs font-bold text-white uppercase tracking-wider hover:bg-white/5 transition-all">
+                                    Edit Article
+                                </a>
+                            @endif
+                        @endauth
                     </div>
 
                     <!-- Contributor -->

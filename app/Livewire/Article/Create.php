@@ -12,6 +12,20 @@ use Illuminate\Support\Str;
 class Create extends Component
 {
     use WithFileUploads;
+    
+    public function mount()
+    {
+        if (session()->has('draft')) {
+            $draft = session('draft');
+            $this->title = $draft['title'] ?? '';
+            $this->category = $draft['category'] ?? '';
+            $this->content = $draft['content'] ?? '';
+            
+            if ($this->category) {
+                $this->step = 2;
+            }
+        }
+    }
 
     public $step = 1;
 

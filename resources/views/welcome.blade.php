@@ -199,72 +199,7 @@
         </div>
     </section>
 
-    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 overflow-hidden">
-        <div class="max-w-[1400px] mx-auto px-8">
-            <div class="mb-12 max-w-2xl">
-                <h2 class="section-title mb-2">Discover what's shaping today's music</h2>
-                <p class="section-subtitle">A dynamic, mosaic-style feed designed for effortless exploration.</p>
-            </div>
 
-            {{-- Staggered Masonry Layout - Exact Figma Match --}}
-            <div class="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" style="min-height: 500px;">
-                {{-- HYPERPOP - Top Left --}}
-                <a href="{{ route('wiki.index') }}" class="group relative overflow-hidden rounded-[24px] border border-white/5 bg-[#161b22]/40 backdrop-blur-sm p-8 hover:border-white/10 hover:bg-[#161b22]/60 transition-all duration-300">
-                    <div class="mb-6">
-                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                        </div>
-                    </div>
-                    <h3 class="text-white text-[24px] font-black uppercase tracking-tighter mb-2 group-hover:text-blue-400 transition-colors">HYPERPOP</h3>
-                    <p class="text-white/50 text-[14px] font-medium">+78% growth this week</p>
-                </a>
-
-                {{-- BLINDING LIGHTS - Top Center --}}
-                <a href="{{ route('wiki.index') }}" class="group relative overflow-hidden rounded-[24px] border border-white/5 bg-[#161b22]/40 backdrop-blur-sm p-8 hover:border-white/10 hover:bg-[#161b22]/60 transition-all duration-300">
-                    <div class="mb-6">
-                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-                        </div>
-                    </div>
-                    <h3 class="text-white text-[24px] font-black uppercase tracking-tighter mb-2 group-hover:text-blue-400 transition-colors">BLINDING<br>LIGHTS</h3>
-                    <p class="text-white/50 text-[14px] font-medium">Most excited today</p>
-                </a>
-
-                {{-- EMERGING SUBGENRE - Top Right --}}
-                <a href="{{ route('wiki.index') }}" class="group relative overflow-hidden rounded-[24px] border border-white/5 bg-[#161b22]/40 backdrop-blur-sm p-8 hover:border-white/10 hover:bg-[#161b22]/60 transition-all duration-300">
-                    <div class="mb-6">
-                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                        </div>
-                    </div>
-                    <h3 class="text-white text-[24px] font-black uppercase tracking-tighter mb-2 group-hover:text-blue-400 transition-colors">EMERGING<br>SUBGENRE</h3>
-                    <p class="text-white/50 text-[14px] font-medium">New Remix</p>
-                </a>
-
-                {{-- AFROFUSION - Bottom Left --}}
-                <a href="{{ route('wiki.index') }}" class="group relative overflow-hidden rounded-[24px] border border-white/5 bg-[#161b22]/40 backdrop-blur-sm p-8 hover:border-white/10 hover:bg-[#161b22]/60 transition-all duration-300">
-                    <div class="mb-6">
-                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                        </div>
-                    </div>
-                    <h3 class="text-white text-[24px] font-black uppercase tracking-tighter mb-2 group-hover:text-blue-400 transition-colors">AFROFUSION</h3>
-                    <p class="text-white/50 text-[14px] font-medium">Emerging subgenre</p>
-                </a>
-
-                {{-- BURNA BOY - Bottom Center (Taller) --}}
-                <a href="{{ route('wiki.index') }}" class="group relative overflow-hidden rounded-[24px] border border-white/5 bg-[#161b22]/40 backdrop-blur-sm p-8 hover:border-white/10 hover:bg-[#161b22]/60 transition-all duration-300 lg:row-span-1">
-                    <div class="mb-6">
-                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center">
-                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"/></svg>
-                        </div>
-                    </div>
-                    <h3 class="text-white text-[24px] font-black uppercase tracking-tighter mb-2 group-hover:text-blue-400 transition-colors">BURNA BOY</h3>
-                    <p class="text-white/50 text-[14px] font-medium">#3 Global Momentum</p>
-                </a>
-            </div>
-        </div>
-    </section>
 
     {{-- =========================================
          REAL-TIME MUSIC WEATHER - DYNAMIC RADAR
@@ -575,6 +510,56 @@
                         </a>
                     </div>
                 </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 overflow-hidden">
+        <div class="max-w-[1400px] mx-auto px-8">
+            <div class="mb-12 max-w-2xl">
+                <h2 class="section-title mb-2">Discover what's shaping today's music</h2>
+                <p class="section-subtitle">Real-time trending topics and community favorites.</p>
+            </div>
+
+            {{-- Dynamic Trending Grid --}}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @foreach($trendingArticles as $index => $article)
+                <a href="{{ route('wiki.show', $article->slug) }}" class="group relative overflow-hidden rounded-[24px] border border-white/5 bg-[#161b22]/40 backdrop-blur-sm p-8 hover:border-blue-500/30 hover:bg-[#161b22]/60 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300">
+                    <div class="mb-6 flex justify-between items-start">
+                        <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500 transition-colors">
+                            @if($article->category === 'artist')
+                                <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                            @elseif($article->category === 'song')
+                                <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                            @elseif($article->category === 'genre')
+                                <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                            @else
+                                <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                            @endif
+                        </div>
+                        
+                        <div class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest">
+                            #{{ $index + 1 }} Trending
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-white text-[24px] font-black uppercase tracking-tighter mb-2 group-hover:text-blue-400 transition-colors line-clamp-1">{{ $article->title }}</h3>
+                    <p class="text-white/50 text-[14px] font-medium mb-4 line-clamp-2">
+                        {{ $article->meta_description ?? 'Join the community discussion about ' . $article->title . ' and discover what makes it trend.' }}
+                    </p>
+                    
+                    <div class="flex items-center gap-4 text-white/30 text-[12px] font-bold">
+                        <span class="flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+                            {{ number_format($article->view_count) }}
+                        </span>
+                        <span class="flex items-center gap-1.5 ml-auto text-blue-400">
+                             Explore
+                             <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                        </span>
+                    </div>
+                </a>
                 @endforeach
             </div>
         </div>
