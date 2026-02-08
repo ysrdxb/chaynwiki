@@ -41,6 +41,13 @@
             </div>
         </div>
     </div>
+    <style>
+        .text-gradient {
+            background: linear-gradient(to right, #fff, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
 </div>
 
 @push('scripts')
@@ -110,11 +117,3 @@
     });
 </script>
 @endpush
-
-<style>
-    .text-gradient {
-        background: linear-gradient(to right, #fff, #3b82f6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-</style>
