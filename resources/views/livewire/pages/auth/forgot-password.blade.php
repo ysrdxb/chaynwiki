@@ -38,7 +38,7 @@ new #[Layout('layouts.guest')] class extends Component
 
 <div>
     <h2 class="text-xl font-bold text-white mb-4">Reset your password</h2>
-    <p class="text-sm text-white/50 mb-6">
+    <p class="text-sm text-white/50 mb-6 font-medium">
         Forgot your password? Enter your email and we’ll send a reset link.
     </p>
 
@@ -56,7 +56,7 @@ new #[Layout('layouts.guest')] class extends Component
                 required 
                 autofocus
                 placeholder="Enter Email Address"
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-[#64748b] focus:border-[#38bdf8] focus:ring-2 focus:ring-[#38bdf8]/20 transition-all font-medium"
+                class="block w-full px-4 py-3.5 bg-[#161b22] border border-white/5 rounded-xl text-white placeholder-white/40 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
             >
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
@@ -65,7 +65,7 @@ new #[Layout('layouts.guest')] class extends Component
             type="submit" 
             wire:loading.attr="disabled"
             wire:target="sendPasswordResetLink"
-            class="w-full flex items-center justify-center gap-2 bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#0a0e14] font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#38bdf8]/25 disabled:opacity-60 disabled:cursor-not-allowed"
+            class="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-900/20 disabled:opacity-60 disabled:cursor-not-allowed"
         >
             <span wire:loading.remove wire:target="sendPasswordResetLink" class="flex items-center gap-2">
                 Email reset link
@@ -83,9 +83,9 @@ new #[Layout('layouts.guest')] class extends Component
         </button>
     </form>
 
-    <p class="mt-8 text-center text-[#64748b]">
+    <p class="mt-8 text-center text-white/40">
         Remembered it?
-        <a href="{{ route('login') }}" wire:navigate class="text-white font-semibold hover:text-[#38bdf8] transition-colors">
+        <a href="{{ route('login') }}" wire:navigate class="text-white font-semibold hover:text-blue-400 transition-colors">
             Log in
         </a>
     </p>

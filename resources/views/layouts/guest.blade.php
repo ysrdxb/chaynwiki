@@ -1,22 +1,22 @@
 <x-master-layout>
     <div class="min-h-screen flex" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 600)">
         <!-- Left Panel - Form -->
-        <div class="flex-1 flex flex-col justify-center px-8 md:px-16 lg:px-24 py-12 bg-[#0a0e14]">
+        <div class="flex-1 flex flex-col justify-center px-8 md:px-16 lg:px-24 py-12 bg-[#0d1117]">
             <div class="max-w-md w-full mx-auto">
                 <!-- Logo -->
                 <a href="/" class="inline-flex items-center gap-3 mb-12">
-                    <div class="w-8 h-8 bg-gradient-to-br from-[#38bdf8] to-[#a78bfa] rounded-lg flex items-center justify-center">
-                        <span class="text-[#0a0e14] font-bold text-sm">C</span>
+                    <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center shadow-lg shadow-blue-900/20">
+                        <span class="text-white font-bold text-sm">C</span>
                     </div>
                     <span class="text-xl font-bold text-white tracking-tight">CHAYNWIKI</span>
                 </a>
 
                 <!-- Welcome Text -->
-                <h1 class="text-4xl md:text-5xl font-bold text-white mb-3 leading-tight">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-3 leading-tight tracking-tight">
                     WELCOME BACK<br>
-                    <span class="text-[#38bdf8]">TO CHAYNWIKI</span>
+                    <span class="text-blue-500">TO CHAYNWIKI</span>
                 </h1>
-                <p class="text-[#64748b] mb-10">
+                <p class="text-white/40 mb-10 font-medium">
                     Your gateway to contributing and exploring the world of music knowledge.
                 </p>
 
@@ -59,41 +59,41 @@
         </div>
 
         <!-- Right Panel - Decorative Image -->
-        <div class="hidden lg:block w-1/2 relative overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-br from-[#0f1419] to-[#0a0e14]"></div>
+        <div class="hidden lg:block w-1/2 relative overflow-hidden bg-[#0d1117]">
+            <div class="absolute inset-0 bg-gradient-to-br from-[#0d1117] to-[#161b22]"></div>
             <!-- Vinyl Record Image -->
             <img 
                 src="https://images.unsplash.com/photo-1461784180009-21121b2f204c?w=1200&q=80" 
                 alt="Vinyl Record" 
-                class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-luminosity"
+                class="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-overlay grayscale-[0.2]"
                 loading="lazy"
             >
             <!-- Gradient Overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0e14] via-transparent to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-r from-[#0a0e14] via-transparent to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#0d1117] via-transparent to-transparent"></div>
             
             <!-- Floating Stats -->
             <div class="absolute bottom-16 left-16 right-16 space-y-4">
                 <div class="flex items-center gap-4" x-show="loaded" x-transition.delay.200ms>
-                    <div class="w-12 h-12 rounded-xl bg-[#38bdf8]/20 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-[#38bdf8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center border border-white/5">
+                        <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
                         </svg>
                     </div>
                     <div>
                         <div class="text-2xl font-bold text-white">10,000+</div>
-                        <div class="text-sm text-[#64748b]">Music Articles</div>
+                        <div class="text-sm text-white/40 font-medium">Music Articles</div>
                     </div>
                 </div>
                 <div class="flex items-center gap-4" x-show="loaded" x-transition.delay.400ms>
-                    <div class="w-12 h-12 rounded-xl bg-[#a78bfa]/20 flex items-center justify-center">
-                        <svg class="w-6 h-6 text-[#a78bfa]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center border border-white/5">
+                        <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                         </svg>
                     </div>
                     <div>
                         <div class="text-2xl font-bold text-white">5,000+</div>
-                        <div class="text-sm text-[#64748b]">Contributors</div>
+                        <div class="text-sm text-white/40 font-medium">Contributors</div>
                     </div>
                 </div>
             </div>

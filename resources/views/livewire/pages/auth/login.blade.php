@@ -49,7 +49,7 @@ new #[Layout('layouts.guest')] class extends Component
                 autofocus 
                 autocomplete="username"
                 placeholder="Enter Email Address"
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-[#64748b] focus:border-[#38bdf8] focus:ring-2 focus:ring-[#38bdf8]/20 transition-all font-medium"
+                class="block w-full px-4 py-3.5 bg-[#161b22] border border-white/5 rounded-xl text-white placeholder-white/40 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
             >
             <x-input-error :messages="$errors->get('form.email')" class="mt-2" />
         </div>
@@ -65,7 +65,7 @@ new #[Layout('layouts.guest')] class extends Component
                 required 
                 autocomplete="current-password"
                 placeholder="Enter your Password"
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-[#64748b] focus:border-[#38bdf8] focus:ring-2 focus:ring-[#38bdf8]/20 transition-all font-medium"
+                class="block w-full px-4 py-3.5 bg-[#161b22] border border-white/5 rounded-xl text-white placeholder-white/40 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
             >
             <x-input-error :messages="$errors->get('form.password')" class="mt-2" />
         </div>
@@ -78,13 +78,13 @@ new #[Layout('layouts.guest')] class extends Component
                     id="remember" 
                     type="checkbox" 
                     name="remember"
-                    class="w-4 h-4 rounded bg-white/5 border-white/10 text-[#38bdf8] focus:ring-[#38bdf8]"
+                    class="w-4 h-4 rounded bg-[#161b22] border-white/10 text-blue-500 focus:ring-blue-500"
                 >
-                <span class="text-sm text-[#64748b]">Remember Me</span>
+                <span class="text-sm text-white/40">Remember Me</span>
             </label>
 
             @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}" wire:navigate class="text-sm text-[#38bdf8] hover:text-[#7dd3fc] transition-colors">
+                <a href="{{ route('password.request') }}" wire:navigate class="text-sm text-blue-400 hover:text-blue-300 transition-colors">
                     Forgot Password?
                 </a>
             @endif
@@ -95,7 +95,7 @@ new #[Layout('layouts.guest')] class extends Component
             type="submit" 
             wire:loading.attr="disabled"
             wire:target="login"
-            class="w-full flex items-center justify-center gap-2 bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#0a0e14] font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#38bdf8]/25 disabled:opacity-60 disabled:cursor-not-allowed"
+            class="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-900/20 disabled:opacity-60 disabled:cursor-not-allowed"
         >
             <span wire:loading.remove wire:target="login" class="flex items-center gap-2">
                 Login
@@ -114,9 +114,9 @@ new #[Layout('layouts.guest')] class extends Component
     </form>
 
     <!-- Sign Up Link -->
-    <p class="mt-8 text-center text-[#64748b]">
+    <p class="mt-8 text-center text-white/40">
         Don't have an account? 
-        <a href="{{ route('register') }}" wire:navigate class="text-white font-semibold hover:text-[#38bdf8] transition-colors">
+        <a href="{{ route('register') }}" wire:navigate class="text-white font-semibold hover:text-blue-400 transition-colors">
             Sign up now
         </a>
     </p>

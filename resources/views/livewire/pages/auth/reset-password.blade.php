@@ -71,7 +71,7 @@ new #[Layout('layouts.guest')] class extends Component
 
 <div>
     <h2 class="text-xl font-bold text-white mb-4">Set a new password</h2>
-    <p class="text-sm text-white/50 mb-6">Choose a strong password you haven’t used before.</p>
+    <p class="text-sm text-white/50 mb-6 font-medium">Choose a strong password you haven’t used before.</p>
 
     <form wire:submit="resetPassword" class="space-y-6">
         <div>
@@ -79,7 +79,7 @@ new #[Layout('layouts.guest')] class extends Component
             <input 
                 wire:model="email" 
                 id="email" 
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-[#64748b] focus:border-[#38bdf8] focus:ring-2 focus:ring-[#38bdf8]/20 transition-all font-medium"
+                class="block w-full px-4 py-3.5 bg-[#161b22] border border-white/5 rounded-xl text-white placeholder-white/40 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
                 type="email" 
                 name="email" 
                 required 
@@ -95,7 +95,7 @@ new #[Layout('layouts.guest')] class extends Component
             <input 
                 wire:model="password" 
                 id="password" 
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-[#64748b] focus:border-[#38bdf8] focus:ring-2 focus:ring-[#38bdf8]/20 transition-all font-medium"
+                class="block w-full px-4 py-3.5 bg-[#161b22] border border-white/5 rounded-xl text-white placeholder-white/40 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
                 type="password" 
                 name="password" 
                 required 
@@ -110,7 +110,7 @@ new #[Layout('layouts.guest')] class extends Component
             <input 
                 wire:model="password_confirmation" 
                 id="password_confirmation" 
-                class="block w-full px-4 py-3.5 bg-white/5 border border-white/10 rounded-xl text-white placeholder-[#64748b] focus:border-[#38bdf8] focus:ring-2 focus:ring-[#38bdf8]/20 transition-all font-medium"
+                class="block w-full px-4 py-3.5 bg-[#161b22] border border-white/5 rounded-xl text-white placeholder-white/40 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium"
                 type="password"
                 name="password_confirmation" 
                 required 
@@ -124,7 +124,7 @@ new #[Layout('layouts.guest')] class extends Component
             type="submit" 
             wire:loading.attr="disabled" 
             wire:target="resetPassword"
-            class="w-full flex items-center justify-center gap-2 bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#0a0e14] font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#38bdf8]/25 disabled:opacity-60 disabled:cursor-not-allowed"
+            class="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-900/20 disabled:opacity-60 disabled:cursor-not-allowed"
         >
             <span wire:loading.remove wire:target="resetPassword" class="flex items-center gap-2">
                 Reset Password

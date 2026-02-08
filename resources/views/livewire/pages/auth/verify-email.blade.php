@@ -37,12 +37,12 @@ new #[Layout('layouts.guest')] class extends Component
 
 <div>
     <h2 class="text-xl font-bold text-white mb-4">Verify your email</h2>
-    <p class="text-sm text-white/50 mb-6">
+    <p class="text-sm text-white/50 mb-6 font-medium">
         We sent a verification link to your email. Click it to activate your account.
     </p>
 
     @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 text-sm text-green-400">
+        <div class="mb-4 text-sm text-green-400 font-medium bg-green-400/10 px-4 py-3 rounded-xl border border-green-400/20">
             A new verification link has been sent to your email address.
         </div>
     @endif
@@ -53,7 +53,7 @@ new #[Layout('layouts.guest')] class extends Component
             wire:click="sendVerification"
             wire:loading.attr="disabled"
             wire:target="sendVerification"
-            class="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#38bdf8] hover:bg-[#7dd3fc] text-[#0a0e14] font-bold py-3.5 px-6 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-[#38bdf8]/25 disabled:opacity-60 disabled:cursor-not-allowed"
+            class="w-full sm:w-auto flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3.5 px-6 rounded-full transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-blue-900/20 disabled:opacity-60 disabled:cursor-not-allowed"
         >
             <span wire:loading.remove wire:target="sendVerification" class="flex items-center gap-2">
                 Resend verification email
@@ -75,7 +75,7 @@ new #[Layout('layouts.guest')] class extends Component
             wire:click="logout"
             wire:loading.attr="disabled"
             wire:target="logout"
-            class="w-full sm:w-auto px-6 py-3.5 rounded-full border border-white/10 text-white/70 text-sm font-semibold hover:text-white hover:border-white/20 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+            class="w-full sm:w-auto px-6 py-3.5 rounded-full border border-white/10 text-white/60 text-sm font-bold hover:text-white hover:border-white/20 hover:bg-white/5 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
         >
             <span wire:loading.remove wire:target="logout">Log out</span>
             <span wire:loading wire:target="logout">Signing out...</span>
