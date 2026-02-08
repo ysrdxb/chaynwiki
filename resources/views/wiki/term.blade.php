@@ -4,7 +4,7 @@
 
 @php
     $seoDescription = $summary ?? Str::limit(strip_tags((string) $article->content), 160);
-    $seoImage = $article->getRawOriginal('featured_image');
+    $seoImage = $article->featured_image;
     if ($seoImage && !Str::startsWith($seoImage, ['http://', 'https://'])) {
         $seoImage = Storage::url($seoImage);
     }
@@ -17,173 +17,188 @@
 @section('og_type', 'article')
 
 @section('content')
-    @php
-        $featured_image = $article->getRawOriginal('featured_image');
-    @endphp
+@php
+    $categories = [
+        'artist' => ['label' => 'Artists', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>'],
+        'song' => ['label' => 'Songs', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>'],
+        'genre' => ['label' => 'Genres', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>'],
+        'playlist' => ['label' => 'Playlists', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>'],
+        'term' => ['label' => 'Terminology', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>'],
+    ];
 
-    <div x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
-        <!-- Actual Content -->
-        <div x-show="loaded" x-transition:enter="transition duration-500">
-            <!-- HERO SECTION -->
-            <div class="relative pt-32 pb-12 bg-primary section-divider overflow-hidden">
-                <div class="absolute inset-0 z-0">
-                    @if($featured_image)
-                        <img src="{{ $featured_image }}" class="w-full h-full object-cover grayscale opacity-10 blur-xl scale-125">
-                    @endif
-                    <div class="absolute inset-0 bg-primary/90"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/80 to-transparent"></div>
-                </div>
-                
-                <div class="relative z-10 max-w-[1200px] mx-auto px-8">
-                    <div class="flex flex-col lg:flex-row gap-10 items-end">
-                        <div class="flex-1">
-                            <nav class="flex items-center gap-2 text-[9px] font-black text-white/20 uppercase tracking-[0.2em] mb-6">
-                                <a href="{{ route('home') }}" class="hover:text-[#38bdf8]">Home</a>
-                                <span>/</span>
-                                <a href="{{ route('wiki.index', ['category' => 'term']) }}" class="hover:text-[#38bdf8]">Glossary</a>
-                                <span>/</span>
-                                @if($article->term?->category_type)
-                                    <span class="text-[#38bdf8]">{{ $article->term->category_type }}</span>
-                                @else
-                                    <span class="text-[#38bdf8]">Term</span>
-                                @endif
-                            </nav>
+    $placeholder = 'https://images.unsplash.com/photo-1514320299584-4bd06b02a04e?auto=format&fit=crop&q=80&w=1200';
+    
+    $featured_image = $article->featured_image;
+    if ($featured_image && !Str::startsWith($featured_image, ['http://', 'https://'])) {
+        $featured_image = Storage::url($featured_image);
+    }
+    $featured_image = $featured_image ?: $placeholder;
+@endphp
 
-                            <h1 class="text-4xl lg:text-7xl font-black text-white italic uppercase tracking-tighter mb-4 leading-none">
-                                {{ $article->title }}
-                            </h1>
-                            
-                            @if($article->term->phonetic)
-                                <p class="text-[#38bdf8] font-mono text-lg mb-6">{{ $article->term->phonetic }}</p>
-                            @endif
+<div class="min-h-screen bg-[#0d1117] flex justify-center">
+    <div class="max-w-[1400px] w-full px-8 flex items-start gap-12 pt-32 pb-16">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="hidden lg:block w-64 sticky top-32 shrink-0 space-y-2">
+            <a href="{{ route('home') }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold text-white/50 hover:text-white hover:bg-white/5 transition-all">
+                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                Home
+            </a>
 
-                            <div class="flex flex-wrap items-center gap-5 text-[10px] font-black text-white/20 uppercase tracking-widest mt-8">
-                                @if($article->term?->origin_language)
-                                <div class="flex items-center gap-2">
-                                    <span class="w-1 h-1 rounded-full bg-[#38bdf8]"></span>
-                                    Origin: {{ $article->term->origin_language }}
-                                </div>
-                                @endif
-                                <div class="flex items-center gap-2">
-                                    <span class="w-1 h-1 rounded-full bg-white/5"></span>
-                                    {{ number_format($article->view_count ?? 0) }} Views
-                                </div>
-                                @if($article->term?->category_type)
-                                    <div class="px-3 py-1 bg-white/5 rounded-lg border border-white/10 text-white/40">
-                                        {{ strtoupper($article->term->category_type) }}
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
+            <div class="h-px bg-white/5 mx-4 my-2"></div>
+
+            <a href="{{ route('wiki.index') }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold transition-all text-white/50 hover:text-white hover:bg-white/5">
+                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                All Records
+            </a>
+            
+            @foreach($categories as $key => $cat)
+                <a href="{{ route('wiki.index', ['category' => $key]) }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ $key === 'term' ? 'bg-white/5 text-white' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
+                    {{ $cat['label'] }}
+                </a>
+            @endforeach
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 min-w-0">
+             <!-- Top Action Row -->
+             <div class="flex justify-between items-center mb-8">
+                 <!-- Breadcrumbs -->
+                 <nav class="flex items-center gap-2 text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">
+                    <a href="{{ route('wiki.index', ['category' => 'term']) }}" class="hover:text-blue-400 transition-colors">Glossary</a>
+                    <span>/</span>
+                    <span class="text-white">{{ Str::limit($article->title, 30) }}</span>
+                </nav>
+
+                <div class="flex items-center gap-4">
+                    <a href="{{ route('wiki.edit', $article) }}" class="text-xs font-bold text-white/50 hover:text-white uppercase tracking-wider transition-colors">Edit</a>
                 </div>
             </div>
 
-            <!-- MAIN CONTENT AREA -->
-            <section class="bg-primary section-divider">
-                <div class="max-w-[1200px] mx-auto px-8 py-12">
-                    <div class="flex flex-col lg:flex-row gap-12">
-                    <!-- Main Column -->
-                    <div class="flex-1 min-w-0">
-                        <article class="prose prose-invert prose-base max-w-none">
-                            @if($summary)
-                                <div class="mb-10 p-6 bg-secondary border border-white/5 rounded-2xl">
-                                    <div class="text-xs font-semibold text-white/50 uppercase tracking-[0.2em] mb-3">Definition Snapshot</div>
-                                    <p class="text-white/70 text-sm leading-relaxed">{{ $summary }}</p>
-                                </div>
-                            @endif
-                            <h2 class="text-xl font-black text-white italic uppercase tracking-tighter mb-8 flex items-center gap-3">
-                                <span class="w-8 h-px bg-[#38bdf8]"></span>
-                                Definition & Usage
-                            </h2>
-                            <div class="article-content text-slate-300 leading-relaxed text-lg">
-                                {!! Str::markdown($article->content) !!}
-                            </div>
-                        </article>
+            <!-- Hero Area -->
+            <div class="relative w-full aspect-[21/9] rounded-[2rem] overflow-hidden mb-10 border border-white/5 group">
+                 @if($featured_image)
+                    <img src="{{ $featured_image }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover group-hover:scale-105 transition duration-1000">
+                 @endif
+                 <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] to-transparent opacity-80"></div>
+                 
+                 <div class="absolute bottom-0 left-0 p-10 w-full">
+                     @if($article->term?->category_type)
+                     <span class="px-3 py-1 bg-blue-400 text-[#0d1117] rounded-lg text-[10px] font-black uppercase tracking-widest inline-block mb-4">
+                        {{ strtoupper($article->term->category_type) }}
+                    </span>
+                    @endif
+                    
+                    <h1 class="text-5xl lg:text-7xl font-black text-white uppercase tracking-tighter mb-2 leading-none">
+                        {{ $article->title }}
+                    </h1>
+                    
+                    @if($article->term->phonetic)
+                        <p class="text-blue-400 font-mono text-xl mb-6">{{ $article->term->phonetic }}</p>
+                    @endif
 
-                        <section class="mt-16 pt-12 border-t border-white/5">
-                            <livewire:article.comments :article="$article" />
-                        </section>
+                    <div class="flex items-center gap-6 text-xs font-bold text-white/60">
+                         @if($article->term?->origin_language)
+                         <div class="flex items-center gap-2">
+                            <span>Origin: {{ $article->term->origin_language }}</span>
+                         </div>
+                         @endif
+                         <span>Views: {{ number_format($article->view_count ?? 0) }}</span>
                     </div>
+                 </div>
+            </div>
 
-                    <!-- Sidebar -->
-                    <aside class="w-full lg:w-72 space-y-8">
-                        <div class="bg-secondary border border-white/5 p-6 rounded-2xl">
-                            <h3 class="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-4">Quick Facts</h3>
-                            <div class="space-y-3 text-[12px] text-white/60">
-                                <div class="flex items-center justify-between">
-                                    <span>Views</span>
-                                    <span class="text-white font-semibold">{{ number_format($article->view_count ?? 0) }}</span>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <span>Edits</span>
-                                    <span class="text-white font-semibold">{{ number_format($article->revisions_count ?? 0) }}</span>
-                                </div>
-                                @if($article->created_at)
-                                    <div class="flex items-center justify-between">
-                                        <span>Published</span>
-                                        <span class="text-white font-semibold">{{ $article->created_at->format('M d, Y') }}</span>
-                                    </div>
-                                @endif
-                                @if($article->updated_at)
-                                    <div class="flex items-center justify-between">
-                                        <span>Updated</span>
-                                        <span class="text-white font-semibold">{{ $article->updated_at->format('M d, Y') }}</span>
-                                    </div>
-                                @endif
+            <div class="flex flex-col xl:flex-row gap-12">
+                <!-- Article Content -->
+                <div class="flex-1 min-w-0 space-y-12">
+                     <article class="prose prose-invert prose-lg max-w-none">
+                        @if($summary)
+                            <div class="mb-10 p-8 bg-blue-400/5 border border-blue-400/20 rounded-[20px]">
+                                <div class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-3">Definition Snapshot</div>
+                                <p class="text-white text-lg leading-relaxed m-0 font-medium">{{ $summary }}</p>
                             </div>
+                        @endif
+                        
+                        <div class="article-content text-white/70 text-base leading-relaxed">
+                             {!! Str::markdown($article->content) !!}
                         </div>
-                        <div class="bg-secondary border border-white/5 p-8 rounded-2xl relative overflow-hidden group">
-                             <div class="absolute top-0 right-0 w-32 h-32 bg-[#38bdf8]/5 blur-3xl rounded-full -mr-16 -mt-16 group-hover:bg-[#38bdf8]/10 transition-colors"></div>
-                             
-                             <div class="relative z-10">
-                                <h3 class="text-base font-black text-white italic uppercase tracking-tighter mb-6">Archive Protocol</h3>
-                                <div class="flex flex-col gap-3">
-                                    <div>
-                                        <livewire:article.play-button 
-                                            :articleId="$article->id" 
-                                            label="Listen"
-                                            class="w-full py-3.5 bg-[#38bdf8] text-[#0a0e14] rounded-2xl text-[11px] font-semibold uppercase tracking-[0.2em] hover:scale-[1.02] flex items-center justify-center gap-3 shadow-xl shadow-[#38bdf8]/20"
-                                        />
-                                    </div>
-
-                                    <div>
-                                        <x-article.⚡add-to-crate :article="$article" />
-                                    </div>
-
-                                    <div class="flex items-center justify-between p-4 bg-white/[0.02] border border-white/5 rounded-2xl">
-                                        <span class="text-[10px] font-semibold text-white/50 uppercase tracking-widest">Protocol Utility</span>
-                                         <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
-                                    </div>
-                                </div>
-                             </div>
-                        </div>
-
-                        <div class="space-y-4">
-                            <h3 class="text-xs font-semibold text-white/50 uppercase tracking-[0.2em]">Related Terms</h3>
-                            <div class="flex flex-wrap gap-2">
-                                @forelse($article->term->related_terms ?? [] as $related)
-                                    @php
-                                        $relatedArticle = $relatedTermArticles->get($related);
-                                    @endphp
-                                    @if($relatedArticle)
-                                        <a href="{{ route('wiki.show', $relatedArticle->slug) }}" class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] text-white/60 hover:text-[#38bdf8] hover:border-[#38bdf8]/30 transition-all uppercase font-semibold tracking-widest">
-                                            {{ $related }}
-                                        </a>
-                                    @else
-                                        <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-[10px] text-white/40 uppercase font-semibold tracking-widest">
-                                            {{ $related }}
-                                        </span>
-                                    @endif
-                                @empty
-                                    <p class="text-[10px] text-white/10 italic">No linked terms found.</p>
-                                @endforelse
-                            </div>
-                        </div>
-                    </aside>
-                    </div>
+                    </article>
+                    
+                    <section class="border-t border-white/5 pt-10">
+                        <h3 class="text-xl font-bold text-white mb-6">Discussion</h3>
+                        <livewire:article.comments :article="$article" />
+                    </section>
                 </div>
-            </section>
-        </div>
+
+                <!-- Right Sidebar (Relevant Data) -->
+                <aside class="w-full xl:w-80 space-y-6 shrink-0">
+                    <!-- Quick Facts -->
+                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6">
+                        <h3 class="text-xs font-bold text-white/40 uppercase tracking-widest mb-6">Term Info</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between py-2 border-b border-white/5">
+                                <span class="text-sm text-white/50 font-medium">Type</span>
+                                <span class="text-sm text-white font-bold">{{ $article->term->category_type ?? 'Term' }}</span>
+                            </div>
+                            <div class="flex items-center justify-between py-2 border-b border-white/5">
+                                <span class="text-sm text-white/50 font-medium">Published</span>
+                                <span class="text-sm text-white font-bold">{{ optional($article->created_at)->format('M d, Y') }}</span>
+                            </div>
+                             <div class="flex items-center justify-between py-2 border-b border-white/5">
+                                <span class="text-sm text-white/50 font-medium">Views</span>
+                                <span class="text-sm text-white font-bold">{{ number_format($article->view_count) }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Related Terms -->
+                    @if(!empty($article->term->related_terms))
+                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6">
+                        <h3 class="text-xs font-bold text-white/40 uppercase tracking-widest mb-4">Related Terms</h3>
+                        <div class="flex flex-wrap gap-2">
+                            @foreach($article->term->related_terms as $related)
+                                <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-white/70 hover:text-blue-400 hover:border-blue-400/30 transition-all cursor-pointer">
+                                    {{ $related }}
+                                </span>
+                            @endforeach
+                        </div>
+                    </div>
+                    @endif
+
+                    <!-- Actions -->
+                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6">
+                         <div class="space-y-3">
+                            <livewire:article.bookmark-button :article="$article" />
+                         </div>
+                    </div>
+
+                    <!-- Contributor -->
+                    @if($article->user)
+                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6">
+                        <h3 class="text-xs font-bold text-white/40 uppercase tracking-widest mb-4">Authored By</h3>
+                        <a href="{{ route('profile', $article->user->username) }}" class="flex items-center gap-4 group">
+                            <div class="w-10 h-10 rounded-full overflow-hidden border border-white/10">
+                                @if($article->user->avatar)
+                                    <img src="{{ $article->user->avatar }}" class="w-full h-full object-cover">
+                                @else
+                                    <div class="w-full h-full bg-blue-400/20 flex items-center justify-center text-blue-400 font-bold">
+                                        {{ strtoupper(substr($article->user->name, 0, 1)) }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
+                                <p class="text-xs text-white/30">{{ optional($article->created_at)->format('M Y') }}</p>
+                            </div>
+                        </a>
+                    </div>
+                    @endif
+
+                </aside>
+            </div>
+
+        </main>
     </div>
+</div>
 @endsection
