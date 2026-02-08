@@ -103,12 +103,12 @@
                 <h2 class="text-2xl font-black text-white uppercase tracking-tighter">Topics Added by {{ $user->name }}</h2>
                 
                 <!-- Navigation Arrows -->
-                <div class="flex items-center gap-4">
-                    <button class="w-12 h-12 rounded-full bg-white hover:bg-gray-100 flex items-center justify-center transition-all text-[#0d1117] shadow-xl shadow-white/5 group">
-                        <svg class="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>
+                <div class="flex items-center gap-2">
+                    <button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-white/20 hover:bg-white/5 transition-all text-white/40 hover:text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                     </button>
-                    <button class="w-12 h-12 rounded-full bg-white hover:bg-gray-100 flex items-center justify-center transition-all text-[#0d1117] shadow-xl shadow-white/5 group">
-                        <svg class="w-6 h-6 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
+                    <button class="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center hover:border-white/20 hover:bg-white/5 transition-all text-white/40 hover:text-white">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </button>
                 </div>
             </div>

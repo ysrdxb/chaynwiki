@@ -45,9 +45,14 @@ Route::get('/wiki/{article:slug}/edit', \App\Livewire\Article\Edit::class)
     ->middleware(['auth'])
     ->name('wiki.edit');
 
-Route::get('/admin', function () {
+Route::middleware(['auth', 'can:admin'])->get('/admin', function () {
     return redirect()->route('admin.dashboard');
-})->middleware(['auth', 'can:admin']);
+});
+
+// Helper for users who type /admin/login
+Route::get('/admin/login', function () {
+    return redirect()->route('login');
+});
 
 Route::get('/user/{username}', function ($username) {
     $user = \App\Models\User::all()->first(fn($u) => \Illuminate\Support\Str::slug($u->name) === $username);

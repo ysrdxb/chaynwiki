@@ -52,10 +52,10 @@
                     <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">{{ $article->user->name ?? 'GUEST' }}</span>
                 </div>
                 
-                <div class="flex items-center gap-2 text-white/40 group-hover:text-blue-400 transition-colors">
-                    <span class="text-[8px] font-bold uppercase tracking-[0.2em]">View</span>
-                    <div class="w-5 h-5 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-[#3b82f6] group-hover:text-white transition-all">
-                        <svg class="w-3 h-3 translate-x-px" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                <div class="flex items-center gap-3 bg-white px-4 py-1.5 rounded-full shadow-lg shadow-white/5 group/btn">
+                    <span class="text-[#0d1117] text-[10px] font-black uppercase tracking-widest">View</span>
+                    <div class="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center group-hover/btn:scale-110 transition-transform">
+                        <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </div>
                 </div>
             </div>
