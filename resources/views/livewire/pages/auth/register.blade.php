@@ -40,87 +40,105 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <h2 class="text-xl font-bold text-white mb-8 tracking-tight">Create an Account</h2>
+    <h2 class="text-[32px] font-black text-white uppercase tracking-tightest mb-12 italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <span class="text-blue-500">Register</span> / Node Discovery
+    </h2>
     
     <form wire:submit="register" class="space-y-5">
         <!-- Full Name -->
-        <div>
-            <label for="name" class="block text-sm font-bold text-white mb-2 tracking-wide">Full Name</label>
-            <input 
-                wire:model="name" 
-                id="name" 
-                type="text" 
-                name="name" 
-                required 
-                autofocus 
-                autocomplete="name"
-                placeholder="Enter your full name"
-                class="block w-full px-5 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white placeholder-white/20 focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium outline-none"
-            >
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        <div class="space-y-3">
+            <label for="name" class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] ml-4">Full Name</label>
+            <div class="relative group">
+                <input 
+                    wire:model="name" 
+                    id="name" 
+                    type="text" 
+                    name="name" 
+                    required 
+                    autofocus 
+                    autocomplete="name"
+                    placeholder="Enter your designated name"
+                    class="block w-full px-8 py-5 bg-white/[0.03] border border-white/5 rounded-[2rem] text-white text-[13px] font-black uppercase tracking-widest placeholder-white/10 focus:border-blue-500/30 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-blue-500/5 transition-all shadow-2xl"
+                >
+                <div class="absolute right-6 top-1/2 -translate-y-1/2 text-white/10 group-focus-within:text-blue-500 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                </div>
+            </div>
+            <x-input-error :messages="$errors->get('name')" class="mt-2 ml-4" />
         </div>
 
         <!-- Email Address -->
-        <div>
-            <label for="email" class="block text-sm font-bold text-white mb-2 tracking-wide">Email</label>
-            <input 
-                wire:model="email" 
-                id="email" 
-                type="email" 
-                name="email" 
-                required 
-                autocomplete="username"
-                placeholder="Enter Email Address"
-                class="block w-full px-5 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white placeholder-white/20 focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium outline-none"
-            >
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="space-y-3">
+            <label for="email" class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] ml-4">Access Identifier</label>
+            <div class="relative group">
+                <input 
+                    wire:model="email" 
+                    id="email" 
+                    type="email" 
+                    name="email" 
+                    required 
+                    autocomplete="username"
+                    placeholder="Enter node identifier..."
+                    class="block w-full px-8 py-5 bg-white/[0.03] border border-white/5 rounded-[2rem] text-white text-[13px] font-black uppercase tracking-widest placeholder-white/10 focus:border-blue-500/30 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-blue-500/5 transition-all shadow-2xl"
+                >
+                <div class="absolute right-6 top-1/2 -translate-y-1/2 text-white/10 group-focus-within:text-blue-500 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+            </div>
+            <x-input-error :messages="$errors->get('email')" class="mt-2 ml-4" />
         </div>
 
-        <!-- Password -->
-        <div>
-            <label for="password" class="block text-sm font-bold text-white mb-2 tracking-wide">Password</label>
-            <input 
-                wire:model="password" 
-                id="password" 
-                type="password"
-                name="password"
-                required 
-                autocomplete="new-password"
-                placeholder="Enter your Password"
-                class="block w-full px-5 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white placeholder-white/20 focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium outline-none"
-            >
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Password -->
+            <div class="space-y-3">
+                <label for="password" class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] ml-4">Secure Key</label>
+                <div class="relative group">
+                    <input 
+                        wire:model="password" 
+                        id="password" 
+                        type="password"
+                        name="password"
+                        required 
+                        autocomplete="new-password"
+                        placeholder="Create key..."
+                        class="block w-full px-8 py-5 bg-white/[0.03] border border-white/5 rounded-[2rem] text-white text-[13px] font-black uppercase tracking-widest placeholder-white/10 focus:border-blue-500/30 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-blue-500/5 transition-all shadow-2xl"
+                    >
+                </div>
+                <x-input-error :messages="$errors->get('password')" class="mt-2 ml-4" />
+            </div>
 
-        <!-- Confirm Password -->
-        <div>
-            <label for="password_confirmation" class="block text-sm font-bold text-white mb-2 tracking-wide">Confirm Password</label>
-            <input 
-                wire:model="password_confirmation" 
-                id="password_confirmation" 
-                type="password"
-                name="password_confirmation" 
-                required 
-                autocomplete="new-password"
-                placeholder="Retype your Password"
-                class="block w-full px-5 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white placeholder-white/20 focus:border-blue-500/50 focus:ring-4 focus:ring-blue-500/10 transition-all font-medium outline-none"
-            >
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+            <!-- Confirm Password -->
+            <div class="space-y-3">
+                <label for="password_confirmation" class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] ml-4">Verify Key</label>
+                <div class="relative group">
+                    <input 
+                        wire:model="password_confirmation" 
+                        id="password_confirmation" 
+                        type="password"
+                        name="password_confirmation" 
+                        required 
+                        autocomplete="new-password"
+                        placeholder="Retype key..."
+                        class="block w-full px-8 py-5 bg-white/[0.03] border border-white/5 rounded-[2rem] text-white text-[13px] font-black uppercase tracking-widest placeholder-white/10 focus:border-blue-500/30 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-blue-500/5 transition-all shadow-2xl"
+                    >
+                </div>
+                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 ml-4" />
+            </div>
         </div>
 
         <!-- Terms Checkbox -->
-        <div>
-            <label for="agree_terms" class="flex items-center gap-2 cursor-pointer group">
+        <div class="px-2">
+            <label for="agree_terms" class="flex items-center gap-3 cursor-pointer group">
                 <input 
                     wire:model="agree_terms" 
                     id="agree_terms" 
                     type="checkbox" 
                     name="agree_terms"
-                    class="peer w-5 h-5 rounded-md bg-white/5 border-white/10 text-blue-600 focus:ring-offset-0 focus:ring-blue-500/20 transition-all"
+                    class="w-5 h-5 border-white/10 bg-white/5 rounded-lg text-blue-500 focus:ring-blue-500/20 focus:ring-offset-0 transition-all"
                 >
-                <span class="text-sm text-white/40 font-medium group-hover:text-white/60 transition-colors">I agree all terms and conditions</span>
+                <span class="text-[11px] font-black text-white/20 uppercase tracking-widest group-hover:text-white/40 transition-colors">Node Operational Protocols Accepted</span>
             </label>
-            <x-input-error :messages="$errors->get('agree_terms')" class="mt-2" />
+            <x-input-error :messages="$errors->get('agree_terms')" class="mt-2 ml-4" />
         </div>
 
         <!-- Submit Button -->
@@ -128,32 +146,30 @@ new #[Layout('layouts.guest')] class extends Component
             type="submit" 
             wire:loading.attr="disabled"
             wire:target="register"
-            class="group w-full flex items-center justify-center bg-white hover:bg-gray-100 text-[#0d1117] font-black py-1.5 px-1.5 rounded-full transition-all hover:scale-[1.01] active:scale-[0.99] shadow-xl shadow-black/20 disabled:opacity-70 disabled:cursor-not-allowed"
+            class="btn-figma-primary !w-full !py-5 !rounded-[2rem] shadow-2xl shadow-blue-500/10"
         >
-            <div class="flex-1 py-3 px-6 flex items-center justify-center gap-2">
-                <span wire:loading.remove wire:target="register">Sign Up</span>
-                <span wire:loading wire:target="register" class="flex items-center gap-2">
-                    <svg class="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
-                        <path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4" stroke-linecap="round"></path>
-                    </svg>
-                    Creating...
-                </span>
-            </div>
+            <span wire:loading.remove wire:target="register">Initiate Registration</span>
+            <span wire:loading wire:target="register" class="flex items-center gap-2">
+                <svg class="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
+                    <path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4" stroke-linecap="round"></path>
+                </svg>
+                Creating Node...
+            </span>
             
-            <div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center shrink-0 shadow-inner">
-                <svg class="w-5 h-5 text-white transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                 </svg>
             </div>
         </button>
     </form>
 
     <!-- Login Link -->
-    <p class="mt-8 text-center text-white/40 font-medium tracking-tight">
-        Already have an account? 
-        <a href="{{ route('login') }}" wire:navigate class="text-white font-black hover:text-blue-500 transition-colors border-b-2 border-white/10 hover:border-blue-500/50 pb-0.5">
-            Login now
+    <p class="mt-12 text-center text-white/20 text-[11px] font-black uppercase tracking-[0.3em]">
+        Already indexed? 
+        <a href="{{ route('login') }}" wire:navigate class="text-blue-500 hover:text-white transition-colors border-b border-blue-500/30 hover:border-white pb-1 ml-2">
+            Access Node
         </a>
     </p>
 </div>

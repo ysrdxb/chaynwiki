@@ -16,46 +16,54 @@
 @endphp
 
 <a href="{{ route('wiki.show', $article->slug) }}" class="group block h-full">
-    <div class="h-full flex flex-col bg-[#161b22]/40 border border-white/5 rounded-[20px] p-4 hover:border-white/10 hover:bg-[#161b22]/60 transition-all duration-300 shadow-xl group-hover:-translate-y-1">
+    <div class="h-full flex flex-col card-premium-unified !p-0 border border-white/5 hover:border-blue-500/30 transition-all duration-500 shadow-3xl bg-[#161b22]/40 backdrop-blur-sm">
         <!-- Image Area -->
-        <div class="relative aspect-[16/10] rounded-xl overflow-hidden mb-5">
+        <div class="relative aspect-[16/10] overflow-hidden group/img">
             <img
                 src="{{ $featured_image }}"
                 onerror="this.onerror=null;this.src='{{ $placeholder }}';"
-                class="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                class="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-1000"
                 alt="{{ $article->title }}">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent opacity-80"></div>
             
-            <div class="absolute top-3 left-3">
-                <span class="px-2 py-1 bg-[#3b82f6] text-white text-[8px] font-black uppercase tracking-[0.2em] rounded-lg shadow-lg">
+            <div class="absolute top-4 left-4">
+                <span class="px-3 py-1 bg-blue-500 text-[#0d1117] text-[9px] font-black uppercase tracking-[0.2em] rounded-lg shadow-2xl">
                     {{ $article->category }}
                 </span>
+            </div>
+
+            <div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center">
+                 <div class="w-12 h-12 rounded-full bg-white text-navy-900 flex items-center justify-center scale-75 opacity-0 group-hover/img:scale-100 group-hover/img:opacity-100 transition-all duration-500 shadow-2xl">
+                     <svg class="w-5 h-5 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                 </div>
             </div>
         </div>
 
         <!-- Content Area -->
-        <div class="flex-1 flex flex-col px-1">
-            <h3 class="text-white font-black text-[15px] leading-tight mb-2 group-hover:text-blue-400 transition-colors line-clamp-2 italic uppercase tracking-tighter">
+        <div class="flex-1 flex flex-col p-6">
+            <h3 class="text-white font-black text-[18px] leading-[1.1] mb-3 group-hover:text-blue-500 transition-colors line-clamp-2 italic uppercase tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                 {{ $article->title }}
             </h3>
             
-            <p class="text-white/50 text-[10px] line-clamp-2 mb-6 font-medium leading-loose">
-                {{ Str::limit(strip_tags($article->content), 70) }}
+            <p class="text-white/30 text-[11px] line-clamp-2 mb-8 font-black uppercase tracking-tightest leading-relaxed">
+                {{ Str::limit(strip_tags($article->content), 60) }}
             </p>
 
             <!-- Footer -->
-            <div class="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-6 h-6 rounded-lg bg-[#3b82f6]/10 border border-[#3b82f6]/20 flex items-center justify-center">
-                        <span class="text-[9px] font-black text-[#3b82f6]">{{ strtoupper(substr($article->user->name ?? 'A', 0, 1)) }}</span>
+            <div class="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                        <span class="text-[10px] font-black text-blue-500">{{ strtoupper(substr($article->user->name ?? 'A', 0, 1)) }}</span>
                     </div>
-                    <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">{{ $article->user->name ?? 'GUEST' }}</span>
+                    <div class="flex flex-col">
+                        <span class="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] leading-none mb-1">Archivist</span>
+                        <span class="text-[11px] font-black text-white/50 uppercase tracking-tight leading-none truncate max-w-[80px]">{{ $article->user->name ?? 'GUEST' }}</span>
+                    </div>
                 </div>
                 
-                <div class="flex items-center gap-3 bg-white px-4 py-1.5 rounded-full shadow-lg shadow-white/5 group/btn">
-                    <span class="text-[#0d1117] text-[10px] font-black uppercase tracking-widest">View</span>
-                    <div class="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center group-hover/btn:scale-110 transition-transform">
-                        <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                <div class="group/btn flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20 group-hover:bg-white group-hover:text-navy-900 transition-all duration-300">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </div>
                 </div>
             </div>

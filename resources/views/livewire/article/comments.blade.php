@@ -2,7 +2,7 @@
     <!-- Section Header -->
     <div class="flex items-center gap-4 mb-8">
         <div class="h-px flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
-        <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Protocol Discussion</h3>
+        <h3 class="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Comments</h3>
         <div class="h-px flex-1 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
     </div>
 
@@ -19,15 +19,15 @@
                     <div class="relative group">
                         <textarea wire:model="content" rows="3" 
                             class="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-sm text-white placeholder:text-white/10 focus:border-[#38bdf8]/50 transition-all outline-none resize-none" 
-                            placeholder="Initialize contribution to the thread..."></textarea>
-                        <div class="absolute bottom-4 right-4 text-[8px] font-black text-slate-500 tracking-widest uppercase pointer-events-none">Signal Ready</div>
+                            placeholder="Write a comment..."></textarea>
+                        <div class="absolute bottom-4 right-4 text-[8px] font-black text-slate-500 tracking-widest uppercase pointer-events-none">Type here</div>
                     </div>
                     @error('content') <span class="text-red-500/80 text-[10px] font-bold uppercase tracking-wider">{{ $message }}</span> @enderror
                     
                     <div class="flex justify-between items-center">
                         <div class="text-[9px] text-slate-500 font-medium italic">Your contribution will be archived in the permanent record.</div>
                         <button type="submit" class="group relative px-6 py-2.5 bg-white text-black rounded-lg font-black text-[10px] uppercase tracking-widest overflow-hidden hover:scale-105 transition-transform active:scale-95">
-                            <span class="relative z-10">Broadcast Comment</span>
+                            <span class="relative z-10">Post Comment</span>
                         </button>
                     </div>
                 </form>
@@ -39,8 +39,8 @@
         <div class="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
             <svg class="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
         </div>
-        <p class="text-xs text-slate-400 mb-6 font-medium">Authentication required to participate in the knowledge stream.</p>
-        <a href="{{ route('login') }}" class="inline-block px-8 py-3 bg-white text-black rounded-full text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all">Identify System</a>
+        <p class="text-xs text-slate-400 mb-6 font-medium">Log in to participate in the conversation.</p>
+        <a href="{{ route('login') }}" class="inline-block px-8 py-3 bg-white text-black rounded-full text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all">Log in to Comment</a>
     </div>
     @endauth
 
@@ -89,9 +89,9 @@
 
                     <!-- Actions -->
                     <div class="flex items-center gap-6 mt-4">
-                        <button wire:click="setReply({{ $comment->id }})" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-[#38bdf8] transition-colors">Echo Response</button>
+                        <button wire:click="setReply({{ $comment->id }})" class="text-[10px] font-black uppercase tracking-widest text-slate-500 hover:text-[#38bdf8] transition-colors">Reply</button>
                         @if($comment->user_id === auth()->id())
-                        <button wire:click="delete({{ $comment->id }})" class="text-[10px] font-black uppercase tracking-widest text-red-500/50 hover:text-red-500 transition-colors">Decommission</button>
+                        <button wire:click="delete({{ $comment->id }})" class="text-[10px] font-black uppercase tracking-widest text-red-500/50 hover:text-red-500 transition-colors">Delete</button>
                         @endif
                     </div>
 
@@ -101,10 +101,10 @@
                         <form wire:submit="submit" class="space-y-4">
                             <textarea wire:model="content" rows="2" 
                                 class="w-full bg-black/20 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/10 focus:border-[#38bdf8]/50 outline-none resize-none" 
-                                placeholder="Entering sub-stream data..."></textarea>
+                                placeholder="Write a reply..."></textarea>
                             <div class="flex gap-3">
-                                <button type="submit" class="px-5 py-2 bg-[#38bdf8] text-[#0a0e14] rounded-lg text-[10px] font-black uppercase tracking-widest">Connect</button>
-                                <button type="button" wire:click="cancelReply" class="px-5 py-2 bg-white/5 text-white/20 rounded-lg text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors">Abort</button>
+                                <button type="submit" class="px-5 py-2 bg-[#38bdf8] text-[#0a0e14] rounded-lg text-[10px] font-black uppercase tracking-widest">Post Reply</button>
+                                <button type="button" wire:click="cancelReply" class="px-5 py-2 bg-white/5 text-white/20 rounded-lg text-[10px] font-black uppercase tracking-widest hover:text-white transition-colors">Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -137,7 +137,7 @@
         @empty
         <div class="py-20 text-center text-slate-600">
             <svg class="w-12 h-12 mx-auto mb-4 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-            <p class="text-xs font-black uppercase tracking-[0.2em]">Archive Empty – Seeking First Entry</p>
+            <p class="text-xs font-black uppercase tracking-[0.2em]">No comments yet. Be the first to share your thoughts!</p>
         </div>
         @endforelse
     </div>

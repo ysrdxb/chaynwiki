@@ -39,36 +39,52 @@ new class extends Component
 }; ?>
 
 <section>
-    <header>
-        <h2 class="text-xl font-black text-white uppercase tracking-tight">
-            {{ __('Update Password') }}
+    <header class="mb-10">
+        <h2 class="text-2xl font-black text-white uppercase tracking-tightest italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+            ACCESS KEYS <span class="text-white/10 ml-2">/ ENCRYPTION</span>
         </h2>
+        <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mt-2 italic">Update your node access authentication sequence.</p>
     </header>
 
-    <form wire:submit="updatePassword" class="mt-6 space-y-6">
-        <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" class="text-xs font-bold text-white/40 uppercase tracking-wider mb-2" />
-            <x-text-input wire:model="current_password" id="update_password_current_password" name="current_password" type="password" class="block w-full bg-[#0d1117] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl" autocomplete="current-password" />
-            <x-input-error :messages="$errors->get('current_password')" class="mt-2" />
+    <form wire:submit="updatePassword" class="space-y-8">
+        <div class="space-y-3">
+            <x-input-label for="update_password_current_password" :value="__('CURRENT ACCESS KEY')" class="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] ml-1" />
+            <div class="relative group">
+                <div class="absolute inset-0 bg-blue-500/5 rounded-2xl blur-xl group-focus-within:bg-blue-500/10 transition-all duration-500"></div>
+                <x-text-input wire:model="current_password" id="update_password_current_password" name="current_password" type="password" class="block w-full h-16 bg-[#0d1117] border-white/5 focus:border-blue-500/20 focus:ring-0 rounded-2xl text-sm font-black text-white uppercase tracking-widest px-6 transition-all duration-500" autocomplete="current-password" placeholder="••••••••••••" />
+            </div>
+            <x-input-error :messages="$errors->get('current_password')" class="mt-2 ml-1" />
         </div>
 
-        <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" class="text-xs font-bold text-white/40 uppercase tracking-wider mb-2" />
-            <x-text-input wire:model="password" id="update_password_password" name="password" type="password" class="block w-full bg-[#0d1117] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl" autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="space-y-3">
+            <x-input-label for="update_password_password" :value="__('NEW ACCESS KEY')" class="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] ml-1" />
+            <div class="relative group">
+                <div class="absolute inset-0 bg-blue-500/5 rounded-2xl blur-xl group-focus-within:bg-blue-500/10 transition-all duration-500"></div>
+                <x-text-input wire:model="password" id="update_password_password" name="password" type="password" class="block w-full h-16 bg-[#0d1117] border-white/5 focus:border-blue-500/20 focus:ring-0 rounded-2xl text-sm font-black text-white uppercase tracking-widest px-6 transition-all duration-500" autocomplete="new-password" placeholder="••••••••••••" />
+            </div>
+            <x-input-error :messages="$errors->get('password')" class="mt-2 ml-1" />
         </div>
 
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" class="text-xs font-bold text-white/40 uppercase tracking-wider mb-2" />
-            <x-text-input wire:model="password_confirmation" id="update_password_password_confirmation" name="password_confirmation" type="password" class="block w-full bg-[#0d1117] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl" autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div class="space-y-3">
+            <x-input-label for="update_password_password_confirmation" :value="__('CONFIRM KEY SEQUENCE')" class="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] ml-1" />
+            <div class="relative group">
+                <div class="absolute inset-0 bg-blue-500/5 rounded-2xl blur-xl group-focus-within:bg-blue-500/10 transition-all duration-500"></div>
+                <x-text-input wire:model="password_confirmation" id="update_password_password_confirmation" name="password_confirmation" type="password" class="block w-full h-16 bg-[#0d1117] border-white/5 focus:border-blue-500/20 focus:ring-0 rounded-2xl text-sm font-black text-white uppercase tracking-widest px-6 transition-all duration-500" autocomplete="new-password" placeholder="••••••••••••" />
+            </div>
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 ml-1" />
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button class="bg-blue-600 hover:bg-blue-500 text-white border-0">{{ __('Save Password') }}</x-primary-button>
+        <div class="flex items-center gap-8 pt-4">
+            <button type="submit" class="btn-figma-primary !px-10 !py-4 shadow-3xl">
+                <span>{{ __('Flash New Key') }}</span>
+                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                </div>
+            </button>
 
-            <x-action-message class="text-xs font-bold text-green-500 uppercase tracking-wider" on="password-updated">
-                {{ __('Saved.') }}
+            <x-action-message class="flex items-center gap-2 text-[10px] font-black text-green-500 uppercase tracking-[0.3em] italic" on="password-updated">
+                <div class="w-1.5 h-1.5 rounded-full bg-current"></div>
+                {{ __('Key Matrix Updated') }}
             </x-action-message>
         </div>
     </form>

@@ -37,7 +37,7 @@ new class extends Component
             $crateId = $crate->id;
         }
 
-        $this->article->crates()->syncWithoutDetaching([$crateId => ['notes' => 'Added via Elite Crate interface']]);
+        $this->article->crates()->syncWithoutDetaching([$crateId => ['notes' => 'Added via interface']]);
 
         $this->isOpen = false;
         $this->dispatch('notify', [
@@ -72,7 +72,7 @@ new class extends Component
         class="absolute right-0 bottom-full mb-4 w-72 bg-[#0f1419] border border-white/10 rounded-3xl shadow-3xl p-6 z-[110]"
         style="display: none;"
     >
-        <h3 class="text-sm font-black text-white italic uppercase tracking-tighter mb-4">Indexing Protocol</h3>
+        <h3 class="text-sm font-black text-white italic uppercase tracking-tighter mb-4">Add to Collection</h3>
         
         <div class="space-y-4">
             {{-- Existing Crates --}}
@@ -87,7 +87,7 @@ new class extends Component
                     </select>
                 </div>
                 <button wire:click="addToCrate" class="w-full py-3 bg-[#38bdf8] text-[#0a0e14] font-black text-[9px] uppercase tracking-widest rounded-xl hover:bg-[#7dd3fc] transition-all">
-                    Confirm Sync
+                    Save
                 </button>
                 <div class="flex items-center gap-3 py-2">
                     <div class="flex-1 h-px bg-white/5"></div>
@@ -98,11 +98,11 @@ new class extends Component
 
             {{-- New Crate --}}
             <div class="space-y-2">
-                <label class="text-[9px] font-black text-white/20 uppercase tracking-widest pl-1">Generate New Crate</label>
-                <input wire:model="newCrateName" type="text" placeholder="Crate Designation..." class="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3 text-[10px] text-white placeholder:text-white/10 focus:border-[#38bdf8] outline-none">
+                <label class="text-[9px] font-black text-white/20 uppercase tracking-widest pl-1">Create New Collection</label>
+                <input wire:model="newCrateName" type="text" placeholder="Name your collection..." class="w-full bg-black/40 border border-white/5 rounded-xl px-4 py-3 text-[10px] text-white placeholder:text-white/10 focus:border-[#38bdf8] outline-none">
             </div>
             <button wire:click="addToCrate()" class="w-full py-3 bg-white text-black font-black text-[9px] uppercase tracking-widest rounded-xl hover:scale-[1.02] transition-all">
-                Create & Sync
+                Create & Save
             </button>
         </div>
 

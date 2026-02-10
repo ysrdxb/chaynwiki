@@ -2,19 +2,23 @@
     <div class="min-h-screen pt-24 pb-12" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 400)">
         <div class="max-w-4xl mx-auto px-6 lg:px-8 space-y-8">
             
-            {{-- Header --}}
-            <div class="mb-8">
-                <h1 class="text-4xl font-black text-white uppercase tracking-tight leading-none mb-2">Settings</h1>
+            {{-- Header Refined --}}
+            <div class="mb-16">
+                <div class="flex items-center gap-4 mb-4">
+                    <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] font-black text-blue-500 uppercase tracking-widest italic">Node Configuration</span>
+                    <div class="h-[1px] flex-1 bg-white/5"></div>
+                </div>
+                <h1 class="text-[64px] font-black text-white uppercase tracking-tightest leading-[0.85] italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">CONTRIBUTOR <br/> <span class="text-blue-500">SETTINGS</span> / CONFIG</h1>
             </div>
 
-            {{-- Skeleton Loading --}}
-            <div x-show="!loaded" class="space-y-6">
+            {{-- Skeleton Loading Refined --}}
+            <div x-show="!loaded" class="space-y-8">
                 @for($i = 0; $i < 3; $i++)
-                <div class="p-8 bg-[#161b22] border border-white/5 rounded-2xl animate-pulse">
-                    <div class="h-6 w-48 bg-white/5 rounded mb-6"></div>
-                    <div class="space-y-4">
-                        <div class="h-10 w-full bg-white/5 rounded-xl"></div>
-                        <div class="h-10 w-full bg-white/5 rounded-xl"></div>
+                <div class="p-12 bg-[#161b22]/40 backdrop-blur-sm border border-white/5 rounded-[3rem] animate-pulse">
+                    <div class="h-8 w-64 bg-white/5 rounded-xl mb-10"></div>
+                    <div class="space-y-6">
+                        <div class="h-16 w-full bg-white/5 rounded-2xl"></div>
+                        <div class="h-16 w-full bg-white/5 rounded-2xl"></div>
                     </div>
                 </div>
                 @endfor
@@ -28,15 +32,15 @@
                  class="space-y-8" 
                  style="display: none;">
                 
-                <div class="p-8 bg-[#161b22] border border-white/5 shadow-2xl rounded-2xl">
+                <div class="card-premium h-auto !bg-[#161b22]/40 backdrop-blur-sm !p-12 rounded-[3.5rem] border-white/5 hover:border-blue-500/20 shadow-3xl transition-all duration-700">
                     <livewire:profile.update-profile-information-form />
                 </div>
 
-                <div class="p-8 bg-[#161b22] border border-white/5 shadow-2xl rounded-2xl">
+                <div class="card-premium h-auto !bg-[#161b22]/40 backdrop-blur-sm !p-12 rounded-[3.5rem] border-white/5 hover:border-blue-500/20 shadow-3xl transition-all duration-700">
                     <livewire:profile.update-password-form />
                 </div>
 
-                <div class="p-8 bg-[#161b22] border border-white/5 shadow-2xl rounded-2xl">
+                <div class="card-premium h-auto !bg-red-500/[0.02] backdrop-blur-sm !p-12 rounded-[3.5rem] border-red-500/10 hover:border-red-500/30 shadow-3xl transition-all duration-700">
                     <livewire:profile.delete-user-form />
                 </div>
             </div>

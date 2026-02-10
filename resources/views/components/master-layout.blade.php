@@ -70,13 +70,28 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
     
-    <!-- Global Styles -->
     <style>
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #0d1117; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 20px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
         [x-cloak] { display: none !important; }
+        
+        /* Unified Card Hover Glow Effect */
+        .card-premium-unified::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(
+                600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+                rgba(59, 130, 246, 0.08),
+                transparent 40%
+            );
+            border-radius: inherit;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+        }
+        .card-premium-unified:hover::before {
+            opacity: 1;
+        }
     </style>
     @stack('styles')
 </head>

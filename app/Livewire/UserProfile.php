@@ -9,10 +9,16 @@ use Livewire\Component;
 class UserProfile extends Component
 {
     public User $user;
+    public bool $showHistory = false;
 
     public function mount(User $user)
     {
         $this->user = $user;
+    }
+
+    public function toggleHistory()
+    {
+        $this->showHistory = !$this->showHistory;
     }
 
     #[Layout('layouts.wiki')]

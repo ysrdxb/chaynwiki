@@ -22,30 +22,35 @@
         <div class="flex items-start gap-12 pt-32 pb-16">
             
             <!-- Sidebar Navigation (Desktop) -->
-            <aside class="hidden lg:block w-64 sticky top-32 shrink-0">
-                <nav class="space-y-2">
-                    <!-- Home Link -->
-                    <a href="{{ route('home') }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold text-white/50 hover:text-white hover:bg-white/5 transition-all">
-                        <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                        <span>Home</span>
-                    </a>
+            <aside class="hidden lg:block w-72 sticky top-32 shrink-0 space-y-2 pr-8 border-r border-white/5">
+                <div class="mb-10 px-4">
+                    <span class="text-white/20 text-[10px] font-black uppercase tracking-[0.4em]">Navigator</span>
+                </div>
+                
+                <a href="{{ route('home') }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[13px] font-black uppercase tracking-widest text-white/50 hover:text-white hover:bg-white/5 transition-all">
+                    <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-white/5 flex items-center justify-center group-hover:bg-blue-500 group-hover:scale-110 transition-all">
+                        <svg class="w-4 h-4 text-blue-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    </div>
+                    Home
+                </a>
 
-                    <div class="h-px bg-white/5 mx-4 my-2"></div>
+                <a href="{{ route('wiki.index') }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[13px] font-black uppercase tracking-widest transition-all {{ !$currentCategory ? 'bg-blue-500/10 text-white border border-blue-500/20 shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                    <div class="w-8 h-8 rounded-lg {{ !$currentCategory ? 'bg-blue-500' : 'bg-white/5' }} flex items-center justify-center transition-all group-hover:scale-110">
+                        <svg class="w-4 h-4 {{ !$currentCategory ? 'text-white' : 'text-blue-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+                    </div>
+                    Library
+                </a>
 
-                    <!-- All Records -->
-                    <a href="{{ route('wiki.index') }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ !$currentCategory ? 'bg-white/5 text-white' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
-                        <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
-                        <span>All Records</span>
+                <div class="h-px bg-white/5 mx-4 my-6"></div>
+                
+                @foreach($categories as $key => $cat)
+                    <a href="{{ route('wiki.index', ['category' => $key]) }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[13px] font-black uppercase tracking-widest transition-all {{ $currentCategory == $key ? 'bg-blue-500/10 text-white border border-blue-500/20 shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                        <div class="w-8 h-8 rounded-lg {{ $currentCategory == $key ? 'bg-blue-500' : 'bg-white/5' }} flex items-center justify-center transition-all group-hover:scale-110">
+                            <svg class="w-4 h-4 {{ $currentCategory == $key ? 'text-white' : 'text-blue-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
+                        </div>
+                        {{ $cat['label'] }}
                     </a>
-                    
-                    <!-- Categories -->
-                    @foreach($categories as $key => $cat)
-                        <a href="{{ route('wiki.index', ['category' => $key]) }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ $currentCategory == $key ? 'bg-white/5 text-white' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
-                            <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
-                            <span>{{ $cat['label'] }}</span>
-                        </a>
-                    @endforeach
-                </nav>
+                @endforeach
             </aside>
 
             <!-- Main Content Area -->
@@ -65,34 +70,40 @@
                 </div>
 
                 <!-- Page Header -->
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+                <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-16">
                     <div>
-                        <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight">
-                            {{ $currentCategory ? ucfirst($currentCategory) : 'Browse Archive' }}
+                         <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-black uppercase tracking-[0.3em] inline-block mb-8 shadow-lg">
+                            Archive Index
+                        </span>
+                        
+                        <h1 class="text-[56px] lg:text-[80px] font-black text-white uppercase tracking-tightest mb-4 leading-[0.9] -ml-1" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                            {{ $currentCategory ? ($categories[$currentCategory]['label'] ?? ucfirst($currentCategory)) : 'Global Archive' }}
                         </h1>
-                        <p class="text-white/40 text-sm font-medium mt-2">
-                            {{ isset($results) ? $results['total_count'] : (isset($articles) ? $articles->total() : '0') }} records found
+                        
+                        <p class="text-white/20 text-[11px] font-black uppercase tracking-[0.4em] mt-6 flex items-center gap-3">
+                             <span class="w-8 h-px bg-white/10"></span>
+                             {{ number_format(isset($results) ? $results['total_count'] : (isset($articles) ? $articles->total() : 0)) }} records indexed
                         </p>
                     </div>
 
-                    <div class="flex items-center gap-4">
-                        <!-- Search Bar -->
-                        <form action="{{ route('wiki.index') }}" method="GET" class="relative group">
+                    <div class="flex flex-wrap items-center gap-6">
+                        <!-- Premium Search Bar -->
+                        <form action="{{ route('wiki.index') }}" method="GET" class="relative group min-w-[300px]">
                             @if($currentCategory)
                                 <input type="hidden" name="category" value="{{ $currentCategory }}">
                             @endif
-                            <input type="text" name="q" value="{{ request('q') }}" placeholder="Search..." 
-                                class="w-full md:w-64 px-4 py-2.5 bg-[#161b22] border border-white/10 rounded-full text-white text-sm placeholder-white/30 focus:border-blue-400/50 focus:outline-none focus:ring-1 focus:ring-blue-400/50 transition-all">
-                            <button type="submit" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 group-focus-within:text-blue-400 transition-colors">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                            <input type="text" name="q" value="{{ request('q') }}" placeholder="Search transmissions..." 
+                                class="w-full px-8 py-4 bg-white/5 border border-white/10 rounded-2xl text-white text-[13px] font-black uppercase tracking-widest placeholder-white/20 focus:border-blue-500/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all shadow-2xl">
+                            <button type="submit" class="absolute right-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-500 transition-colors">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                             </button>
                         </form>
 
                         <!-- Add Topic Button -->
-                        <a href="{{ route('wiki.create') }}" class="bg-white text-black px-5 py-2.5 rounded-full text-sm font-bold hover:bg-gray-100 transition-colors flex items-center gap-2 shadow-lg shadow-white/5 shrink-0">
-                            Add Topic
-                            <div class="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center">
-                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                        <a href="{{ route('wiki.create') }}" class="btn-figma-primary shadow-2xl shadow-blue-500/20 !px-8 !py-4 shrink-0">
+                            <span>Register Node</span>
+                            <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
                             </div>
                         </a>
                     </div>
@@ -105,10 +116,13 @@
                         @foreach(['song' => 'Songs', 'artist' => 'Artists', 'genre' => 'Genres', 'playlist' => 'Playlists', 'term' => 'Terminology'] as $key => $label)
                             @if($results[$key.'s']->count() > 0)
                                 <section>
-                                    <div class="flex items-center gap-4 mb-6">
-                                        <h2 class="text-xl font-bold text-white">{{ $label }}</h2>
+                                    <div class="flex items-center justify-between gap-8 mb-10">
+                                        <h2 class="text-[20px] font-black text-white uppercase tracking-widest flex items-center gap-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                                            <div class="w-8 h-1 bg-blue-500 rounded-full"></div>
+                                            {{ $label }}
+                                        </h2>
                                         <div class="flex-1 h-px bg-white/5"></div>
-                                        <span class="text-xs font-bold text-white/30 bg-white/5 px-2 py-1 rounded">{{ $results[$key.'s']->count() }}</span>
+                                        <span class="text-[10px] font-black text-white/20 bg-white/5 border border-white/5 px-3 py-1.5 rounded-lg uppercase tracking-widest">{{ $results[$key.'s']->count() }} indexed</span>
                                     </div>
 
                                     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -126,49 +140,50 @@
                         @forelse($articles as $article)
                             @include('wiki._article-card', ['article' => $article])
                         @empty
-                            <div class="col-span-full py-24 text-center rounded-[20px] bg-[#161b22]/40 border border-white/5">
-                                <div class="w-20 h-20 rounded-full bg-blue-400/10 flex items-center justify-center mx-auto mb-6">
-                                    <svg class="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
+                            <div class="col-span-full py-32 text-center rounded-[2.5rem] bg-[#161b22]/40 border border-white/5 shadow-2xl backdrop-blur-sm">
+                                <div class="w-24 h-24 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto mb-10 shadow-3xl">
+                                    <svg class="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
                                 </div>
-                                <h3 class="text-2xl font-bold text-white mb-3">No Records Found</h3>
-                                <p class="text-white/40 text-sm max-w-md mx-auto mb-8">The archive doesn't have any entries matching your criteria yet.</p>
-                                <a href="{{ route('wiki.create') }}" class="inline-flex items-center gap-2 text-blue-400 font-bold hover:text-blue-300">
-                                    Create First Record →
+                                <h3 class="text-3xl font-black text-white mb-4 uppercase tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">No Signal Detected</h3>
+                                <p class="text-white/20 text-[12px] font-black uppercase tracking-[0.2em] max-w-md mx-auto mb-12">The archive does not contain any entries matching your query. Transmission ended.</p>
+                                <a href="{{ route('wiki.create') }}" class="btn-figma-secondary !px-10 !py-4 shadow-xl">
+                                    Register First Node →
                                 </a>
                             </div>
                         @endforelse
                     </div>
 
                     <!-- Pagination -->
-                    @if(isset($articles) && $articles->hasPages())
-                        <div class="mt-16 flex justify-center">
-                            <div class="flex items-center gap-2">
+                        <div class="mt-20 flex justify-center">
+                            <div class="flex items-center gap-6 p-2 bg-white/5 border border-white/10 rounded-2xl shadow-3xl backdrop-blur-md">
                                 @if($articles->onFirstPage())
-                                    <span class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/20 cursor-not-allowed">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                                    <span class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/10 cursor-not-allowed">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>
                                     </span>
                                 @else
-                                    <a href="{{ $articles->previousPageUrl() }}" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/60 hover:bg-blue-400 hover:text-white transition-all">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                                    <a href="{{ $articles->previousPageUrl() }}" class="w-12 h-12 rounded-xl bg-blue-500/10 border border-white/5 flex items-center justify-center text-blue-400 hover:bg-blue-500 hover:text-white transition-all shadow-lg group">
+                                        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>
                                     </a>
                                 @endif
 
-                                <span class="px-4 py-2 text-sm font-bold text-white/60">
-                                    Page {{ $articles->currentPage() }} of {{ $articles->lastPage() }}
-                                </span>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-[9px] font-black text-white/20 uppercase tracking-[0.4em] mb-1">Index Page</span>
+                                    <span class="text-[14px] font-black text-white uppercase tracking-tightest">
+                                        {{ $articles->currentPage() }} <span class="text-white/20 mx-1">/</span> {{ $articles->lastPage() }}
+                                    </span>
+                                </div>
 
                                 @if($articles->hasMorePages())
-                                    <a href="{{ $articles->nextPageUrl() }}" class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/60 hover:bg-blue-400 hover:text-white transition-all">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                    <a href="{{ $articles->nextPageUrl() }}" class="w-12 h-12 rounded-xl bg-blue-500/10 border border-white/5 flex items-center justify-center text-blue-400 hover:bg-blue-500 hover:text-white transition-all shadow-lg group">
+                                        <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
                                     </a>
                                 @else
-                                    <span class="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/20 cursor-not-allowed">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                                    <span class="w-12 h-12 rounded-xl bg-white/5 border border-white/5 flex items-center justify-center text-white/10 cursor-not-allowed">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
                                     </span>
                                 @endif
                             </div>
                         </div>
-                    @endif
                 @endif
             </main>
         </div>

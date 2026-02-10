@@ -194,7 +194,7 @@
                         <div><x-article.⚡add-to-crate :article="$article" /></div>
 
                         <div class="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-white/5">
-                            <span class="text-[9px] font-bold text-white/40 uppercase tracking-widest">Protocol Score</span>
+                            <span class="text-[9px] font-bold text-white/40 uppercase tracking-widest">Rating</span>
                              <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
                         

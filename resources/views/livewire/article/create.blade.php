@@ -310,8 +310,8 @@
                 {{-- Initialization Prompt --}}
                 <div class="py-32 flex flex-col items-center justify-center text-center opacity-40 select-none">
                     <svg class="w-24 h-24 text-white/10 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="0.5"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
-                    <h3 class="text-3xl font-black italic uppercase tracking-tighter text-white mb-2">System Ready</h3>
-                    <p class="text-sm text-white/20">Select a classification protocol to unlock data entry fields.</p>
+                    <h3 class="text-3xl font-black italic uppercase tracking-tighter text-white mb-2">Ready</h3>
+                    <p class="text-sm text-white/20">Select a category to start adding content.</p>
                 </div>
             @endif
         </form>

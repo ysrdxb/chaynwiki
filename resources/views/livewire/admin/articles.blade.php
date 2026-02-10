@@ -16,7 +16,7 @@
                 <option value="genre">Genres</option>
                 <option value="playlist">Playlists</option>
             </select>
-            <a href="{{ route('wiki.create') }}" class="btn-premium text-xs text-white whitespace-nowrap">INITIATE NEW RECORD</a>
+            <a href="{{ route('wiki.create') }}" class="btn-premium text-xs text-white whitespace-nowrap">ADD NEW ARTICLE</a>
         </div>
     </div>
 
