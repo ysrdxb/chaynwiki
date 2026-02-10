@@ -36,8 +36,8 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <h2 class="text-[32px] font-black text-white uppercase tracking-tightest mb-4 italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-        <span class="text-blue-500">Verification</span> / Node Activation
+    <h2 class="text-[32px] font-black text-white uppercase tracking-tightest mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <span class="text-blue-500">Verify</span> / Identity Logic
     </h2>
     <p class="text-white/20 text-[11px] font-black uppercase tracking-[0.4em] mb-12">
         A verification link has been dispatched to your identifier. Activate to proceed.

@@ -72,7 +72,7 @@ new class extends Component
         class="absolute right-0 bottom-full mb-4 w-72 bg-[#0f1419] border border-white/10 rounded-3xl shadow-3xl p-6 z-[110]"
         style="display: none;"
     >
-        <h3 class="text-sm font-black text-white italic uppercase tracking-tighter mb-4">Add to Collection</h3>
+        <h3 class="text-sm font-black text-white uppercase tracking-tighter mb-4">Add to Collection</h3>
         
         <div class="space-y-4">
             {{-- Existing Crates --}}

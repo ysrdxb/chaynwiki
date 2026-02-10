@@ -102,11 +102,11 @@
                     
                     <div class="flex items-center gap-10">
                          <div class="flex flex-col">
-                            <span class="text-white text-3xl font-black tracking-tightest mb-1 italic">{{ number_format($article->views_count ?? rand(100, 2000)) }}</span>
+                            <span class="text-white text-3xl font-black tracking-tightest mb-1">{{ number_format($article->views_count ?? rand(100, 2000)) }}</span>
                             <span class="text-[10px] text-white/20 font-black uppercase tracking-[0.3em]">Indexed Records</span>
                          </div>
                          <div class="flex flex-col">
-                            <span class="text-blue-500 text-3xl font-black tracking-tightest mb-1 italic">{{ number_format($article->view_count ?? 0) }}</span>
+                            <span class="text-blue-500 text-3xl font-black tracking-tightest mb-1">{{ number_format($article->view_count ?? 0) }}</span>
                             <span class="text-[10px] text-white/20 font-black uppercase tracking-[0.3em]">Total Engagements</span>
                          </div>
                     </div>
@@ -124,7 +124,7 @@
                                 @if(!empty($article->content))
                                     {!! Str::markdown($article->content) !!}
                                 @else
-                                    <p class="text-white/30 italic uppercase tracking-[0.2em] text-[12px]">No classification data available for this node.</p>
+                                    <p class="text-white/30 uppercase tracking-[0.2em] text-[12px]">No classification data available for this node.</p>
                                 @endif
                             </div>
                         </article>
@@ -200,7 +200,6 @@
                     </div>
                     @endif
 
-                </aside>
             </div>
 
         </main>

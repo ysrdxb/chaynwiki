@@ -41,7 +41,7 @@
 
         <!-- Content Area -->
         <div class="flex-1 flex flex-col p-6">
-            <h3 class="text-white font-black text-[18px] leading-[1.1] mb-3 group-hover:text-blue-500 transition-colors line-clamp-2 italic uppercase tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+            <h3 class="text-white font-black text-[18px] leading-[1.1] mb-3 group-hover:text-blue-500 transition-colors line-clamp-2 uppercase tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                 {{ $article->title }}
             </h3>
             

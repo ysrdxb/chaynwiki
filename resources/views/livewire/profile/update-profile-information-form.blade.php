@@ -64,10 +64,11 @@ new class extends Component
 
 <section>
     <header class="mb-10">
-        <h2 class="text-2xl font-black text-white uppercase tracking-tightest italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4 leading-none">
             NODE IDENTIFICATION <span class="text-white/10 ml-2">/ PROFILE</span>
-        </h2>
-        <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mt-2 italic">Synchronize your display credentials with the global node.</p>
+        </h1>
+        <p class="text-[11px] font-medium text-white/40 leading-relaxed uppercase tracking-wider">
+Synchronize your display credentials with the global node.</p>
     </header>
 
     <form wire:submit="updateProfileInformation" class="space-y-8">
@@ -95,7 +96,7 @@ new class extends Component
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
                         </div>
                         <div class="flex-1">
-                            <p class="text-[10px] font-black text-red-500 uppercase tracking-widest mb-1 italic">
+                            <p class="text-[10px] font-black text-red-500 uppercase tracking-widest mb-1">
                                 {{ __('Email Verification Required') }}
                             </p>
                             <p class="text-[11px] font-medium text-white/40 mb-3">Your node credentials are currently unverified.</p>
@@ -126,7 +127,7 @@ new class extends Component
                 </div>
             </button>
 
-            <x-action-message class="flex items-center gap-2 text-[10px] font-black text-green-500 uppercase tracking-[0.3em] italic" on="profile-updated">
+            <x-action-message class="flex items-center gap-2 text-[10px] font-black text-green-500 uppercase tracking-[0.3em]" on="profile-updated">
                 <div class="w-1.5 h-1.5 rounded-full bg-current"></div>
                 {{ __('Sync Successful') }}
             </x-action-message>

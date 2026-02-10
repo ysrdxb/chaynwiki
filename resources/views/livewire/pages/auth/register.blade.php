@@ -40,7 +40,7 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <h2 class="text-[32px] font-black text-white uppercase tracking-tightest mb-12 italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+    <h2 class="text-[32px] font-black text-white uppercase tracking-tightest mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
         <span class="text-blue-500">Register</span> / Node Discovery
     </h2>
     
@@ -166,7 +166,7 @@ new #[Layout('layouts.guest')] class extends Component
     </form>
 
     <!-- Login Link -->
-    <p class="mt-12 text-center text-white/20 text-[11px] font-black uppercase tracking-[0.3em]">
+    <p class="text-sm text-white/50 mb-8 font-medium">
         Already indexed? 
         <a href="{{ route('login') }}" wire:navigate class="text-blue-500 hover:text-white transition-colors border-b border-blue-500/30 hover:border-white pb-1 ml-2">
             Access Node

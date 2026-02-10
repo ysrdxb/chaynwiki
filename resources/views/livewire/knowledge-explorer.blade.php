@@ -19,7 +19,7 @@
                     </svg>
                     Interactive Explorer Node
                 </div>
-                <h1 class="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter mb-4 leading-none">
+                <h1 class="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none mb-4">
                     KNOWLEDGE <span class="text-[#38bdf8]">EXPLORER</span>
                 </h1>
                 <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] max-w-xl mx-auto leading-relaxed">
@@ -151,7 +151,7 @@
                 @if($genreDetails)
                     <div class="bg-secondary border border-white/5 rounded-2xl p-8 sticky top-32 shadow-2xl animate-fade-in">
                         <div class="flex items-center justify-between mb-8">
-                            <h3 class="text-xl font-black text-white uppercase italic tracking-tighter">{{ $genreDetails['genre']['name'] ?? 'Node Detail' }}</h3>
+                            <h3 class="text-xl font-black text-white uppercase tracking-tighter">{{ $genreDetails['genre']['name'] ?? 'Node Detail' }}</h3>
                         <button wire:click="closeDetails" class="text-white/20 hover:text-white transition-colors">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>

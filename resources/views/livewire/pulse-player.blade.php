@@ -156,7 +156,7 @@
             {{-- Info & Metadata --}}
             <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-3">
-                    <h4 class="text-[11px] font-black text-white italic uppercase tracking-tighter truncate">
+                    <h4 class="text-[11px] font-black text-white uppercase tracking-tighter truncate">
                         {{ $currentArticle?->title ?? 'Transmission Active' }}
                     </h4>
                     <span class="px-2 py-0.5 bg-[#38bdf8]/10 border border-[#38bdf8]/20 rounded text-[7px] font-black text-[#38bdf8] uppercase tracking-widest">

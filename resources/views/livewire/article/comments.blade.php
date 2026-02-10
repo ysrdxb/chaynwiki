@@ -25,7 +25,7 @@
                     @error('content') <span class="text-red-500/80 text-[10px] font-bold uppercase tracking-wider">{{ $message }}</span> @enderror
                     
                     <div class="flex justify-between items-center">
-                        <div class="text-[9px] text-slate-500 font-medium italic">Your contribution will be archived in the permanent record.</div>
+                        <div class="text-[9px] text-slate-500 font-medium">Your contribution will be archived in the permanent record.</div>
                         <button type="submit" class="group relative px-6 py-2.5 bg-white text-black rounded-lg font-black text-[10px] uppercase tracking-widest overflow-hidden hover:scale-105 transition-transform active:scale-95">
                             <span class="relative z-10">Post Comment</span>
                         </button>

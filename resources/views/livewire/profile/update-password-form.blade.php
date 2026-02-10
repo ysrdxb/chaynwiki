@@ -40,10 +40,10 @@ new class extends Component
 
 <section>
     <header class="mb-10">
-        <h2 class="text-2xl font-black text-white uppercase tracking-tightest italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <h2 class="text-2xl font-black text-white uppercase tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">
             ACCESS KEYS <span class="text-white/10 ml-2">/ ENCRYPTION</span>
         </h2>
-        <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mt-2 italic">Update your node access authentication sequence.</p>
+        <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mt-2">Update your node access authentication sequence.</p>
     </header>
 
     <form wire:submit="updatePassword" class="space-y-8">
@@ -82,7 +82,7 @@ new class extends Component
                 </div>
             </button>
 
-            <x-action-message class="flex items-center gap-2 text-[10px] font-black text-green-500 uppercase tracking-[0.3em] italic" on="password-updated">
+            <x-action-message class="flex items-center gap-2 text-[10px] font-black text-green-500 uppercase tracking-[0.3em]" on="password-updated">
                 <div class="w-1.5 h-1.5 rounded-full bg-current"></div>
                 {{ __('Key Matrix Updated') }}
             </x-action-message>

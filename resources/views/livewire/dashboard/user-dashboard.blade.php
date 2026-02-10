@@ -36,10 +36,10 @@
                 {{-- User Info Refined --}}
                 <div class="flex-1 text-center md:text-left">
                     <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-4">
-                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] font-black text-blue-500 uppercase tracking-widest italic">Authorized Session</span>
+                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] font-black text-blue-500 uppercase tracking-widest">Authorized Session</span>
                         <span class="text-white/20 text-[10px] font-black uppercase tracking-[0.3em]">Established {{ $user->created_at->format('Y') }}</span>
                     </div>
-                    <h1 class="text-[54px] md:text-[72px] font-black text-white uppercase tracking-tightest leading-[0.85] mb-6 italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <h1 class="text-[54px] md:text-[72px] font-black text-white uppercase tracking-tightest leading-[0.85] mb-6" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                         {{ $user->name }}
                     </h1>
                     
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="flex items-baseline gap-2">
-                    <span class="text-[44px] font-black text-white uppercase tracking-tightest leading-none italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ number_format($stats['reputation']) }}</span>
+                    <span class="text-[44px] font-black text-white uppercase tracking-tightest leading-none" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ number_format($stats['reputation']) }}</span>
                     <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest">CREDITS</span>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <div class="flex items-baseline gap-2">
-                    <span class="text-[44px] font-black text-white uppercase tracking-tightest leading-none italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ number_format($stats['contributions']) }}</span>
+                    <span class="text-[44px] font-black text-white uppercase tracking-tightest leading-none" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ number_format($stats['contributions']) }}</span>
                     <span class="text-[10px] font-black text-green-500 uppercase tracking-widest">COMMITS</span>
                 </div>
             </div>
@@ -109,7 +109,7 @@
                     </div>
                 </div>
                 <div class="flex items-baseline gap-2">
-                    <span class="text-[44px] font-black text-white uppercase tracking-tightest leading-none italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ number_format($stats['bookmarks']) }}</span>
+                    <span class="text-[44px] font-black text-white uppercase tracking-tightest leading-none" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ number_format($stats['bookmarks']) }}</span>
                     <span class="text-[10px] font-black text-purple-500 uppercase tracking-widest">RECORDS</span>
                 </div>
             </div>
@@ -134,7 +134,7 @@
             <div class="lg:col-span-2 space-y-10">
                 <div class="flex items-center border-b border-white/5 pb-6">
                     <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6"></div>
-                    <h2 class="text-2xl font-black text-white uppercase tracking-tightest italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">RECENT LOGS <span class="text-white/10 ml-4 font-black">/ TRANSMISSION FEED</span></h2>
+                    <h2 class="text-2xl font-black text-white uppercase tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">RECENT LOGS <span class="text-white/10 ml-4 font-black">/ TRANSMISSION FEED</span></h2>
                 </div>
 
                 <div class="space-y-6">
@@ -152,7 +152,7 @@
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <div class="flex items-center gap-4 mb-2">
-                                            <h3 class="text-lg font-black text-white uppercase tracking-tightest italic truncate group-hover:text-blue-500 transition-colors" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $act['title'] }}</h3>
+                                            <h3 class="text-lg font-black text-white uppercase tracking-tightest truncate group-hover:text-blue-500 transition-colors" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $act['title'] }}</h3>
                                             <div class="w-1.5 h-1.5 rounded-full bg-white/10 hidden md:block"></div>
                                             <span class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] hidden md:block">{{ $act['date']->diffForHumans() }}</span>
                                         </div>
@@ -190,7 +190,7 @@
                 {{-- Recommended Refined --}}
                 <div class="space-y-8">
                     <div class="flex items-center border-b border-white/5 pb-4">
-                        <h2 class="text-xl font-black text-white uppercase tracking-tightest italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">SUGGESTED <span class="text-white/10 ml-2">DATA</span></h2>
+                        <h2 class="text-xl font-black text-white uppercase tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">SUGGESTED <span class="text-white/10 ml-2">DATA</span></h2>
                     </div>
                     <div class="space-y-3">
                         @foreach($recommendations as $rec)
@@ -206,7 +206,7 @@
                                     <div class="absolute inset-0 bg-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                 </div>
                                 <div class="min-w-0">
-                                    <h4 class="text-sm font-black text-white uppercase tracking-tightest group-hover:text-blue-500 transition-colors truncate mb-1 italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $rec->title }}</h4>
+                                    <h4 class="text-sm font-black text-white uppercase tracking-tightest group-hover:text-blue-500 transition-colors truncate mb-1" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $rec->title }}</h4>
                                     <p class="text-[9px] font-black text-white/20 uppercase tracking-[0.3em]">{{ $rec->category }}</p>
                                 </div>
                             </a>
@@ -223,7 +223,7 @@
                         <div class="w-20 h-20 bg-white/10 rounded-[2rem] flex items-center justify-center mx-auto mb-8 backdrop-blur-md shadow-3xl border border-white/20 group-hover:rotate-12 transition-transform duration-500">
                             <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
                         </div>
-                        <h3 class="text-3xl font-black text-white uppercase tracking-tightest mb-4 italic leading-none" style="font-family: 'Plus Jakarta Sans', sans-serif;">INDEX NEW DATA</h3>
+                        <h3 class="text-3xl font-black text-white uppercase tracking-tightest mb-4 leading-none" style="font-family: 'Plus Jakarta Sans', sans-serif;">INDEX NEW DATA</h3>
                         <p class="text-[11px] font-black text-white/60 mb-10 uppercase tracking-[0.3em] leading-relaxed">Contribute to the global knowledge archive</p>
                         <a href="{{ route('wiki.create') }}" wire:navigate class="block w-full py-5 bg-white text-blue-600 text-[11px] font-black uppercase tracking-[0.4em] rounded-[1.5rem] hover:bg-blue-50 transition-all shadow-3xl hover:scale-[1.02] active:scale-[0.98]">
                             Start Commit

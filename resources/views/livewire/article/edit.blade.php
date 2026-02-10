@@ -7,7 +7,7 @@
 
     <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="mb-12 px-2">
-            <h1 class="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter leading-none mb-4">
+            <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-6">
                 Modify Registry: <span class="text-[#38bdf8]">{{ $article->title }}</span>
             </h1>
             <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">

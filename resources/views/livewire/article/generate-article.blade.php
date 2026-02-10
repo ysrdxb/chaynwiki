@@ -46,7 +46,7 @@
                     <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
                     Neural Engine Active
                  </div>
-                 <h1 class="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-4">
+                 <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none mb-6">
                      AI <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Generator</span>
                  </h1>
                  <p class="text-white/50 text-lg font-medium max-w-2xl leading-relaxed">
@@ -100,7 +100,7 @@
                                 </div>
                             </div>
                             @error('topic')
-                                <p class="text-red-400 text-xs font-bold uppercase tracking-wider">{{ $message }}</p>
+                                <div class="text-[9px] text-slate-500 font-medium">Your contribution will be archived in the permanent record.</div>
                             @enderror
                         </div>
 
@@ -179,7 +179,7 @@
                     <div class="p-10 space-y-8">
                         <div>
                             <span class="text-[9px] font-black text-blue-400 uppercase tracking-[0.2em] block mb-2">Proposed Title</span>
-                            <h2 class="text-3xl font-black text-white italic tracking-tighter">{{ $generatedDraft['title'] }}</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter">{{ $generatedDraft['title'] }}</h2>
                         </div>
                         
                         <div>

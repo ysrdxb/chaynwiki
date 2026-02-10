@@ -122,7 +122,7 @@
                     type="text"
                     wire:model="message"
                     placeholder="Ask about music history..."
-                    class="flex-1 bg-white/5 border border-white/5 rounded-xl px-5 py-3 text-white placeholder-white/20 text-xs font-bold uppercase tracking-widest focus:border-blue-500/50 focus:ring-0 transition-all italic"
+                    class="flex-1 bg-white/5 border border-white/5 rounded-xl px-5 py-3 text-white placeholder-white/20 text-xs font-bold uppercase tracking-widest focus:border-blue-500/50 focus:ring-0 transition-all font-bold"
                     @if(!$aiAvailable) disabled @endif
                 />
                 <button

@@ -120,7 +120,7 @@
                             {{ $article->title }}
                         </h1>
                         
-                        <div class="flex items-center gap-3 text-2xl lg:text-3xl font-black text-white/60 mb-10 italic tracking-tightest">
+                        <div class="flex items-center gap-3 text-2xl lg:text-3xl font-black text-white/60 mb-10 tracking-tightest">
                             @if($article->song && $article->song->artist)
                                 <span class="text-white/20 uppercase text-[12px] not-italic tracking-[0.3em] mr-2">By</span>
                                 <a href="{{ route('wiki.show', $article->song->artist->article) }}" class="text-blue-500 hover:text-white transition-colors border-b-2 border-transparent hover:border-blue-500">
@@ -131,11 +131,11 @@
 
                         <div class="flex flex-wrap gap-10">
                              <div class="flex flex-col">
-                                <span class="text-white text-3xl font-black tracking-tightest mb-1 italic">{{ $article->song->release_date ?? 'Unknown' }}</span>
+                                <span class="text-white text-3xl font-black tracking-tightest mb-1">{{ $article->song->release_date ?? 'Unknown' }}</span>
                                 <span class="text-[10px] text-white/20 font-black uppercase tracking-[0.3em]">Release Date</span>
                              </div>
                              <div class="flex flex-col">
-                                <span class="text-blue-500 text-3xl font-black tracking-tightest mb-1 italic">{{ number_format($article->view_count ?? 0) }}</span>
+                                <span class="text-blue-500 text-3xl font-black tracking-tightest mb-1">{{ number_format($article->view_count ?? 0) }}</span>
                                 <span class="text-[10px] text-white/20 font-black uppercase tracking-[0.3em]">Total Plays</span>
                              </div>
                         </div>
@@ -147,19 +147,19 @@
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                 <div class="card-premium-unified bg-[#161b22]/40 border border-white/5 !p-8 group hover:border-blue-500/30 transition-all">
                     <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mb-4">Tone Key</p>
-                    <p class="text-3xl font-black text-white tracking-tightest italic group-hover:text-blue-500 transition-colors uppercase">{{ $article->song->key ?? '--' }}</p>
+                    <p class="text-3xl font-black text-white tracking-tightest group-hover:text-blue-500 transition-colors uppercase">{{ $article->song->key ?? '--' }}</p>
                 </div>
                  <div class="card-premium-unified bg-[#161b22]/40 border border-white/5 !p-8 group hover:border-blue-500/30 transition-all">
                     <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mb-4">Tempo (BPM)</p>
-                    <p class="text-3xl font-black text-blue-500 tracking-tightest italic transition-colors uppercase">{{ $article->song->bpm ?? '--' }}</p>
+                    <p class="text-3xl font-black text-blue-500 tracking-tightest transition-colors uppercase">{{ $article->song->bpm ?? '--' }}</p>
                 </div>
                  <div class="card-premium-unified bg-[#161b22]/40 border border-white/5 !p-8 group hover:border-blue-500/30 transition-all">
                     <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mb-4">Genre Class</p>
-                    <p class="text-3xl font-black text-white tracking-tightest italic group-hover:text-blue-500 transition-colors uppercase truncate">{{ $article->genre ? $article->genre->name : 'Experimental' }}</p>
+                    <p class="text-3xl font-black text-white tracking-tightest group-hover:text-blue-500 transition-colors uppercase truncate">{{ $article->genre ? $article->genre->name : 'Experimental' }}</p>
                 </div>
                  <div class="card-premium-unified bg-[#161b22]/40 border border-white/5 !p-8 group hover:border-blue-500/30 transition-all">
                     <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mb-4">Time Span</p>
-                    <p class="text-3xl font-black text-white tracking-tightest italic group-hover:text-blue-500 transition-colors uppercase">{{ $article->song->duration ?? '--' }}</p>
+                    <p class="text-3xl font-black text-white tracking-tightest group-hover:text-blue-500 transition-colors uppercase">{{ $article->song->duration ?? '--' }}</p>
                 </div>
             </div>
 
@@ -175,14 +175,15 @@
                             @if($summary)
                                 <div class="mb-8 p-6 bg-[#161b22]/60 border border-white/5 rounded-2xl">
                                     <h3 class="text-white text-lg font-bold mb-2 uppercase tracking-tight">{{ strtoupper($article->song->album ?? 'About this Track') }}</h3>
-                                    <p class="text-white/70 text-base leading-relaxed m-0">{{ $summary }}</p>
+                                    <p class="text-white/70 text-sm leading-relaxed relative z-10">
+{{ $summary }}</p>
                                 </div>
                             @endif
                             <div class="article-content text-white/70 text-base leading-relaxed">
                                 @if(!empty($article->content))
                                     {!! Str::markdown($article->content) !!}
                                 @else
-                                    <p class="text-white/30 italic uppercase tracking-[0.2em] text-[12px]">No analysis data available for this transmission.</p>
+                                    <p class="text-white/30 uppercase tracking-[0.2em] text-[12px]">No classification data available for this node.</p>
                                 @endif
                             </div>
                         </article>

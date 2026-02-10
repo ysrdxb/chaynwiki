@@ -4,7 +4,7 @@
         <div class="absolute top-0 inset-x-0 p-8 z-10 bg-gradient-to-b from-dark/80 to-transparent pointer-events-none">
             <div class="flex justify-between items-start">
                 <div>
-                    <h2 class="text-2xl font-black italic uppercase tracking-tighter text-white">Neural Knowledge Graph</h2>
+                    <h2 class="text-2xl font-black uppercase tracking-tighter text-white">Neural Knowledge Graph</h2>
                     <p class="text-slate-400 text-xs mt-1 uppercase tracking-widest opacity-60">Autonomous mapping of music node clusters and relational bridges</p>
                 </div>
                 <div class="flex gap-4 pointer-events-auto">
@@ -37,7 +37,7 @@
         <div class="absolute bottom-8 left-8 right-8 pointer-events-none">
             <div class="max-w-xs bg-black/40 backdrop-blur-xl border border-white/5 rounded-2xl p-4 pointer-events-auto shadow-2xl">
                 <div class="text-[10px] font-black text-brand-400 uppercase tracking-widest mb-2">Cluster Intelligence</div>
-                <p class="text-[11px] text-slate-400 leading-relaxed italic">Drag nodes to stabilize clusters. Scroll to zoom deep into metadata hierarchies. Click a node to focus signal.</p>
+                <p class="text-[11px] text-slate-400 leading-relaxed">Drag nodes to stabilize clusters. Scroll to zoom deep into metadata hierarchies. Click a node to focus signal.</p>
             </div>
         </div>
     </div>

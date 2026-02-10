@@ -27,11 +27,11 @@
     {{-- =========================================
          HERO SECTION - FIGMA STYLE (LEFT-ALIGNED)
          ========================================= --}}
-    <section class="pt-40 pb-24 bg-[#0d1117] relative z-10 overflow-hidden">
+    <section class="pt-32 pb-20 bg-[#0d1117] relative z-10 overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-8">
             {{-- Title - Left aligned Massive Typography --}}
-            <div class="max-w-4xl mb-12">
-                <h1 class="text-[56px] md:text-[80px] font-black text-white uppercase leading-[0.95] tracking-tightest mb-6" 
+            <div class="max-w-4xl mb-10">
+                <h1 class="text-[48px] md:text-[64px] font-black text-white uppercase leading-[0.95] tracking-tightest mb-5" 
                     style="font-family: 'Plus Jakarta Sans', sans-serif;">
                     YOUR COMMUNITY<br>
                     DRIVEN MUSIC<br>
@@ -41,14 +41,14 @@
                 {{-- Subtitle Disclaimer --}}
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-[1px] bg-white/20"></div>
-                    <p class="text-white/40 text-[12px] font-bold uppercase tracking-[0.2em]" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <p class="text-white/40 text-[11px] font-bold uppercase tracking-[0.2em]" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                         We are not affiliated with SoundCloud / Spotify
                     </p>
                 </div>
             </div>
             
             {{-- Search Bar - Ultra Premium Pill style --}}
-            <div class="max-w-[850px] mb-12 group">
+            <div class="max-w-[750px] mb-10 group">
                 <form action="{{ route('search') }}" method="GET" class="relative">
                     <div class="absolute inset-y-0 left-6 flex items-center pointer-events-none">
                         <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -59,11 +59,11 @@
                         type="text" 
                         name="q" 
                         placeholder="Search for a song, artist, or genre..." 
-                        class="w-full bg-[#1c2128] border-2 border-white/5 rounded-full pl-16 pr-40 py-6 text-lg text-white placeholder-white/10 focus:outline-none focus:border-blue-500/50 focus:bg-[#252a33] transition-all shadow-2xl shadow-black/50"
+                        class="w-full h-16 bg-[#1c2128] border-2 border-white/5 rounded-full pl-16 pr-40 text-base text-white placeholder-white/10 focus:outline-none focus:border-blue-500/50 focus:bg-[#252a33] transition-all shadow-2xl shadow-black/50"
                         style="font-family: 'Plus Jakarta Sans', sans-serif;"
                     >
                     <div class="absolute right-2 top-2 bottom-2">
-                        <button type="submit" class="btn-figma-primary !h-full !px-8 !py-0 !rounded-full !text-[13px]">
+                        <button type="submit" class="btn-figma-primary !h-full !px-8 !py-0 !rounded-full !text-[12px]">
                             Search
                         </button>
                     </div>
@@ -113,7 +113,6 @@
                 </div>
             </div>
         </div>
-    </section>
         </div>
     </section>
 
@@ -637,7 +636,7 @@
                                 {{-- Floaters --}}
                                 <div class="absolute top-6 left-6">
                                     <div class="flex items-center gap-1">
-                                        <span class="text-white text-[32px] font-black leading-none opacity-40 italic tracking-tighter">{{ sprintf('%02d', $index + 1) }}</span>
+                                        <span class="text-white text-[32px] font-black leading-none opacity-40 tracking-tighter">{{ sprintf('%02d', $index + 1) }}</span>
                                     </div>
                                 </div>
                                 <div class="absolute top-6 right-6">

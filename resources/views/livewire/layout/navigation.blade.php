@@ -24,7 +24,7 @@ new class extends Component
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" wire:navigate class="group">
-                        <span class="text-3xl font-black tracking-tightest text-white uppercase italic group-hover:text-blue-500 transition-colors duration-500" style="font-family: 'Plus Jakarta Sans', sans-serif;">CHAYN<span class="text-blue-500 group-hover:text-white transition-colors duration-500">WIKI</span></span>
+                        <span class="text-3xl font-black tracking-tightest text-white uppercase group-hover:text-blue-500 transition-colors duration-500" style="font-family: 'Plus Jakarta Sans', sans-serif;">CHAYN<span class="text-blue-500 group-hover:text-white transition-colors duration-500">WIKI</span></span>
                     </a>
                 </div>
 
@@ -48,7 +48,7 @@ new class extends Component
                             <div class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-500/20 group-hover:scale-110 transition-transform duration-500">
                                 <svg class="w-3 h-3 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
                             </div>
-                            <div x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name" class="italic"></div>
+                            <div x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
                             <svg class="w-3 h-3 text-white/20 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/></svg>
                         </button>
                         @endauth
@@ -62,18 +62,18 @@ new class extends Component
                     <x-slot name="content">
                         <div class="p-2 space-y-1">
                             @auth
-                            <x-dropdown-link :href="route('settings')" wire:navigate class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 hover:!bg-blue-500/10 hover:!text-blue-500 transition-all italic">
+                            <x-dropdown-link :href="route('settings')" wire:navigate class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 hover:!bg-blue-500/10 hover:!text-blue-500 transition-all">
                                 {{ __('Configuration') }}
                             </x-dropdown-link>
 
-                            <x-dropdown-link :href="route('profile', ['username' => auth()->user()->username])" wire:navigate class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 hover:!bg-blue-500/10 hover:!text-blue-500 transition-all italic">
+                            <x-dropdown-link :href="route('profile', ['username' => auth()->user()->username])" wire:navigate class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 hover:!bg-blue-500/10 hover:!text-blue-500 transition-all">
                                 {{ __('Public Node') }}
                             </x-dropdown-link>
 
                             <div class="h-px bg-white/5 my-1"></div>
 
                             <button wire:click="logout" class="w-full text-start group">
-                                <x-dropdown-link class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 group-hover:!bg-red-500/10 group-hover:!text-red-500 transition-all italic">
+                                <x-dropdown-link class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 group-hover:!bg-red-500/10 group-hover:!text-red-500 transition-all">
                                     {{ __('Terminate Session') }}
                                 </x-dropdown-link>
                             </button>
@@ -110,7 +110,7 @@ new class extends Component
         @auth
         <div class="pt-6 pb-6 border-t border-white/5">
             <div class="px-8 mb-6">
-                <div class="text-[12px] font-black text-white uppercase tracking-widest italic mb-1" x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
+                <div class="text-[12px] font-black text-white uppercase tracking-widest mb-1" x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
                 <div class="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">{{ auth()->user()->email }}</div>
             </div>
 

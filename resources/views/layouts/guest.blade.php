@@ -18,13 +18,13 @@
             <div class="max-w-md w-full mx-auto">
                 <!-- Logo -->
                 <a href="/" class="inline-flex items-center gap-3 mb-16">
-                    <span class="text-2xl font-black text-white tracking-tightest uppercase italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">CHAYN<span class="text-blue-500">WIKI</span></span>
+                    <span class="text-2xl font-black text-white tracking-tightest uppercase" style="font-family: 'Plus Jakarta Sans', sans-serif;">CHAYN<span class="text-blue-500">WIKI</span></span>
                 </a>
 
                 <!-- Welcome Text -->
                 <div class="mb-12 relative">
                     <div class="absolute -left-12 -top-12 w-64 h-64 bg-blue-500/5 rounded-full blur-[100px] -z-10"></div>
-                    <h1 class="text-[56px] lg:text-[72px] font-black text-white mb-6 leading-[0.85] tracking-tightest uppercase italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <h1 class="text-[56px] lg:text-[72px] font-black text-white mb-6 leading-[0.85] tracking-tightest uppercase" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                         WELCOME<br>
                         <span class="text-white/20">BACK NODE</span>
                     </h1>
@@ -69,7 +69,7 @@
                     <div class="flex items-end justify-between gap-6">
                         <div class="flex-1">
                             <span class="px-3 py-1 bg-blue-500 text-[#0d1117] text-[10px] font-black uppercase tracking-[0.3em] inline-block mb-6 shadow-2xl">Verified Access</span>
-                            <h2 class="text-4xl font-black text-white uppercase tracking-tightest mb-2 italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">THE MUSIC HUB</h2>
+                            <h2 class="text-4xl font-black text-white uppercase tracking-tightest mb-2" style="font-family: 'Plus Jakarta Sans', sans-serif;">THE MUSIC HUB</h2>
                             <p class="text-white/40 text-[11px] font-black uppercase tracking-[0.4em]">Synchronizing 1.2M Records</p>
                         </div>
                         <div class="w-16 h-16 rounded-2xl bg-white/5 backdrop-blur-2xl border border-white/10 flex items-center justify-center shadow-2xl group-hover:scale-110 transition-all duration-500">

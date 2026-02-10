@@ -25,14 +25,14 @@ new class extends Component
 
 <section class="space-y-8">
     <header class="mb-10">
-        <h2 class="text-2xl font-black text-red-500 uppercase tracking-tightest italic" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <h2 class="text-2xl font-black text-red-500 uppercase tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">
             TERMINATE NODE <span class="text-white/10 ml-2">/ DESTRUCTIVE</span>
         </h2>
-        <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mt-2 italic">Request permanent disconnection of this node identifier from the global archive.</p>
+        <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mt-2">Request permanent disconnection of this node identifier from the global archive.</p>
     </header>
 
     <div class="p-8 rounded-3xl bg-red-500/[0.03] border border-red-500/10 backdrop-blur-md mb-8">
-        <p class="text-[11px] font-medium text-white/40 leading-relaxed uppercase tracking-wider italic">
+        <p class="text-[11px] font-medium text-white/40 leading-relaxed uppercase tracking-wider">
             {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. This action is irreversible.') }}
         </p>
     </div>
@@ -55,10 +55,10 @@ new class extends Component
         <form wire:submit="deleteUser" class="p-4 bg-[#0d1117] rounded-[2.5rem] overflow-hidden">
             <div class="p-10 card-premium h-auto !bg-[#161b22]/60 backdrop-blur-md rounded-[2.2rem] border-red-500/20 shadow-3xl">
                 <header class="mb-10">
-                    <h2 class="text-3xl font-black text-white uppercase tracking-tightest italic leading-none mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <h2 class="text-3xl font-black text-white uppercase tracking-tightest leading-none mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                         FINAL <span class="text-red-500">CONFIRMATION</span>
                     </h2>
-                    <p class="text-[11px] font-black text-white/30 uppercase tracking-[0.3em] leading-relaxed italic">
+                    <p class="text-[11px] font-black text-white/30 uppercase tracking-[0.3em] leading-relaxed">
                         {{ __('To prevent accidental termination, please enter your node access key to authorize the destruction of this identity.') }}
                     </p>
                 </header>

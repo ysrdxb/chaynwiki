@@ -122,19 +122,19 @@
                         <!-- Stats Mini Grid -->
                         <div class="flex flex-wrap gap-10">
                              <div class="flex flex-col">
-                                <span class="text-white text-3xl font-black tracking-tightest mb-1 italic">{{ number_format($artistStats['views'] ?? 0) }}</span>
+                                <span class="text-white text-3xl font-black tracking-tightest mb-1">{{ number_format($artistStats['views'] ?? 0) }}</span>
                                 <span class="text-[10px] text-white/20 font-black uppercase tracking-[0.3em]">Global Views</span>
                             </div>
                             <div class="flex flex-col">
-                                <span class="text-white text-3xl font-black tracking-tightest mb-1 italic">{{ number_format($artistStats['streams'] ?? 0) }}</span>
+                                <span class="text-white text-3xl font-black tracking-tightest mb-1">{{ number_format($artistStats['streams'] ?? 0) }}</span>
                                 <span class="text-[10px] text-white/20 font-black uppercase tracking-[0.3em]">Streams</span>
                             </div>
                             <div class="flex flex-col">
-                                <span class="text-blue-500 text-3xl font-black tracking-tightest mb-1 italic">{{ number_format($artistStats['impact'] ?? 0, 1) }}</span>
+                                <span class="text-blue-500 text-3xl font-black tracking-tightest mb-1">{{ number_format($artistStats['impact'] ?? 0, 1) }}</span>
                                 <span class="text-[10px] text-white/20 font-black uppercase tracking-[0.3em]">Impact Radius</span>
                             </div>
                              <div class="flex flex-col">
-                                <span class="text-white text-3xl font-black tracking-tightest mb-1 italic">#{{ number_format($artistStats['rank'] ?? 0) }}</span>
+                                <span class="text-white text-3xl font-black tracking-tightest mb-1">#{{ number_format($artistStats['rank'] ?? 0) }}</span>
                                 <span class="text-[10px] text-white/20 font-black uppercase tracking-[0.3em]">World Rank</span>
                             </div>
                         </div>

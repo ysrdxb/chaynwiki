@@ -114,17 +114,17 @@
                         <div class="flex flex-wrap items-center justify-center md:justify-start gap-8">
                              <div class="flex flex-col">
                                 <span class="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">Track Count</span>
-                                <span class="text-2xl font-black text-white italic">{{ $playlist->track_count ?? '0' }}</span>
+                                <span class="text-2xl font-black text-white">{{ $playlist->track_count ?? '0' }}</span>
                             </div>
                             <div class="w-px h-8 bg-white/10 hidden md:block"></div>
                             <div class="flex flex-col">
                                 <span class="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">Total Impact</span>
-                                <span class="text-2xl font-black text-white italic">{{ number_format($article->view_count ?? 0) }}</span>
+                                <span class="text-2xl font-black text-white">{{ number_format($article->view_count ?? 0) }}</span>
                             </div>
                              <div class="w-px h-8 bg-white/10 hidden md:block"></div>
                             <div class="flex flex-col">
                                 <span class="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">Last Updated</span>
-                                <span class="text-2xl font-black text-white italic">{{ optional($article->updated_at)->format('M d, Y') ?? 'Unknown' }}</span>
+                                <span class="text-2xl font-black text-white">{{ optional($article->updated_at)->format('M d, Y') ?? 'Unknown' }}</span>
                             </div>
                         </div>
                      </div>
@@ -139,13 +139,13 @@
                             @if(!empty($article->content))
                                 {!! Str::markdown($article->content) !!}
                             @else
-                                <p class="text-white/30 italic">No playlist description available.</p>
+                                <p class="text-white/30">No playlist description available.</p>
                             @endif
                         </div>
                     </article>
 
                     <section>
-                        <h3 class="text-xl font-black text-white italic uppercase tracking-tighter mb-6 flex items-center gap-4">
+                        <h3 class="text-xl font-black text-white uppercase tracking-tighter mb-6 flex items-center gap-4">
                             <span class="w-8 h-px bg-green-500"></span>
                             Stream Pulse
                         </h3>
@@ -178,7 +178,7 @@
                             <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017V14H17.017C15.9124 14 15.017 13.1046 15.017 12V9C15.017 7.89543 15.9124 7 17.017 7H20.017V10H18.017V12H20.017C21.1216 12 22.017 12.8954 22.017 14V21H14.017ZM3 21V18C3 16.8954 3.89543 16 5 16H8V14H6C4.89543 14 4 13.1046 4 12V9C4 7.89543 4.89543 7 6 7H9V10H7V12H9C10.1046 12 11 12.8954 11 14V21H3Z"/></svg>
                         </div>
                          <h3 class="text-xs font-bold text-[#38bdf8] uppercase tracking-widest mb-4 relative z-10">Curator Note</h3>
-                         <p class="text-white/70 text-sm leading-relaxed italic relative z-10">
+                         <p class="text-white/70 text-sm leading-relaxed relative z-10">
                             "{{ $playlist?->curator_note ?: 'This collection represents a specific moment in music history, curated for the ChaynWiki archive.' }}"
                         </p>
                     </div>
