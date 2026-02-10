@@ -131,17 +131,10 @@ class HomeController extends Controller
         
         // Normalize to 0-100 scale, with minimum of 20 for visual appeal
         $musicWeather = [
-            'submission_velocity' => min(100, max(20, ($newArticlesWeek / max($maxForNormalization * 0.05, 1)) * 100)),
-            'edit_activity' => min(100, max(20, ($editsToday / max($maxForNormalization * 0.05, 1)) * 100)),
-            'community_consensus' => min(100, max(20, 100 - (($pendingReviews ?? 0) / max($maxForNormalization * 0.05, 1)) * 50)),
-            'trend_intensity' => min(100, max(20, (($viralArtists + $trendingSongs) / max($maxForNormalization * 0.2, 1)) * 100)),
-            // Raw counts for display
-            'raw' => [
-                'submission_velocity' => $newArticlesWeek,
-                'edit_activity' => $editsToday,
-                'community_consensus' => 85, // Static for now until consensus logic is deeper
-                'trend_intensity' => $trendingSongs,
-            ]
+            'rising_genres' => min(100, max(20, ($newArticlesWeek / max($maxForNormalization * 0.05, 1)) * 100)),
+            'trending_songs' => min(100, max(20, ($editsToday / max($maxForNormalization * 0.05, 1)) * 100)),
+            'declining_trends' => min(100, max(20, 100 - (($pendingReviews ?? 0) / max($maxForNormalization * 0.05, 1)) * 50)),
+            'viral_artists' => min(100, max(20, (($viralArtists + $trendingSongs) / max($maxForNormalization * 0.2, 1)) * 100)),
         ];
 
         // 5. Featured Content (The Beat of the Moment - High Trending Score)

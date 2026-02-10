@@ -55,7 +55,7 @@
                         navy: { 900: '#0d1117', 950: '#0a0a0f' }
                     },
                     fontFamily: {
-                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        sans: ['MODERNIZ', '"Plus Jakarta Sans"', 'sans-serif'],
                     },
                     letterSpacing: {
                         'tightest': '-0.06em',

@@ -16,75 +16,96 @@ new class extends Component
     }
 }; ?>
 
-<nav x-data="{ open: false }" class="bg-black/60 border-b border-white/5 backdrop-blur-2xl fixed top-0 w-full z-50">
+<nav x-data="{ open: false }" class="bg-[#0a0a0a] border-b border-white/5 fixed top-0 w-full z-50">
     <!-- Primary Navigation Menu -->
-    <div class="max-w-[1400px] mx-auto px-8">
-        <div class="flex justify-between h-20">
-            <div class="flex items-center gap-12">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" wire:navigate class="group">
-                        <span class="text-3xl font-black tracking-tightest text-white uppercase group-hover:text-blue-500 transition-colors duration-500" style="font-family: 'Plus Jakarta Sans', sans-serif;">CHAYN<span class="text-blue-500 group-hover:text-white transition-colors duration-500">WIKI</span></span>
-                    </a>
-                </div>
+    <div class="max-w-[1500px] mx-auto px-12">
+        <div class="flex items-center justify-between h-20">
+            <!-- Left: Logo -->
+            <div class="shrink-0">
+                <a href="{{ route('dashboard') }}" wire:navigate class="group">
+                    <span class="text-[32px] font-[950] text-white uppercase leading-none inline-block transform scale-y-110" 
+                        style="font-family: 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.08em; font-weight: 1000;">CHAYNWIKI</span>
+                </a>
+            </div>
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:flex h-full items-center">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate class="text-[10px] font-black uppercase tracking-[0.3em] h-full flex items-center border-b-2 border-transparent hover:border-blue-500/50 transition-all duration-500 pt-1">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <a href="{{ route('wiki.index') }}" wire:navigate class="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-white transition-colors">
-                        ARCHIVE
-                    </a>
+            <!-- Middle: Search Bar (Compact) -->
+            <div class="hidden lg:flex flex-1 justify-center max-w-xl px-12">
+                <div class="relative w-72 group">
+                    <input type="text" placeholder="Search" class="w-full h-11 bg-[#161616] border-none rounded-full px-6 text-[14px] text-white/40 placeholder-white/30 focus:outline-none focus:ring-1 focus:ring-white/10 transition-all font-medium">
+                    <div class="absolute right-1 top-1 bottom-1 w-9 h-9 bg-[#2563eb] rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    </div>
                 </div>
             </div>
 
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="60">
-                    <x-slot name="trigger">
-                        @auth
-                        <button class="inline-flex items-center gap-3 px-4 py-2 border border-white/5 rounded-xl bg-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-white/60 hover:text-white hover:bg-white/10 transition-all duration-500 group">
-                            <div class="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center border border-blue-500/20 group-hover:scale-110 transition-transform duration-500">
-                                <svg class="w-3 h-3 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
-                            </div>
-                            <div x-data="{{ json_encode(['name' => auth()->user()->name]) }}" x-text="name" x-on:profile-updated.window="name = $event.detail.name"></div>
-                            <svg class="w-3 h-3 text-white/20 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"/></svg>
-                        </button>
-                        @endauth
-                        @guest
-                        <a href="{{ route('login') }}" class="btn-figma-primary !py-2 !px-6 !text-[10px]">
-                            LOG_IN
-                        </a>
-                        @endguest
-                    </x-slot>
+            <!-- Right: Nav Links + Avatar -->
+            <div class="flex items-center gap-10">
+                <nav class="hidden space-x-8 lg:flex items-center">
+                    <a href="{{ route('wiki.index', ['category' => 'artist']) }}" wire:navigate class="text-[14px] font-medium text-white/40 hover:text-white transition-colors">
+                        Artists
+                    </a>
+                    <a href="{{ route('wiki.index', ['category' => 'genre']) }}" wire:navigate class="text-[14px] font-medium text-white/40 hover:text-white transition-colors">
+                        Genres
+                    </a>
+                    <a href="#" class="text-[14px] font-medium text-white/40 hover:text-white transition-colors">
+                        lyrics
+                    </a>
+                    <a href="#" class="text-[14px] font-medium text-white/40 hover:text-white transition-colors">
+                        Playlist
+                    </a>
+                </nav>
 
-                    <x-slot name="content">
-                        <div class="p-2 space-y-1">
+                <!-- Avatar Dropdown -->
+                <div class="ms-4">
+                    <x-dropdown align="right" width="60">
+                        <x-slot name="trigger">
                             @auth
-                            <x-dropdown-link :href="route('settings')" wire:navigate class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 hover:!bg-blue-500/10 hover:!text-blue-500 transition-all">
-                                {{ __('Configuration') }}
-                            </x-dropdown-link>
-
-                            <x-dropdown-link :href="route('profile', ['username' => auth()->user()->username])" wire:navigate class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 hover:!bg-blue-500/10 hover:!text-blue-500 transition-all">
-                                {{ __('Public Node') }}
-                            </x-dropdown-link>
-
-                            <div class="h-px bg-white/5 my-1"></div>
-
-                            <button wire:click="logout" class="w-full text-start group">
-                                <x-dropdown-link class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 group-hover:!bg-red-500/10 group-hover:!text-red-500 transition-all">
-                                    {{ __('Terminate Session') }}
-                                </x-dropdown-link>
+                            <button class="flex items-center group transition-all duration-500">
+                                <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white/10 transition-all overflow-hidden p-0.5">
+                                    @if(auth()->user()->profile_photo_url)
+                                        <img src="{{ auth()->user()->profile_photo_url }}" class="w-full h-full rounded-full object-cover">
+                                    @else
+                                        <div class="w-full h-full rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-white/40" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+                                        </div>
+                                    @endif
+                                </div>
                             </button>
                             @endauth
-                        </div>
-                    </x-slot>
-                </x-dropdown>
+                            @guest
+                            <a href="{{ route('login') }}" class="btn-figma-primary !py-2 !px-6 !text-[10px]">
+                                Log In
+                            </a>
+                            @endguest
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <div class="p-2 space-y-1">
+                                @auth
+                                <x-dropdown-link :href="route('settings')" wire:navigate class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 hover:!bg-blue-500/10 hover:!text-blue-500 transition-all">
+                                    {{ __('Settings') }}
+                                </x-dropdown-link>
+
+                                <x-dropdown-link :href="route('profile', ['username' => auth()->user()->username])" wire:navigate class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 hover:!bg-blue-500/10 hover:!text-blue-500 transition-all">
+                                    {{ __('Profile') }}
+                                </x-dropdown-link>
+
+                                <div class="h-px bg-white/5 my-1"></div>
+
+                                <button wire:click="logout" class="w-full text-start group">
+                                    <x-dropdown-link class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 group-hover:!bg-red-500/10 group-hover:!text-red-500 transition-all">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </button>
+                                @endauth
+                            </div>
+                        </x-slot>
+                    </x-dropdown>
+                </div>
             </div>
 
             <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
+            <div class="-me-2 flex items-center lg:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-3 rounded-xl text-white/40 hover:text-white hover:bg-white/5 transition duration-500 focus:outline-none">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
@@ -102,7 +123,7 @@ new class extends Component
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             <a href="{{ route('wiki.index') }}" wire:navigate class="block px-4 py-4 rounded-2xl text-[11px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-white hover:bg-white/5 transition-all">
-                ARCHIVE
+                Library
             </a>
         </div>
 
@@ -116,23 +137,23 @@ new class extends Component
 
             <div class="space-y-2 px-4">
                 <x-responsive-nav-link :href="route('settings')" wire:navigate class="rounded-2xl !text-[10px] !font-black !uppercase !tracking-[0.3em] !py-4">
-                    {{ __('Configuration') }}
+                    {{ __('Settings') }}
                 </x-responsive-nav-link>
 
                 <x-responsive-nav-link :href="route('profile', ['username' => auth()->user()->username])" wire:navigate class="rounded-2xl !text-[10px] !font-black !uppercase !tracking-[0.3em] !py-4">
-                    {{ __('Public Node') }}
+                    {{ __('Profile') }}
                 </x-responsive-nav-link>
 
                 <button wire:click="logout" class="w-full text-start">
                     <x-responsive-nav-link class="rounded-2xl !text-[10px] !font-black !uppercase !tracking-[0.3em] !py-4 !text-red-500">
-                        {{ __('Terminate Session') }}
+                        {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </button>
             </div>
         </div>
         @else
         <div class="pt-6 pb-6 border-t border-white/5 px-4">
-            <a href="{{ route('login') }}" class="block px-4 py-4 rounded-2xl text-[11px] font-black uppercase tracking-[0.3em] text-blue-500 bg-blue-500/10 text-center">LOGIN_NODE</a>
+            <a href="{{ route('login') }}" class="block px-4 py-4 rounded-2xl text-[11px] font-black uppercase tracking-[0.3em] text-blue-500 bg-blue-500/10 text-center">Log In</a>
         </div>
         @endauth
     </div>

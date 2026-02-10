@@ -2,7 +2,7 @@
     <div class="relative max-w-[1400px] mx-auto px-8 pt-32 pb-24 flex flex-col items-center">
         {{-- Giant Brand Name - Centered --}}
         <h2 class="w-full text-[100px] sm:text-[140px] md:text-[180px] lg:text-[220px] font-black text-white uppercase leading-none mb-16 select-none text-center tracking-[-0.05em]" 
-            style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900;">
+            style="font-weight: 900;">
             CHAYNWIKI
         </h2>
 
@@ -17,7 +17,7 @@
 
         {{-- Copyright --}}
         <div class="text-center">
-            <p class="text-white/20 text-[13px] font-medium" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+            <p class="text-white/20 text-[13px] font-medium">
                 ChaynWiki - All rights reserved.
             </p>
         </div>
