@@ -21,7 +21,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
                     </svg>
-                    Initiate Analysis
+                    Analyze lyrics
                 </button>
             @endif
         </div>
@@ -37,8 +37,8 @@
                         </svg>
                     </div>
                 </div>
-                <h4 class="text-xl font-display font-black text-white mb-3 uppercase tracking-widest">Decoding Signal...</h4>
-                <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] max-w-sm leading-relaxed">Extracting thematic anchors and harmonic structures from lyrical payload.</p>
+                <h4 class="text-xl font-display font-black text-white mb-3 uppercase tracking-widest">Analyzing...</h4>
+                <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.2em] max-w-sm leading-relaxed">Extracting thematic elements and structures from lyrical content.</p>
             </div>
         @elseif($analysis)
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
@@ -76,7 +76,7 @@
                         </div>
                     </div>
 
-                    <!-- Thematic Nodes -->
+                    <!-- Thematic categories -->
                     <div>
                         <div class="text-[10px] font-black uppercase text-brand-500 tracking-[0.4em] mb-6">Thematic Clustors</div>
                         <div class="flex flex-wrap gap-4">
@@ -116,7 +116,7 @@
                                 <div class="p-6 glass border border-white/5 rounded-2xl group hover:bg-white/[0.02] transition-colors">
                                     <div class="flex items-center justify-between mb-4">
                                         <span class="text-[10px] font-black text-white uppercase tracking-widest">{{ $device['type'] }}</span>
-                                        <span class="text-[8px] text-slate-600 font-black uppercase tracking-[0.2em]">Node Path: {{ $device['line'] ?? '??' }}</span>
+                                        <span class="text-[8px] text-slate-600 font-black uppercase tracking-[0.2em]">Line path: {{ $device['line'] ?? '??' }}</span>
                                     </div>
                                     <p class="text-sm text-slate-400 italic font-medium leading-relaxed">"{{ $device['example'] }}"</p>
                                 </div>
@@ -140,7 +140,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
                     </svg>
-                    Re-scan Payload
+                    Analyze again
                 </button>
             </div>
         @endif

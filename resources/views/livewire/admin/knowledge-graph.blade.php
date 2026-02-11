@@ -5,7 +5,7 @@
             <div class="flex justify-between items-start">
                 <div>
                     <h2 class="text-2xl font-black uppercase tracking-tighter text-white">Neural Knowledge Graph</h2>
-                    <p class="text-slate-400 text-xs mt-1 uppercase tracking-widest opacity-60">Autonomous mapping of music node clusters and relational bridges</p>
+                    <p class="text-slate-400 text-xs mt-1 uppercase tracking-widest opacity-60">Mapping music relationships and connections</p>
                 </div>
                 <div class="flex gap-4 pointer-events-auto">
                     <button @click="fullScreen = !fullScreen" class="p-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all">
@@ -37,7 +37,7 @@
         <div class="absolute bottom-8 left-8 right-8 pointer-events-none">
             <div class="max-w-xs bg-black/40 backdrop-blur-xl border border-white/5 rounded-2xl p-4 pointer-events-auto shadow-2xl">
                 <div class="text-[10px] font-black text-brand-400 uppercase tracking-widest mb-2">Cluster Intelligence</div>
-                <p class="text-[11px] text-slate-400 leading-relaxed">Drag nodes to stabilize clusters. Scroll to zoom deep into metadata hierarchies. Click a node to focus signal.</p>
+                <p class="text-[11px] text-slate-400 leading-relaxed">Drag items to stabilize clusters. Scroll to zoom deep into metadata hierarchies. Click an item to focus.</p>
             </div>
         </div>
     </div>
@@ -78,7 +78,7 @@
             .linkDirectionalArrowRelPos(1)
             .backgroundColor('#030308')
             .onNodeClick(node => {
-                // Focus on node
+                // Focus on item
                 Graph.centerAt(node.x, node.y, 1000);
                 Graph.zoom(4, 1000);
             })

@@ -5,7 +5,7 @@
             {{-- Header Refined --}}
             <div class="mb-16">
                 <div class="flex items-center gap-4 mb-4">
-                    <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] font-black text-blue-500 uppercase tracking-widest">Node Configuration</span>
+                    <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] font-black text-blue-500 uppercase tracking-widest">Profile settings</span>
                     <div class="h-[1px] flex-1 bg-white/5"></div>
                 </div>
                 <h1 class="text-[64px] font-black text-white uppercase tracking-tightest leading-[0.85]" style="font-family: 'Plus Jakarta Sans', sans-serif;">CONTRIBUTOR <br/> <span class="text-blue-500">SETTINGS</span> / CONFIG</h1>

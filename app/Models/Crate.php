@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Crate extends Model
 {
+    protected $table = 'user_crates';
+
     protected $fillable = ['user_id', 'name', 'description', 'color_accent'];
 
     public function user()

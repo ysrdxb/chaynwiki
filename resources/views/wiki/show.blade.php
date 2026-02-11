@@ -43,22 +43,25 @@
     <div class="max-w-[1400px] w-full px-8 flex items-start gap-12 pt-32 pb-16">
         
         <!-- Sidebar Navigation -->
-        <aside class="hidden lg:block w-64 sticky top-32 shrink-0 space-y-2">
-            <a href="{{ route('home') }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold text-white/50 hover:text-white hover:bg-white/5 transition-all">
-                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <aside class="hidden lg:block w-72 sticky top-32 shrink-0 space-y-2 pr-8 border-r border-white/5">
+            <div class="mb-10 px-4">
+                <span class="text-white/20 text-[11px] font-bold text-blue-400 uppercase tracking-widest">Explore All</span>
+            </div>
+            
+            <a href="{{ route('home') }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[14px] font-bold text-white/50 hover:text-white hover:bg-white/5 transition-all">
+                <div class="w-9 h-9 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center group-hover:bg-blue-500 group-hover:scale-110 transition-all shadow-lg shadow-blue-500/10">
+                    <svg class="w-4 h-4 text-blue-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                </div>
                 Home
             </a>
 
-            <div class="h-px bg-white/5 mx-4 my-2"></div>
-
-            <a href="{{ route('wiki.index') }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold transition-all text-white/50 hover:text-white hover:bg-white/5">
-                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
-                All Records
-            </a>
+            <div class="h-px bg-white/5 mx-4 my-6"></div>
             
             @foreach($categories as $key => $cat)
-                <a href="{{ route('wiki.index', ['category' => $key]) }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold transition-all text-white/50 hover:text-white hover:bg-white/5">
-                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
+                <a href="{{ route('wiki.index', ['category' => $key]) }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[14px] font-bold transition-all {{ $article->category === $key ? 'bg-blue-500/10 text-white border border-blue-500/20 shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                    <div class="w-9 h-9 rounded-full {{ $article->category === $key ? 'bg-blue-500 shadow-lg shadow-blue-500/20' : 'bg-white/5' }} flex items-center justify-center transition-all group-hover:scale-110">
+                        <svg class="w-4 h-4 {{ $article->category === $key ? 'text-white' : 'text-blue-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
+                    </div>
                     {{ $cat['label'] }}
                 </a>
             @endforeach
@@ -69,32 +72,41 @@
              <!-- Top Action Row -->
              <div class="flex justify-between items-center mb-8">
                  <!-- Breadcrumbs -->
-                 <nav class="flex items-center gap-2 text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">
+                 <nav class="flex items-center gap-2 text-[11px] font-bold text-white/30 uppercase tracking-widest">
                     <a href="{{ route('wiki.index', ['category' => $article->category]) }}" class="hover:text-blue-400 transition-colors">{{ ucfirst($article->category) }}</a>
                     <span>/</span>
                     <span class="text-white">{{ Str::limit($article->title, 30) }}</span>
                 </nav>
 
-                <div class="flex items-center gap-4">
-                    <a href="{{ route('wiki.edit', $article) }}" class="text-xs font-bold text-white/50 hover:text-white uppercase tracking-wider transition-colors">Edit</a>
+                <div class="flex items-center gap-6">
+                    <a href="{{ route('wiki.edit', $article) }}" class="flex items-center gap-2 text-[11px] font-bold text-white/40 hover:text-white uppercase tracking-widest transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                        Edit Topic
+                    </a>
                 </div>
             </div>
 
             <!-- Hero Area -->
-            <div class="relative w-full aspect-[21/9] rounded-[2rem] overflow-hidden mb-10 border border-white/5 group">
-                 <img src="{{ $featured_image }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover group-hover:scale-105 transition duration-1000">
-                 <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] to-transparent opacity-80"></div>
+            <div class="relative w-full aspect-[21/9] rounded-[32px] overflow-hidden mb-12 border border-white/10 group shadow-3xl bg-[#0d1117]">
+                 <img src="{{ $featured_image }}" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;" class="w-full h-full object-cover group-hover:scale-105 transition duration-1000 opacity-80">
+                 <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-[#0d1117]/40 to-transparent"></div>
                  
-                 <div class="absolute bottom-0 left-0 p-10 w-full">
-                     <span class="px-3 py-1 bg-blue-400 text-[#0d1117] rounded-lg text-[10px] font-black uppercase tracking-widest inline-block mb-4">
-                        {{ ucfirst($article->category) }}
+                 <div class="absolute bottom-0 left-0 p-12 w-full">
+                     <span class="px-3 py-1 bg-blue-500 text-[#0d1117] rounded-lg text-[10px] font-black uppercase tracking-widest inline-block mb-6 shadow-lg shadow-blue-500/20">
+                        {{ ucfirst($article->category) }} Topic
                     </span>
-                    <h1 class="text-5xl lg:text-6xl font-black text-white uppercase tracking-tighter mb-4 leading-none">
+                    <h1 class="text-[52px] lg:text-[72px] font-black text-white uppercase leading-[0.95] tracking-tighter mb-6" style="font-family: 'Moderniz', sans-serif;">
                         {{ $article->title }}
                     </h1>
-                    <div class="flex items-center gap-6 text-xs font-bold text-white/60">
-                         <span>Start Date: {{ optional($article->created_at)->format('M d, Y') }}</span>
-                         <span>Views: {{ number_format($article->view_count ?? 0) }}</span>
+                    <div class="flex items-center gap-8 text-[13px] font-bold text-white/60">
+                         <div class="flex items-center gap-2">
+                             <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                             Record Date: {{ optional($article->created_at)->format('M d, Y') }}
+                         </div>
+                         <div class="flex items-center gap-2">
+                             <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                             {{ number_format($article->view_count ?? 0) }} Views
+                         </div>
                     </div>
                  </div>
             </div>
@@ -102,18 +114,29 @@
             <div class="flex flex-col xl:flex-row gap-12">
                 <!-- Article Content -->
                 <div class="flex-1 min-w-0 space-y-12">
-                    <article class="prose prose-invert prose-lg max-w-none">
-                        <div class="article-content text-white/70 text-base leading-relaxed">
-                            @if(!empty($article->content))
-                                {!! Str::markdown($article->content) !!}
-                            @else
-                                <p class="text-white/50 text-sm">This record is still being authored.</p>
-                            @endif
+                    <section>
+                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+                            <h2 class="text-3xl font-black text-white uppercase tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Analysis</h2>
                         </div>
-                    </article>
+                        <article class="prose prose-invert prose-lg max-w-none">
+                            <div class="article-content text-white/70 text-base leading-relaxed">
+                                @if(!empty($article->content))
+                                    {!! Str::markdown($article->content) !!}
+                                @else
+                                    <div class="py-12 text-center rounded-3xl border border-dashed border-white/5 bg-white/[0.01]">
+                                        <p class="text-white/20 text-[12px] font-bold uppercase tracking-widest">No detailed classification data synchronized yet</p>
+                                    </div>
+                                @endif
+                            </div>
+                        </article>
+                    </section>
                     
-                    <section class="border-t border-white/5 pt-10">
-                        <h3 class="text-xl font-bold text-white mb-6">Discussion</h3>
+                    <section class="border-t border-white/5 pt-16">
+                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+                            <h2 class="text-3xl font-black text-white uppercase tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Discussion</h2>
+                        </div>
                         <livewire:article.comments :article="$article" />
                     </section>
                 </div>
@@ -121,8 +144,8 @@
                 <!-- Right Sidebar (Relevant Data) -->
                 <aside class="w-full xl:w-80 space-y-6 shrink-0">
                     <!-- Quick Facts (Data) -->
-                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6">
-                        <h3 class="text-xs font-bold text-white/40 uppercase tracking-widest mb-6">Quick Facts</h3>
+                    <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
+                        <h3 class="text-[11px] font-bold text-white/40 uppercase tracking-widest mb-6">Quick facts</h3>
                         <div class="space-y-4">
                             <div class="flex items-center justify-between py-2 border-b border-white/5">
                                 <span class="text-sm text-white/50 font-medium">Category</span>
@@ -133,7 +156,7 @@
                                 <span class="text-sm text-white font-bold capitalize">{{ $article->status ?? 'Published' }}</span>
                             </div>
                             <div class="flex items-center justify-between py-2 border-b border-white/5">
-                                <span class="text-sm text-white/50 font-medium">Last Updated</span>
+                                <span class="text-sm text-white/50 font-medium">Last updated</span>
                                 <span class="text-sm text-white font-bold">{{ optional($article->updated_at)->diffForHumans() }}</span>
                             </div>
                              <div class="flex items-center justify-between py-2 border-b border-white/5">
@@ -144,12 +167,12 @@
                     </div>
 
                     <!-- Actions -->
-                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6 flex flex-col gap-4">
-                        <div><livewire:article.bookmark-button :article="$article" /></div>
+                    <div class="card-premium-unified !bg-[#161b22]/40 !p-8 flex flex-col gap-6 shadow-3xl">
+                        <div class="group"><livewire:article.bookmark-button :article="$article" /></div>
                          @auth
                             @if($article->user_id === auth()->id())
-                                <a href="{{ route('wiki.edit', $article) }}" class="flex items-center justify-center w-full py-3 rounded-xl border border-white/10 text-xs font-bold text-white uppercase tracking-wider hover:bg-white/5 transition-all">
-                                    Edit Article
+                                <a href="{{ route('wiki.edit', $article) }}" class="flex items-center justify-center w-full py-4 rounded-full border border-white/10 text-[13px] font-bold text-white uppercase tracking-widest hover:bg-white/5 hover:border-blue-500/30 transition-all shadow-xl">
+                                    Edit Topic
                                 </a>
                             @endif
                         @endauth
@@ -157,29 +180,29 @@
 
                     <!-- Contributor -->
                     @if($article->user)
-                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6">
-                        <h3 class="text-xs font-bold text-white/40 uppercase tracking-widest mb-4">Created By</h3>
+                    <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
+                        <h3 class="text-[11px] font-bold text-white/40 uppercase tracking-widest mb-6">Created by</h3>
                         <a href="{{ route('profile', $article->user->username) }}" class="flex items-center gap-4 group">
-                            <div class="w-10 h-10 rounded-full overflow-hidden border border-white/10">
-                                @if($article->user->avatar)
-                                    <img src="{{ $article->user->avatar }}" class="w-full h-full object-cover">
-                                @else
-                                    <div class="w-full h-full bg-blue-400/20 flex items-center justify-center text-blue-400 font-bold">
-                                        {{ strtoupper(substr($article->user->name, 0, 1)) }}
-                                    </div>
-                                @endif
+                            <div class="w-12 h-12 rounded-full p-0.5 bg-gradient-to-br from-white/10 to-transparent group-hover:from-blue-500/50 transition-all duration-500">
+                                <div class="w-full h-full rounded-full overflow-hidden border border-white/10 bg-[#0d1117] flex items-center justify-center">
+                                    @if($article->user->avatar)
+                                        <img src="{{ $article->user->avatar }}" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
+                                    @else
+                                        <span class="text-sm text-white font-bold">{{ strtoupper(substr($article->user->name, 0, 1)) }}</span>
+                                    @endif
+                                </div>
                             </div>
                             <div>
-                                <p class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
-                                <p class="text-xs text-white/30">{{ optional($article->created_at)->format('M Y') }}</p>
+                                <p class="text-[15px] font-bold text-white group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
+                                <p class="text-[11px] text-white/30 font-medium uppercase tracking-widest">{{ optional($article->created_at)->format('M d, Y') }}</p>
                             </div>
                         </a>
                     </div>
                     @endif
 
                     <!-- TOC -->
-                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6">
-                        <h3 class="text-xs font-bold text-white/40 uppercase tracking-widest mb-4">On This Page</h3>
+                    <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
+                        <h3 class="text-[11px] font-bold text-white/40 uppercase tracking-widest mb-6">On this page</h3>
                          <x-table-of-contents :content="$article->content ?? ''" />
                     </div>
                 </aside>

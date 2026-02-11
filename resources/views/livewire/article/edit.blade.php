@@ -11,7 +11,7 @@
                 Modify Registry: <span class="text-[#38bdf8]">{{ $article->title }}</span>
             </h1>
             <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">
-                Authorized revision sequence for {{ $article->category }} node
+                Revision for {{ $article->category }} topic
             </p>
         </div>
 

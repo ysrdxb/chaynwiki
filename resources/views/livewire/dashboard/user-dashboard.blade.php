@@ -13,7 +13,7 @@
          x-transition:enter-end="opacity-100 translate-y-0">
         
         {{-- Profile Header Refined --}}
-        <div class="card-premium !bg-[#161b22]/60 backdrop-blur-md !p-10 relative overflow-hidden group border-white/5 hover:border-blue-500/20 transition-all duration-700">
+        <div class="card-premium-unified !p-10 relative overflow-hidden group">
             <div class="absolute inset-0 bg-gradient-to-br from-blue-500/[0.03] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
             
             <div class="relative z-10 flex flex-col md:flex-row items-center gap-10">
@@ -22,45 +22,45 @@
                     <div class="w-40 h-40 rounded-[2.5rem] p-1 bg-gradient-to-br from-white/10 to-transparent group-hover/avatar:from-blue-500/50 transition-all duration-500 shadow-3xl">
                         <div class="w-full h-full rounded-[2.2rem] bg-[#0d1117] flex items-center justify-center overflow-hidden border border-white/5">
                              @if($user->avatar)
-                                <img src="{{ $user->avatar }}" class="w-full h-full object-cover grayscale group-hover/avatar:grayscale-0 group-hover/avatar:scale-110 transition-all duration-700">
+                                <img src="{{ $user->avatar }}" class="w-full h-full object-cover grayscale group-hover/avatar:grayscale-0 group-hover/avatar:scale-110 transition-all duration-700" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
                             @else
-                                <span class="text-7xl font-black text-white/5 select-none transition-all duration-700 group-hover/avatar:text-blue-500 group-hover/avatar:scale-110" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ substr($user->name, 0, 1) }}</span>
+                                <span class="text-7xl font-bold text-white/5 select-none transition-all duration-700 group-hover/avatar:text-blue-500 group-hover/avatar:scale-110">{{ substr($user->name, 0, 1) }}</span>
                             @endif
                         </div>
                     </div>
-                    <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-blue-500 border-[3px] border-[#161b22] text-white text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-xl shadow-3xl group-hover/avatar:scale-110 transition-transform duration-500">
-                        RANK {{ $user->level }}
+                    <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-blue-500 border-[3px] border-[#161b22] text-white text-[11px] font-bold uppercase tracking-wider px-4 py-1.5 rounded-xl shadow-3xl group-hover/avatar:scale-110 transition-transform duration-500">
+                        LEVEL {{ $user->level }}
                     </div>
                 </div>
 
                 {{-- User Info Refined --}}
                 <div class="flex-1 text-center md:text-left">
                     <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-4">
-                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[10px] font-black text-blue-500 uppercase tracking-widest">Authorized Session</span>
-                        <span class="text-white/20 text-[10px] font-black uppercase tracking-[0.3em]">Established {{ $user->created_at->format('Y') }}</span>
+                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[11px] font-bold text-blue-400 uppercase tracking-widest">Active Member</span>
+                        <span class="text-white/40 text-[13px] font-medium">Joined in {{ $user->created_at->format('Y') }}</span>
                     </div>
-                    <h1 class="text-[54px] md:text-[72px] font-black text-white uppercase tracking-tightest leading-[0.85] mb-6" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <h1 class="text-[54px] md:text-[64px] font-black text-white uppercase leading-[1.0] tracking-tighter mb-6" style="font-family: 'Moderniz', sans-serif;">
                         {{ $user->name }}
                     </h1>
                     
                     <div class="flex flex-wrap justify-center md:justify-start gap-8 items-center">
-                        <div class="flex items-center gap-3 text-[11px] font-black text-white/40 uppercase tracking-[0.3em]">
-                            <div class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+                        <div class="flex items-center gap-3 text-[13px] font-bold text-white/40 uppercase tracking-widest">
+                            <div class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)] animate-pulse"></div>
                             {{ $user->rank_name ?? 'Senior Contributor' }}
                         </div>
-                        <div class="flex items-center gap-3 text-[11px] font-black text-white/40 uppercase tracking-[0.3em]">
+                        <div class="flex items-center gap-3 text-[13px] font-bold text-white/40 uppercase tracking-widest">
                              <svg class="w-4 h-4 text-blue-500/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>
-                             {{ $user->location ?? 'GLOBAL_NODE' }}
+                             {{ $user->location ?? 'Global' }}
                         </div>
                     </div>
                 </div>
 
                 {{-- Action Button Refined --}}
                 <div class="shrink-0 pt-6 md:pt-0">
-                     <a href="{{ route('settings') }}" wire:navigate class="btn-figma-secondary !px-8 !py-4 shadow-3xl">
-                        <span>Node Settings</span>
-                        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shadow-inner group-hover:rotate-90 transition-transform duration-700">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                     <a href="{{ route('settings') }}" wire:navigate class="flex items-center gap-4 px-8 py-3 rounded-full border border-white/20 text-white text-[16px] font-semibold hover:bg-white/5 transition-all group shadow-2xl shadow-blue-500/10">
+                        <span>Profile Settings</span>
+                        <div class="w-7 h-7 bg-[#3b82f6] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         </div>
                     </a>
                 </div>
@@ -70,80 +70,85 @@
         {{-- Stats Grid Refined --}}
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             {{-- Reputation Refined --}}
-            <div class="card-premium h-auto !bg-[#161b22]/40 backdrop-blur-sm !p-8 group overflow-hidden border-white/5 hover:border-blue-500/20 transition-all duration-500 shadow-3xl">
+            <div class="card-premium-unified h-auto !bg-[#161b22]/40 group overflow-hidden shadow-3xl">
                 <div class="absolute inset-0 bg-blue-500/[0.02] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div class="flex items-center justify-between mb-8">
-                    <span class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">Node Reputation</span>
-                    <div class="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-500 shadow-3xl group-hover:bg-blue-500 group-hover:text-white transition-all duration-500">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    <span class="text-[12px] font-bold text-white/40 uppercase tracking-widest">Total Reputation</span>
+                    <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-500 shadow-lg shadow-blue-500/10">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                     </div>
                 </div>
                 <div class="flex items-baseline gap-2">
-                    <span class="text-[44px] font-black text-white uppercase tracking-tightest leading-none" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ number_format($stats['reputation']) }}</span>
-                    <span class="text-[10px] font-black text-blue-500 uppercase tracking-widest">CREDITS</span>
+                    <span class="text-[48px] font-black text-white leading-none tracking-tighter">{{ number_format($stats['reputation']) }}</span>
+                    <span class="text-[11px] font-bold text-blue-500 uppercase tracking-widest">Points</span>
                 </div>
             </div>
 
             {{-- Contributions Refined --}}
-            <div class="card-premium h-auto !bg-[#161b22]/40 backdrop-blur-sm !p-8 group overflow-hidden border-white/5 hover:border-green-500/20 transition-all duration-500 shadow-3xl">
+            <div class="card-premium-unified h-auto !bg-[#161b22]/40 group overflow-hidden shadow-3xl">
                 <div class="absolute inset-0 bg-green-500/[0.02] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div class="flex items-center justify-between mb-8">
-                    <span class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">Index Activity</span>
-                    <div class="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-500 shadow-3xl group-hover:bg-green-500 group-hover:text-white transition-all duration-500">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    <span class="text-[12px] font-bold text-white/40 uppercase tracking-widest">Contributions</span>
+                    <div class="w-10 h-10 rounded-full bg-green-500/10 border border-white/10 flex items-center justify-center text-green-400 group-hover:bg-green-500 group-hover:text-white transition-all duration-500 shadow-lg shadow-green-500/10">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                     </div>
                 </div>
                 <div class="flex items-baseline gap-2">
-                    <span class="text-[44px] font-black text-white uppercase tracking-tightest leading-none" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ number_format($stats['contributions']) }}</span>
-                    <span class="text-[10px] font-black text-green-500 uppercase tracking-widest">COMMITS</span>
+                    <span class="text-[48px] font-black text-white leading-none tracking-tighter">{{ number_format($stats['contributions']) }}</span>
+                    <span class="text-[11px] font-bold text-green-500 uppercase tracking-widest">Edits</span>
                 </div>
             </div>
 
             {{-- Saved Items Refined --}}
-            <div class="card-premium h-auto !bg-[#161b22]/40 backdrop-blur-sm !p-8 group overflow-hidden border-white/5 hover:border-purple-500/20 transition-all duration-500 shadow-3xl">
+            <div class="card-premium-unified h-auto !bg-[#161b22]/40 group overflow-hidden shadow-3xl">
                 <div class="absolute inset-0 bg-purple-500/[0.02] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 <div class="flex items-center justify-between mb-8">
-                    <span class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">Secured Data</span>
-                    <div class="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-500 shadow-3xl group-hover:bg-purple-500 group-hover:text-white transition-all duration-500">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+                    <span class="text-[12px] font-bold text-white/40 uppercase tracking-widest">Saved Items</span>
+                    <div class="w-10 h-10 rounded-full bg-purple-500/10 border border-white/10 flex items-center justify-center text-purple-400 group-hover:bg-purple-500 group-hover:text-white transition-all duration-500 shadow-lg shadow-purple-500/10">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
                     </div>
                 </div>
                 <div class="flex items-baseline gap-2">
-                    <span class="text-[44px] font-black text-white uppercase tracking-tightest leading-none" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ number_format($stats['bookmarks']) }}</span>
-                    <span class="text-[10px] font-black text-purple-500 uppercase tracking-widest">RECORDS</span>
+                    <span class="text-[48px] font-black text-white leading-none tracking-tighter">{{ number_format($stats['bookmarks']) }}</span>
+                    <span class="text-[11px] font-bold text-purple-500 uppercase tracking-widest">Topics</span>
                 </div>
             </div>
 
             {{-- Progress --}}
-            <div class="bg-[#161b22] border border-white/5 rounded-2xl p-6 relative flex flex-col justify-between">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="text-[10px] font-black text-white/40 uppercase tracking-widest">Next Level</span>
-                    <span class="text-[10px] font-bold text-white">{{ ($stats['reputation'] % 100) }}%</span>
+            <div class="card-premium-unified h-auto !bg-blue-600/10 border-blue-500/20 group overflow-hidden shadow-3xl flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-6">
+                    <span class="text-[12px] font-bold text-white/40 uppercase tracking-widest">Next Level</span>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[14px] font-black text-white leading-none">{{ ($stats['reputation'] % 100) }}%</span>
+                    </div>
                 </div>
-                <div class="w-full bg-white/5 rounded-full h-2 overflow-hidden">
-                    <div class="h-full bg-blue-500 rounded-full" style="width: {{ ($stats['reputation'] % 100) }}%"></div>
-                </div>
-                <div class="mt-2 text-[10px] text-white/30 font-medium">
-                    {{ 100 - ($stats['reputation'] % 100) }} XP to Level {{ $user->level + 1 }}
+                
+                <div class="flex-1 flex flex-col justify-end">
+                    <div class="w-full bg-white/5 rounded-full h-3 mb-4 overflow-hidden p-0.5">
+                        <div class="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]" style="width: {{ ($stats['reputation'] % 100) }}%"></div>
+                    </div>
+                    <div class="text-[10px] text-white/30 font-bold uppercase tracking-widest">
+                        {{ 100 - ($stats['reputation'] % 100) }} points to Level {{ $user->level + 1 }}
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {{-- Activity Feed Refined --}}
             <div class="lg:col-span-2 space-y-10">
                 <div class="flex items-center border-b border-white/5 pb-6">
-                    <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6"></div>
-                    <h2 class="text-2xl font-black text-white uppercase tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">RECENT LOGS <span class="text-white/10 ml-4 font-black">/ TRANSMISSION FEED</span></h2>
+                    <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+                    <h2 class="text-2xl font-black text-white uppercase tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Recent Activity</h2>
                 </div>
 
                 <div class="space-y-6">
                     @forelse($activities as $act)
                         <div class="group relative">
-                            <div class="absolute -left-4 top-1/2 -translate-y-1/2 w-1 h-0 group-hover:h-full bg-blue-500 transition-all duration-500 rounded-full"></div>
-                            <div class="card-premium h-auto !bg-[#161b22]/40 backdrop-blur-sm !p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:translate-x-2 transition-all duration-500 border-white/5 hover:border-blue-500/20 shadow-3xl">
+                            <div class="absolute -left-4 top-1/2 -translate-y-1/2 w-1.5 h-0 group-hover:h-8 bg-blue-500 transition-all duration-500 rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                            <div class="card-premium-unified !bg-[#161b22]/40 backdrop-blur-sm !p-8 flex flex-col md:flex-row md:items-center justify-between gap-6 hover:translate-x-2 transition-all duration-500 group/card shadow-3xl">
                                 <div class="flex items-center gap-8 flex-1 min-w-0">
-                                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 group-hover:bg-blue-500/10 group-hover:border-blue-500/20 transition-all duration-500 {{ $act['type'] === 'contribution' ? 'bg-blue-500/5 text-blue-500' : 'bg-purple-500/5 text-purple-500 group-hover:bg-purple-500/10 group-hover:border-purple-500/20 group-hover:text-purple-500' }}">
+                                    <div class="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 border border-white/10 group-hover/card:bg-blue-500/10 group-hover/card:border-blue-500/20 transition-all duration-500 {{ $act['type'] === 'contribution' ? 'bg-blue-500/5 text-blue-400' : 'bg-purple-500/5 text-purple-400 group-hover/card:bg-purple-500/10 group-hover/card:border-purple-500/20 group-hover/card:text-purple-400' }}">
                                         @if($act['icon'] === 'pencil')
                                             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                                         @else
@@ -151,86 +156,87 @@
                                         @endif
                                     </div>
                                     <div class="flex-1 min-w-0">
-                                        <div class="flex items-center gap-4 mb-2">
-                                            <h3 class="text-lg font-black text-white uppercase tracking-tightest truncate group-hover:text-blue-500 transition-colors" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $act['title'] }}</h3>
+                                        <div class="flex items-center gap-4 mb-1">
+                                            <h3 class="text-xl font-bold text-white tracking-tight truncate group-hover/card:text-blue-400 transition-colors">{{ $act['title'] }}</h3>
                                             <div class="w-1.5 h-1.5 rounded-full bg-white/10 hidden md:block"></div>
-                                            <span class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] hidden md:block">{{ $act['date']->diffForHumans() }}</span>
+                                            <span class="text-[12px] font-medium text-white/30 hidden md:block">{{ $act['date']->diffForHumans() }}</span>
                                         </div>
-                                        <p class="text-[11px] font-black text-white/20 uppercase tracking-[0.4em] mb-4">
-                                            {{ $act['type'] === 'contribution' ? 'DATA_COMMIT' : 'CACHE_SAVE' }}
+                                        <p class="text-[12px] font-bold text-white/20 uppercase tracking-widest mb-4">
+                                            {{ $act['type'] === 'contribution' ? 'Edit Activity' : 'Saved Topic' }}
                                         </p>
                                         @if($act['type'] === 'contribution')
-                                            <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-xl text-[9px] font-black uppercase tracking-widest shadow-2xl {{ $act['status'] === 'approved' ? 'bg-green-500/10 text-green-400 border border-green-500/10' : ($act['status'] === 'rejected' ? 'bg-red-500/10 text-red-500 border border-red-500/10' : 'bg-yellow-500/10 text-yellow-500 border border-yellow-500/10') }}">
+                                            <div class="inline-flex items-center gap-3 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-2xl {{ $act['status'] === 'approved' ? 'bg-green-500/10 text-green-400 border border-green-500/10' : ($act['status'] === 'rejected' ? 'bg-red-500/10 text-red-500 border border-red-500/10' : 'bg-yellow-500/10 text-yellow-500 border border-yellow-500/10') }}">
                                                 <div class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></div>
                                                 {{ $act['status'] }}
                                             </div>
                                         @endif
                                     </div>
                                 </div>
-                                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-4 group-hover:translate-x-0">
+                                <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center opacity-0 group-hover/card:opacity-100 transition-all duration-500 translate-x-4 group-hover/card:translate-x-0">
                                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
                                 </div>
                             </div>
                         </div>
                     @empty
-                        <div class="text-center py-32 rounded-[3.5rem] border border-dashed border-white/5 bg-white/[0.01] shadow-3xl">
+                        <div class="text-center py-32 rounded-[32px] border border-dashed border-white/5 bg-white/[0.01] shadow-3xl">
                             <div class="w-24 h-24 rounded-full bg-blue-500/5 mx-auto mb-10 flex items-center justify-center border border-white/5 shadow-3xl">
                                 <svg class="w-10 h-10 text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             </div>
-                            <p class="text-white/10 text-[11px] font-black uppercase tracking-[0.5em]">No synchronization history detected</p>
+                            <p class="text-white/20 text-[12px] font-bold uppercase tracking-widest">No activity history detected yet</p>
                         </div>
                     @endforelse
                 </div>
             </div>
 
             {{-- Sidebar --}}
-            <div class="space-y-8">
-            {{-- Sidebar Refined --}}
             <div class="space-y-12">
-                {{-- Recommended Refined --}}
+                {{-- Recommended --}}
                 <div class="space-y-8">
                     <div class="flex items-center border-b border-white/5 pb-4">
-                        <h2 class="text-xl font-black text-white uppercase tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">SUGGESTED <span class="text-white/10 ml-2">DATA</span></h2>
+                        <h2 class="text-2xl font-black text-white uppercase tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Suggested for You</h2>
                     </div>
-                    <div class="space-y-3">
+                    <div class="space-y-4">
                         @foreach($recommendations as $rec)
-                            <a href="{{ route('wiki.show', $rec->slug) }}" wire:navigate class="flex items-center gap-5 p-4 rounded-2xl bg-white/[0.01] hover:bg-white/[0.03] border border-white/0 hover:border-white/5 transition-all duration-500 group">
-                                <div class="w-16 h-16 rounded-xl bg-[#0d1117] relative overflow-hidden shrink-0 border border-white/5 shadow-2xl">
+                            <a href="{{ route('wiki.show', $rec->slug) }}" wire:navigate class="flex items-center gap-5 p-4 rounded-2xl bg-[#161b22]/40 hover:bg-[#1c2128] border border-white/5 transition-all duration-500 group">
+                                <div class="w-20 h-20 rounded-2xl bg-[#0d1117] relative overflow-hidden shrink-0 border border-white/5 shadow-2xl">
                                     @if($rec->featured_image)
-                                        <img src="{{ Storage::url($rec->featured_image) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                        <img src="{{ Storage::url($rec->featured_image) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 grayscale-[0.2] group-hover:grayscale-0" alt="{{ $rec->title }}" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
                                     @else
                                         <div class="w-full h-full flex items-center justify-center text-white/5">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                                         </div>
                                     @endif
-                                    <div class="absolute inset-0 bg-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    <div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                                 </div>
                                 <div class="min-w-0">
-                                    <h4 class="text-sm font-black text-white uppercase tracking-tightest group-hover:text-blue-500 transition-colors truncate mb-1" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $rec->title }}</h4>
-                                    <p class="text-[9px] font-black text-white/20 uppercase tracking-[0.3em]">{{ $rec->category }}</p>
+                                    <h4 class="text-lg font-bold text-white tracking-tight group-hover:text-blue-400 transition-colors truncate mb-1">{{ $rec->title }}</h4>
+                                    <p class="text-[11px] font-bold text-blue-400/60 uppercase tracking-widest">{{ $rec->category }}</p>
                                 </div>
                             </a>
                         @endforeach
                     </div>
                 </div>
 
-                {{-- Quick Actions Refined --}}
-                <div class="card-premium h-auto !bg-blue-600 !p-10 text-center relative overflow-hidden group border-none shadow-3xl shadow-blue-500/20">
+                {{-- Quick Actions --}}
+                <div class="card-premium-unified !bg-blue-600 !p-10 text-center relative overflow-hidden group border-none shadow-3xl shadow-blue-500/20">
                     <div class="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                     <div class="absolute -top-12 -right-12 w-48 h-48 bg-white/10 rounded-full blur-3xl group-hover:scale-150 transition-transform duration-1000"></div>
                     
                     <div class="relative z-10">
-                        <div class="w-20 h-20 bg-white/10 rounded-[2rem] flex items-center justify-center mx-auto mb-8 backdrop-blur-md shadow-3xl border border-white/20 group-hover:rotate-12 transition-transform duration-500">
+                        <div class="w-20 h-20 bg-white/10 rounded-3xl flex items-center justify-center mx-auto mb-8 backdrop-blur-md shadow-3xl border border-white/20 group-hover:rotate-12 transition-transform duration-500">
                             <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
                         </div>
-                        <h3 class="text-3xl font-black text-white uppercase tracking-tightest mb-4 leading-none" style="font-family: 'Plus Jakarta Sans', sans-serif;">INDEX NEW DATA</h3>
-                        <p class="text-[11px] font-black text-white/60 mb-10 uppercase tracking-[0.3em] leading-relaxed">Contribute to the global knowledge archive</p>
-                        <a href="{{ route('wiki.create') }}" wire:navigate class="block w-full py-5 bg-white text-blue-600 text-[11px] font-black uppercase tracking-[0.4em] rounded-[1.5rem] hover:bg-blue-50 transition-all shadow-3xl hover:scale-[1.02] active:scale-[0.98]">
-                            Start Commit
+                        <h3 class="text-3xl font-black text-white uppercase tracking-tighter mb-4 leading-none" style="font-family: 'Moderniz', sans-serif;">Contribute</h3>
+                        <p class="text-[14px] font-medium text-white/70 mb-10 leading-relaxed">Share your knowledge with the community</p>
+                        
+                        <a href="{{ route('wiki.create') }}" wire:navigate class="flex items-center justify-between bg-white hover:bg-gray-100 px-8 py-4 rounded-full transition-all duration-300 shadow-2xl shadow-black/40 group/btn">
+                             <span class="text-blue-600 text-[15px] font-bold">Add New Topic</span>
+                             <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center group-hover/btn:scale-110 transition-transform">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 4v16m8-8H4"/></svg>
+                            </div>
                         </a>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>

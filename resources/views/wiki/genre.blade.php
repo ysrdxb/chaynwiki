@@ -39,28 +39,21 @@
         <!-- Sidebar Navigation -->
         <aside class="hidden lg:block w-72 sticky top-32 shrink-0 space-y-2 pr-8 border-r border-white/5">
             <div class="mb-10 px-4">
-                <span class="text-white/20 text-[10px] font-black uppercase tracking-[0.4em]">Navigator</span>
+                <span class="text-white/20 text-[11px] font-bold text-blue-400 tracking-widest">Explore all</span>
             </div>
             
-            <a href="{{ route('home') }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[13px] font-black uppercase tracking-widest text-white/50 hover:text-white hover:bg-white/5 transition-all">
-                <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-white/5 flex items-center justify-center group-hover:bg-blue-500 group-hover:scale-110 transition-all">
-                    <svg class="w-4 h-4 text-blue-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            <a href="{{ route('home') }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[14px] font-bold text-white/50 hover:text-white hover:bg-white/5 transition-all">
+                <div class="w-9 h-9 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center group-hover:bg-blue-500 group-hover:scale-110 transition-all shadow-lg shadow-blue-500/10">
+                    <svg class="w-4 h-4 text-blue-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                 </div>
                 Home
-            </a>
-
-            <a href="{{ route('wiki.index') }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[13px] font-black uppercase tracking-widest text-white/50 hover:text-white hover:bg-white/5 transition-all">
-                <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-white/5 flex items-center justify-center group-hover:bg-blue-500 group-hover:scale-110 transition-all">
-                    <svg class="w-4 h-4 text-blue-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
-                </div>
-                Library
             </a>
 
             <div class="h-px bg-white/5 mx-4 my-6"></div>
             
             @foreach($categories as $key => $cat)
-                <a href="{{ route('wiki.index', ['category' => $key]) }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[13px] font-black uppercase tracking-widest transition-all {{ $key === 'genre' ? 'bg-blue-500/10 text-white border border-blue-500/20 shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
-                    <div class="w-8 h-8 rounded-lg {{ $key === 'genre' ? 'bg-blue-500' : 'bg-white/5' }} flex items-center justify-center transition-all group-hover:scale-110">
+                <a href="{{ route('wiki.index', ['category' => $key]) }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[14px] font-bold transition-all {{ $key === 'genre' ? 'bg-blue-500/10 text-white border border-blue-500/20 shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                    <div class="w-9 h-9 rounded-full {{ $key === 'genre' ? 'bg-blue-500 shadow-lg shadow-blue-500/20' : 'bg-white/5' }} flex items-center justify-center transition-all group-hover:scale-110">
                         <svg class="w-4 h-4 {{ $key === 'genre' ? 'text-white' : 'text-blue-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
                     </div>
                     {{ $cat['label'] }}
@@ -92,22 +85,22 @@
                  <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/10 rounded-full blur-[160px] -mr-40 -mt-40"></div>
                  
                  <div class="relative z-10 p-12 lg:p-16 w-full">
-                     <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-black uppercase tracking-[0.3em] inline-block mb-8 shadow-lg">
-                        Node Classification
+                     <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-bold uppercase tracking-widest inline-block mb-8 shadow-lg">
+                        Genre info
                     </span>
                     
-                    <h1 class="text-[64px] lg:text-[100px] font-black text-white uppercase tracking-tightest mb-10 leading-[0.85] -ml-1" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                    <h1 class="text-[64px] lg:text-[100px] font-black text-white uppercase tracking-tighter mb-10 leading-[0.85] -ml-1" style="font-family: 'Moderniz', sans-serif;">
                         {{ $article->title }}
                     </h1>
                     
                     <div class="flex items-center gap-10">
                          <div class="flex flex-col">
-                            <span class="text-white text-3xl font-black tracking-tightest mb-1">{{ number_format($article->views_count ?? rand(100, 2000)) }}</span>
-                            <span class="text-[10px] text-white/20 font-black uppercase tracking-[0.3em]">Indexed Records</span>
+                            <span class="text-white text-3xl font-black tracking-tighter mb-1">{{ number_format($article->views_count ?? rand(100, 2000)) }}</span>
+                            <span class="text-[11px] text-white/30 font-bold uppercase tracking-widest">Songs</span>
                          </div>
                          <div class="flex flex-col">
-                            <span class="text-blue-500 text-3xl font-black tracking-tightest mb-1">{{ number_format($article->view_count ?? 0) }}</span>
-                            <span class="text-[10px] text-white/20 font-black uppercase tracking-[0.3em]">Total Engagements</span>
+                            <span class="text-blue-500 text-3xl font-black tracking-tighter mb-1">{{ number_format($article->view_count ?? 0) }}</span>
+                            <span class="text-[11px] text-white/30 font-bold uppercase tracking-widest">Views</span>
                          </div>
                     </div>
                  </div>
@@ -115,26 +108,28 @@
 
             <div class="flex flex-col xl:flex-row gap-12">
                      <section>
-                        <h2 class="text-[32px] font-black text-white uppercase tracking-tightest mb-10 flex items-center gap-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                            <div class="w-12 h-1.5 bg-blue-500 rounded-full"></div>
-                            Description
-                        </h2>
+                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Description</h2>
+                        </div>
                         <article class="prose prose-invert prose-lg max-w-none">
                             <div class="article-content text-white/70 text-base leading-relaxed">
                                 @if(!empty($article->content))
                                     {!! Str::markdown($article->content) !!}
                                 @else
-                                    <p class="text-white/30 uppercase tracking-[0.2em] text-[12px]">No classification data available for this node.</p>
+                                    <div class="py-12 text-center rounded-3xl border border-dashed border-white/5 bg-white/[0.01]">
+                                        <p class="text-white/20 text-[12px] font-bold uppercase tracking-widest">No detailed description data synchronized yet</p>
+                                    </div>
                                 @endif
                             </div>
                         </article>
                     </section>
                     
-                    <section class="border-t border-white/5 pt-16">
-                        <h2 class="text-[32px] font-black text-white uppercase tracking-tightest mb-10 flex items-center gap-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                            <div class="w-12 h-1.5 bg-blue-500 rounded-full"></div>
-                            Discussion
-                        </h2>
+                     <section class="border-t border-white/5 pt-16">
+                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Discussion</h2>
+                        </div>
                         <livewire:article.comments :article="$article" />
                     </section>
                 </div>
@@ -143,17 +138,19 @@
                 <aside class="w-full xl:w-80 space-y-6 shrink-0">
                     
                     <!-- Actions -->
-                    <div class="card-premium-unified bg-[#161b22]/40 border border-white/5 rounded-[2.5rem] p-8 flex flex-col gap-6">
+                    <div class="card-premium-unified !bg-[#161b22]/40 !p-8 flex flex-col gap-6 shadow-3xl">
                         <livewire:article.play-button 
                             :articleId="$article->id" 
-                            label="Sonic Pulse"
+                            label="Play genre"
                             class="btn-figma-primary !w-full !py-4"
                         />
                         
-                        <div class="group"><x-article.⚡add-to-crate :article="$article" /></div>
+                        <div class="group">
+                             <livewire:article.add-to-collection :article="$article" />
+                        </div>
 
                         <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 group hover:border-blue-500/20 transition-all">
-                            <span class="text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Node Rating</span>
+                            <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest">Global rating</span>
                              <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
                         
@@ -161,40 +158,40 @@
                     </div>
 
                     <!-- Quick Facts -->
-                    <div class="card-premium-unified bg-[#161b22]/40 border border-white/5 rounded-[2.5rem] p-8">
-                        <h3 class="text-[11px] font-black text-white/30 uppercase tracking-[0.4em] mb-6">Archive Data</h3>
-                        <p class="text-[13px] text-white/40 font-bold leading-relaxed mb-8 uppercase tracking-tight">
-                            Maintained core node. All community contributions are indexed for historical accuracy.
+                    <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
+                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest mb-6">Genre info</h3>
+                        <p class="text-sm text-white/40 font-medium leading-relaxed mb-8">
+                            This genre is part of our core community index. All contributions are verified for historical accuracy.
                         </p>
                         <div class="space-y-4">
-                            <div class="flex items-center justify-between py-3 border-b border-white/5">
-                                <span class="text-[13px] text-white/40 font-bold uppercase tracking-tight">Status</span>
-                                <span class="text-[13px] text-white font-black uppercase tracking-tight">Active</span>
+                            <div class="flex items-center justify-between py-2 border-b border-white/5">
+                                <span class="text-sm text-white/50 font-medium">Status</span>
+                                <span class="text-sm text-white font-bold">Active</span>
                             </div>
-                            <div class="flex items-center justify-between py-3">
-                                <span class="text-[13px] text-white/40 font-bold uppercase tracking-tight">Sync</span>
-                                <span class="text-[13px] text-white font-black uppercase tracking-tight">{{ optional($article->updated_at)->diffForHumans() }}</span>
+                            <div class="flex items-center justify-between py-2">
+                                <span class="text-sm text-white/50 font-medium">Synced</span>
+                                <span class="text-sm text-white font-bold">{{ optional($article->updated_at)->diffForHumans() }}</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Contributor -->
                     @if($article->user)
-                    <div class="card-premium-unified bg-[#161b22]/40 border border-white/5 rounded-[2.5rem] p-8">
-                        <h3 class="text-[11px] font-black text-white/30 uppercase tracking-[0.4em] mb-8">Maintainer</h3>
-                        <a href="{{ route('profile', $article->user->username) }}" class="flex items-center gap-5 group">
-                            <div class="w-12 h-12 rounded-xl overflow-hidden border border-white/10 shadow-lg transition-transform group-hover:scale-110">
-                                @if($article->user->avatar)
-                                    <img src="{{ $article->user->avatar }}" class="w-full h-full object-cover">
-                                @else
-                                    <div class="w-full h-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-black uppercase tracking-tightest">
-                                        {{ substr($article->user->name, 0, 1) }}
-                                    </div>
-                                @endif
+                    <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
+                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest mb-6">Added by</h3>
+                        <a href="{{ route('profile', $article->user->username) }}" class="flex items-center gap-4 group">
+                            <div class="w-12 h-12 rounded-full p-0.5 bg-gradient-to-br from-white/10 to-transparent group-hover:from-blue-500/50 transition-all duration-500">
+                                <div class="w-full h-full rounded-full overflow-hidden border border-white/10 bg-[#0d1117] flex items-center justify-center">
+                                    @if($article->user->avatar)
+                                        <img src="{{ $article->user->avatar }}" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
+                                    @else
+                                        <span class="text-sm text-white font-bold">{{ strtoupper(substr($article->user->name, 0, 1)) }}</span>
+                                    @endif
+                                </div>
                             </div>
                             <div>
-                                <p class="text-[13px] font-black text-white uppercase tracking-tight group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
-                                <p class="text-[9px] text-white/20 font-black uppercase tracking-widest mt-1">Lead Archivist</p>
+                                <p class="text-[15px] font-bold text-white group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
+                                <p class="text-[11px] text-white/30 font-medium uppercase tracking-widest">Contributor</p>
                             </div>
                         </a>
                     </div>

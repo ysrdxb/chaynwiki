@@ -41,11 +41,11 @@
 
         <!-- Content Area -->
         <div class="flex-1 flex flex-col p-6">
-            <h3 class="text-white font-black text-[18px] leading-[1.1] mb-3 group-hover:text-blue-500 transition-colors line-clamp-2 uppercase tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+            <h3 class="text-white font-black text-[18px] leading-[1.1] mb-3 group-hover:text-blue-500 transition-colors line-clamp-2 tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                 {{ $article->title }}
             </h3>
             
-            <p class="text-white/30 text-[11px] line-clamp-2 mb-8 font-black uppercase tracking-tightest leading-relaxed">
+            <p class="text-white/30 text-[11px] line-clamp-2 mb-8 font-black tracking-tightest leading-relaxed">
                 {{ Str::limit(strip_tags($article->content), 60) }}
             </p>
 

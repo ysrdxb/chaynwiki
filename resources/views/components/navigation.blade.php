@@ -42,8 +42,8 @@
                 <nav class="hidden lg:flex items-center gap-2">
                     <a href="{{ route('wiki.index') }}?category=artist" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Artists</a>
                     <a href="{{ route('wiki.index') }}?category=genre" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Genres</a>
-                    <a href="{{ route('wiki.index') }}?category=song" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">lyrics</a>
-                    <a href="{{ route('wiki.index') }}?category=playlist" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Playlist</a>
+                    <a href="{{ route('wiki.index') }}?category=song" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Lyrics</a>
+                    <a href="{{ route('wiki.index') }}?category=playlist" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Playlists</a>
                 </nav>
 
                 {{-- Avatar/Auth --}}
@@ -78,7 +78,7 @@
                                     </a>
                                     <a href="{{ route('wiki.create') }}" class="flex items-center gap-3 px-3 py-2.5 text-[13px] text-white/60 hover:text-white hover:bg-white/5 rounded-xl transition-all">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                                        Create Article
+                                        Create topic
                                     </a>
                                 </div>
                                 
@@ -138,7 +138,7 @@
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                 </svg>
-                Create New Topic
+                Create topic
             </a>
         </div>
     </div>

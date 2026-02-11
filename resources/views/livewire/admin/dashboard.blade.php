@@ -44,7 +44,7 @@
         <div class="glass-card p-6">
             <div class="flex justify-between items-start">
                 <div>
-                    <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Total Nodes</p>
+                    <p class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Total topics</p>
                     <h3 class="text-3xl font-display font-black mt-1">{{ number_format($stats['articles']) }}</h3>
                 </div>
                 <div class="p-3 bg-[#38bdf8]/10 rounded-xl">
@@ -134,7 +134,7 @@
             <div class="space-y-6">
                 <div class="flex items-center justify-between">
                     <div>
-                        <div class="text-sm font-bold">Ollama AI Node</div>
+                        <div class="text-sm font-bold">Ollama AI status</div>
                         <div class="text-[10px] text-slate-500">Processing lyrics & metadata</div>
                     </div>
                     <div class="flex items-center text-[10px] font-black text-emerald-500 bg-emerald-500/10 px-2 py-1 rounded-lg">

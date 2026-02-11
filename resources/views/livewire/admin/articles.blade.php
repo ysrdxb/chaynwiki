@@ -1,6 +1,6 @@
 <div class="space-y-6" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
     @section('header', 'Resource Index')
-    @section('subheader', 'Manage all indexed music nodes and knowledge records.')
+    @section('subheader', 'Manage all indexed music entries and knowledge records.')
 
     <!-- Filters & Actions -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4">

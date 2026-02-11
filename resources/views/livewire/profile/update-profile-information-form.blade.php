@@ -64,11 +64,11 @@ new class extends Component
 
 <section>
     <header class="mb-10">
-        <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4 leading-none">
-            NODE IDENTIFICATION <span class="text-white/10 ml-2">/ PROFILE</span>
+        <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4 leading-none" style="font-family: 'Moderniz', sans-serif;">
+            PROFILE INFORMATION <span class="text-white/10 ml-2">/ SETTINGS</span>
         </h1>
         <p class="text-[11px] font-medium text-white/40 leading-relaxed uppercase tracking-wider">
-Synchronize your display credentials with the global node.</p>
+Update your profile information and account details.</p>
     </header>
 
     <form wire:submit="updateProfileInformation" class="space-y-8">
@@ -76,7 +76,7 @@ Synchronize your display credentials with the global node.</p>
             <x-input-label for="name" :value="__('DISPLAY NAME')" class="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] ml-1" />
             <div class="relative group">
                 <div class="absolute inset-0 bg-blue-500/5 rounded-2xl blur-xl group-focus-within:bg-blue-500/10 transition-all duration-500"></div>
-                <x-text-input wire:model="name" id="name" name="name" type="text" class="block w-full h-16 bg-[#0d1117] border-white/5 focus:border-blue-500/20 focus:ring-0 rounded-2xl text-sm font-black text-white uppercase tracking-widest px-6 transition-all duration-500 placeholder:text-white/5" required autofocus autocomplete="name" placeholder="NODE_IDENTIFIER" />
+                <x-text-input wire:model="name" id="name" name="name" type="text" class="block w-full h-16 bg-[#0d1117] border-white/5 focus:border-blue-500/20 focus:ring-0 rounded-2xl text-sm font-black text-white uppercase tracking-widest px-6 transition-all duration-500 placeholder:text-white/10" required autofocus autocomplete="name" placeholder="DISPLAY NAME" />
             </div>
             <x-input-error class="mt-2 ml-1" :messages="$errors->get('name')" />
         </div>
@@ -85,7 +85,7 @@ Synchronize your display credentials with the global node.</p>
             <x-input-label for="email" :value="__('EMAIL ADDRESS')" class="text-[10px] font-black text-white/40 uppercase tracking-[0.4em] ml-1" />
             <div class="relative group">
                 <div class="absolute inset-0 bg-blue-500/5 rounded-2xl blur-xl group-focus-within:bg-blue-500/10 transition-all duration-500"></div>
-                <x-text-input wire:model="email" id="email" name="email" type="email" class="block w-full h-16 bg-[#0d1117] border-white/5 focus:border-blue-500/20 focus:ring-0 rounded-2xl text-sm font-black text-white uppercase tracking-widest px-6 transition-all duration-500 placeholder:text-white/5" required autocomplete="username" placeholder="NODE_TRANSMISSION_MAIL" />
+                <x-text-input wire:model="email" id="email" name="email" type="email" class="block w-full h-16 bg-[#0d1117] border-white/5 focus:border-blue-500/20 focus:ring-0 rounded-2xl text-sm font-black text-white uppercase tracking-widest px-6 transition-all duration-500 placeholder:text-white/10" required autocomplete="username" placeholder="EMAIL ADDRESS" />
             </div>
             <x-input-error class="mt-2 ml-1" :messages="$errors->get('email')" />
 
@@ -99,10 +99,10 @@ Synchronize your display credentials with the global node.</p>
                             <p class="text-[10px] font-black text-red-500 uppercase tracking-widest mb-1">
                                 {{ __('Email Verification Required') }}
                             </p>
-                            <p class="text-[11px] font-medium text-white/40 mb-3">Your node credentials are currently unverified.</p>
+                            <p class="text-[11px] font-medium text-white/40 mb-3">Your email address is currently unverified.</p>
 
                             <button wire:click.prevent="sendVerification" class="text-[10px] font-black text-white uppercase tracking-[0.2em] px-4 py-2 bg-white/5 rounded-lg hover:bg-white/10 transition-all border border-white/5">
-                                {{ __('Resend Verification Segment') }}
+                                {{ __('Resend Verification Email') }}
                             </button>
                         </div>
                     </div>
@@ -111,7 +111,7 @@ Synchronize your display credentials with the global node.</p>
                         <div class="mt-4 flex items-center gap-3 text-green-500">
                             <div class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></div>
                             <p class="text-[10px] font-black uppercase tracking-widest">
-                                {{ __('Transmission re-dispatched to your terminal.') }}
+                                {{ __('Verification email sent.') }}
                             </p>
                         </div>
                     @endif
@@ -121,7 +121,7 @@ Synchronize your display credentials with the global node.</p>
 
         <div class="flex items-center gap-8 pt-4">
             <button type="submit" class="btn-figma-primary !px-10 !py-4 shadow-3xl">
-                <span>{{ __('Commit Changes') }}</span>
+                <span>{{ __('Save changes') }}</span>
                 <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
                     <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
                 </div>
@@ -129,7 +129,7 @@ Synchronize your display credentials with the global node.</p>
 
             <x-action-message class="flex items-center gap-2 text-[10px] font-black text-green-500 uppercase tracking-[0.3em]" on="profile-updated">
                 <div class="w-1.5 h-1.5 rounded-full bg-current"></div>
-                {{ __('Sync Successful') }}
+                {{ __('Profile updated') }}
             </x-action-message>
         </div>
     </form>

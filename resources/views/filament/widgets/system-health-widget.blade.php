@@ -12,25 +12,25 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            @foreach($this->getHealthData()['nodes'] as $node)
+            @foreach($this->getHealthData()['services'] as $service)
                 <div class="p-4 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-white/10 transition-all group relative overflow-hidden">
                     <div class="absolute inset-0 bg-gradient-to-br from-brand-500/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-[10px] font-mono text-gray-500 uppercase tracking-tighter">{{ $node['type'] }}</span>
-                        <span class="text-[10px] font-mono {{ $node['status'] === 'online' ? 'text-green-500' : 'text-red-500' }} font-black uppercase">
-                            {{ $node['status'] }}
+                        <span class="text-[10px] font-mono text-gray-500 uppercase tracking-tighter">{{ $service['type'] }}</span>
+                        <span class="text-[10px] font-mono {{ $service['status'] === 'online' ? 'text-green-500' : 'text-red-500' }} font-black uppercase">
+                            {{ $service['status'] }}
                         </span>
                     </div>
                     
                     <div class="flex items-center gap-3">
-                        <div class="w-2 h-2 rounded-full {{ $node['status'] === 'online' ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]' }}"></div>
-                        <h3 class="text-sm font-bold text-white tracking-tight">{{ $node['name'] }}</h3>
+                        <div class="w-2 h-2 rounded-full {{ $service['status'] === 'online' ? 'bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]' : 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]' }}"></div>
+                        <h3 class="text-sm font-bold text-white tracking-tight">{{ $service['name'] }}</h3>
                     </div>
                     
                     <div class="mt-4 flex items-center justify-between">
                         <div class="text-[10px] font-mono text-gray-600">LATENCY</div>
-                        <div class="text-[10px] font-mono text-brand-400 font-bold">{{ $node['latency'] }}</div>
+                        <div class="text-[10px] font-mono text-brand-400 font-bold">{{ $service['latency'] }}</div>
                     </div>
                     
                     {{-- Micro Visualization Sparkline --}}

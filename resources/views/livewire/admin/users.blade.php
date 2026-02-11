@@ -1,5 +1,5 @@
 <div class="space-y-6" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
-    @section('header', 'Community Nodes')
+    @section('header', 'Community contributors')
     @section('subheader', 'Administer user accounts, reputation metrics, and access levels.')
 
     <!-- Filters -->

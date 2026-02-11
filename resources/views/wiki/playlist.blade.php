@@ -49,22 +49,25 @@
     <div class="max-w-[1400px] w-full px-8 flex items-start gap-12 pt-32 pb-16">
         
         <!-- Sidebar Navigation -->
-        <aside class="hidden lg:block w-64 sticky top-32 shrink-0 space-y-2">
-            <a href="{{ route('home') }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold text-white/50 hover:text-white hover:bg-white/5 transition-all">
-                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <aside class="hidden lg:block w-72 sticky top-32 shrink-0 space-y-2 pr-8 border-r border-white/5">
+            <div class="mb-10 px-4">
+                <span class="text-white/20 text-[11px] font-bold text-blue-400 tracking-widest">Explore all</span>
+            </div>
+            
+            <a href="{{ route('home') }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[14px] font-bold text-white/50 hover:text-white hover:bg-white/5 transition-all">
+                <div class="w-9 h-9 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center group-hover:bg-blue-500 group-hover:scale-110 transition-all shadow-lg shadow-blue-500/10">
+                    <svg class="w-4 h-4 text-blue-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                </div>
                 Home
             </a>
 
-            <div class="h-px bg-white/5 mx-4 my-2"></div>
-
-            <a href="{{ route('wiki.index') }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold transition-all text-white/50 hover:text-white hover:bg-white/5">
-                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
-                All Records
-            </a>
+            <div class="h-px bg-white/5 mx-4 my-6"></div>
             
             @foreach($categories as $key => $cat)
-                <a href="{{ route('wiki.index', ['category' => $key]) }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold transition-all {{ $key === 'playlist' ? 'bg-white/5 text-white' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
-                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
+                <a href="{{ route('wiki.index', ['category' => $key]) }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[14px] font-bold transition-all {{ $key === 'playlist' ? 'bg-blue-500/10 text-white border border-blue-500/20 shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                    <div class="w-9 h-9 rounded-full {{ $key === 'playlist' ? 'bg-blue-500 shadow-lg shadow-blue-500/20' : 'bg-white/5' }} flex items-center justify-center transition-all group-hover:scale-110">
+                        <svg class="w-4 h-4 {{ $key === 'playlist' ? 'text-white' : 'text-blue-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
+                    </div>
                     {{ $cat['label'] }}
                 </a>
             @endforeach
@@ -103,28 +106,28 @@
                      </div>
                      
                      <div class="flex-1 min-w-0 pb-2 text-center md:text-left">
-                        <span class="px-3 py-1 bg-white/5 border border-white/10 text-blue-400 rounded-lg text-[10px] font-black uppercase tracking-widest inline-block mb-4">
-                            Curated Archive
+                        <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-bold uppercase tracking-widest inline-block mb-4 shadow-lg">
+                            Playlist
                         </span>
                         
-                        <h1 class="text-4xl lg:text-7xl font-black text-white uppercase tracking-tighter mb-4 leading-none">
+                        <h1 class="text-4xl lg:text-7xl font-black text-white uppercase tracking-tighter mb-4 leading-none" style="font-family: 'Moderniz', sans-serif;">
                             {{ $article->title }}
                         </h1>
                         
                         <div class="flex flex-wrap items-center justify-center md:justify-start gap-8">
                              <div class="flex flex-col">
-                                <span class="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">Track Count</span>
-                                <span class="text-2xl font-black text-white">{{ $playlist->track_count ?? '0' }}</span>
+                                <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest mb-1">Songs</span>
+                                <span class="text-2xl font-black text-white px-1 tracking-tighter">{{ $playlist->track_count ?? '0' }}</span>
                             </div>
                             <div class="w-px h-8 bg-white/10 hidden md:block"></div>
                             <div class="flex flex-col">
-                                <span class="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">Total Impact</span>
-                                <span class="text-2xl font-black text-white">{{ number_format($article->view_count ?? 0) }}</span>
+                                <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest mb-1">Views</span>
+                                <span class="text-2xl font-black text-blue-500 px-1 tracking-tighter">{{ number_format($article->view_count ?? 0) }}</span>
                             </div>
                              <div class="w-px h-8 bg-white/10 hidden md:block"></div>
                             <div class="flex flex-col">
-                                <span class="text-[9px] font-black text-white/30 uppercase tracking-widest mb-1">Last Updated</span>
-                                <span class="text-2xl font-black text-white">{{ optional($article->updated_at)->format('M d, Y') ?? 'Unknown' }}</span>
+                                <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest mb-1">Updated</span>
+                                <span class="text-2xl font-black text-white px-1 tracking-tighter">{{ optional($article->updated_at)->format('M d, Y') ?? 'Unknown' }}</span>
                             </div>
                         </div>
                      </div>
@@ -145,10 +148,10 @@
                     </article>
 
                     <section>
-                        <h3 class="text-xl font-black text-white uppercase tracking-tighter mb-6 flex items-center gap-4">
-                            <span class="w-8 h-px bg-green-500"></span>
-                            Stream Pulse
-                        </h3>
+                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Listen</h2>
+                        </div>
                         @if($spotify_id)
                             <div class="rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-black/50">
                                 <iframe src="https://open.spotify.com/embed/playlist/{{ $spotify_id }}" width="100%" height="450" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
@@ -163,8 +166,11 @@
                         @endif
                     </section>
                     
-                    <section class="border-t border-white/5 pt-10">
-                        <h3 class="text-xl font-bold text-white mb-6">Discussion</h3>
+                     <section class="border-t border-white/5 pt-16">
+                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Discussion</h2>
+                        </div>
                         <livewire:article.comments :article="$article" />
                     </section>
                 </div>
@@ -177,46 +183,49 @@
                         <div class="absolute -top-4 -right-4 text-white/5 rotate-12">
                             <svg class="w-24 h-24" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017V14H17.017C15.9124 14 15.017 13.1046 15.017 12V9C15.017 7.89543 15.9124 7 17.017 7H20.017V10H18.017V12H20.017C21.1216 12 22.017 12.8954 22.017 14V21H14.017ZM3 21V18C3 16.8954 3.89543 16 5 16H8V14H6C4.89543 14 4 13.1046 4 12V9C4 7.89543 4.89543 7 6 7H9V10H7V12H9C10.1046 12 11 12.8954 11 14V21H3Z"/></svg>
                         </div>
-                         <h3 class="text-xs font-bold text-[#38bdf8] uppercase tracking-widest mb-4 relative z-10">Curator Note</h3>
+                         <h3 class="text-xs font-bold text-[#38bdf8] tracking-widest mb-4 relative z-10">Curator Note</h3>
                          <p class="text-white/70 text-sm leading-relaxed relative z-10">
                             "{{ $playlist?->curator_note ?: 'This collection represents a specific moment in music history, curated for the ChaynWiki archive.' }}"
                         </p>
                     </div>
 
                     <!-- Actions -->
-                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6 flex flex-col gap-4">
+                    <div class="card-premium-unified !bg-[#161b22]/40 !p-8 flex flex-col gap-6 shadow-3xl">
                         <livewire:article.play-button 
                             :articleId="$article->id" 
-                            label="Stream Pulse"
-                            class="w-full py-3 bg-[#38bdf8] text-[#0a0e14] rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-[#7dd3fc] transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-400/20"
+                            label="Play playlist"
+                            class="btn-figma-primary !w-full !py-4"
                         />
                         
-                        <div><x-article.⚡add-to-crate :article="$article" /></div>
+                        <div class="group">
+                             <livewire:article.add-to-collection :article="$article" />
+                        </div>
 
-                        <div class="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-white/5">
-                            <span class="text-[9px] font-bold text-white/40 uppercase tracking-widest">Rating</span>
+                        <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 group hover:border-blue-500/20 transition-all">
+                            <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest">Global rating</span>
                              <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
                         
-                        <div><livewire:article.bookmark-button :article="$article" /></div>
+                        <div class="group"><livewire:article.bookmark-button :article="$article" /></div>
                     </div>
 
                     <!-- Contributor -->
                     @if($article->user)
-                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6">
-                        <h3 class="text-xs font-bold text-white/40 uppercase tracking-widest mb-4">Curated By</h3>
+                    <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
+                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest mb-6">Added by</h3>
                         <a href="{{ route('profile', $article->user->username) }}" class="flex items-center gap-4 group">
-                            <div class="w-10 h-10 rounded-full overflow-hidden border border-white/10">
-                                @if($article->user->avatar)
-                                    <img src="{{ $article->user->avatar }}" class="w-full h-full object-cover">
-                                @else
-                                    <div class="w-full h-full bg-blue-400/20 flex items-center justify-center text-blue-400 font-bold">
-                                        {{ strtoupper(substr($article->user->name, 0, 1)) }}
-                                    </div>
-                                @endif
+                            <div class="w-12 h-12 rounded-full p-0.5 bg-gradient-to-br from-white/10 to-transparent group-hover:from-blue-500/50 transition-all duration-500">
+                                <div class="w-full h-full rounded-full overflow-hidden border border-white/10 bg-[#0d1117] flex items-center justify-center">
+                                    @if($article->user->avatar)
+                                        <img src="{{ $article->user->avatar }}" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
+                                    @else
+                                        <span class="text-sm text-white font-bold">{{ strtoupper(substr($article->user->name, 0, 1)) }}</span>
+                                    @endif
+                                </div>
                             </div>
                             <div>
-                                <p class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
+                                <p class="text-[15px] font-bold text-white group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
+                                <p class="text-[11px] text-white/30 font-medium uppercase tracking-widest">Contributor</p>
                             </div>
                         </a>
                     </div>

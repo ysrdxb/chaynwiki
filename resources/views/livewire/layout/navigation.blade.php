@@ -48,7 +48,7 @@ new class extends Component
                         Genres
                     </a>
                     <a href="#" class="text-[14px] font-medium text-white/40 hover:text-white transition-colors">
-                        lyrics
+                        Lyrics
                     </a>
                     <a href="#" class="text-[14px] font-medium text-white/40 hover:text-white transition-colors">
                         Playlist
@@ -82,18 +82,18 @@ new class extends Component
                         <x-slot name="content">
                             <div class="p-2 space-y-1">
                                 @auth
-                                <x-dropdown-link :href="route('settings')" wire:navigate class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 hover:!bg-blue-500/10 hover:!text-blue-500 transition-all">
+                                <x-dropdown-link :href="route('settings')" wire:navigate class="!rounded-xl !text-[10px] !font-black !tracking-widest !py-3 hover:!bg-blue-500/10 hover:!text-blue-500 transition-all">
                                     {{ __('Settings') }}
                                 </x-dropdown-link>
 
-                                <x-dropdown-link :href="route('profile', ['username' => auth()->user()->username])" wire:navigate class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 hover:!bg-blue-500/10 hover:!text-blue-500 transition-all">
+                                <x-dropdown-link :href="route('profile', ['username' => auth()->user()->username])" wire:navigate class="!rounded-xl !text-[10px] !font-black !tracking-widest !py-3 hover:!bg-blue-500/10 hover:!text-blue-500 transition-all">
                                     {{ __('Profile') }}
                                 </x-dropdown-link>
 
                                 <div class="h-px bg-white/5 my-1"></div>
 
                                 <button wire:click="logout" class="w-full text-start group">
-                                    <x-dropdown-link class="!rounded-xl !text-[10px] !font-black !uppercase !tracking-widest !py-3 group-hover:!bg-red-500/10 group-hover:!text-red-500 transition-all">
+                                    <x-dropdown-link class="!rounded-xl !text-[10px] !font-black !tracking-widest !py-3 group-hover:!bg-red-500/10 group-hover:!text-red-500 transition-all">
                                         {{ __('Log Out') }}
                                     </x-dropdown-link>
                                 </button>
@@ -119,10 +119,10 @@ new class extends Component
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-black/90 backdrop-blur-xl border-t border-white/5">
         <div class="pt-4 pb-6 space-y-2 px-4">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate class="rounded-2xl !text-[11px] !font-black !uppercase !tracking-[0.3em] !py-4">
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate class="rounded-2xl !text-[11px] !font-black !tracking-[0.3em] !py-4">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <a href="{{ route('wiki.index') }}" wire:navigate class="block px-4 py-4 rounded-2xl text-[11px] font-black uppercase tracking-[0.3em] text-white/40 hover:text-white hover:bg-white/5 transition-all">
+            <a href="{{ route('wiki.index') }}" wire:navigate class="block px-4 py-4 rounded-2xl text-[11px] font-black tracking-[0.3em] text-white/40 hover:text-white hover:bg-white/5 transition-all">
                 Library
             </a>
         </div>
