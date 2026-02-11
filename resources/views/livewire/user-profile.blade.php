@@ -33,6 +33,7 @@
                 <div class="flex-1 mt-6 md:mt-0">
                     <div class="flex items-center gap-4 mb-4">
                         <span class="px-3 py-1 bg-white/5 border border-white/5 rounded-full text-[10px] font-black text-white/40 tracking-[0.3em]">Verified contributor</span>
+                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] font-black text-blue-500 tracking-[0.3em] uppercase">Sonic Bridge v1.1</span>
                         <span class="text-white/20 text-xs font-black tracking-[0.2em] ml-2">Established {{ $user->created_at->format('Y') }}</span>
                     </div>
                     <h1 class="text-[64px] md:text-[84px] font-black text-white tracking-tightest mb-4 leading-[0.8]" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $user->name }}</h1>
@@ -74,6 +75,24 @@
                     <!-- Spotify Now Playing -->
                     <div class="max-w-sm mt-8">
                         <livewire:spotify-now-playing :user="$user" />
+                        
+                        @guest
+                            <div class="mt-4 p-4 rounded-2xl bg-white/5 border border-white/5">
+                                <p class="text-[10px] font-black text-white/40 uppercase tracking-widest text-center">
+                                    <a href="{{ route('login') }}" class="text-blue-500 hover:text-blue-400">Log in</a> to connect your Spotify
+                                </p>
+                            </div>
+                        @endguest
+
+                        @auth
+                            @if(auth()->id() != $user->id && empty($user->spotify_token))
+                                <div class="mt-4 p-4 rounded-2xl bg-white/5 border border-white/5">
+                                    <p class="text-[10px] font-black text-white/20 uppercase tracking-widest text-center">
+                                        User has not linked Spotify
+                                    </p>
+                                </div>
+                            @endif
+                        @endauth
                     </div>
                 </div>
 
