@@ -19,9 +19,16 @@ class HomeSearch extends Component
 
         $this->results = Article::where('title', 'like', '%' . $this->query . '%')
             ->orWhere('content', 'like', '%' . $this->query . '%')
-            ->select('id', 'title', 'slug', 'category', 'featured_image') // Optimize selection
+            ->select('id', 'title', 'slug', 'category', 'featured_image')
             ->take(5)
             ->get();
+    }
+
+    public function goToSearch()
+    {
+        if (!empty($this->query)) {
+            return redirect()->route('search', ['q' => $this->query]);
+        }
     }
 
     public function render()

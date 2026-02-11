@@ -21,19 +21,7 @@
 
             {{-- Center: Search (Desktop) --}}
             <div class="hidden md:flex flex-1 max-w-[420px] mx-12">
-                <form action="{{ route('search') }}" method="GET" class="w-full">
-                    <div class="flex items-center bg-[#161b22] border border-white/10 rounded-full px-4 py-2 focus-within:border-white/20 transition-all">
-                        <input 
-                            type="text" 
-                            name="q" 
-                            placeholder="Search" 
-                            class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-white/30 text-[16px] font-medium tracking-tight"
-                        >
-                        <button type="submit" class="ml-2 flex items-center justify-center w-8 h-8 rounded-full bg-[#3b82f6] hover:bg-[#2563eb] transition-colors">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke-width="2"/><path stroke-linecap="round" stroke-width="2" d="M21 21l-4.35-4.35"/></svg>
-                        </button>
-                    </div>
-                </form>
+                @livewire('header-search')
             </div>
 
             {{-- Right: Nav + Actions --}}

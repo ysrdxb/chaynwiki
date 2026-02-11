@@ -1,5 +1,5 @@
 <div class="relative w-full" x-data="{ focused: false }">
-    <div class="relative group flex items-center bg-[#161b22] border border-white/10 rounded-full overflow-hidden focus-within:border-white/20 transition-all">
+    <div class="relative group flex items-center bg-[#161b22] border border-white/10 rounded-full px-4 py-2 focus-within:border-white/20 transition-all">
         <input 
             type="text" 
             wire:model.live.debounce.300ms="query"
@@ -7,12 +7,10 @@
             @focus="focused = true"
             @blur="setTimeout(() => focused = false, 200)"
             placeholder="Search" 
-            class="flex-1 bg-transparent border-none focus:ring-0 text-[14px] text-white placeholder-white/30 px-5 py-2"
+            class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-white/30 text-[16px] font-medium tracking-tight"
         >
-        <button wire:click="goToSearch" class="w-8 h-8 m-1 bg-[#3b82f6] rounded-full flex items-center justify-center hover:bg-[#2563eb] transition-colors">
-            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
+        <button wire:click="goToSearch" class="ml-2 flex items-center justify-center w-8 h-8 rounded-full bg-[#3b82f6] hover:bg-[#2563eb] transition-colors">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" stroke-width="2"/><path stroke-linecap="round" stroke-width="2" d="M21 21l-4.35-4.35"/></svg>
         </button>
     </div>
 
@@ -28,11 +26,11 @@
         >
             @foreach($results as $result)
                 <a href="{{ route('wiki.show', $result->slug) }}" wire:navigate class="flex items-center gap-3 px-4 py-3 hover:bg-white/5 transition-colors group">
-                    <div class="w-8 h-8 flex-shrink-0 bg-[#38bdf8]/10 rounded-lg flex items-center justify-center overflow-hidden">
+                    <div class="w-8 h-8 flex-shrink-0 bg-[#3b82f6]/10 rounded-lg flex items-center justify-center overflow-hidden">
                         @if($result->featured_image)
-                            <img src="{{ Storage::url($result->featured_image) }}" class="w-full h-full object-cover">
+                            <img src="{{ $result->featured_image }}" class="w-full h-full object-cover">
                         @else
-                            <svg class="w-4 h-4 text-[#38bdf8]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13"/></svg>
+                            <svg class="w-4 h-4 text-[#3b82f6]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13"/></svg>
                         @endif
                     </div>
                     <div class="flex-1 min-w-0">
