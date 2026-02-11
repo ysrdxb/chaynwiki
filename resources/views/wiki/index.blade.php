@@ -58,11 +58,11 @@
                 <!-- Mobile Horizontal Nav -->
                 <div class="lg:hidden mb-10 overflow-x-auto pb-4 scrollbar-hide">
                     <div class="flex items-center gap-3 w-max px-1">
-                         <a href="{{ route('wiki.index') }}" class="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest transition-all {{ !$currentCategory ? 'bg-blue-400 text-white' : 'bg-white/5 text-white/60' }}">
+                         <a href="{{ route('wiki.index') }}" class="px-5 py-2.5 rounded-xl text-xs font-bold tracking-widest transition-all {{ !$currentCategory ? 'bg-blue-400 text-white' : 'bg-white/5 text-white/60' }}">
                             All
                         </a>
                         @foreach($categories as $key => $cat)
-                            <a href="{{ route('wiki.index', ['category' => $key]) }}" class="px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest transition-all {{ $currentCategory == $key ? 'bg-blue-400 text-white' : 'bg-white/5 text-white/60' }}">
+                            <a href="{{ route('wiki.index', ['category' => $key]) }}" class="px-5 py-2.5 rounded-xl text-xs font-bold tracking-widest transition-all {{ $currentCategory == $key ? 'bg-blue-400 text-white' : 'bg-white/5 text-white/60' }}">
                                 {{ $cat['label'] }}
                             </a>
                         @endforeach
@@ -72,7 +72,7 @@
                 <!-- Page Header -->
                 <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-16">
                     <div>
-                         <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-black uppercase tracking-[0.3em] inline-block mb-8 shadow-lg">
+                         <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-black tracking-[0.3em] inline-block mb-8 shadow-lg">
                             Archive Index
                         </span>
                         
@@ -80,7 +80,7 @@
                             {{ $currentCategory ? ($categories[$currentCategory]['label'] ?? ucfirst($currentCategory)) : 'Global Archive' }}
                         </h1>
                         
-                        <p class="text-white/20 text-[11px] font-black uppercase tracking-[0.4em] mt-6 flex items-center gap-3">
+                        <p class="text-white/20 text-[11px] font-black tracking-[0.4em] mt-6 flex items-center gap-3">
                              <span class="w-8 h-px bg-white/10"></span>
                              {{ number_format(isset($results) ? $results['total_count'] : (isset($articles) ? $articles->total() : 0)) }} records indexed
                         </p>
@@ -93,7 +93,7 @@
                                 <input type="hidden" name="category" value="{{ $currentCategory }}">
                             @endif
                             <input type="text" name="q" value="{{ request('q') }}" placeholder="Search topics..." 
-                                class="w-full px-8 py-4 bg-white/5 border border-white/10 rounded-2xl text-white text-[13px] font-black uppercase tracking-widest placeholder-white/20 focus:border-blue-500/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all shadow-2xl">
+                                class="w-full px-8 py-4 bg-white/5 border border-white/10 rounded-2xl text-white text-[13px] font-black tracking-widest placeholder-white/20 focus:border-blue-500/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all shadow-2xl">
                             <button type="submit" class="absolute right-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-blue-500 transition-colors">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                             </button>
@@ -117,12 +117,12 @@
                             @if($results[$key.'s']->count() > 0)
                                 <section>
                                     <div class="flex items-center justify-between gap-8 mb-10">
-                                        <h2 class="text-[20px] font-black text-white uppercase tracking-widest flex items-center gap-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                                        <h2 class="text-[20px] font-black text-white tracking-widest flex items-center gap-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                                             <div class="w-8 h-1 bg-blue-500 rounded-full"></div>
                                             {{ $label }}
                                         </h2>
                                         <div class="flex-1 h-px bg-white/5"></div>
-                                        <span class="text-[10px] font-black text-white/20 bg-white/5 border border-white/5 px-3 py-1.5 rounded-lg uppercase tracking-widest">{{ $results[$key.'s']->count() }} indexed</span>
+                                        <span class="text-[10px] font-black text-white/20 bg-white/5 border border-white/5 px-3 py-1.5 rounded-lg tracking-widest">{{ $results[$key.'s']->count() }} indexed</span>
                                     </div>
 
                                     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -144,8 +144,8 @@
                                 <div class="w-24 h-24 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mx-auto mb-10 shadow-3xl">
                                     <svg class="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
                                 </div>
-                                <h3 class="text-3xl font-black text-white mb-4 uppercase tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">No Signal Detected</h3>
-                                <p class="text-white/20 text-[12px] font-black uppercase tracking-[0.2em] max-w-md mx-auto mb-12">The archive does not contain any entries matching your query. End of results.</p>
+                                <h3 class="text-3xl font-black text-white mb-4 tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">No Signal Detected</h3>
+                                <p class="text-white/20 text-[12px] font-black tracking-[0.2em] max-w-md mx-auto mb-12">The archive does not contain any entries matching your query. End of results.</p>
                                 <a href="{{ route('wiki.create') }}" class="btn-figma-secondary !px-10 !py-4 shadow-xl">
                                     Add first topic →
                                 </a>
@@ -167,8 +167,8 @@
                                 @endif
 
                                 <div class="flex flex-col items-center">
-                                    <span class="text-[9px] font-black text-white/20 uppercase tracking-[0.4em] mb-1">Index Page</span>
-                                    <span class="text-[14px] font-black text-white uppercase tracking-tightest">
+                                    <span class="text-[9px] font-black text-white/20 tracking-[0.4em] mb-1">Index Page</span>
+                                    <span class="text-[14px] font-black text-white tracking-tightest">
                                         {{ $articles->currentPage() }} <span class="text-white/20 mx-1">/</span> {{ $articles->lastPage() }}
                                     </span>
                                 </div>

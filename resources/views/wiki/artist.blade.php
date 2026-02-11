@@ -67,14 +67,14 @@
              <!-- Top Action Row -->
              <div class="flex justify-between items-center mb-8">
                  <!-- Breadcrumbs -->
-                 <nav class="flex items-center gap-2 text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">
+                 <nav class="flex items-center gap-2 text-[10px] font-bold text-white/30 tracking-[0.2em]">
                     <a href="{{ route('wiki.index', ['category' => 'artist']) }}" class="hover:text-blue-400 transition-colors">Artists</a>
                     <span>/</span>
                     <span class="text-white">{{ Str::limit($article->title, 30) }}</span>
                 </nav>
 
                 <div class="flex items-center gap-4">
-                    <a href="{{ route('wiki.edit', $article) }}" class="text-xs font-bold text-white/50 hover:text-white uppercase tracking-wider transition-colors">Edit</a>
+                    <a href="{{ route('wiki.edit', $article) }}" class="text-xs font-bold text-white/50 hover:text-white tracking-wider transition-colors">Edit</a>
                 </div>
             </div>
 
@@ -100,15 +100,15 @@
                      <div class="flex-1 min-w-0 pb-4">
                         <div class="flex items-center gap-3 mb-8">
                              @if(!empty($artistMeta['spotify_id']) || !empty($artistMeta['website']))
-                                <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 shadow-lg">
+                                <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-black tracking-[0.2em] flex items-center gap-2 shadow-lg">
                                     <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> Verified Artist
                                 </span>
                             @else
-                                <span class="px-3 py-1.5 bg-white/5 border border-white/10 text-white/50 rounded-lg text-[10px] font-bold uppercase tracking-widest shadow-lg">Artist profile</span>
+                                <span class="px-3 py-1.5 bg-white/5 border border-white/10 text-white/50 rounded-lg text-[10px] font-bold tracking-widest shadow-lg">Artist profile</span>
                             @endif
                         </div>
                         
-                        <h1 class="text-[56px] lg:text-[90px] font-black text-white uppercase tracking-tighter mb-8 leading-[0.9] -ml-1" style="font-family: 'Moderniz', sans-serif;">
+                        <h1 class="text-[56px] lg:text-[90px] font-black text-white tracking-tighter mb-8 leading-[0.9] -ml-1" style="font-family: 'Moderniz', sans-serif;">
                             {{ $article->title }}
                         </h1>
                         
@@ -116,19 +116,19 @@
                         <div class="flex flex-wrap gap-10">
                              <div class="flex flex-col">
                                 <span class="text-white text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['views'] ?? 0) }}</span>
-                                <span class="text-[11px] text-white/30 font-bold uppercase tracking-widest">Global views</span>
+                                <span class="text-[11px] text-white/30 font-bold tracking-widest">Global views</span>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-white text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['streams'] ?? 0) }}</span>
-                                <span class="text-[11px] text-white/30 font-bold uppercase tracking-widest">Streams</span>
+                                <span class="text-[11px] text-white/30 font-bold tracking-widest">Streams</span>
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-blue-500 text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['impact'] ?? 0, 1) }}</span>
-                                <span class="text-[11px] text-white/30 font-bold uppercase tracking-widest">Impact radius</span>
+                                <span class="text-[11px] text-white/30 font-bold tracking-widest">Impact radius</span>
                             </div>
                              <div class="flex flex-col">
                                 <span class="text-white text-3xl font-black tracking-tighter mb-1">#{{ number_format($artistStats['rank'] ?? 0) }}</span>
-                                <span class="text-[11px] text-white/30 font-bold uppercase tracking-widest">World rank</span>
+                                <span class="text-[11px] text-white/30 font-bold tracking-widest">World rank</span>
                             </div>
                         </div>
                      </div>
@@ -160,7 +160,7 @@
                                 <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
                                 <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Discography</h2>
                              </div>
-                             <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="group flex items-center gap-2 text-[11px] font-bold text-white/30 uppercase tracking-widest hover:text-blue-400 transition-all">
+                             <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="group flex items-center gap-2 text-[11px] font-bold text-white/30 tracking-widest hover:text-blue-400 transition-all">
                                 <span>Browse all tracks</span>
                                 <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                              </a>
@@ -176,8 +176,8 @@
                                              </div>
                                         </div>
                                     </div>
-                                    <h4 class="text-white font-black text-sm truncate tracking-tight group-hover:text-blue-400 transition-colors uppercase leading-tight mb-2">{{ $item['title'] }}</h4>
-                                    <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">{{ $item['year'] ?? 'Unknown' }}</p>
+                                    <h4 class="text-white font-black text-sm truncate tracking-tight group-hover:text-blue-400 transition-colors leading-tight mb-2">{{ $item['title'] }}</h4>
+                                    <p class="text-[10px] font-black text-white/20 tracking-[0.2em]">{{ $item['year'] ?? 'Unknown' }}</p>
                                  </a>
                             @endforeach
                         </div>
@@ -195,7 +195,7 @@
                                     <img src="{{ $item['image'] }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000 grayscale-[0.3] group-hover:grayscale-0">
                                     <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent opacity-80 group-hover:opacity-40 transition-opacity"></div>
                                     <div class="absolute bottom-6 left-6 right-6">
-                                        <p class="text-[10px] font-black text-white uppercase tracking-[0.3em] truncate">{{ $item['title'] }}</p>
+                                        <p class="text-[10px] font-black text-white tracking-[0.3em] truncate">{{ $item['title'] }}</p>
                                     </div>
                                 </div>
                             @endforeach
@@ -228,7 +228,7 @@
                         </div>
 
                         <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 group hover:border-blue-500/20 transition-all">
-                            <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest">Global rating</span>
+                            <span class="text-[11px] font-bold text-white/30 tracking-widest">Global rating</span>
                              <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
                         
@@ -243,19 +243,19 @@
                             @if(!empty($artistMeta['origin']))
                             <div class="flex items-center justify-between py-3 border-b border-white/5">
                                 <span class="text-[13px] text-white/40 font-bold">Origin</span>
-                                <span class="text-[13px] text-white font-black uppercase tracking-tight">{{ $artistMeta['origin'] }}</span>
+                                <span class="text-[13px] text-white font-black tracking-tight">{{ $artistMeta['origin'] }}</span>
                             </div>
                             @endif
                             @if(!empty($artistMeta['active_from']))
                             <div class="flex items-center justify-between py-3 border-b border-white/5">
                                 <span class="text-[13px] text-white/40 font-bold">Active from</span>
-                                <span class="text-[13px] text-white font-black uppercase tracking-tight">{{ $artistMeta['active_from'] }}</span>
+                                <span class="text-[13px] text-white font-black tracking-tight">{{ $artistMeta['active_from'] }}</span>
                             </div>
                             @endif
                             @if(!empty($artistMeta['website']))
                             <div class="flex items-center justify-between py-3">
                                 <span class="text-[13px] text-white/40 font-bold">Website</span>
-                                <a href="{{ $artistMeta['website'] }}" target="_blank" class="flex items-center gap-2 text-[11px] font-bold text-blue-400 uppercase tracking-widest hover:text-white transition-colors">Link ↗</a>
+                                <a href="{{ $artistMeta['website'] }}" target="_blank" class="flex items-center gap-2 text-[11px] font-bold text-blue-400 tracking-widest hover:text-white transition-colors">Link ↗</a>
                             </div>
                             @endif
                         </div>
@@ -274,8 +274,8 @@
                                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
                                     </div>
                                     <div class="min-w-0">
-                                        <p class="text-[13px] font-bold text-white uppercase tracking-tight truncate group-hover:text-blue-400 transition-colors">{{ $song->title }}</p>
-                                        <p class="text-[9px] text-white/30 font-bold uppercase tracking-widest">Topic</p>
+                                        <p class="text-[13px] font-bold text-white tracking-tight truncate group-hover:text-blue-400 transition-colors">{{ $song->title }}</p>
+                                        <p class="text-[9px] text-white/30 font-bold tracking-widest">Topic</p>
                                     </div>
                                 </a>
                                 @endif

@@ -66,14 +66,14 @@
              <!-- Top Action Row -->
              <div class="flex justify-between items-center mb-8">
                  <!-- Breadcrumbs -->
-                 <nav class="flex items-center gap-2 text-[11px] font-bold text-white/30 uppercase tracking-widest">
+                 <nav class="flex items-center gap-2 text-[11px] font-bold text-white/30 tracking-widest">
                     <a href="{{ route('wiki.index', ['category' => 'song']) }}" class="hover:text-blue-400 transition-colors">Songs</a>
                     <span>/</span>
                     <span class="text-white">{{ Str::limit($article->title, 30) }}</span>
                 </nav>
 
                 <div class="flex items-center gap-6">
-                    <a href="{{ route('wiki.edit', $article) }}" class="flex items-center gap-2 text-[11px] font-bold text-white/40 hover:text-white uppercase tracking-widest transition-all">
+                    <a href="{{ route('wiki.edit', $article) }}" class="flex items-center gap-2 text-[11px] font-bold text-white/40 hover:text-white tracking-widest transition-all">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                         Edit Topic
                     </a>
@@ -106,19 +106,19 @@
                      
                      <div class="flex-1 min-w-0 pb-4">
                         <div class="flex items-center gap-3 mb-8">
-                            <span class="px-3 py-1.5 bg-blue-500 text-[#0d1117] rounded-lg text-[10px] font-black uppercase tracking-widest shadow-lg shadow-blue-500/20">Track file</span>
+                            <span class="px-3 py-1.5 bg-blue-500 text-[#0d1117] rounded-lg text-[10px] font-black tracking-widest shadow-lg shadow-blue-500/20">Track file</span>
                             @if($article->song->label)
-                                <span class="px-3 py-1.5 bg-white/5 border border-white/10 text-white/50 rounded-lg text-[10px] font-bold uppercase tracking-widest shadow-lg">{{ $article->song->label }}</span>
+                                <span class="px-3 py-1.5 bg-white/5 border border-white/10 text-white/50 rounded-lg text-[10px] font-bold tracking-widest shadow-lg">{{ $article->song->label }}</span>
                             @endif
                         </div>
                         
-                        <h1 class="text-[52px] lg:text-[76px] font-black text-white uppercase tracking-tighter mb-4 leading-[0.95] -ml-1" style="font-family: 'Moderniz', sans-serif;">
+                        <h1 class="text-[52px] lg:text-[76px] font-black text-white tracking-tighter mb-4 leading-[0.95] -ml-1" style="font-family: 'Moderniz', sans-serif;">
                             {{ $article->title }}
                         </h1>
                         
                         <div class="flex items-center gap-3 text-2xl lg:text-3xl font-black text-white/60 mb-10 tracking-tight">
                             @if($article->song && $article->song->artist)
-                                <span class="text-white/20 uppercase text-[12px] font-bold tracking-widest mr-2">By</span>
+                                <span class="text-white/20 text-[12px] font-bold tracking-widest mr-2">By</span>
                                 <a href="{{ route('wiki.show', $article->song->artist->article) }}" class="text-blue-500 hover:text-white transition-colors border-b-2 border-transparent hover:border-blue-500">
                                     {{ $article->song->artist->name }}
                                 </a>
@@ -128,64 +128,64 @@
                         <div class="flex flex-wrap gap-12">
                              <div class="flex flex-col">
                                 <span class="text-white text-3xl font-black tracking-tighter mb-1">{{ $article->song->release_date ?? 'Unknown' }}</span>
-                                <span class="text-[11px] text-white/30 font-bold uppercase tracking-widest">Release date</span>
+                                <span class="text-[11px] text-white/30 font-bold tracking-widest">Release date</span>
                              </div>
                              <div class="flex flex-col">
                                 <span class="text-blue-500 text-3xl font-black tracking-tighter mb-1">{{ number_format($article->view_count ?? 0) }}</span>
-                                <span class="text-[11px] text-white/30 font-bold uppercase tracking-widest">Total plays</span>
+                                <span class="text-[11px] text-white/30 font-bold tracking-widest">Total plays</span>
                              </div>
                         </div>
                      </div>
-                 </div>
+                  </div>
             </div>
             
             <!-- Rapid Fire Section -->
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
                 <div class="card-premium-unified !bg-[#161b22]/40 group overflow-hidden shadow-3xl">
                     <div class="flex items-center justify-between mb-8">
-                        <span class="text-[11px] font-bold text-white/40 uppercase tracking-widest">Tone key</span>
+                        <span class="text-[11px] font-bold text-white/40 tracking-widest">Tone key</span>
                         <div class="w-9 h-9 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-500 shadow-lg shadow-blue-500/10">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
                         </div>
                     </div>
                     <div class="flex items-baseline gap-2">
-                        <span class="text-3xl font-black text-white tracking-tighter group-hover:text-blue-400 transition-colors uppercase">{{ $article->song->key ?? '--' }}</span>
+                        <span class="text-3xl font-black text-white tracking-tighter group-hover:text-blue-400 transition-colors">{{ $article->song->key ?? '--' }}</span>
                     </div>
                 </div>
 
                 <div class="card-premium-unified !bg-[#161b22]/40 group overflow-hidden shadow-3xl">
                     <div class="flex items-center justify-between mb-8">
-                        <span class="text-[11px] font-bold text-white/40 uppercase tracking-widest">Tempo (BPM)</span>
+                        <span class="text-[11px] font-bold text-white/40 tracking-widest">Tempo (BPM)</span>
                         <div class="w-9 h-9 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-500 shadow-lg shadow-blue-500/10">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                     </div>
                     <div class="flex items-baseline gap-2">
-                        <span class="text-3xl font-black text-blue-500 tracking-tighter transition-colors uppercase">{{ $article->song->bpm ?? '--' }}</span>
+                        <span class="text-3xl font-black text-blue-500 tracking-tighter transition-colors">{{ $article->song->bpm ?? '--' }}</span>
                     </div>
                 </div>
 
                 <div class="card-premium-unified !bg-[#161b22]/40 group overflow-hidden shadow-3xl">
                     <div class="flex items-center justify-between mb-8">
-                        <span class="text-[11px] font-bold text-white/40 uppercase tracking-widest">Genre class</span>
+                        <span class="text-[11px] font-bold text-white/40 tracking-widest">Genre class</span>
                         <div class="w-9 h-9 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-500 shadow-lg shadow-blue-500/10">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
                         </div>
                     </div>
                     <div class="flex items-baseline gap-2">
-                        <span class="text-3xl font-black text-white tracking-tighter group-hover:text-blue-400 transition-colors uppercase truncate">{{ $article->genre ? $article->genre->name : 'Unknown' }}</span>
+                        <span class="text-3xl font-black text-white tracking-tighter group-hover:text-blue-400 transition-colors truncate">{{ $article->genre ? $article->genre->name : 'Unknown' }}</span>
                     </div>
                 </div>
 
                 <div class="card-premium-unified !bg-[#161b22]/40 group overflow-hidden shadow-3xl">
                     <div class="flex items-center justify-between mb-8">
-                        <span class="text-[11px] font-bold text-white/40 uppercase tracking-widest">Time span</span>
+                        <span class="text-[11px] font-bold text-white/40 tracking-widest">Time span</span>
                         <div class="w-9 h-9 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-500 shadow-lg shadow-blue-500/10">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                         </div>
                     </div>
                     <div class="flex items-baseline gap-2">
-                        <span class="text-3xl font-black text-white tracking-tighter group-hover:text-blue-400 transition-colors uppercase">{{ $article->song->duration ?? '--' }}</span>
+                        <span class="text-3xl font-black text-white tracking-tighter group-hover:text-blue-400 transition-colors">{{ $article->song->duration ?? '--' }}</span>
                     </div>
                 </div>
             </div>
@@ -201,7 +201,7 @@
                         <article class="prose prose-invert prose-lg max-w-none">
                             @if($summary)
                                 <div class="card-premium-unified !bg-[#161b22]/60 !p-8 mb-10">
-                                    <h3 class="text-white text-lg font-bold mb-4 uppercase tracking-widest text-blue-400">{{ $article->song->album ?? 'About this track' }}</h3>
+                                    <h3 class="text-white text-lg font-bold mb-4 tracking-widest text-blue-400">{{ $article->song->album ?? 'About this track' }}</h3>
                                     <p class="text-white/70 text-[15px] leading-relaxed relative z-10">
                                         {{ $summary }}
                                     </p>
@@ -212,7 +212,7 @@
                                     {!! Str::markdown($article->content) !!}
                                 @else
                                     <div class="py-12 text-center rounded-3xl border border-dashed border-white/5 bg-white/[0.01]">
-                                        <p class="text-white/20 text-[12px] font-bold uppercase tracking-widest">No detailed classification data synchronized yet</p>
+                                        <p class="text-white/20 text-[12px] font-bold tracking-widest">No detailed classification data synchronized yet</p>
                                     </div>
                                 @endif
                             </div>
@@ -257,7 +257,7 @@
                         </div>
 
                         <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 group hover:border-blue-500/20 transition-all">
-                            <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest">Global rating</span>
+                            <span class="text-[11px] font-bold text-white/30 tracking-widest">Global rating</span>
                              <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
                         
@@ -299,7 +299,7 @@
                             </div>
                             <div>
                                 <p class="text-[15px] font-bold text-white group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
-                                <p class="text-[11px] text-white/30 font-medium uppercase tracking-widest">{{ optional($article->created_at)->format('M d, Y') }}</p>
+                                <p class="text-[11px] text-white/30 font-medium tracking-widest">{{ optional($article->created_at)->format('M d, Y') }}</p>
                             </div>
                         </a>
                     </div>

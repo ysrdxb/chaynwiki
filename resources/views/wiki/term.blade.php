@@ -67,14 +67,14 @@
              <!-- Top Action Row -->
              <div class="flex justify-between items-center mb-8">
                  <!-- Breadcrumbs -->
-                 <nav class="flex items-center gap-2 text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">
+                 <nav class="flex items-center gap-2 text-[10px] font-bold text-white/30 tracking-[0.2em]">
                     <a href="{{ route('wiki.index', ['category' => 'term']) }}" class="hover:text-blue-400 transition-colors">Glossary</a>
                     <span>/</span>
                     <span class="text-white">{{ Str::limit($article->title, 30) }}</span>
                 </nav>
 
                 <div class="flex items-center gap-4">
-                    <a href="{{ route('wiki.edit', $article) }}" class="text-xs font-bold text-white/50 hover:text-white uppercase tracking-wider transition-colors">Edit</a>
+                    <a href="{{ route('wiki.edit', $article) }}" class="text-xs font-bold text-white/50 hover:text-white tracking-wider transition-colors">Edit</a>
                 </div>
             </div>
 
@@ -93,12 +93,12 @@
                  
                  <div class="absolute bottom-0 left-0 p-10 lg:p-16 w-full z-10">
                      @if($article->term?->category_type)
-                     <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-bold uppercase tracking-widest inline-block mb-8 shadow-lg">
-                        {{ strtoupper($article->term->category_type) }}
+                     <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-bold tracking-widest inline-block mb-8 shadow-lg">
+                        {{ ucfirst($article->term->category_type) }}
                     </span>
                     @endif
                     
-                    <h1 class="text-5xl lg:text-9xl font-black text-white uppercase tracking-tighter mb-8 leading-[0.85] -ml-1" style="font-family: 'Moderniz', sans-serif;">
+                    <h1 class="text-5xl lg:text-9xl font-black text-white tracking-tighter mb-8 leading-[0.85] -ml-1" style="font-family: 'Moderniz', sans-serif;">
                         {{ $article->title }}
                     </h1>
                     
@@ -109,12 +109,12 @@
                     <div class="flex items-center gap-10">
                          @if($article->term?->origin_language)
                          <div class="flex flex-col">
-                            <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest mb-1">Origin</span>
+                            <span class="text-[11px] font-bold text-white/30 tracking-widest mb-1">Origin</span>
                             <span class="text-2xl font-black text-white px-1 tracking-tighter">{{ $article->term->origin_language }}</span>
                          </div>
                          @endif
                          <div class="flex flex-col">
-                            <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest mb-1">Views</span>
+                            <span class="text-[11px] font-bold text-white/30 tracking-widest mb-1">Views</span>
                             <span class="text-2xl font-black text-blue-500 px-1 tracking-tighter">{{ number_format($article->view_count ?? 0) }}</span>
                          </div>
                     </div>
@@ -129,7 +129,7 @@
                             <div class="mb-12 p-10 bg-blue-500/5 border border-white/5 rounded-[2.5rem] relative overflow-hidden group hover:border-blue-500/20 transition-all shadow-3xl">
                                 <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] -mr-32 -mt-32"></div>
                                 <div class="relative z-10">
-                                    <div class="text-[11px] font-bold text-blue-400 uppercase tracking-widest mb-6 border-b border-blue-400/20 pb-4 inline-block">Summary</div>
+                                    <div class="text-[11px] font-bold text-blue-400 tracking-widest mb-6 border-b border-blue-400/20 pb-4 inline-block">Summary</div>
                                     <p class="text-white text-2xl leading-relaxed m-0 font-medium tracking-tight">{{ $summary }}</p>
                                 </div>
                             </div>
@@ -143,7 +143,7 @@
                      <section class="border-t border-white/5 pt-16">
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white uppercase tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Discussion</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Discussion</h2>
                         </div>
                         <livewire:article.comments :article="$article" />
                     </section>
@@ -206,7 +206,7 @@
                             </div>
                             <div>
                                 <p class="text-[15px] font-bold text-white group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
-                                <p class="text-[11px] text-white/30 font-medium uppercase tracking-widest">Contributor</p>
+                                <p class="text-[11px] text-white/30 font-medium tracking-widest">Contributor</p>
                             </div>
                         </a>
                     </div>

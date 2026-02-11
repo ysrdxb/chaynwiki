@@ -66,14 +66,14 @@
              <!-- Top Action Row -->
              <div class="flex justify-between items-center mb-8">
                  <!-- Breadcrumbs -->
-                 <nav class="flex items-center gap-2 text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">
+                 <nav class="flex items-center gap-2 text-[10px] font-bold text-white/30 tracking-[0.2em]">
                     <a href="{{ route('wiki.index', ['category' => 'genre']) }}" class="hover:text-blue-400 transition-colors">Genres</a>
                     <span>/</span>
                     <span class="text-white">{{ Str::limit($article->title, 30) }}</span>
                 </nav>
 
                 <div class="flex items-center gap-4">
-                    <a href="{{ route('wiki.edit', $article) }}" class="text-xs font-bold text-white/50 hover:text-white uppercase tracking-wider transition-colors">Edit</a>
+                    <a href="{{ route('wiki.edit', $article) }}" class="text-xs font-bold text-white/50 hover:text-white tracking-wider transition-colors">Edit</a>
                 </div>
             </div>
 
@@ -85,22 +85,22 @@
                  <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/10 rounded-full blur-[160px] -mr-40 -mt-40"></div>
                  
                  <div class="relative z-10 p-12 lg:p-16 w-full">
-                     <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-bold uppercase tracking-widest inline-block mb-8 shadow-lg">
+                     <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-bold tracking-widest inline-block mb-8 shadow-lg">
                         Genre info
                     </span>
                     
-                    <h1 class="text-[64px] lg:text-[100px] font-black text-white uppercase tracking-tighter mb-10 leading-[0.85] -ml-1" style="font-family: 'Moderniz', sans-serif;">
+                    <h1 class="text-[64px] lg:text-[100px] font-black text-white tracking-tighter mb-10 leading-[0.85] -ml-1" style="font-family: 'Moderniz', sans-serif;">
                         {{ $article->title }}
                     </h1>
                     
                     <div class="flex items-center gap-10">
                          <div class="flex flex-col">
                             <span class="text-white text-3xl font-black tracking-tighter mb-1">{{ number_format($article->views_count ?? rand(100, 2000)) }}</span>
-                            <span class="text-[11px] text-white/30 font-bold uppercase tracking-widest">Songs</span>
+                            <span class="text-[11px] text-white/30 font-bold tracking-widest">Songs</span>
                          </div>
                          <div class="flex flex-col">
                             <span class="text-blue-500 text-3xl font-black tracking-tighter mb-1">{{ number_format($article->view_count ?? 0) }}</span>
-                            <span class="text-[11px] text-white/30 font-bold uppercase tracking-widest">Views</span>
+                            <span class="text-[11px] text-white/30 font-bold tracking-widest">Views</span>
                          </div>
                     </div>
                  </div>
@@ -118,7 +118,7 @@
                                     {!! Str::markdown($article->content) !!}
                                 @else
                                     <div class="py-12 text-center rounded-3xl border border-dashed border-white/5 bg-white/[0.01]">
-                                        <p class="text-white/20 text-[12px] font-bold uppercase tracking-widest">No detailed description data synchronized yet</p>
+                                        <p class="text-white/20 text-[12px] font-bold tracking-widest">No detailed description data synchronized yet</p>
                                     </div>
                                 @endif
                             </div>
@@ -150,7 +150,7 @@
                         </div>
 
                         <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 group hover:border-blue-500/20 transition-all">
-                            <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest">Global rating</span>
+                            <span class="text-[11px] font-bold text-white/30 tracking-widest">Global rating</span>
                              <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
                         
@@ -191,7 +191,7 @@
                             </div>
                             <div>
                                 <p class="text-[15px] font-bold text-white group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
-                                <p class="text-[11px] text-white/30 font-medium uppercase tracking-widest">Contributor</p>
+                                <p class="text-[11px] text-white/30 font-medium tracking-widest">Contributor</p>
                             </div>
                         </a>
                     </div>

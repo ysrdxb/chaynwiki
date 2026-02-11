@@ -78,14 +78,14 @@
              <!-- Top Action Row -->
              <div class="flex justify-between items-center mb-8">
                  <!-- Breadcrumbs -->
-                 <nav class="flex items-center gap-2 text-[10px] font-bold text-white/30 uppercase tracking-[0.2em]">
+                 <nav class="flex items-center gap-2 text-[10px] font-bold text-white/30 tracking-[0.2em]">
                     <a href="{{ route('wiki.index', ['category' => 'playlist']) }}" class="hover:text-blue-400 transition-colors">Playlists</a>
                     <span>/</span>
                     <span class="text-white">{{ Str::limit($article->title, 30) }}</span>
                 </nav>
 
                 <div class="flex items-center gap-4">
-                    <a href="{{ route('wiki.edit', $article) }}" class="text-xs font-bold text-white/50 hover:text-white uppercase tracking-wider transition-colors">Edit</a>
+                    <a href="{{ route('wiki.edit', $article) }}" class="text-xs font-bold text-white/50 hover:text-white tracking-wider transition-colors">Edit</a>
                 </div>
             </div>
 
@@ -106,27 +106,27 @@
                      </div>
                      
                      <div class="flex-1 min-w-0 pb-2 text-center md:text-left">
-                        <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-bold uppercase tracking-widest inline-block mb-4 shadow-lg">
+                        <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-bold tracking-widest inline-block mb-4 shadow-lg">
                             Playlist
                         </span>
                         
-                        <h1 class="text-4xl lg:text-7xl font-black text-white uppercase tracking-tighter mb-4 leading-none" style="font-family: 'Moderniz', sans-serif;">
+                        <h1 class="text-4xl lg:text-7xl font-black text-white tracking-tighter mb-4 leading-none" style="font-family: 'Moderniz', sans-serif;">
                             {{ $article->title }}
                         </h1>
                         
                         <div class="flex flex-wrap items-center justify-center md:justify-start gap-8">
                              <div class="flex flex-col">
-                                <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest mb-1">Songs</span>
+                                <span class="text-[11px] font-bold text-white/30 tracking-widest mb-1">Songs</span>
                                 <span class="text-2xl font-black text-white px-1 tracking-tighter">{{ $playlist->track_count ?? '0' }}</span>
                             </div>
                             <div class="w-px h-8 bg-white/10 hidden md:block"></div>
                             <div class="flex flex-col">
-                                <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest mb-1">Views</span>
+                                <span class="text-[11px] font-bold text-white/30 tracking-widest mb-1">Views</span>
                                 <span class="text-2xl font-black text-blue-500 px-1 tracking-tighter">{{ number_format($article->view_count ?? 0) }}</span>
                             </div>
                              <div class="w-px h-8 bg-white/10 hidden md:block"></div>
                             <div class="flex flex-col">
-                                <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest mb-1">Updated</span>
+                                <span class="text-[11px] font-bold text-white/30 tracking-widest mb-1">Updated</span>
                                 <span class="text-2xl font-black text-white px-1 tracking-tighter">{{ optional($article->updated_at)->format('M d, Y') ?? 'Unknown' }}</span>
                             </div>
                         </div>
@@ -160,7 +160,7 @@
                             <div class="rounded-3xl border border-white/5 bg-[#161b22]/40 p-10 text-center">
                                 <p class="text-white/50 text-sm">No Spotify connection detected.</p>
                                 @if(!empty($playlist?->platform_link))
-                                    <a href="{{ $playlist->platform_link }}" target="_blank" rel="noopener" class="mt-4 px-6 py-2 bg-white text-black text-xs font-bold uppercase tracking-widest rounded-lg hover:bg-gray-200 inline-block">Open External Link</a>
+                                    <a href="{{ $playlist->platform_link }}" target="_blank" rel="noopener" class="mt-4 px-6 py-2 bg-white text-black text-xs font-bold tracking-widest rounded-lg hover:bg-gray-200 inline-block">Open External Link</a>
                                 @endif
                             </div>
                         @endif
@@ -202,7 +202,7 @@
                         </div>
 
                         <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 group hover:border-blue-500/20 transition-all">
-                            <span class="text-[11px] font-bold text-white/30 uppercase tracking-widest">Global rating</span>
+                            <span class="text-[11px] font-bold text-white/30 tracking-widest">Global rating</span>
                              <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
                         </div>
                         
@@ -225,7 +225,7 @@
                             </div>
                             <div>
                                 <p class="text-[15px] font-bold text-white group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
-                                <p class="text-[11px] text-white/30 font-medium uppercase tracking-widest">Contributor</p>
+                                <p class="text-[11px] text-white/30 font-medium tracking-widest">Contributor</p>
                             </div>
                         </a>
                     </div>

@@ -1,11 +1,11 @@
 @php
     $placeholder = match ($article->category) {
-        'artist' => 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=400',
-        'song' => 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=400',
-        'genre' => 'https://images.unsplash.com/photo-1514525253361-bee8a48740ad?auto=format&fit=crop&q=80&w=400',
-        'playlist' => 'https://images.unsplash.com/photo-1459749411177-042180ce6742?auto=format&fit=crop&q=80&w=400',
-        'term' => 'https://images.unsplash.com/photo-1514320299584-4bd06b02a04e?auto=format&fit=crop&q=80&w=400',
-        default => 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=400',
+        'artist' => 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?auto=format&fit=crop&q=80&w=800',
+        'song' => 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800',
+        'genre' => 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&q=80&w=800',
+        'playlist' => 'https://images.unsplash.com/photo-1459749411177-042180ce6742?auto=format&fit=crop&q=80&w=800',
+        'term' => 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=800',
+        default => 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=800',
     };
 
     $featured_image = $article->featured_image;
@@ -18,7 +18,7 @@
 <a href="{{ route('wiki.show', $article->slug) }}" class="group block h-full">
     <div class="h-full flex flex-col card-premium-unified !p-0 border border-white/5 hover:border-blue-500/30 transition-all duration-500 shadow-3xl bg-[#161b22]/40 backdrop-blur-sm">
         <!-- Image Area -->
-        <div class="relative aspect-[16/10] overflow-hidden group/img">
+        <div class="relative aspect-[16/10] overflow-hidden group/img bg-[#1a1f26]">
             <img
                 src="{{ $featured_image }}"
                 onerror="this.onerror=null;this.src='{{ $placeholder }}';"
@@ -27,8 +27,8 @@
             <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent opacity-80"></div>
             
             <div class="absolute top-4 left-4">
-                <span class="px-3 py-1 bg-blue-500 text-[#0d1117] text-[9px] font-black uppercase tracking-[0.2em] rounded-lg shadow-2xl">
-                    {{ $article->category }}
+                <span class="px-3 py-1 bg-blue-500 text-navy-950 text-[10px] font-bold tracking-widest rounded-lg shadow-2xl">
+                    {{ ucfirst($article->category) }}
                 </span>
             </div>
 
@@ -56,8 +56,8 @@
                         <span class="text-[10px] font-black text-blue-500">{{ strtoupper(substr($article->user->name ?? 'A', 0, 1)) }}</span>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-[9px] font-black text-white/20 uppercase tracking-[0.2em] leading-none mb-1">Archivist</span>
-                        <span class="text-[11px] font-black text-white/50 uppercase tracking-tight leading-none truncate max-w-[80px]">{{ $article->user->name ?? 'GUEST' }}</span>
+                        <span class="text-[9px] font-black text-white/20 tracking-[0.2em] leading-none mb-1">Archivist</span>
+                        <span class="text-[11px] font-black text-white/50 tracking-tight leading-none truncate max-w-[80px]">{{ $article->user->name ?? 'Guest' }}</span>
                     </div>
                 </div>
                 
