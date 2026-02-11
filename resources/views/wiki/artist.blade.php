@@ -182,7 +182,6 @@
                             @endforeach
                         </div>
                      </section>
-                     @endif
 
                      <section>
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
@@ -201,8 +200,7 @@
                             @endforeach
                         </div>
                      </section>
-                     @endif
-                    
+
                      <section class="border-t border-white/5 pt-16">
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>

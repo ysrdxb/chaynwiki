@@ -107,6 +107,8 @@
             </div>
 
             <div class="flex flex-col xl:flex-row gap-12">
+                <!-- Content Area -->
+                <div class="flex-1 min-w-0 space-y-16">
                      <section>
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
@@ -118,14 +120,14 @@
                                     {!! Str::markdown($article->content) !!}
                                 @else
                                     <div class="py-12 text-center rounded-3xl border border-dashed border-white/5 bg-white/[0.01]">
-                                        <p class="text-white/20 text-[12px] font-bold tracking-widest">No detailed description data synchronized yet</p>
+                                        <p class="text-white/20 text-[12px] font-bold tracking-widest">No detailed description available yet</p>
                                     </div>
                                 @endif
                             </div>
                         </article>
                     </section>
                     
-                     <section class="border-t border-white/5 pt-16">
+                     <section class="pt-4">
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
                             <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Discussion</h2>
@@ -185,7 +187,7 @@
                                     @if($article->user->avatar)
                                         <img src="{{ $article->user->avatar }}" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
                                     @else
-                                        <span class="text-sm text-white font-bold">{{ strtoupper(substr($article->user->name, 0, 1)) }}</span>
+                                        <span class="text-sm text-white font-bold">{{ ucfirst(substr($article->user->name, 0, 1)) }}</span>
                                     @endif
                                 </div>
                             </div>
@@ -196,7 +198,7 @@
                         </a>
                     </div>
                     @endif
-
+                </aside>
             </div>
 
         </main>
