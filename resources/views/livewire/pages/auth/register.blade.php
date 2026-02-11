@@ -40,14 +40,12 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <h2 class="text-[32px] font-black text-white uppercase tracking-tightest mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-        <span class="text-blue-500">Register</span> / Node Discovery
-    </h2>
+    <h2 class="text-[24px] font-bold text-white mb-10">Create an Account</h2>
     
-    <form wire:submit="register" class="space-y-5">
+    <form wire:submit="register" class="space-y-6">
         <!-- Full Name -->
         <div class="space-y-3">
-            <label for="name" class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] ml-4">Full Name</label>
+            <label for="name" class="text-[16px] font-medium text-white ml-2">Full Name</label>
             <div class="relative group">
                 <input 
                     wire:model="name" 
@@ -57,19 +55,16 @@ new #[Layout('layouts.guest')] class extends Component
                     required 
                     autofocus 
                     autocomplete="name"
-                    placeholder="Enter your designated name"
-                    class="block w-full px-8 py-5 bg-white/[0.03] border border-white/5 rounded-[2rem] text-white text-[13px] font-black uppercase tracking-widest placeholder-white/10 focus:border-blue-500/30 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-blue-500/5 transition-all shadow-2xl"
+                    placeholder="Enter your full name"
+                    class="block w-full px-8 py-5 bg-[#161b22] border border-white/5 rounded-[20px] text-white text-[15px] placeholder-white/20 focus:border-blue-500/30 focus:outline-none transition-all shadow-xl"
                 >
-                <div class="absolute right-6 top-1/2 -translate-y-1/2 text-white/10 group-focus-within:text-blue-500 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                </div>
             </div>
             <x-input-error :messages="$errors->get('name')" class="mt-2 ml-4" />
         </div>
 
         <!-- Email Address -->
         <div class="space-y-3">
-            <label for="email" class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] ml-4">Access Identifier</label>
+            <label for="email" class="text-[16px] font-medium text-white ml-2">Email</label>
             <div class="relative group">
                 <input 
                     wire:model="email" 
@@ -78,12 +73,9 @@ new #[Layout('layouts.guest')] class extends Component
                     name="email" 
                     required 
                     autocomplete="username"
-                    placeholder="Enter node identifier..."
-                    class="block w-full px-8 py-5 bg-white/[0.03] border border-white/5 rounded-[2rem] text-white text-[13px] font-black uppercase tracking-widest placeholder-white/10 focus:border-blue-500/30 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-blue-500/5 transition-all shadow-2xl"
+                    placeholder="Enter Email Address"
+                    class="block w-full px-8 py-5 bg-[#161b22] border border-white/5 rounded-[20px] text-white text-[15px] placeholder-white/20 focus:border-blue-500/30 focus:outline-none transition-all shadow-xl"
                 >
-                <div class="absolute right-6 top-1/2 -translate-y-1/2 text-white/10 group-focus-within:text-blue-500 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-                </div>
             </div>
             <x-input-error :messages="$errors->get('email')" class="mt-2 ml-4" />
         </div>
@@ -91,7 +83,7 @@ new #[Layout('layouts.guest')] class extends Component
         <div class="grid md:grid-cols-2 gap-6">
             <!-- Password -->
             <div class="space-y-3">
-                <label for="password" class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] ml-4">Secure Key</label>
+                <label for="password" class="text-[16px] font-medium text-white ml-2">Password</label>
                 <div class="relative group">
                     <input 
                         wire:model="password" 
@@ -100,8 +92,8 @@ new #[Layout('layouts.guest')] class extends Component
                         name="password"
                         required 
                         autocomplete="new-password"
-                        placeholder="Create key..."
-                        class="block w-full px-8 py-5 bg-white/[0.03] border border-white/5 rounded-[2rem] text-white text-[13px] font-black uppercase tracking-widest placeholder-white/10 focus:border-blue-500/30 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-blue-500/5 transition-all shadow-2xl"
+                        placeholder="Enter your Password"
+                        class="block w-full px-8 py-5 bg-[#161b22] border border-white/5 rounded-[20px] text-white text-[15px] placeholder-white/20 focus:border-blue-500/30 focus:outline-none transition-all shadow-xl"
                     >
                 </div>
                 <x-input-error :messages="$errors->get('password')" class="mt-2 ml-4" />
@@ -109,7 +101,7 @@ new #[Layout('layouts.guest')] class extends Component
 
             <!-- Confirm Password -->
             <div class="space-y-3">
-                <label for="password_confirmation" class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] ml-4">Verify Key</label>
+                <label for="password_confirmation" class="text-[16px] font-medium text-white ml-2">Confirm Password</label>
                 <div class="relative group">
                     <input 
                         wire:model="password_confirmation" 
@@ -118,8 +110,8 @@ new #[Layout('layouts.guest')] class extends Component
                         name="password_confirmation" 
                         required 
                         autocomplete="new-password"
-                        placeholder="Retype key..."
-                        class="block w-full px-8 py-5 bg-white/[0.03] border border-white/5 rounded-[2rem] text-white text-[13px] font-black uppercase tracking-widest placeholder-white/10 focus:border-blue-500/30 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-blue-500/5 transition-all shadow-2xl"
+                        placeholder="Enter your Password"
+                        class="block w-full px-8 py-5 bg-[#161b22] border border-white/5 rounded-[20px] text-white text-[15px] placeholder-white/20 focus:border-blue-500/30 focus:outline-none transition-all shadow-xl"
                     >
                 </div>
                 <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 ml-4" />
@@ -134,9 +126,9 @@ new #[Layout('layouts.guest')] class extends Component
                     id="agree_terms" 
                     type="checkbox" 
                     name="agree_terms"
-                    class="w-5 h-5 border-white/10 bg-white/5 rounded-lg text-blue-500 focus:ring-blue-500/20 focus:ring-offset-0 transition-all"
+                    class="w-5 h-5 border-white/10 bg-white/5 rounded text-blue-500 focus:ring-blue-500/20 focus:ring-offset-0 transition-all"
                 >
-                <span class="text-[11px] font-black text-white/20 uppercase tracking-widest group-hover:text-white/40 transition-colors">Node Operational Protocols Accepted</span>
+                <span class="text-[14px] font-medium text-white/60 group-hover:text-white transition-colors">I agree all terms and conditions</span>
             </label>
             <x-input-error :messages="$errors->get('agree_terms')" class="mt-2 ml-4" />
         </div>
@@ -146,30 +138,32 @@ new #[Layout('layouts.guest')] class extends Component
             type="submit" 
             wire:loading.attr="disabled"
             wire:target="register"
-            class="btn-figma-primary !w-full !py-5 !rounded-[2rem] shadow-2xl shadow-blue-500/10"
+            class="group w-full flex items-center justify-center gap-4 bg-white hover:bg-gray-100 py-5 rounded-full transition-all duration-300 shadow-xl shadow-black/20"
         >
-            <span wire:loading.remove wire:target="register">Initiate Registration</span>
-            <span wire:loading wire:target="register" class="flex items-center gap-2">
+            <span wire:loading.remove wire:target="register" class="text-[#0d1117] text-[16px] font-bold">
+                Sign Up
+            </span>
+            <span wire:loading wire:target="register" class="flex items-center gap-2 text-[#0d1117] text-[16px] font-bold">
                 <svg class="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
                     <path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4" stroke-linecap="round"></path>
                 </svg>
-                Creating Node...
+                Creating Account...
             </span>
             
-            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            <div class="w-8 h-8 rounded-full bg-[#3b82f6] flex items-center justify-center group-hover:scale-110 transition-transform">
+                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M7 17L17 7M17 7H7M17 7V17"/>
                 </svg>
             </div>
         </button>
     </form>
 
     <!-- Login Link -->
-    <p class="text-sm text-white/50 mb-8 font-medium">
-        Already indexed? 
-        <a href="{{ route('login') }}" wire:navigate class="text-blue-500 hover:text-white transition-colors border-b border-blue-500/30 hover:border-white pb-1 ml-2">
-            Access Node
+    <p class="mt-12 text-center text-white/40 text-[14px]">
+        Already have an account? 
+        <a href="{{ route('login') }}" wire:navigate class="text-white font-bold hover:text-blue-400 transition-colors ml-1">
+            Login now
         </a>
     </p>
 </div>

@@ -555,12 +555,12 @@
                 <p class="text-white/40 text-[18px] font-medium">A dynamic, mosaic-style feed designed for effortless exploration.</p>
             </div>
 
-            {{-- Mosaic Staggered Layout - Creative Pattern --}}
+            {{-- Mosaic Staggered Layout - Exact Figma Pattern --}}
             <div class="flex flex-col md:flex-row gap-8 lg:gap-12">
-                {{-- Column 1: Aligned Top --}}
-                <div class="flex-1 flex flex-col gap-12">
-                    {{-- Hyperpop Card --}}
-                    <a href="{{ route('wiki.index', ['category' => 'genre', 'q' => 'hyperpop']) }}" class="bg-[#161b22] border border-white/5 rounded-[24px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group">
+                {{-- Column 1 --}}
+                <div class="flex-1 flex flex-col gap-10">
+                    {{-- Hyperpop Card - Top Left --}}
+                    <a href="{{ route('wiki.index', ['category' => 'genre', 'q' => 'hyperpop']) }}" class="bg-[#161b22] border border-white/5 rounded-[32px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group">
                         <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                         </div>
@@ -568,8 +568,8 @@
                         <p class="text-white/40 text-[16px] font-medium">+78% growth this week</p>
                     </a>
 
-                    {{-- Burna Boy Card (Shifted slightly) --}}
-                    <a href="{{ route('wiki.index', ['q' => 'Burna Boy']) }}" class="bg-[#161b22] border border-white/5 rounded-[24px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group mt-8">
+                    {{-- Burna Boy Card - Lower Left --}}
+                    <a href="{{ route('wiki.index', ['q' => 'Burna Boy']) }}" class="bg-[#161b22] border border-white/5 rounded-[32px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group md:mt-16">
                         <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                         </div>
@@ -578,10 +578,10 @@
                     </a>
                 </div>
 
-                {{-- Column 2: Large Offset for "Systematic Creative" feel --}}
-                <div class="flex-1 flex flex-col gap-12 md:mt-32">
-                    {{-- Blinding Lights Card --}}
-                    <a href="{{ route('wiki.index', ['q' => 'Blinding Lights']) }}" class="bg-[#161b22] border border-white/5 rounded-[24px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group">
+                {{-- Column 2 - Offset Middle --}}
+                <div class="flex-1 flex flex-col gap-10 md:mt-24">
+                    {{-- Blinding Lights Card - Middle Top (Offset) --}}
+                    <a href="{{ route('wiki.index', ['q' => 'Blinding Lights']) }}" class="bg-[#161b22] border border-white/5 rounded-[32px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group">
                         <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                         </div>
@@ -589,8 +589,8 @@
                         <p class="text-white/40 text-[16px] font-medium">Most edited today</p>
                     </a>
 
-                    {{-- Afrofusion Card --}}
-                    <a href="{{ route('wiki.index', ['category' => 'genre', 'q' => 'afrofusion']) }}" class="bg-[#161b22] border border-white/5 rounded-[24px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group mt-16">
+                    {{-- Afrofusion Card - Middle Bottom (Offset) --}}
+                    <a href="{{ route('wiki.index', ['category' => 'genre', 'q' => 'afrofusion']) }}" class="bg-[#161b22] border border-white/5 rounded-[32px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group md:mt-16">
                         <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                         </div>
@@ -599,19 +599,16 @@
                     </a>
                 </div>
 
-                {{-- Column 3: Medium Offset --}}
-                <div class="flex-1 flex flex-col gap-12 md:mt-12">
-                    {{-- Emerging Subgenre Card --}}
-                    <a href="{{ route('wiki.index', ['category' => 'genre']) }}" class="bg-[#161b22] border border-white/5 rounded-[24px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group">
+                {{-- Column 3 - Offset Right --}}
+                <div class="flex-1 flex flex-col gap-10 md:mt-12">
+                    {{-- Emerging Subgenre Card - Top Right (Offset) --}}
+                    <a href="{{ route('wiki.index', ['category' => 'genre']) }}" class="bg-[#161b22] border border-white/5 rounded-[32px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group">
                         <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
                         </div>
                         <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2 leading-tight">EMERGING<br>SUBGENRE</h3>
                         <p class="text-white/40 text-[16px] font-medium">New Remix</p>
                     </a>
-                    
-                    {{-- Placeholder/Empty space to enhance the mosaic feel on larger screens --}}
-                    <div class="hidden lg:block h-32"></div>
                 </div>
             </div>
         </div>
