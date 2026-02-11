@@ -670,56 +670,77 @@
     {{-- =========================================
          COMMUNITY INSIGHTS - FIGMA DESIGN
          ========================================= --}}
-    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10">
+    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 overflow-hidden"
+             x-data="{ 
+                canScrollLeft: false, 
+                canScrollRight: true,
+                sliderScroll(amount) {
+                    const slider = this.$refs.insightSlider;
+                    slider.scrollBy({ left: amount, behavior: 'smooth' });
+                    setTimeout(() => this.checkScroll(), 350);
+                },
+                checkScroll() {
+                    const slider = this.$refs.insightSlider;
+                    this.canScrollLeft = slider.scrollLeft > 10;
+                    this.canScrollRight = slider.scrollLeft < (slider.scrollWidth - slider.clientWidth - 10);
+                }
+            }" x-init="checkScroll()">
         <div class="max-w-[1400px] mx-auto px-8">
-            <div class="mb-12 max-w-2xl">
-                <h2 class="section-title mb-2">Community Insights</h2>
-                <p class="section-subtitle">Real-time metrics on how the community is expanding the global music knowledge base.</p>
+            <div class="flex items-end justify-between mb-16">
+                <div class="max-w-2xl">
+                    <h2 class="text-white text-[32px] font-black uppercase tracking-tight mb-2" style="font-family: 'MODERNIZ', sans-serif;">COMMUNITY INSIGHTS</h2>
+                    <p class="section-subtitle">See what the SoundBook community is actively updating right now.</p>
+                </div>
+
+                {{-- Slider Controls --}}
+                <div class="hidden md:flex items-center gap-4">
+                    <button @click="sliderScroll(-400)" :class="canScrollLeft ? 'text-white border-white/20' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center transition-all bg-transparent hover:border-white/40 group">
+                        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button @click="sliderScroll(400)" :class="canScrollRight ? 'text-white border-white/20' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center transition-all bg-transparent hover:border-white/40 group">
+                        <svg class="w-5 h-5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {{-- Stat Card 1 --}}
-                <div class="card-premium-unified p-8 flex flex-col min-h-[220px] group">
-                    <span class="text-white/40 text-[12px] font-bold uppercase tracking-widest mb-6">Total contributors</span>
-                    <div class="text-[48px] font-black text-white leading-none tracking-tighter mb-auto">{{ number_format($heroStats['contributors']) }}</div>
-                    <div class="flex justify-end">
-                        <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center group-hover:bg-blue-500 transition-all duration-300">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                        </div>
-                    </div>
-                </div>
+            <div class="overflow-x-auto scrollbar-hide -mx-8 px-8" x-ref="insightSlider" @scroll="checkScroll()" style="scrollbar-width: none; -ms-overflow-style: none;">
+                <div class="flex gap-6 pb-8">
+                    @php
+                        $insights = [
+                            [
+                                'title' => 'Most Edited Artist Today',
+                                'value' => 'Drake',
+                                'badge' => '42 updates',
+                            ],
+                            [
+                                'title' => 'Most Added Genre',
+                                'value' => 'Afrobeats',
+                                'badge' => '+12 today',
+                            ],
+                            [
+                                'title' => 'Fastest Growing Playlist',
+                                'value' => 'Summer Hits',
+                                'badge' => '+1.2K likes',
+                            ],
+                            [
+                                'title' => 'Trending Category',
+                                'value' => 'Music Theory',
+                                'badge' => 'High Heat',
+                            ],
+                        ];
+                    @endphp
 
-                {{-- Stat Card 2 --}}
-                <div class="card-premium-unified p-8 flex flex-col min-h-[220px] group">
-                    <span class="text-white/40 text-[12px] font-bold uppercase tracking-widest mb-6">Article changes</span>
-                    <div class="text-[48px] font-black text-white leading-none tracking-tighter mb-auto">{{ number_format($heroStats['revisions']) }}</div>
-                    <div class="flex justify-end">
-                        <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center group-hover:bg-blue-500 transition-all duration-300">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    @foreach($insights as $insight)
+                    <div class="bg-[#161b22]/90 border border-white/10 rounded-[32px] p-10 min-w-[380px] md:min-w-[440px] group transition-all duration-300 hover:border-white/20 hover:bg-[#1c2128] flex items-center justify-between">
+                        <div>
+                            <h3 class="text-white text-[24px] font-bold leading-tight mb-4 max-w-[200px]">{{ $insight['title'] }}</h3>
+                            <p class="text-white/40 text-[16px] font-medium">{{ $insight['value'] }}</p>
+                        </div>
+                        <div class="bg-blue-600 px-6 py-3 rounded-full shadow-lg shadow-blue-600/20">
+                            <span class="text-white text-[14px] font-black whitespace-nowrap">{{ $insight['badge'] }}</span>
                         </div>
                     </div>
-                </div>
-
-                {{-- Stat Card 3 --}}
-                <div class="card-premium-unified p-8 flex flex-col min-h-[220px] group">
-                    <span class="text-white/40 text-[12px] font-bold uppercase tracking-widest mb-6">Artists indexed</span>
-                    <div class="text-[48px] font-black text-white leading-none tracking-tighter mb-auto">{{ number_format($heroStats['artists']) }}</div>
-                    <div class="flex justify-end">
-                        <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center group-hover:bg-blue-500 transition-all duration-300">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Stat Card 4 --}}
-                <div class="card-premium-unified p-8 flex flex-col min-h-[220px] group">
-                    <span class="text-white/40 text-[12px] font-bold uppercase tracking-widest mb-6">Total topics</span>
-                    <div class="text-[48px] font-black text-white leading-none tracking-tighter mb-auto">{{ number_format($heroStats['articles']) }}</div>
-                    <div class="flex justify-end">
-                        <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center group-hover:bg-blue-500 transition-all duration-300">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -733,18 +754,18 @@
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none"></div>
 
         <div class="max-w-[1400px] mx-auto px-8 text-center relative z-10">
-            <h2 class="text-[40px] md:text-[64px] font-black text-white tracking-tighter mb-16 max-w-4xl mx-auto leading-[1.0]">
+            <h2 class="text-[32px] md:text-[48px] font-black text-white tracking-tight mb-12 max-w-4xl mx-auto uppercase leading-tight" style="font-family: 'MODERNIZ', sans-serif;">
                 Can't find the topic you're looking for? Add it now!
             </h2>
             
             <div class="flex justify-center">
-                <a href="{{ route('wiki.create') }}" class="group inline-flex items-center gap-6 bg-white hover:bg-gray-100 px-10 py-5 rounded-full transition-all duration-300 shadow-2xl shadow-black/40">
-                    <span class="text-[#0d1117] text-[18px] font-black uppercase tracking-tighter">
+                <a href="{{ route('wiki.create') }}" class="group inline-flex items-center gap-4 bg-white hover:bg-gray-100 px-8 py-4 rounded-full transition-all duration-300 shadow-xl shadow-black/20">
+                    <span class="text-[#0d1117] text-[15px] font-black uppercase tracking-tight">
                         Add a New Topic
                     </span>
-                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    <div class="w-8 h-8 bg-[#3b82f6] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M7 17L17 7M17 7H7M17 7V17"/>
                         </svg>
                     </div>
                 </a>
