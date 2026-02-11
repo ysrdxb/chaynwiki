@@ -37,19 +37,17 @@ new #[Layout('layouts.guest')] class extends Component
 }; ?>
 
 <div>
-    <h2 class="text-[32px] font-black text-white uppercase tracking-tightest mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-        <span class="text-blue-500">Recovery</span> / Node Access
-    </h2>
-    <p class="text-white/20 text-[11px] font-black uppercase tracking-[0.4em] mb-12">
-        Lost access? Enter identifier to dispatch a restoration link.
+    <h2 class="text-[32px] font-bold text-white mb-4">Forgot Password</h2>
+    <p class="text-white/50 text-[14px] font-medium mb-12">
+        Forgot your password? No problem. Just let us know your email address and we will email you a password reset link.
     </p>
 
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <form wire:submit="sendPasswordResetLink" class="space-y-6">
-        <div class="space-y-3">
-            <label for="email" class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em] ml-4">Access Identifier</label>
+        <div class="space-y-2">
+            <label for="email" class="text-[15px] font-medium text-white/80 ml-1">Email</label>
             <div class="relative group">
                 <input 
                     wire:model="email" 
@@ -58,12 +56,9 @@ new #[Layout('layouts.guest')] class extends Component
                     name="email" 
                     required 
                     autofocus
-                    placeholder="Enter node identifier..."
-                    class="block w-full px-8 py-5 bg-white/[0.03] border border-white/5 rounded-[2rem] text-white text-[13px] font-black uppercase tracking-widest placeholder-white/10 focus:border-blue-500/30 focus:bg-white/[0.05] focus:outline-none focus:ring-4 focus:ring-blue-500/5 transition-all shadow-2xl"
+                    placeholder="Enter your email address"
+                    class="block w-full px-6 py-3 bg-[#161b22] border border-white/5 rounded-[14px] text-white text-[15px] placeholder-white/20 focus:border-white/10 focus:outline-none transition-all shadow-2xl"
                 >
-                <div class="absolute right-6 top-1/2 -translate-y-1/2 text-white/10 group-focus-within:text-blue-500 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                </div>
             </div>
             <x-input-error :messages="$errors->get('email')" class="mt-2 ml-4" />
         </div>
@@ -73,29 +68,33 @@ new #[Layout('layouts.guest')] class extends Component
             type="submit" 
             wire:loading.attr="disabled"
             wire:target="sendPasswordResetLink"
-            class="btn-figma-primary !w-full !py-5 !rounded-[2rem] shadow-2xl shadow-blue-500/10"
+            class="group w-full flex items-center justify-between bg-white hover:bg-gray-100 px-8 py-3 rounded-full transition-all duration-300 shadow-2xl shadow-black/40"
         >
-            <span wire:loading.remove wire:target="sendPasswordResetLink">Dispatch Restoration Link</span>
-            <span wire:loading wire:target="sendPasswordResetLink" class="flex items-center gap-2">
-                <svg class="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
-                    <path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4" stroke-linecap="round"></path>
-                </svg>
-                Sending...
-            </span>
+            <div class="flex-1 text-center">
+                <span wire:loading.remove wire:target="sendPasswordResetLink" class="text-[#0d1117] text-[17px] font-bold">
+                    Email Password Reset Link
+                </span>
+                <span wire:loading wire:target="sendPasswordResetLink" class="flex items-center justify-center gap-2 text-[#0d1117] text-[17px] font-bold">
+                    <svg class="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke-width="4"></circle>
+                        <path class="opacity-75" d="M4 12a8 8 0 018-8" stroke-width="4" stroke-linecap="round"></path>
+                    </svg>
+                    Sending...
+                </span>
+            </div>
             
-            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+            <div class="w-8 h-8 rounded-full bg-[#3b82f6] flex items-center justify-center group-hover:scale-110 transition-transform">
                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M7 17L17 7M17 7H7M17 7V17"/>
                 </svg>
             </div>
         </button>
     </form>
 
-    <p class="mt-12 text-center text-white/20 text-[11px] font-black uppercase tracking-[0.3em]">
-        Back to safety? 
-        <a href="{{ route('login') }}" wire:navigate class="text-blue-500 hover:text-white transition-colors border-b border-blue-500/30 hover:border-white pb-1 ml-2">
-            Access Node
+    <div class="mt-16 text-center">
+        <span class="text-white/30 text-[14px] font-medium">Remember your password?</span> 
+        <a href="{{ route('login') }}" wire:navigate class="text-white text-[14px] font-black hover:text-blue-400 transition-colors ml-1">
+            Login now
         </a>
-    </p>
+    </div>
 </div>
