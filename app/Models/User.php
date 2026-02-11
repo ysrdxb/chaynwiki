@@ -12,10 +12,12 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
     
-    // Fallback username for now until migration adds one
+    /**
+     * Get the user's username, falling back to a slug of their name if not set.
+     */
     public function getUsernameAttribute()
     {
-        return \Illuminate\Support\Str::slug($this->name);
+        return $this->attributes['username'] ?? \Illuminate\Support\Str::slug($this->name);
     }
 
     /**
@@ -25,6 +27,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
         'role',
@@ -33,6 +36,11 @@ class User extends Authenticatable
         'bio',
         'location',
         'website',
+        'spotify_id',
+        'spotify_token',
+        'spotify_refresh_token',
+        'spotify_token_expires_at',
+        'spotify_now_playing',
     ];
 
     /**
@@ -40,7 +48,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $appends = ['level', 'rank_name', 'username'];
+    protected $appends = ['level', 'rank_name'];
 
     /**
      * The attributes that should be hidden for serialization.

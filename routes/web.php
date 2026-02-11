@@ -54,8 +54,12 @@ Route::get('/admin/login', function () {
     return redirect()->route('login');
 });
 
+// Spotify OAuth
+Route::get('/auth/spotify/redirect', [App\Http\Controllers\SpotifyController::class, 'redirect'])->name('auth.spotify.redirect');
+Route::get('/auth/spotify/callback', [App\Http\Controllers\SpotifyController::class, 'callback'])->name('auth.spotify.callback');
+
 Route::get('/user/{username}', function ($username) {
-    $user = \App\Models\User::all()->first(fn($u) => \Illuminate\Support\Str::slug($u->name) === $username);
+    $user = \App\Models\User::where('username', $username)->first();
     if (!$user) abort(404);
     return view('profile-page', ['user' => $user]);
 })->name('profile');

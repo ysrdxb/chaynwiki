@@ -13,24 +13,24 @@
         --bg-surface: #151c24;
         --bg-elevated: #1c2630;
         --bg-muted: #2a3544;
-        
+
         /* Accent Colors */
         --accent-primary: #38bdf8;
         --accent-secondary: #2dd4bf;
         --accent-tertiary: #f472b6;
         --accent-purple: #a78bfa;
         --accent-orange: #fb923c;
-        
+
         /* Text Colors */
         --text-primary: #f1f5f9;
         --text-secondary: #cbd5e1;
         --text-muted: #64748b;
-        
+
         /* Border Colors */
         --border-subtle: rgba(56, 189, 248, 0.1);
         --border-visible: rgba(56, 189, 248, 0.2);
     }
-    
+
     body {
         @apply bg-primary text-white font-sans antialiased;
         background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
@@ -50,40 +50,105 @@
 
 /* === Ocean Depth Utility Classes === */
 @layer utilities {
+
     /* Core backgrounds */
-    .bg-primary { background-color: var(--bg-primary); }
-    .bg-secondary { background-color: var(--bg-secondary); }
-    .bg-surface { background-color: var(--bg-surface); }
-    .bg-elevated { background-color: var(--bg-elevated); }
-    
+    .bg-primary {
+        background-color: var(--bg-primary);
+    }
+
+    .bg-secondary {
+        background-color: var(--bg-secondary);
+    }
+
+    .bg-surface {
+        background-color: var(--bg-surface);
+    }
+
+    .bg-elevated {
+        background-color: var(--bg-elevated);
+    }
+
     /* Accent colors */
-    .text-accent { color: var(--accent-primary); }
-    .text-accent-secondary { color: var(--accent-secondary); }
-    .text-accent-tertiary { color: var(--accent-tertiary); }
-    
+    .text-accent {
+        color: var(--accent-primary);
+    }
+
+    .text-accent-secondary {
+        color: var(--accent-secondary);
+    }
+
+    .text-accent-tertiary {
+        color: var(--accent-tertiary);
+    }
+
     /* Text hierarchy */
-    .text-primary { color: var(--text-primary); }
-    .text-secondary { color: var(--text-secondary); }
-    .text-muted { color: var(--text-muted); }
-    .text-subtle { color: rgba(255, 255, 255, 0.4); }
-    
+    .text-primary {
+        color: var(--text-primary);
+    }
+
+    .text-secondary {
+        color: var(--text-secondary);
+    }
+
+    .text-muted {
+        color: var(--text-muted);
+    }
+
+    .text-subtle {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
     /* Enhanced borders */
-    .border-subtle { border-color: var(--border-subtle); }
-    .border-visible { border-color: var(--border-visible); }
-    .border-accent { border-color: var(--accent-primary); }
-    
+    .border-subtle {
+        border-color: var(--border-subtle);
+    }
+
+    .border-visible {
+        border-color: var(--border-visible);
+    }
+
+    .border-accent {
+        border-color: var(--accent-primary);
+    }
+
     /* Global border standardization - 22% opacity */
     .border-white\/5,
     .border-white\/10,
     .border-white\/15 {
         border-color: rgb(255 255 255 / 22%) !important;
     }
-    
+
     /* Ocean glow effects */
     .glow-accent {
         box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
     }
+
     .glow-accent-strong {
         box-shadow: 0 0 30px rgba(56, 189, 248, 0.4), 0 0 60px rgba(56, 189, 248, 0.2);
     }
+}
+
+/* Music Visualizer Animations */
+@keyframes visualizer {
+
+    0%,
+    100% {
+        height: 20%;
+    }
+
+    50% {
+        height: 100%;
+    }
+}
+
+.animate-visualizer-1 {
+    animation: visualizer 0.5s ease-in-out infinite;
+}
+
+.animate-visualizer-2 {
+    animation: visualizer 0.7s ease-in-out infinite;
+}
+
+.animate-visualizer-3 {
+    animation: visualizer 0.6s ease-in-out infinite;
 }

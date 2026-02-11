@@ -78,4 +78,32 @@ class SpotifyService
         }
         return $this->api->getArtist($id);
     }
+
+    public function getAudioFeatures(string $id)
+    {
+        if (!$this->api) {
+            return [
+                'tempo' => 120,
+                'key' => 'C',
+                'energy' => 85,
+            ];
+        }
+        
+        try {
+            $features = $this->api->getAudioFeatures($id);
+            return [
+                'tempo' => round($features->tempo),
+                'key' => $this->mapSpotifyKeyToNote($features->key),
+                'energy' => round($features->energy * 100),
+            ];
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    protected function mapSpotifyKeyToNote(int $key)
+    {
+        $keys = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+        return $keys[$key] ?? 'Unknown';
+    }
 }

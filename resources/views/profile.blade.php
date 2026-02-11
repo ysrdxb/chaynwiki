@@ -40,6 +40,17 @@
                     <livewire:profile.update-password-form />
                 </div>
 
+                <div class="card-premium h-auto !bg-[#161b22]/40 backdrop-blur-sm !p-12 rounded-[3.5rem] border-white/5 hover:border-blue-500/20 shadow-3xl transition-all duration-700">
+                    <div class="mb-8">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="px-3 py-1 bg-green-500/10 border border-green-500/20 rounded-lg text-[10px] font-black text-green-500 uppercase tracking-widest">External Connectivity</span>
+                            <div class="h-[1px] flex-1 bg-white/5"></div>
+                        </div>
+                        <h2 class="text-2xl font-black text-white uppercase tracking-tightest">Sonic Bridge / <span class="text-green-500">Spotify</span></h2>
+                    </div>
+                    <livewire:spotify-now-playing :user="auth()->user()" />
+                </div>
+
                 <div class="card-premium h-auto !bg-red-500/[0.02] backdrop-blur-sm !p-12 rounded-[3.5rem] border-red-500/10 hover:border-red-500/30 shadow-3xl transition-all duration-700">
                     <livewire:profile.delete-user-form />
                 </div>

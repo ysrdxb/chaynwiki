@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class DataIntelligenceService
 {
@@ -28,6 +29,10 @@ class DataIntelligenceService
             return $this->fetchFromYouTube($url);
         }
 
+        if (Str::contains($url, 'soundcloud.com')) {
+            return $this->fetchFromSoundCloud($url);
+        }
+
         return [
             'success' => false,
             'message' => 'Unsupported source protocol. Please use Spotify or YouTube URLs.'
@@ -51,6 +56,7 @@ class DataIntelligenceService
             switch ($type) {
                 case 'track':
                     $track = $this->spotify->getTrack($id);
+                    $features = $this->spotify->getAudioFeatures($id);
                     $data = [
                         'title' => $track->name,
                         'artist' => $track->artists[0]->name,
@@ -58,6 +64,9 @@ class DataIntelligenceService
                         'release_date' => $track->album->release_date,
                         'image' => $track->album->images[0]->url ?? null,
                         'spotify_id' => $id,
+                        'bpm' => $features['tempo'] ?? null,
+                        'key' => $features['key'] ?? null,
+                        'energy' => $features['energy'] ?? null,
                     ];
 
                     // Intelligent Fallback: Search YouTube for the video equivalent
@@ -126,5 +135,33 @@ class DataIntelligenceService
                 'youtube_id' => $videoId,
             ]
         ];
+    }
+
+    protected function fetchFromSoundCloud(string $url): array
+    {
+        try {
+            $response = Http::get('https://soundcloud.com/oembed', [
+                'url' => $url,
+                'format' => 'json',
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                return [
+                    'success' => true,
+                    'category' => 'song',
+                    'data' => [
+                        'title' => $data['title'],
+                        'artist' => $data['author_name'] ?? 'SoundCloud User',
+                        'image' => $data['thumbnail_url'] ?? null,
+                        'soundcloud_embed' => $data['html'],
+                    ]
+                ];
+            }
+        } catch (\Exception $e) {
+            // Silently fail or log
+        }
+
+        return ['success' => false, 'message' => 'SoundCloud retrieval failed.'];
     }
 }

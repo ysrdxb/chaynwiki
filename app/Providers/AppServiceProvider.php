@@ -22,5 +22,10 @@ class AppServiceProvider extends ServiceProvider
         \Illuminate\Support\Facades\Gate::define('admin', function ($user) {
             return $user->role === 'admin';
         });
+
+        // Register SocialiteProviders Spotify Listener
+        \Illuminate\Support\Facades\Event::listen(function (\SocialiteProviders\Manager\SocialiteWasCalled $event) {
+            $event->extendSocialite('spotify', \SocialiteProviders\Spotify\Provider::class);
+        });
     }
 }

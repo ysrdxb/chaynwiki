@@ -70,6 +70,11 @@
                             <span class="text-[14px] font-black text-white tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $pendingReviews }} <span class="text-white/10 text-[10px] ml-1">pending</span></span>
                         </div>
                     </div>
+
+                    <!-- Spotify Now Playing -->
+                    <div class="max-w-sm mt-8">
+                        <livewire:spotify-now-playing :user="$user" />
+                    </div>
                 </div>
 
                 <div class="shrink-0 pt-8 md:pt-0">

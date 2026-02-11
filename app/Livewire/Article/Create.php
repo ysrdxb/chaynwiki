@@ -135,6 +135,9 @@ class Create extends Component
                 $this->meta['album'] = $data['album'] ?? null;
                 $this->meta['release_date'] = $data['release_date'] ?? null;
                 $this->meta['artist_name'] = $data['artist'] ?? null;
+                $this->meta['bpm'] = $data['bpm'] ?? null;
+                $this->meta['key'] = $data['key'] ?? null;
+                $this->meta['energy'] = $data['energy'] ?? null;
                 
                 // If youtube_id was fetched by service (currently not in service but we could add it)
                 if (isset($data['youtube_id'])) {
