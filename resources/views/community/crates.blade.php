@@ -13,7 +13,7 @@
         </div>
 
         <!-- Main Content -->
-        <livewire:explore.⚡crate-explore />
+        <livewire:explore.crate-explore />
     </div>
 </div>
 @endsection

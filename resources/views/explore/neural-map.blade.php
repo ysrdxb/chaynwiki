@@ -31,7 +31,7 @@
 
     {{-- Main Graph Canvas --}}
     <div class="flex-1 relative">
-        <livewire:⚡neural-knowledge-graph :isGlobal="true" :height="800" />
+        <livewire:wiki.neural-knowledge-graph :isGlobal="true" :height="800" />
         
         {{-- Floating Controls Overlay --}}
         <div class="absolute top-8 right-8 z-30 flex flex-col gap-4">
