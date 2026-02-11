@@ -543,52 +543,76 @@
         </div>
     </section>
 
-    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 overflow-hidden">
-        <div class="max-w-[1400px] mx-auto px-8">
-            <div class="mb-12 max-w-2xl">
-                <h2 class="section-title mb-2">Discover what's shaping today's music</h2>
-                <p class="section-subtitle">Real-time trending topics and community favorites.</p>
+    <section class="section-unified py-32 bg-[#0d1117] border-t border-white/5 relative z-10 overflow-hidden">
+        {{-- Background Glow --}}
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-500/5 blur-[160px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-[1400px] mx-auto px-8 relative z-10">
+            <div class="mb-24 max-w-3xl">
+                <h2 class="text-white text-[32px] md:text-[40px] font-black uppercase tracking-tight mb-4" style="font-family: 'MODERNIZ', sans-serif;">
+                    DISCOVER WHAT’S SHAPING TODAY’S MUSIC
+                </h2>
+                <p class="text-white/40 text-[18px] font-medium">A dynamic, mosaic-style feed designed for effortless exploration.</p>
             </div>
 
-            {{-- Dynamic Trending Grid --}}
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach($trendingArticles as $index => $article)
-                <a href="{{ route('wiki.show', $article->slug) }}" class="group relative overflow-hidden rounded-[24px] border border-white/5 bg-[#161b22]/40 backdrop-blur-sm p-8 hover:border-blue-500/30 hover:bg-[#161b22]/60 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-300">
-                    <div class="mb-6 flex justify-between items-start">
-                        <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500 transition-colors">
-                            @if($article->category === 'artist')
-                                <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                            @elseif($article->category === 'song')
-                                <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-                            @elseif($article->category === 'genre')
-                                <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-                            @else
-                                <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                            @endif
+            {{-- Mosaic Staggered Layout - Creative Pattern --}}
+            <div class="flex flex-col md:flex-row gap-8 lg:gap-12">
+                {{-- Column 1: Aligned Top --}}
+                <div class="flex-1 flex flex-col gap-12">
+                    {{-- Hyperpop Card --}}
+                    <a href="{{ route('wiki.index', ['category' => 'genre', 'q' => 'hyperpop']) }}" class="bg-[#161b22] border border-white/5 rounded-[24px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group">
+                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                         </div>
-                        
-                        <div class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest">
-                            #{{ $index + 1 }} Trending
+                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2">HYPERPOP</h3>
+                        <p class="text-white/40 text-[16px] font-medium">+78% growth this week</p>
+                    </a>
+
+                    {{-- Burna Boy Card (Shifted slightly) --}}
+                    <a href="{{ route('wiki.index', ['q' => 'Burna Boy']) }}" class="bg-[#161b22] border border-white/5 rounded-[24px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group mt-8">
+                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                         </div>
-                    </div>
+                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2">BURNA BOY</h3>
+                        <p class="text-white/40 text-[16px] font-medium">#3 Global Momentum</p>
+                    </a>
+                </div>
+
+                {{-- Column 2: Large Offset for "Systematic Creative" feel --}}
+                <div class="flex-1 flex flex-col gap-12 md:mt-32">
+                    {{-- Blinding Lights Card --}}
+                    <a href="{{ route('wiki.index', ['q' => 'Blinding Lights']) }}" class="bg-[#161b22] border border-white/5 rounded-[24px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group">
+                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                        </div>
+                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2 leading-tight">BLINDING<br>LIGHTS</h3>
+                        <p class="text-white/40 text-[16px] font-medium">Most edited today</p>
+                    </a>
+
+                    {{-- Afrofusion Card --}}
+                    <a href="{{ route('wiki.index', ['category' => 'genre', 'q' => 'afrofusion']) }}" class="bg-[#161b22] border border-white/5 rounded-[24px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group mt-16">
+                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2">AFROFUSION</h3>
+                        <p class="text-white/40 text-[16px] font-medium">Emerging subgenre</p>
+                    </a>
+                </div>
+
+                {{-- Column 3: Medium Offset --}}
+                <div class="flex-1 flex flex-col gap-12 md:mt-12">
+                    {{-- Emerging Subgenre Card --}}
+                    <a href="{{ route('wiki.index', ['category' => 'genre']) }}" class="bg-[#161b22] border border-white/5 rounded-[24px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group">
+                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
+                        </div>
+                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2 leading-tight">EMERGING<br>SUBGENRE</h3>
+                        <p class="text-white/40 text-[16px] font-medium">New Remix</p>
+                    </a>
                     
-                    <h3 class="text-white text-[24px] font-black uppercase tracking-tighter mb-2 group-hover:text-blue-400 transition-colors line-clamp-1">{{ $article->title }}</h3>
-                    <p class="text-white/50 text-[14px] font-medium mb-4 line-clamp-2">
-                        {{ $article->meta_description ?? 'Join the community discussion about ' . $article->title . ' and discover what makes it trend.' }}
-                    </p>
-                    
-                    <div class="flex items-center gap-4 text-white/30 text-[12px] font-bold">
-                        <span class="flex items-center gap-1.5">
-                            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
-                            {{ number_format($article->view_count) }}
-                        </span>
-                        <span class="flex items-center gap-1.5 ml-auto text-blue-400">
-                             Explore
-                             <svg class="w-3 h-3 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-                        </span>
-                    </div>
-                </a>
-                @endforeach
+                    {{-- Placeholder/Empty space to enhance the mosaic feel on larger screens --}}
+                    <div class="hidden lg:block h-32"></div>
+                </div>
             </div>
         </div>
     </section>
