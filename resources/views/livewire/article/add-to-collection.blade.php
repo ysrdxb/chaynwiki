@@ -65,82 +65,84 @@ new class extends Component {
     </button>
 
     @if($isOpen)
-    <!-- Modal Backdrop -->
-    <div class="fixed inset-0 bg-black/80 backdrop-blur-md z-[100] flex items-center justify-center p-6"
-         x-data x-on:keydown.escape.window="$wire.isOpen = false">
-        
-        <!-- Modal Content -->
-        <div @click.away="$wire.isOpen = false" 
-             class="bg-[#161b22] border border-white/10 rounded-[2.5rem] w-full max-w-md overflow-hidden shadow-3xl relative">
+    <div x-teleport="body">
+        <!-- Modal Backdrop -->
+        <div class="fixed inset-0 bg-[#0d1117]/90 backdrop-blur-xl z-[9999] flex items-center justify-center p-6"
+             x-data x-on:keydown.escape.window="$wire.isOpen = false">
             
-            <div class="p-10">
-                <div class="flex items-center justify-between mb-8">
-                    <h3 class="text-2xl font-black text-white uppercase tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Save to collection</h3>
-                    <button wire:click="$set('isOpen', false)" class="text-white/20 hover:text-white transition-colors">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
-                    </button>
-                </div>
+            <!-- Modal Content -->
+            <div @click.away="$wire.isOpen = false" 
+                 class="bg-[#161b22] border border-white/10 rounded-[2.5rem] w-full max-w-md overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.8),0_0_50px_rgba(59,130,246,0.1)] relative transition-all duration-300">
+                
+                <div class="p-8">
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="text-2xl font-black text-white uppercase tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Save to collection</h3>
+                        <button wire:click="$set('isOpen', false)" class="text-white/20 hover:text-white transition-colors">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
 
-                @auth
-                    <div class="space-y-6">
-                        @php $userCrates = auth()->user()->crates; @endphp
-                        @if($userCrates->isNotEmpty())
-                            <div>
-                                <label class="text-[10px] font-black text-white/20 uppercase tracking-widest mb-3 block">Existing collections</label>
-                                <div class="grid gap-3">
-                                    @foreach($userCrates as $crate)
-                                        <button wire:click="$set('selectedCrate', '{{ $crate->id }}'); $set('newCrateName', '')"
-                                                class="flex items-center justify-between p-4 rounded-2xl border transition-all {{ $selectedCrate == $crate->id ? 'bg-blue-500/10 border-blue-500/50 text-white' : 'bg-white/5 border-white/5 text-white/40 hover:bg-white/10' }}">
-                                            <span class="text-sm font-bold">{{ $crate->name }}</span>
-                                            <div class="w-2 h-2 rounded-full" style="background-color: {{ $crate->color_accent ?? '#3b82f6' }}"></div>
-                                        </button>
-                                    @endforeach
+                    @auth
+                        <div class="space-y-6">
+                            @php $userCrates = auth()->user()->crates; @endphp
+                            @if($userCrates->isNotEmpty())
+                                <div>
+                                    <label class="text-[10px] font-black text-white/20 uppercase tracking-widest mb-3 block">Existing collections</label>
+                                    <div class="grid gap-3 max-h-[240px] overflow-y-auto pr-2 scrollbar-hide">
+                                        @foreach($userCrates as $crate)
+                                            <button wire:click="$set('selectedCrate', '{{ $crate->id }}'); $set('newCrateName', '')"
+                                                    class="flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 {{ $selectedCrate == $crate->id ? 'bg-blue-500/10 border-blue-500/50 text-white' : 'bg-white/5 border-white/5 text-white/40 hover:bg-white/10 hover:border-white/10' }}">
+                                                <span class="text-sm font-bold">{{ $crate->name }}</span>
+                                                <div class="w-2 h-2 rounded-full shadow-[0_0_8px_currentColor]" style="background-color: {{ $crate->color_accent ?? '#3b82f6' }}; color: {{ $crate->color_accent ?? '#3b82f6' }}"></div>
+                                            </button>
+                                        @endforeach
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="flex items-center gap-4 my-8">
-                                <div class="h-px bg-white/5 flex-1"></div>
-                                <span class="text-[9px] font-black text-white/10 uppercase tracking-[0.3em]">OR</span>
-                                <div class="h-px bg-white/5 flex-1"></div>
-                            </div>
-                        @endif
-
-                        <div>
-                            <label class="text-[10px] font-black text-white/20 uppercase tracking-widest mb-3 block">Create new collection</label>
-                            <input type="text" wire:model.live="newCrateName" 
-                                   placeholder="Collection name..." 
-                                   class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm text-white placeholder-white/20 focus:outline-none focus:border-blue-500/50 transition-all">
-                        </div>
-
-                        <div class="pt-6">
-                            <button wire:click="addToCollection" 
-                                    @disabled($loading || (!$selectedCrate && !$newCrateName))
-                                    class="btn-figma-primary !w-full !py-5 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed">
-                                @if($success)
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
-                                    <span>Saved Successfully</span>
-                                @else
-                                    <div wire:loading wire:target="addToCollection" class="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                                    <span wire:loading.remove wire:target="addToCollection">{{ $selectedCrate || $newCrateName ? 'Confirm selection' : 'Select a collection' }}</span>
-                                    <span wire:loading wire:target="addToCollection">Saving...</span>
-                                @endif
-                            </button>
-                            
-                            @if($error)
-                                <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest mt-4 text-center">{{ $error }}</p>
+                                <div class="flex items-center gap-4 my-8">
+                                    <div class="h-px bg-white/5 flex-1"></div>
+                                    <span class="text-[9px] font-black text-white/10 uppercase tracking-[0.3em]">OR</span>
+                                    <div class="h-px bg-white/5 flex-1"></div>
+                                </div>
                             @endif
+
+                            <div>
+                                <label class="text-[10px] font-black text-white/20 uppercase tracking-widest mb-3 block">Create new collection</label>
+                                <input type="text" wire:model.live="newCrateName" 
+                                       placeholder="Collection name..." 
+                                       class="input-unified !py-4 !px-6 !text-sm !font-bold">
+                            </div>
+
+                            <div class="pt-4">
+                                <button wire:click="addToCollection" 
+                                        @disabled($loading || (!$selectedCrate && !$newCrateName))
+                                        class="btn-figma-primary !w-full !py-5 flex items-center justify-center gap-3 disabled:opacity-30 disabled:grayscale disabled:cursor-not-allowed transition-all duration-300">
+                                    @if($success)
+                                        <svg class="w-5 h-5 text-[#0d1117] animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                                        <span class="text-[#0d1117]">Saved to Library</span>
+                                    @else
+                                        <div wire:loading wire:target="addToCollection" class="w-4 h-4 border-2 border-[#0d1117]/20 border-t-[#0d1117] rounded-full animate-spin"></div>
+                                        <span wire:loading.remove wire:target="addToCollection" class="text-[#0d1117]">{{ $selectedCrate || $newCrateName ? 'Confirm Selection' : 'Select a Collection' }}</span>
+                                        <span wire:loading wire:target="addToCollection" class="text-[#0d1117]">Synchronizing...</span>
+                                    @endif
+                                </button>
+                                
+                                @if($error)
+                                    <p class="text-red-500 text-[10px] font-bold uppercase tracking-widest mt-4 text-center">{{ $error }}</p>
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                @else
-                    <div class="text-center py-12">
-                        <div class="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-8">
-                            <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    @else
+                        <div class="text-center py-10">
+                            <div class="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-8 border border-white/5 shadow-inner">
+                                <svg class="w-10 h-10 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                            </div>
+                            <h4 class="text-white font-bold mb-2">Login Required</h4>
+                            <p class="text-white/40 text-[11px] mb-8 leading-relaxed">Join the community to start building your personal music library.</p>
+                            <a href="{{ route('login') }}" class="btn-figma-primary !inline-flex !px-12 !py-4 shadow-xl">Secure Log In</a>
                         </div>
-                        <h4 class="text-white font-bold mb-2">Login Required</h4>
-                        <p class="text-white/40 text-[11px] mb-8">You must be logged in to save topics to your library.</p>
-                        <a href="{{ route('login') }}" class="btn-figma-primary !inline-flex !px-10">Log In</a>
-                    </div>
-                @endauth
+                    @endauth
+                </div>
             </div>
         </div>
     </div>
