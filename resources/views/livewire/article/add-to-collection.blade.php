@@ -65,14 +65,14 @@ new class extends Component {
     </button>
 
     @if($isOpen)
-    <div x-teleport="body">
+    @teleport('body')
         <!-- Modal Backdrop -->
-        <div class="fixed inset-0 bg-[#0d1117]/90 backdrop-blur-xl z-[9999] flex items-center justify-center p-6"
+        <div class="fixed inset-0 bg-[#0d1117]/95 backdrop-blur-2xl z-[99999] flex items-center justify-center p-6"
              x-data x-on:keydown.escape.window="$wire.isOpen = false">
             
             <!-- Modal Content -->
             <div @click.away="$wire.isOpen = false" 
-                 class="bg-[#161b22] border border-white/10 rounded-[2.5rem] w-full max-w-md overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.8),0_0_50px_rgba(59,130,246,0.1)] relative transition-all duration-300">
+                 class="bg-[#161b22] border border-white/10 rounded-[2.5rem] w-full max-w-md overflow-hidden shadow-[0_0_100px_rgba(0,0,0,0.9),0_0_40px_rgba(59,130,246,0.15)] relative transition-all duration-300">
                 
                 <div class="p-8">
                     <div class="flex items-center justify-between mb-8">
@@ -88,7 +88,7 @@ new class extends Component {
                             @if($userCrates->isNotEmpty())
                                 <div>
                                     <label class="text-[10px] font-black text-white/20 uppercase tracking-widest mb-3 block">Existing collections</label>
-                                    <div class="grid gap-3 max-h-[240px] overflow-y-auto pr-2 scrollbar-hide">
+                                    <div class="grid gap-3 max-h-[220px] overflow-y-auto pr-2 custom-scrollbar">
                                         @foreach($userCrates as $crate)
                                             <button wire:click="$set('selectedCrate', '{{ $crate->id }}'); $set('newCrateName', '')"
                                                     class="flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 {{ $selectedCrate == $crate->id ? 'bg-blue-500/10 border-blue-500/50 text-white' : 'bg-white/5 border-white/5 text-white/40 hover:bg-white/10 hover:border-white/10' }}">
@@ -99,7 +99,7 @@ new class extends Component {
                                     </div>
                                 </div>
 
-                                <div class="flex items-center gap-4 my-8">
+                                <div class="flex items-center gap-4 my-6">
                                     <div class="h-px bg-white/5 flex-1"></div>
                                     <span class="text-[9px] font-black text-white/10 uppercase tracking-[0.3em]">OR</span>
                                     <div class="h-px bg-white/5 flex-1"></div>
@@ -116,13 +116,13 @@ new class extends Component {
                             <div class="pt-4">
                                 <button wire:click="addToCollection" 
                                         @disabled($loading || (!$selectedCrate && !$newCrateName))
-                                        class="btn-figma-primary !w-full !py-5 flex items-center justify-center gap-3 disabled:opacity-30 disabled:grayscale disabled:cursor-not-allowed transition-all duration-300">
+                                        class="btn-figma-primary !w-full !py-5 flex items-center justify-center gap-3 disabled:opacity-30 disabled:grayscale disabled:cursor-not-allowed transition-all duration-300 group">
                                     @if($success)
                                         <svg class="w-5 h-5 text-[#0d1117] animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
                                         <span class="text-[#0d1117]">Saved to Library</span>
                                     @else
                                         <div wire:loading wire:target="addToCollection" class="w-4 h-4 border-2 border-[#0d1117]/20 border-t-[#0d1117] rounded-full animate-spin"></div>
-                                        <span wire:loading.remove wire:target="addToCollection" class="text-[#0d1117]">{{ $selectedCrate || $newCrateName ? 'Confirm Selection' : 'Select a Collection' }}</span>
+                                        <span wire:loading.remove wire:target="addToCollection" class="text-[#0d1117] group-hover:scale-105 transition-transform">{{ $selectedCrate || $newCrateName ? 'Confirm sync' : 'Select a collection' }}</span>
                                         <span wire:loading wire:target="addToCollection" class="text-[#0d1117]">Synchronizing...</span>
                                     @endif
                                 </button>
@@ -145,6 +145,6 @@ new class extends Component {
                 </div>
             </div>
         </div>
-    </div>
+    @endteleport
     @endif
 </div>
