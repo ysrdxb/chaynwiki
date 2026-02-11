@@ -122,8 +122,8 @@ new class extends Component {
                                         <span class="text-[#0d1117]">Saved to Library</span>
                                     @else
                                         <div wire:loading wire:target="addToCollection" class="w-4 h-4 border-2 border-[#0d1117]/20 border-t-[#0d1117] rounded-full animate-spin"></div>
-                                        <span wire:loading.remove wire:target="addToCollection" class="text-[#0d1117] group-hover:scale-105 transition-transform">{{ $selectedCrate || $newCrateName ? 'Confirm sync' : 'Select a collection' }}</span>
-                                        <span wire:loading wire:target="addToCollection" class="text-[#0d1117]">Synchronizing...</span>
+                                        <span wire:loading.remove wire:target="addToCollection" class="text-[#0d1117] group-hover:scale-105 transition-transform">{{ $selectedCrate || $newCrateName ? 'Save to Collection' : 'Select a collection' }}</span>
+                                        <span wire:loading wire:target="addToCollection" class="text-[#0d1117]">Saving...</span>
                                     @endif
                                 </button>
                                 

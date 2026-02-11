@@ -11,8 +11,7 @@
     <div class="bg-white/[0.02] border border-white/5 rounded-3xl p-8 backdrop-blur-md">
         <div class="flex gap-6">
             <div class="relative shrink-0">
-                <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=0D0D1A&color=fff" class="w-12 h-12 rounded-2xl border border-white/10">
-                <div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full bg-[#38bdf8] border-2 border-[#050510]"></div>
+                <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=0D0D1A&color=fff" class="w-12 h-12 rounded-2xl border border-white/10 shadow-lg">
             </div>
             <div class="flex-1">
                 <form wire:submit="submit" class="space-y-4">
@@ -24,9 +23,12 @@
                     </div>
                     @error('content') <span class="text-red-500/80 text-[10px] font-bold uppercase tracking-wider">{{ $message }}</span> @enderror
                     
-                    <div class="flex justify-between items-center">
-                        <div class="text-[9px] text-slate-500 font-medium">Your contribution will be archived in the permanent record.</div>
-                        <button type="submit" class="group relative px-6 py-2.5 bg-white text-black rounded-lg font-black text-[10px] uppercase tracking-widest overflow-hidden hover:scale-105 transition-transform active:scale-95">
+                    <div class="flex justify-between items-center mt-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-1 h-1 rounded-full bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.4)]"></div>
+                            <div class="text-[11px] text-slate-500">Your comment will be visible to everyone.</div>
+                        </div>
+                        <button type="submit" class="group relative px-8 py-3 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-tighter overflow-hidden hover:scale-105 transition-all shadow-xl active:scale-95">
                             <span class="relative z-10">Post Comment</span>
                         </button>
                     </div>
@@ -137,7 +139,7 @@
         @empty
         <div class="py-20 text-center text-slate-600">
             <svg class="w-12 h-12 mx-auto mb-4 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-            <p class="text-xs font-black uppercase tracking-[0.2em]">No comments yet. Be the first to share your thoughts!</p>
+            <p class="text-xs font-bold text-slate-500">No comments yet. Be the first to share your thoughts!</p>
         </div>
         @endforelse
     </div>

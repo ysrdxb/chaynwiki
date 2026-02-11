@@ -44,7 +44,7 @@
              <div class="mb-12">
                  <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] font-black uppercase tracking-widest text-blue-400 mb-6">
                     <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
-                    Neural Engine Active
+                    AI Assistant Ready
                  </div>
                  <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none mb-6">
                      AI <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Generator</span>
@@ -100,7 +100,7 @@
                                 </div>
                             </div>
                             @error('topic')
-                                <div class="text-[9px] text-slate-500 font-medium">Your contribution will be archived in the permanent record.</div>
+                                <div class="text-[11px] text-slate-500">This topic will be visible to everyone once saved.</div>
                             @enderror
                         </div>
 
@@ -140,10 +140,10 @@
                             <div class="relative z-10 flex items-center justify-center gap-3">
                                 @if($isGenerating)
                                     <svg class="animate-spin w-5 h-5 text-black" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
-                                    <span>Synthesizing...</span>
+                                    <span>Generating...</span>
                                 @else
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
-                                    <span>Initialize Generation</span>
+                                    <span>Create Topic</span>
                                 @endif
                             </div>
                         </button>
@@ -193,7 +193,7 @@
                             wire:click="useAsDraft"
                             class="w-full py-4 bg-blue-500 hover:bg-blue-400 text-white font-black rounded-xl uppercase tracking-widest transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center gap-3"
                         >
-                            <span>Save to Archive</span>
+                            <span>Publish Topic</span>
                             <svg class="w-4 h-4 arrow-right" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </button>
                     </div>
