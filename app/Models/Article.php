@@ -96,6 +96,22 @@ class Article extends Model
                     ->withTimestamps();
     }
 
+    /**
+     * Relationships originating from this article.
+     */
+    public function outgoingRelationships()
+    {
+        return $this->hasMany(ArticleRelationship::class, 'source_id');
+    }
+
+    /**
+     * Relationships targeting this article.
+     */
+    public function incomingRelationships()
+    {
+        return $this->hasMany(ArticleRelationship::class, 'target_id');
+    }
+
     public function getMetaDescriptionAttribute(): string
     {
         if ($this->analysis && $this->analysis->summary) {

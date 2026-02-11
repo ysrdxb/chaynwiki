@@ -94,6 +94,12 @@ class User extends Authenticatable
         return $this->hasMany(Crate::class);
     }
 
+    public function collaboratedCrates()
+    {
+        return $this->belongsToMany(Crate::class, 'crate_collaborators', 'user_id', 'crate_id')
+                    ->withPivot('role');
+    }
+
     public function revisions()
     {
         return $this->hasMany(Revision::class);
@@ -123,5 +129,18 @@ class User extends Authenticatable
     public function isModerator(): bool
     {
         return in_array($this->role, ['admin', 'moderator']);
+    }
+
+    public function follows()
+    {
+        return $this->hasMany(Follower::class);
+    }
+
+    public function isFollowing($model)
+    {
+        return $this->follows()
+            ->where('followable_id', $model->id)
+            ->where('followable_type', get_class($model))
+            ->exists();
     }
 }

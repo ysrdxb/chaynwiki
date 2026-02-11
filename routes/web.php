@@ -74,5 +74,19 @@ Route::middleware(['auth', 'can:admin'])->prefix('admin')->group(function () {
     Route::get('/users', \App\Livewire\Admin\Users::class)->name('admin.users');
 });
 
+// Knowledge Graph API
+Route::prefix('api/graph')->group(function () {
+    Route::get('/global', [\App\Http\Controllers\Api\KnowledgeGraphController::class, 'global'])->name('api.graph.global');
+    Route::get('/{id}', [\App\Http\Controllers\Api\KnowledgeGraphController::class, 'show'])->name('api.graph.show');
+});
+
+Route::get('/explore/neural-map', function () {
+    return view('explore.neural-map');
+})->name('explore.neural-map');
+
+Route::get('/community/crates', function () {
+    return view('community.crates');
+})->name('community.crates');
+
 require __DIR__.'/auth.php';
 

@@ -13,6 +13,7 @@ new class extends Component {
     public $newCrateName = '';
     public $success = false;
     public $error = null;
+    public $isPublic = false;
 
     public function addToCollection()
     {
@@ -29,13 +30,19 @@ new class extends Component {
                 $crate = $user->crates()->create([
                     'name' => $this->newCrateName,
                     'description' => 'Personal collection',
-                    'color_accent' => '#3b82f6'
+                    'color_accent' => '#3b82f6',
+                    'is_public' => $this->isPublic
                 ]);
                 $this->selectedCrate = $crate->id;
             }
 
             $crate = Crate::findOrFail($this->selectedCrate);
             
+            // Permission check: Owner or Collaborator
+            if ($crate->user_id !== $user->id && !$user->collaboratedCrates()->where('crate_id', $crate->id)->exists()) {
+                throw new \Exception('You do not have permission to edit this collection.');
+            }
+
             // Check if already in crate to avoid duplicates if needed, but attach handles sync
             $crate->articles()->syncWithoutDetaching([$this->article->id]);
 
@@ -47,6 +54,7 @@ new class extends Component {
             $this->success = false;
             $this->newCrateName = '';
             $this->selectedCrate = '';
+            $this->isPublic = false;
 
         } catch (\Exception $e) {
             $this->error = 'Failed to save: ' . $e->getMessage();
@@ -84,15 +92,27 @@ new class extends Component {
 
                     @auth
                         <div class="space-y-6">
-                            @php $userCrates = auth()->user()->crates; @endphp
-                            @if($userCrates->isNotEmpty())
+                            @php 
+                                $userCrates = auth()->user()->crates;
+                                $collaboratedCrates = auth()->user()->collaboratedCrates;
+                                $allCrates = $userCrates->merge($collaboratedCrates);
+                            @endphp
+                            @if($allCrates->isNotEmpty())
                                 <div>
-                                    <label class="text-[10px] font-black text-white/20 uppercase tracking-widest mb-3 block">Existing collections</label>
+                                    <label class="text-[10px] font-black text-white/20 uppercase tracking-widest mb-3 block">Available collections</label>
                                     <div class="grid gap-3 max-h-[220px] overflow-y-auto pr-2 custom-scrollbar">
-                                        @foreach($userCrates as $crate)
+                                        @foreach($allCrates as $crate)
                                             <button wire:click="$set('selectedCrate', '{{ $crate->id }}'); $set('newCrateName', '')"
                                                     class="flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 {{ $selectedCrate == $crate->id ? 'bg-blue-500/10 border-blue-500/50 text-white' : 'bg-white/5 border-white/5 text-white/40 hover:bg-white/10 hover:border-white/10' }}">
-                                                <span class="text-sm font-bold">{{ $crate->name }}</span>
+                                                <div class="flex items-center gap-3">
+                                                    <span class="text-sm font-bold">{{ $crate->name }}</span>
+                                                    @if($crate->user_id !== auth()->id())
+                                                        <span class="px-1.5 py-0.5 rounded text-[7px] font-black bg-purple-500/20 text-purple-400 uppercase tracking-widest border border-purple-500/10">Collab</span>
+                                                    @endif
+                                                    @if($crate->is_public)
+                                                        <span class="px-1.5 py-0.5 rounded text-[7px] font-black bg-blue-500/20 text-blue-400 uppercase tracking-widest border border-blue-500/10">Public</span>
+                                                    @endif
+                                                </div>
                                                 <div class="w-2 h-2 rounded-full shadow-[0_0_8px_currentColor]" style="background-color: {{ $crate->color_accent ?? '#3b82f6' }}; color: {{ $crate->color_accent ?? '#3b82f6' }}"></div>
                                             </button>
                                         @endforeach
@@ -106,11 +126,25 @@ new class extends Component {
                                 </div>
                             @endif
 
-                            <div>
-                                <label class="text-[10px] font-black text-white/20 uppercase tracking-widest mb-3 block">Create new collection</label>
-                                <input type="text" wire:model.live="newCrateName" 
-                                       placeholder="Collection name..." 
-                                       class="input-unified !py-4 !px-6 !text-sm !font-bold">
+                            <div class="space-y-4">
+                                <label class="text-[10px] font-black text-white/20 uppercase tracking-widest mb-1 block">Create new collection</label>
+                                <div class="flex items-center gap-3">
+                                    <div class="flex-1">
+                                        <input type="text" wire:model.live="newCrateName" 
+                                               placeholder="Collection name..." 
+                                               class="input-unified !py-4 !px-6 !text-sm !font-bold">
+                                    </div>
+                                    <div class="shrink-0">
+                                        <button type="button" 
+                                                wire:click="$toggle('isPublic')"
+                                                class="flex flex-col items-center gap-1 group">
+                                            <div class="w-10 h-6 rounded-full relative transition-all duration-300 {{ $isPublic ? 'bg-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.3)]' : 'bg-white/10' }}">
+                                                <div class="absolute top-1 left-1 w-4 h-4 rounded-full bg-white transition-all duration-300 {{ $isPublic ? 'translate-x-4' : '' }}"></div>
+                                            </div>
+                                            <span class="text-[7px] font-black uppercase tracking-widest {{ $isPublic ? 'text-blue-400' : 'text-white/20' }}">{{ $isPublic ? 'Public' : 'Private' }}</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="pt-4">
@@ -145,6 +179,6 @@ new class extends Component {
                 </div>
             </div>
         </div>
-    @endteleport
+    @teleport('body')
     @endif
 </div>

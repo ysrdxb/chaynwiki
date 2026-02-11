@@ -32,6 +32,8 @@
                     <a href="{{ route('wiki.index') }}?category=genre" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Genres</a>
                     <a href="{{ route('wiki.index') }}?category=song" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Lyrics</a>
                     <a href="{{ route('wiki.index') }}?category=playlist" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Playlists</a>
+                    <a href="{{ route('community.crates') }}" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Community</a>
+                    <a href="{{ route('explore.neural-map') }}" class="ml-4 px-4 py-2 text-[12px] font-black text-purple-400 hover:text-white transition-colors tracking-widest border border-purple-500/20 rounded-xl bg-purple-500/5 hover:bg-purple-500/10">Neural Map</a>
                 </nav>
 
                 {{-- Avatar/Auth --}}
@@ -120,6 +122,8 @@
             <a href="{{ route('wiki.index') }}?category=genre" class="block px-4 py-3 text-[14px] font-bold text-white/50 hover:text-white uppercase tracking-widest transition-all">Genres</a>
             <a href="{{ route('wiki.index') }}?category=song" class="block px-4 py-3 text-[14px] font-bold text-white/50 hover:text-white uppercase tracking-widest transition-all">Lyrics</a>
             <a href="{{ route('wiki.index') }}?category=playlist" class="block px-4 py-3 text-[14px] font-bold text-white/50 hover:text-white uppercase tracking-widest transition-all">Playlists</a>
+            <a href="{{ route('community.crates') }}" class="block px-4 py-3 text-[14px] font-bold text-white/50 hover:text-white uppercase tracking-widest transition-all">Community</a>
+            <a href="{{ route('explore.neural-map') }}" class="block px-4 py-3 text-[14px] font-bold text-purple-400 hover:text-white uppercase tracking-widest transition-all">Neural Map</a>
             
             {{-- Mobile Create Button --}}
             <a href="{{ route('wiki.create') }}" class="flex items-center justify-center gap-2 mt-4 px-6 py-4 bg-white text-[#0d1117] text-[14px] font-black uppercase tracking-tighter rounded-full transition-colors">

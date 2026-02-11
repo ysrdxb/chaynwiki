@@ -11,6 +11,8 @@ class ReputationService
     public const POINTS_COMMENT = 2;
     public const POINTS_RECEIVE_UPVOTE = 1;
     public const POINTS_REVISION_APPROVED = 15;
+    public const POINTS_CRATE_FOLLOW = 5;
+    public const POINTS_CRATE_LIKE = 2;
 
     public function award(User $user, int $points, string $reason = null): void
     {
