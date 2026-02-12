@@ -6,7 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @livewireStyles
-    @livewireScripts
+    @livewireStyles
+    <script src="{{ asset('vendor/livewire/livewire.js') }}" data-csrf="{{ csrf_token() }}" data-update-uri="{{ route('livewire.update') }}" data-navigate-once="true"></script>
 
     <title>@yield('title', config('app.name', 'ChaynWiki'))</title>
     

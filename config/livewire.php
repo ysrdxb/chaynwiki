@@ -1,6 +1,7 @@
 <?php
 
 return [
-    'asset_url' => env('APP_URL', 'http://localhost/chaynwiki/public'),
+    'asset_url' => '/chaynwiki/public',
     'update_route_prefix' => 'livewire',
+    'inject_assets' => false,
 ];
