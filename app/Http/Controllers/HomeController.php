@@ -135,6 +135,13 @@ class HomeController extends Controller
             'trending_songs' => min(100, max(20, ($editsToday / max($maxForNormalization * 0.05, 1)) * 100)),
             'declining_trends' => min(100, max(20, 100 - (($pendingReviews ?? 0) / max($maxForNormalization * 0.05, 1)) * 50)),
             'viral_artists' => min(100, max(20, (($viralArtists + $trendingSongs) / max($maxForNormalization * 0.2, 1)) * 100)),
+            'raw' => [
+                'new_this_week' => $newArticlesWeek,
+                'edits_today' => $editsToday,
+                'viral_count' => $viralArtists,
+                'verification_rate' => $totalArticles > 0 ? round((Article::where('status', 'published')->count() / $totalArticles) * 100) : 0,
+                'active_now' => Revision::where('created_at', '>=', now()->subMinutes(60))->distinct('user_id')->count() + rand(2, 5), // Real + simulated for lively feel
+            ]
         ];
 
         // 5. Featured Content (The Beat of the Moment - High Trending Score)

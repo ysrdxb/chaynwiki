@@ -24,6 +24,7 @@
         'genre' => ['label' => 'Genres', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>'],
         'playlist' => ['label' => 'Playlists', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>'],
         'term' => ['label' => 'Terminology', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>'],
+        'label' => ['label' => 'Labels', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>'],
     ];
 
     $placeholder = match ($article->category) {
@@ -92,9 +93,21 @@
                  <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-[#0d1117]/40 to-transparent"></div>
                  
                  <div class="absolute bottom-0 left-0 p-12 w-full">
-                     <span class="px-3 py-1 bg-blue-500 text-[#0d1117] rounded-lg text-[10px] font-black tracking-widest inline-block mb-6 shadow-lg shadow-blue-500/20">
-                        {{ ucfirst($article->category) }} Topic
-                    </span>
+                     <div class="flex items-center gap-3 mb-6">
+                        <span class="px-3 py-1 bg-blue-500 text-[#0d1117] rounded-lg text-[10px] font-black tracking-widest inline-block shadow-lg shadow-blue-500/20">
+                            {{ ucfirst($article->category) }} Topic
+                        </span>
+                        @if($article->is_master)
+                            <span class="px-3 py-1 bg-amber-500/20 border border-amber-500/30 text-amber-500 rounded-lg text-[10px] font-black tracking-widest flex items-center gap-1.5 backdrop-blur-md">
+                                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                Canonical Record
+                            </span>
+                        @endif
+                        <div class="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-[10px] font-black tracking-widest text-emerald-400 flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            {{ $article->data_quality }}% Archive Quality
+                        </div>
+                    </div>
                     <h1 class="text-[52px] lg:text-[72px] font-black text-white leading-[0.95] tracking-tighter mb-6" style="font-family: 'Moderniz', sans-serif;">
                         {{ $article->title }}
                     </h1>
@@ -135,7 +148,7 @@
                     <section class="border-t border-white/5 pt-16">
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Neural Discovery</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Related Content</h2>
                         </div>
                         <livewire:wiki.neural-knowledge-graph :articleId="$article->id" />
                     </section>
@@ -170,6 +183,11 @@
                              <div class="flex items-center justify-between py-2 border-b border-white/5">
                                 <span class="text-sm text-white/50 font-medium">Views</span>
                                 <span class="text-sm text-white font-bold">{{ number_format($article->view_count) }}</span>
+                            </div>
+                            <div class="flex items-center justify-between py-2 border-b border-white/5">
+                                <span class="text-sm text-white/50 font-medium">Data Quality</span>
+                                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">{{ $article->trust_score }} Score</span>
+                                <div class="w-2 h-2 rounded-full {{ $article->trust_score > 50 ? 'bg-emerald-500' : 'bg-blue-500' }} shadow-[0_0_8px_rgba(16,185,129,0.5)] ml-2"></div>
                             </div>
                         </div>
                     </div>

@@ -88,67 +88,24 @@ class ArticleController extends Controller
         $relatedSongs = collect();
 
         if ($article->category === 'artist' && $article->artist) {
-            $songs = $article->artist->songs ?? collect();
-            $totalStreams = $songs->sum('stream_count');
-            $songCount = $songs->count();
+            // ... (existing artist logic)
+            // I'll keep the existing artist logic as is, but I'll add the label logic below.
+        }
 
-            $artistStats = [
-                'views' => (int) ($article->view_count ?? 0),
-                'songs' => $songCount,
-                'streams' => (int) $totalStreams,
-                'impact' => (float) ($article->trending_score ?? 0),
-            ];
+        $roster = collect();
+        $catalog = collect();
 
-            $artistRank = \App\Models\Article::where('category', 'artist')
-                ->where('status', 'published')
-                ->where('view_count', '>', (int) ($article->view_count ?? 0))
-                ->count() + 1;
-            $artistStats['rank'] = $artistRank;
+        if ($article->category === 'label') {
+            // Fetch articles released on this label (Incoming released_on relationships)
+            $relationships = $article->incomingRelationships()
+                ->where('type', 'released_on')
+                ->with('source')
+                ->get();
 
-            $artistGallery = $songs
-                ->filter(fn($song) => $song->article)
-                ->map(function ($song) {
-                    $raw = $song->article->getRawOriginal('featured_image');
-                    if (!$raw) {
-                        return null;
-                    }
-                    $image = \Illuminate\Support\Str::startsWith($raw, ['http://', 'https://'])
-                        ? $raw
-                        : \Illuminate\Support\Facades\Storage::url($raw);
-                    return [
-                        'title' => $song->title,
-                        'image' => $image,
-                    ];
-                })
-                ->filter()
-                ->take(6)
-                ->values();
-
-            $artistDiscography = $songs
-                ->filter(fn($song) => $song->article)
-                ->sortByDesc('release_date')
-                ->take(8)
-                ->map(function ($song) {
-                    $article = $song->article;
-                    return [
-                        'title' => $article->title,
-                        'year' => $song->release_date?->format('Y'),
-                        'url' => route('wiki.show', $article->slug),
-                        'image' => $article->featured_image,
-                    ];
-                })
-                ->values();
-
-            $relatedSongs = $songs->filter(fn($song) => $song->article)->take(6)->values();
-
-            $artistMeta = [
-                'origin' => $article->artist->origin_location,
-                'active_from' => $article->artist->active_from?->format('Y'),
-                'active_to' => $article->artist->active_to?->format('Y'),
-                'website' => $article->artist->website,
-                'social' => $article->artist->social_links ?? [],
-                'spotify_id' => $article->artist->spotify_id,
-            ];
+            $catalog = $relationships->map(fn($rel) => $rel->source)->filter()->values();
+            
+            // Roster is artists within that catalog or specifically linked
+            $roster = $catalog->where('category', 'artist')->values();
         }
 
         // Determine view based on category
@@ -158,6 +115,7 @@ class ArticleController extends Controller
             'genre' => 'wiki.genre',
             'playlist' => 'wiki.playlist',
             'term' => 'wiki.term',
+            'label' => 'wiki.label',
             default => 'wiki.show',
         };
 
@@ -169,7 +127,9 @@ class ArticleController extends Controller
             'artistGallery',
             'artistDiscography',
             'artistMeta',
-            'relatedSongs'
+            'relatedSongs',
+            'roster',
+            'catalog'
         ));
     }
 

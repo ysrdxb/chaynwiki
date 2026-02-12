@@ -9,7 +9,7 @@
                 </div>
                 <div>
                     <h3 class="text-3xl font-display font-black text-white uppercase tracking-tight">Lyric Intelligence</h3>
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1 italic">Distributed Neural Analysis // v4.0</p>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1 italic">Music Analysis Engine // v4.0</p>
                 </div>
             </div>
             

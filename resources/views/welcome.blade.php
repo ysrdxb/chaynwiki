@@ -19,9 +19,8 @@
 @section('content')
     {{-- Background Blobs --}}
     <div class="fixed inset-0 pointer-events-none z-0">
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#3b82f6]/10 blur-[120px] rounded-full"></div>
-        <div class="absolute bottom-[10%] right-[-10%] w-[30%] h-[30%] bg-purple-600/10 blur-[120px] rounded-full"></div>
-        <div class="absolute top-[40%] right-[10%] w-[20%] h-[20%] bg-[#3b82f6]/5 blur-[100px] rounded-full"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#3b82f6]/5 blur-[120px] rounded-full"></div>
+        <div class="absolute bottom-[10%] right-[-10%] w-[30%] h-[30%] bg-purple-600/5 blur-[120px] rounded-full"></div>
     </div>
 
     {{-- =========================================
@@ -32,25 +31,25 @@
          ========================================= --}}
     <section class="pt-32 pb-16 bg-[#0d1117] relative z-10 overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-8">
-            <h1 class="text-[56px] md:text-[72px] font-black text-white uppercase leading-[1.05] tracking-tighter mb-4" style="letter-spacing: -0.04em;">
+            <h1 class="text-[48px] md:text-[64px] font-black text-white uppercase leading-[1.1] tracking-tight mb-4">
                 YOUR COMMUNITY-DRIVEN<br>
                 MUSIC ENCYCLOPEDIA
             </h1>
             <p class="text-white/50 text-[14px] font-medium mb-10">
-                We are not affiliated with SoundCloud / Spotify.
+                ChaynWiki is an independent archival platform. Not affiliated with SoundCloud or Spotify.
             </p>
             @livewire('home-search')
-            <div class="flex flex-wrap items-center gap-4 mb-14">
-                <a href="{{ route('wiki.create') }}" class="flex items-center gap-4 px-8 py-3 rounded-full border border-white/20 text-white text-[16px] font-semibold hover:bg-white/5 transition-all group">
+            <div class="flex flex-wrap items-center gap-4 mb-16">
+                <a href="{{ route('wiki.create') }}" class="flex items-center gap-4 px-8 py-3.5 bg-white text-[#0d1117] rounded-full text-[15px] font-black uppercase tracking-tight hover:bg-gray-100 transition-all group shadow-xl shadow-black/20">
                     <span>Contribute a Topic</span>
                     <div class="w-6 h-6 bg-[#3b82f6] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/20">
                         <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
                     </div>
                 </a>
-                <a href="{{ route('wiki.index') }}" class="flex items-center gap-4 px-8 py-3 rounded-full border border-white/20 text-white text-[16px] font-semibold hover:bg-white/5 transition-all group">
-                    <span>Browse Categories</span>
-                    <div class="w-6 h-6 bg-[#3b82f6] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/20">
-                        <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
+                <a href="{{ route('wiki.index') }}" class="flex items-center gap-4 px-8 py-3.5 bg-white/5 border border-white/8 text-white rounded-full text-[15px] font-bold hover:bg-white/10 transition-all group">
+                    <span>Explore Categories</span>
+                    <div class="w-6 h-6 bg-[#3b82f6]/10 rounded-full flex items-center justify-center group-hover:bg-[#3b82f6] transition-all">
+                        <svg class="w-3 h-3 text-[#3b82f6] group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                     </div>
                 </a>
             </div>
@@ -110,11 +109,11 @@
                 
                 {{-- Navigation Arrows - Figma Style --}}
                 <div class="hidden md:flex items-center gap-4">
-                    <button @click="sliderScroll(-400)" :class="canScrollLeft ? 'text-white border-white/20' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center transition-all bg-transparent hover:border-white/40 group">
-                        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
+                    <button @click="sliderScroll(-400)" :class="canScrollLeft ? 'text-white border-white/15' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all bg-white/5 hover:bg-white/10 hover:border-white/20 group">
+                        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                     </button>
-                    <button @click="sliderScroll(400)" :class="canScrollRight ? 'text-white border-white/20' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center transition-all bg-transparent hover:border-white/40 group">
-                        <svg class="w-5 h-5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+                    <button @click="sliderScroll(400)" :class="canScrollRight ? 'text-white border-white/15' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all bg-white/5 hover:bg-white/10 hover:border-white/20 group">
+                        <svg class="w-5 h-5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </button>
                 </div>
             </div>
@@ -128,23 +127,28 @@
                             {{-- Image --}}
                             <div class="relative aspect-video rounded-2xl overflow-hidden mb-6">
                                 @if($topic['image'])
-                                    <img src="{{ $topic['image'] }}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="{{ $topic['title'] }}" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
+                                    <img src="{{ $topic['image'] }}" class="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="{{ $topic['title'] }}" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
                                 @else
-                                    <div class="w-full h-full bg-gradient-to-br from-blue-900/40 to-black flex items-center justify-center">
-                                        <svg class="w-12 h-12 text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                                    <div class="w-full h-full bg-gradient-to-br from-[#161b22] to-black flex items-center justify-center">
+                                        <svg class="w-12 h-12 text-white/5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13"/></svg>
                                     </div>
                                 @endif
-                                {{-- Genre Label removed from here --}}
+                                
+                                {{-- Genre Badge Overlay --}}
+                                <div class="absolute top-4 left-4">
+                                    <span class="px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded text-blue-400 text-[10px] font-black uppercase tracking-[0.2em]">
+                                        {{ $topic['category'] }}
+                                    </span>
+                                </div>
                             </div>
 
                             {{-- Text Content --}}
-                            <div class="px-2">
-                                <span class="text-[#3b82f6] text-[12px] font-bold block mb-1">{{ $topic['category'] }}</span>
-                                <h3 class="text-white text-[24px] font-bold tracking-tight mb-2 group-hover:text-blue-400 transition-colors">
+                            <div class="px-2 pb-2">
+                                <h3 class="text-white text-[24px] font-bold tracking-tight mb-3 group-hover:text-blue-400 transition-colors">
                                     {{ $topic['title'] }}
                                 </h3>
                                 <p class="text-white/40 text-[14px] font-medium leading-relaxed mb-6 line-clamp-2">
-                                    {{ $topic['desc'] ?? 'A unique exploration of musical landscapes and cultural influences shaping the industry today.' }}
+                                    {{ $topic['desc'] ?? 'Explore this music database entry, enriched with community metrics and detailed information.' }}
                                 </p>
                                 
                                 {{-- User Metadata Row --}}
@@ -185,7 +189,7 @@
 
 
     {{-- =========================================
-         REAL-TIME MUSIC WEATHER - DYNAMIC RADAR
+         PLATFORM ARCHIVE PULSE - DYNAMIC RADAR & STATS
          ========================================= --}}
     @php
         $radarData = $musicWeather ?? [
@@ -206,10 +210,10 @@
         };
         $angles = [0, 90, 180, 270];
         $values = [
-            $radarData['submission'] ?? $radarData['viral_artists'] ?? 50, 
-            $radarData['edit'] ?? $radarData['trending_songs'] ?? 50, 
-            $radarData['consensus'] ?? $radarData['declining_trends'] ?? 50, 
-            $radarData['intensity'] ?? $radarData['rising_genres'] ?? 50
+            $radarData['rising_genres'] ?? 50, 
+            $radarData['trending_songs'] ?? 50, 
+            $radarData['declining_trends'] ?? 50, 
+            $radarData['viral_artists'] ?? 50
         ];
         $points = []; $pointCoords = [];
         foreach ($angles as $i => $angle) {
@@ -221,18 +225,22 @@
     @endphp
 
     <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10" 
-             x-data="{ active: 'rising', hovered: null, animateIn: false }" 
+             x-data="{ active: 'growth', hovered: null, animateIn: false }" 
              x-init="setTimeout(() => animateIn = true, 300)">
         <div class="max-w-[1400px] mx-auto px-8">
             <div class="flex flex-col lg:flex-row items-center gap-16">
                 {{-- Left: Radar Visualization --}}
-                <div class="w-full lg:w-1/2 relative bg-[#161b22]/40 rounded-[40px] p-12 border border-white/5 overflow-hidden">
+                <div class="w-full lg:w-1/2 relative bg-[#161b22]/40 rounded-[40px] p-12 border border-white/5 overflow-hidden group">
                     {{-- Decore background --}}
                     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/5 via-transparent to-transparent opacity-50"></div>
 
                     <div class="relative z-10 mb-10 text-center lg:text-left">
-                        <h2 class="section-title mb-4">Real-Time Music Weather</h2>
-                        <p class="section-subtitle">A live visualization of musical trends and community momentum.</p>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full mb-4">
+                            <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                            <span class="text-[10px] font-black text-blue-400 uppercase tracking-widest">Live Platform Pulse</span>
+                        </div>
+                        <h2 class="section-title mb-4">Archival Momentum</h2>
+                        <p class="section-subtitle">Real-time visualization of community updates and archive growth.</p>
                     </div>
 
                     <div class="relative w-full max-w-[400px] mx-auto z-10">
@@ -263,34 +271,26 @@
                                 style="transform-origin: center; transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);"
                             />
                             
-                            {{-- Gradient definition --}}
-                            <defs>
-                                <linearGradient id="radarGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.6"/>
-                                    <stop offset="100%" style="stop-color:#a855f7;stop-opacity:0.3"/>
-                                </linearGradient>
-                            </defs>
-                            
                             <g class="cursor-pointer">
                                 {{-- Submission Velocity (Top) --}}
                                 <circle 
                                     cx="{{ $pointCoords[0]['x'] }}" cy="{{ $pointCoords[0]['y'] }}" r="6" 
                                     fill="#ec4899"
-                                    @mouseenter="hovered = 'submission'"
+                                    @mouseenter="hovered = 'growth'"
                                     @mouseleave="hovered = null"
-                                    @click="active = 'submission'"
-                                    :r="active === 'submission' || hovered === 'submission' ? 12 : 6"
-                                    class="transition-all duration-300"
+                                    @click="active = 'growth'"
+                                    :r="active === 'growth' || hovered === 'growth' ? 12 : 6"
+                                    class="transition-all duration-300 shadow-lg"
                                 />
 
                                 {{-- Edit Activity (Right) --}}
                                 <circle 
                                     cx="{{ $pointCoords[1]['x'] }}" cy="{{ $pointCoords[1]['y'] }}" r="6" 
                                     fill="#22d3ee"
-                                    @mouseenter="hovered = 'edit'"
+                                    @mouseenter="hovered = 'activity'"
                                     @mouseleave="hovered = null"
-                                    @click="active = 'edit'"
-                                    :r="active === 'edit' || hovered === 'edit' ? 12 : 6"
+                                    @click="active = 'activity'"
+                                    :r="active === 'activity' || hovered === 'activity' ? 12 : 6"
                                     class="transition-all duration-300"
                                 />
 
@@ -298,10 +298,10 @@
                                 <circle 
                                     cx="{{ $pointCoords[2]['x'] }}" cy="{{ $pointCoords[2]['y'] }}" r="6" 
                                     fill="#f472b6"
-                                    @mouseenter="hovered = 'consensus'"
+                                    @mouseenter="hovered = 'trust'"
                                     @mouseleave="hovered = null"
-                                    @click="active = 'consensus'"
-                                    :r="active === 'consensus' || hovered === 'consensus' ? 12 : 6"
+                                    @click="active = 'trust'"
+                                    :r="active === 'trust' || hovered === 'trust' ? 12 : 6"
                                     class="transition-all duration-300"
                                 />
 
@@ -320,94 +320,100 @@
                         
                         {{-- Labels around the radar --}}
                         <div class="absolute -top-4 left-1/2 -translate-x-1/2 text-center w-full">
-                            <span class="text-white text-[11px] font-black uppercase tracking-widest cursor-pointer transition-all" 
-                                  @click="active = 'submission'"
-                                  :class="active === 'submission' ? 'text-pink-400 opacity-100' : 'opacity-20'">Submission Velocity</span>
+                            <span class="text-white text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all" 
+                                  @click="active = 'growth'"
+                                  :class="active === 'growth' ? 'text-pink-400 opacity-100' : 'opacity-20'">Topic Growth</span>
                         </div>
                         <div class="absolute top-1/2 -right-16 -translate-y-1/2">
-                            <span class="text-white text-[11px] font-black uppercase tracking-widest cursor-pointer transition-all block rotate-90"
-                                  @click="active = 'edit'"
-                                  :class="active === 'edit' ? 'text-cyan-400 opacity-100' : 'opacity-20'">Edit Activity</span>
+                            <span class="text-white text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all block rotate-90"
+                                  @click="active = 'activity'"
+                                  :class="active === 'activity' ? 'text-cyan-400 opacity-100' : 'opacity-20'">Edit Velocity</span>
                         </div>
                         <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 text-center w-full">
-                            <span class="text-white text-[11px] font-black uppercase tracking-widest cursor-pointer transition-all"
-                                  @click="active = 'consensus'"
-                                  :class="active === 'consensus' ? 'text-pink-300 opacity-100' : 'opacity-20'">Community Consensus</span>
+                            <span class="text-white text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all"
+                                  @click="active = 'trust'"
+                                  :class="active === 'trust' ? 'text-pink-300 opacity-100' : 'opacity-20'">Archive Trust</span>
                         </div>
                         <div class="absolute top-1/2 -left-16 -translate-y-1/2">
-                            <span class="text-white text-[11px] font-black uppercase tracking-widest cursor-pointer transition-all block -rotate-90"
+                            <span class="text-white text-[10px] font-black uppercase tracking-widest cursor-pointer transition-all block -rotate-90"
                                   @click="active = 'intensity'"
                                   :class="active === 'intensity' ? 'text-blue-500 opacity-100' : 'opacity-20'">Trend Intensity</span>
                         </div>
                     </div>
                 </div>
 
-                {{-- Right: Info Cards --}}
-                <div class="w-full lg:w-1/2 grid grid-cols-1 gap-4">
-                    {{-- Submission Velocity Card --}}
-                    <div @mouseenter="active = 'submission'" 
-                         class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6 flex items-center justify-between transition-all duration-300 cursor-pointer group hover:border-white/10"
-                         :class="active === 'submission' ? 'bg-[#1c2128]' : ''">
-                        <div class="flex items-center gap-5">
-                            <div class="w-10 h-10 rounded-full bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 group-hover:bg-pink-500 group-hover:text-white transition-all duration-300 shadow-lg shadow-pink-500/10">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                {{-- Right: Integrated Data Widgets --}}
+                <div class="w-full lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {{-- Active Nodes Card --}}
+                    <div @mouseenter="active = 'growth'" 
+                         class="bg-[#161b22]/60 border border-white/5 rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer group hover:border-blue-500/30"
+                         :class="active === 'growth' ? 'bg-[#1c2128] border-blue-500/20' : ''">
+                        <div class="flex justify-between items-start mb-8">
+                            <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 group-hover:bg-pink-500 group-hover:text-white transition-all duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
                             </div>
-                            <div>
-                                <h4 class="text-white text-[18px] font-bold tracking-tight">Submission Velocity</h4>
-                                <p class="text-white/40 text-[13px]">Rate of new topic additions by the community.</p>
-                            </div>
+                            <span class="text-[12px] font-black text-emerald-400 uppercase tracking-widest">+{{ $musicWeather['raw']['new_this_week'] ?? 0 }} this week</span>
                         </div>
-                        <svg class="w-5 h-5 text-white/20 group-hover:text-white/40 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                        <div>
+                            <span class="text-white/40 text-[11px] font-bold uppercase tracking-widest mb-1 block">New Topics</span>
+                            <h3 class="text-4xl font-black text-white tracking-tighter">{{ number_format($musicWeather['raw']['new_this_week'] ?? 0) }}</h3>
+                        </div>
                     </div>
 
-                    {{-- Edit Activity Card --}}
-                    <div @mouseenter="active = 'edit'" 
-                         class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6 flex items-center justify-between transition-all duration-300 cursor-pointer group hover:border-white/10"
-                         :class="active === 'edit' ? 'bg-[#1c2128]' : ''">
-                        <div class="flex items-center gap-5">
-                            <div class="w-10 h-10 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500 group-hover:text-white transition-all duration-300 shadow-lg shadow-cyan-500/10">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                    {{-- Edit Frequency Card --}}
+                    <div @mouseenter="active = 'activity'" 
+                         class="bg-[#161b22]/60 border border-white/5 rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer group hover:border-cyan-500/30"
+                         :class="active === 'activity' ? 'bg-[#1c2128] border-cyan-500/20' : ''">
+                        <div class="flex justify-between items-start mb-8">
+                            <div class="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500 group-hover:text-white transition-all duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                             </div>
-                            <div>
-                                <h4 class="text-white text-[18px] font-bold tracking-tight">Edit Activity</h4>
-                                <p class="text-white/40 text-[13px]">Frequency and depth of real-time article refinements.</p>
-                            </div>
+                            <span class="text-[12px] font-black text-white/20 uppercase tracking-widest">Live Updates</span>
                         </div>
-                        <svg class="w-5 h-5 text-white/20 group-hover:text-white/40 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                        <div>
+                            <span class="text-white/40 text-[11px] font-bold uppercase tracking-widest mb-1 block">Daily Edits</span>
+                            <h3 class="text-4xl font-black text-white tracking-tighter">{{ number_format($musicWeather['raw']['edits_today'] ?? 0) }}</h3>
+                        </div>
                     </div>
 
-                    {{-- Community Consensus Card --}}
-                    <div @mouseenter="active = 'consensus'" 
-                         class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6 flex items-center justify-between transition-all duration-300 cursor-pointer group hover:border-white/10"
-                         :class="active === 'consensus' ? 'bg-[#1c2128]' : ''">
-                        <div class="flex items-center gap-5">
-                            <div class="w-10 h-10 rounded-full bg-pink-300/10 border border-pink-300/20 flex items-center justify-center text-pink-300 group-hover:bg-pink-300 group-hover:text-white transition-all duration-300 shadow-lg shadow-pink-300/10">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                    {{-- Verification Score Card --}}
+                    <div @mouseenter="active = 'trust'" 
+                         class="bg-[#161b22]/60 border border-white/5 rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer group hover:border-pink-500/30"
+                         :class="active === 'trust' ? 'bg-[#1c2128] border-pink-500/20' : ''">
+                        <div class="flex justify-between items-start mb-8">
+                            <div class="w-12 h-12 rounded-2xl bg-pink-300/10 border border-pink-300/20 flex items-center justify-center text-pink-300 group-hover:bg-pink-300 group-hover:text-white transition-all duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                             </div>
-                            <div>
-                                <h4 class="text-white text-[18px] font-bold tracking-tight">Community Consensus</h4>
-                                <p class="text-white/40 text-[13px]">Agreement level on article quality and verification.</p>
-                            </div>
+                            <span class="text-[12px] font-black text-pink-400 uppercase tracking-widest">Archive Integrity</span>
                         </div>
-                        <svg class="w-5 h-5 text-white/20 group-hover:text-white/40 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                        <div>
+                            <span class="text-white/40 text-[11px] font-bold uppercase tracking-widest mb-1 block">Verification Rate</span>
+                            <h3 class="text-4xl font-black text-white tracking-tighter">{{ $musicWeather['raw']['verification_rate'] ?? 0 }}%</h3>
+                        </div>
                     </div>
 
-                    {{-- Trend Intensity Card --}}
+                    {{-- Pulse Momentum Card --}}
                     <div @mouseenter="active = 'intensity'" 
-                         class="bg-[#161b22]/60 border border-white/5 rounded-[20px] p-6 flex items-center justify-between transition-all duration-300 cursor-pointer group hover:border-white/10"
-                         :class="active === 'intensity' ? 'bg-[#1c2128]' : ''">
-                        <div class="flex items-center gap-5">
-                            <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 shadow-lg shadow-blue-500/10">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 17h8m0 0v-8m0 8l-8-8-4 4-6-6"/></svg>
+                         class="bg-[#161b22]/60 border border-white/5 rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer group hover:border-blue-500/30"
+                         :class="active === 'intensity' ? 'bg-[#1c2128] border-blue-500/20' : ''">
+                        <div class="flex justify-between items-start mb-8">
+                            <div class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                             </div>
-                            <div>
-                                <h4 class="text-white text-[18px] font-bold tracking-tight">Trend Intensity</h4>
-                                <p class="text-white/40 text-[13px]">Strength of current musical movements platform-wide.</p>
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)] animate-pulse"></span>
+                                <span class="text-[12px] font-black text-blue-400 uppercase tracking-widest">{{ $musicWeather['raw']['active_now'] ?? 0 }} Online</span>
                             </div>
                         </div>
-                        <svg class="w-5 h-5 text-white/20 group-hover:text-white/40 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                        <div>
+                            <span class="text-white/40 text-[11px] font-bold uppercase tracking-widest mb-1 block">Archive Momentum</span>
+                            <h3 class="text-4xl font-black text-white tracking-tighter">High Activity</h3>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
             </div>
         </div>
     </section>
@@ -456,73 +462,62 @@
         ];
     @endphp
 
-    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 overflow-hidden" 
-             x-data="{ 
-                canScrollLeft: false, 
-                canScrollRight: true,
-                sliderScroll(amount) {
-                    const slider = this.$refs.catSlider;
-                    slider.scrollBy({ left: amount, behavior: 'smooth' });
-                },
-                checkScroll() {
-                    const slider = this.$refs.catSlider;
-                    this.canScrollLeft = slider.scrollLeft > 10;
-                    this.canScrollRight = slider.scrollLeft < (slider.scrollWidth - slider.clientWidth - 10);
-                }
-            }" x-init="checkScroll()">
+    {{-- =========================================
+         BROWSE BY CATEGORY - GRID DESIGN
+         ========================================= --}}
+    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 transition-all">
         <div class="max-w-[1400px] mx-auto px-8">
-            <div class="flex items-end justify-between mb-16">
+            <div class="flex items-end justify-between mb-12">
                 <div class="max-w-2xl">
-                    <h2 class="section-title mb-2 uppercase">BROWSE BY CATEGORY</h2>
-                    <p class="section-subtitle">Explore genres, artists, playlists, songs, and essential music terminology.</p>
-                </div>
-
-                {{-- Slider Controls --}}
-                <div class="hidden md:flex items-center gap-4">
-                    <button @click="sliderScroll(-400)" :class="canScrollLeft ? 'text-white border-white/20' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center transition-all bg-transparent hover:border-white/40 group">
-                        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
-                    </button>
-                    <button @click="sliderScroll(400)" :class="canScrollRight ? 'text-white border-white/20' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center transition-all bg-transparent hover:border-white/40 group">
-                        <svg class="w-5 h-5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
-                    </button>
+                    <h2 class="section-title mb-2">Explore Categories</h2>
+                    <p class="section-subtitle">Browse through the main sections of our music library.</p>
                 </div>
             </div>
 
-            <div class="overflow-x-auto scrollbar-hide -mx-8 px-8" x-ref="catSlider" @scroll="checkScroll()" style="scrollbar-width: none; -ms-overflow-style: none;">
-                <div class="flex gap-6 pb-8">
-                    @foreach($categories as $index => $cat)
-                    <div class="card-premium-unified min-w-[340px] md:min-w-[420px] p-8 bg-[#161b22]/60 border border-white/5 group flex flex-col justify-between">
-                        <div>
-                            <h3 class="text-white text-[32px] font-bold tracking-tight mb-4">{{ $cat['title'] }}</h3>
-                            <p class="text-white/40 text-[15px] font-medium leading-relaxed mb-8">{{ $cat['desc'] }}</p>
-                            
-                            <div class="flex items-center gap-3 mb-10">
-                                <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center">
-                                    <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                </div>
-                                <span class="text-white/60 text-[14px] font-medium">{{ $cat['count'] }}</span>
-                            </div>
-                        </div>
-                        
-                        <div class="flex">
-                            @if($index === 0)
-                                <a href="{{ $cat['url'] }}" class="group inline-flex items-center gap-4 bg-white hover:bg-gray-100 px-8 py-4 rounded-full transition-all duration-300">
-                                    <span class="text-[#0d1117] text-[15px] font-black uppercase tracking-tight">Explore {{ $cat['title'] }}</span>
-                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                                    </div>
-                                </a>
-                            @else
-                                <a href="{{ $cat['url'] }}" class="group inline-flex items-center gap-4 bg-transparent border border-white/20 hover:bg-white/5 px-8 py-4 rounded-full transition-all duration-300">
-                                    <span class="text-white text-[15px] font-black uppercase tracking-tight">{{ $index === 1 ? 'View' : 'Explore' }} {{ $cat['title'] }}</span>
-                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                                    </div>
-                                </a>
-                            @endif
-                        </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {{-- Category 1: Artists --}}
+                <div class="card-premium-unified p-8 bg-[#161b22]/60 border border-white/5 flex flex-col h-full group">
+                    <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 mb-8 transition-transform group-hover:scale-110">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                     </div>
-                    @endforeach
+                    <h3 class="text-[24px] font-bold tracking-tight text-white mb-4">Artists</h3>
+                    <p class="text-white/40 text-[15px] font-medium leading-relaxed mb-10">
+                        Profiles of musicians, producers, and performers with consolidated discographies and professional collaborations.
+                    </p>
+                    <div class="mt-auto flex justify-between items-center">
+                        <span class="text-white/20 text-[12px] font-bold uppercase tracking-widest">{{ number_format($categoryCounts->where('category', 'artist')->first()->total ?? 0) }} Entities</span>
+                        <a href="{{ route('wiki.index', ['category' => 'artist']) }}" class="px-6 py-2 bg-white/5 border border-white/5 rounded-full text-[13px] font-bold text-white hover:bg-blue-500 hover:border-blue-500 transition-all">Explore</a>
+                    </div>
+                </div>
+
+                {{-- Category 2: Genres --}}
+                <div class="card-premium-unified p-8 bg-[#161b22]/60 border border-white/5 flex flex-col h-full group">
+                    <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 mb-8 transition-transform group-hover:scale-110">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                    </div>
+                    <h3 class="text-[24px] font-bold tracking-tight text-white mb-4">Genres</h3>
+                    <p class="text-white/40 text-[15px] font-medium leading-relaxed mb-10">
+                        Deep archival entries for musical styles, tracing origins, subgenres, and regional evolutions.
+                    </p>
+                    <div class="mt-auto flex justify-between items-center">
+                        <span class="text-white/20 text-[12px] font-bold uppercase tracking-widest">{{ number_format($categoryCounts->where('category', 'genre')->first()->total ?? 0) }} Topics</span>
+                        <a href="{{ route('wiki.index', ['category' => 'genre']) }}" class="px-6 py-2 bg-white/5 border border-white/5 rounded-full text-[13px] font-bold text-white hover:bg-blue-500 hover:border-blue-500 transition-all">Explore</a>
+                    </div>
+                </div>
+
+                {{-- Category 3: Songs/Tracks --}}
+                <div class="card-premium-unified p-8 bg-[#161b22]/60 border border-white/5 flex flex-col h-full group">
+                    <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 mb-8 transition-transform group-hover:scale-110">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                    <h3 class="text-[24px] font-bold tracking-tight text-white mb-4">Tracks</h3>
+                    <p class="text-white/40 text-[15px] font-medium leading-relaxed mb-10">
+                        Detailed track information including technical metadata, sample history, and contributor credits.
+                    </p>
+                    <div class="mt-auto flex justify-between items-center">
+                        <span class="text-white/20 text-[12px] font-bold uppercase tracking-widest">{{ number_format($categoryCounts->where('category', 'song')->first()->total ?? 0) }} Tracks</span>
+                        <a href="{{ route('wiki.index', ['category' => 'song']) }}" class="px-6 py-2 bg-white/5 border border-white/5 rounded-full text-[13px] font-bold text-white hover:bg-blue-500 hover:border-blue-500 transition-all">Explore</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -535,9 +530,9 @@
         <div class="max-w-[1400px] mx-auto px-8 relative z-10">
             <div class="mb-24 max-w-3xl">
                 <h2 class="text-white text-[32px] md:text-[40px] font-black uppercase tracking-tight mb-4" style="font-family: 'MODERNIZ', sans-serif;">
-                    DISCOVER WHAT’S SHAPING TODAY’S MUSIC
+                    DISCOVER WHAT’S TRENDING IN MUSIC
                 </h2>
-                <p class="text-white/40 text-[18px] font-medium">A dynamic, mosaic-style feed designed for effortless exploration.</p>
+                <p class="text-white/40 text-[18px] font-medium">A dynamic feed of community favorites and trending releases.</p>
             </div>
 
             {{-- Mosaic Staggered Layout - Exact Figma Pattern --}}
@@ -624,11 +619,11 @@
                 </div>
                 
                 <div class="hidden md:flex items-center gap-4">
-                    <button @click="sliderScroll(-400)" :class="canScrollLeft ? 'text-white border-white/20' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center transition-all bg-transparent hover:border-white/40 group">
-                        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
+                    <button @click="sliderScroll(-400)" :class="canScrollLeft ? 'text-white border-white/15' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all bg-white/5 hover:bg-white/10 hover:border-white/20 group">
+                        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                     </button>
-                    <button @click="sliderScroll(400)" :class="canScrollRight ? 'text-white border-white/20' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center transition-all bg-transparent hover:border-white/40 group">
-                        <svg class="w-5 h-5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
+                    <button @click="sliderScroll(400)" :class="canScrollRight ? 'text-white border-white/15' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all bg-white/5 hover:bg-white/10 hover:border-white/20 group">
+                        <svg class="w-5 h-5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </button>
                 </div>
             </div>
@@ -636,32 +631,43 @@
             <div class="overflow-x-auto scrollbar-hide -mx-8 px-8" x-ref="rankedSlider" @scroll="checkScroll()" style="scrollbar-width: none; -ms-overflow-style: none;">
                 <div class="flex gap-6 pb-8">
                     @foreach($rankedArticles as $index => $article)
-                    <div class="bg-[#161b22]/90 border border-white/10 rounded-[32px] p-8 min-w-[340px] md:min-w-[420px] group transition-all duration-300 hover:border-white/20 hover:bg-[#1c2128]">
-                        <a href="{{ route('wiki.show', $article->slug) }}" class="block h-full">
-                            <div class="relative aspect-video rounded-[24px] overflow-hidden mb-8">
-                                <img src="{{ $article->featured_image }}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-700" alt="{{ $article->title }}" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
+                    <div class="card-premium-unified min-w-[340px] md:min-w-[420px] p-0 group">
+                        <a href="{{ route('wiki.show', $article->slug) }}" class="block p-8">
+                            {{-- Image with Rank Overlay --}}
+                            <div class="relative aspect-video rounded-2xl overflow-hidden mb-8">
+                                @if($article->featured_image)
+                                    <img src="{{ $article->featured_image }}" class="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700" alt="{{ $article->title }}" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
+                                @else
+                                    <div class="w-full h-full bg-[#1c2128] flex items-center justify-center">
+                                        <svg class="w-12 h-12 text-white/5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13"/></svg>
+                                    </div>
+                                @endif
+                                
+                                {{-- Rank Overlay --}}
+                                <div class="absolute top-4 left-4">
+                                    <span class="text-[32px] font-black text-white/30 tracking-tighter leading-none select-none">
+                                        {{ sprintf('%02d', $index + 1) }}
+                                    </span>
+                                </div>
+
+                                {{-- Category Badge --}}
+                                <div class="absolute top-4 right-4">
+                                    <span class="px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded text-blue-400 text-[10px] font-black uppercase tracking-[0.2em]">
+                                        {{ $article->category }}
+                                    </span>
+                                </div>
                             </div>
 
                             <div class="px-1">
-                                <span class="text-[#3b82f6] text-[12px] font-bold block mb-2 uppercase tracking-wide">{{ $article->category }}</span>
-                                <h3 class="text-white text-[28px] font-bold tracking-tight mb-3 group-hover:text-blue-400 transition-colors leading-tight">{{ $article->title }}</h3>
-                                <p class="text-white/40 text-[14px] font-medium leading-relaxed mb-8 line-clamp-2">
-                                    {{ $article->meta_description ?? 'The definitive community archive exploring the depth of ' . strtolower($article->title) . '.' }}
-                                </p>
+                                <h3 class="text-white text-[24px] font-bold tracking-tight mb-4 group-hover:text-blue-400 transition-colors leading-tight">
+                                    {{ $article->title }}
+                                </h3>
                                 
-                                {{-- Meta Counters Row - Figma Fidelity Sync --}}
-                                <div class="flex items-center gap-6 text-white/40 text-[12px] font-bold mt-auto border-t border-white/5 pt-6">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                        <span class="text-white/60 tracking-tight">{{ ($article->view_count ?? 0) / 1000000 >= 1 ? number_format($article->view_count / 1000000, 1) . 'M' : number_format($article->view_count ?? 0) }}</span>
-                                    </div>
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="text-white/20 uppercase tracking-widest text-[10px]">SEO Score:</span>
-                                        <span class="text-white/60">{{ $article->seo_score ?? 92 }}</span>
-                                    </div>
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="text-white/20 uppercase tracking-widest text-[10px]">Engagement:</span>
-                                        <span class="text-white/60">High Activity</span>
+                                <div class="flex items-center justify-between mt-auto pt-6 border-t border-white/5">
+                                    <span class="text-white/20 uppercase tracking-widest text-[10px] font-bold">Community Rank: <span class="text-blue-400">#{{ $index + 1 }}</span></span>
+                                    <div class="flex items-center gap-2 bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
+                                        <svg class="w-3.5 h-3.5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12l-6-6h12l-6 6z"/></svg>
+                                        <span class="text-white/60 text-[11px] font-black">{{ ($article->view_count ?? 0) / 1000 >= 1 ? number_format($article->view_count / 1000, 1) . 'K' : number_format($article->view_count ?? 0) }} Views</span>
                                     </div>
                                 </div>
                             </div>
@@ -694,8 +700,8 @@
         <div class="max-w-[1400px] mx-auto px-8">
             <div class="flex items-end justify-between mb-16">
                 <div class="max-w-2xl">
-                    <h2 class="text-white text-[32px] font-black uppercase tracking-tight mb-2" style="font-family: 'MODERNIZ', sans-serif;">COMMUNITY INSIGHTS</h2>
-                    <p class="section-subtitle">See what the SoundBook community is actively updating right now.</p>
+                    <h2 class="text-white text-[32px] font-black uppercase tracking-tight mb-2" style="font-family: 'MODERNIZ', sans-serif;">TRENDING NOW</h2>
+                    <p class="section-subtitle">See what the community is actively updating right now.</p>
                 </div>
 
                 {{-- Slider Controls --}}
@@ -737,13 +743,20 @@
                     @endphp
 
                     @foreach($insights as $insight)
-                    <div class="bg-[#161b22]/90 border border-white/10 rounded-[32px] p-10 min-w-[380px] md:min-w-[440px] group transition-all duration-300 hover:border-white/20 hover:bg-[#1c2128] flex items-center justify-between">
-                        <div>
-                            <h3 class="text-white text-[24px] font-bold leading-tight mb-4 max-w-[200px]">{{ $insight['title'] }}</h3>
-                            <p class="text-white/40 text-[16px] font-medium">{{ $insight['value'] }}</p>
+                    <div class="card-premium-unified min-w-[380px] md:min-w-[440px] p-10 flex flex-col min-h-[220px] group transition-all duration-300">
+                        <div class="flex justify-between items-start mb-6">
+                            <span class="text-white/40 text-[12px] font-bold uppercase tracking-widest">{{ $insight['title'] }}</span>
+                            <div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center border border-white/10 group-hover:bg-blue-500 transition-all">
+                                <svg class="w-4 h-4 text-blue-500 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-width="2.5"/></svg>
+                            </div>
                         </div>
-                        <div class="bg-blue-600 px-6 py-3 rounded-full shadow-lg shadow-blue-600/20">
-                            <span class="text-white text-[14px] font-black whitespace-nowrap">{{ $insight['badge'] }}</span>
+                        <h3 class="text-[48px] font-black text-white leading-none tracking-tighter mb-auto">
+                            {{ $insight['value'] }}
+                        </h3>
+                        <div class="flex items-center gap-2 mt-8">
+                            <span class="px-4 py-1.5 bg-blue-600/10 border border-blue-500/20 text-blue-400 text-[11px] font-black uppercase tracking-widest rounded-full">
+                                {{ $insight['badge'] }}
+                            </span>
                         </div>
                     </div>
                     @endforeach
@@ -753,28 +766,39 @@
     </section>
 
     {{-- =========================================
-         CTA SECTION - FIGMA DESIGN
+         CTA SECTION - DARK ARCHIVAL IMPACT
          ========================================= --}}
-    <section class="section-unified py-32 bg-[#0d1117] relative overflow-hidden border-t border-white/5 relative z-10">
-        {{-- Background Accents --}}
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 overflow-hidden">
+        <div class="max-w-[1400px] mx-auto px-8">
+            <div class="relative bg-[#161b22] rounded-[40px] p-12 md:p-24 text-center border border-white/5 overflow-hidden group">
+                {{-- Decorative background elements --}}
+                <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/10 transition-all duration-700"></div>
+                <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/5 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2"></div>
 
-        <div class="max-w-[1400px] mx-auto px-8 text-center relative z-10">
-            <h2 class="text-[32px] md:text-[48px] font-black text-white tracking-tight mb-12 max-w-4xl mx-auto uppercase leading-tight" style="font-family: 'MODERNIZ', sans-serif;">
-                Can't find the topic you're looking for? Add it now!
-            </h2>
-            
-            <div class="flex justify-center">
-                <a href="{{ route('wiki.create') }}" class="group inline-flex items-center gap-4 bg-white hover:bg-gray-100 px-8 py-4 rounded-full transition-all duration-300 shadow-xl shadow-black/20">
-                    <span class="text-[#0d1117] text-[15px] font-black uppercase tracking-tight">
-                        Add a New Topic
-                    </span>
-                    <div class="w-8 h-8 bg-[#3b82f6] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
-                        <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M7 17L17 7M17 7H7M17 7V17"/>
-                        </svg>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full mb-8">
+                        <span class="text-[10px] font-black text-white/40 uppercase tracking-widest">Open Archive</span>
                     </div>
-                </a>
+                    
+                    <h2 class="text-[32px] md:text-[56px] font-black text-white tracking-tight mb-12 max-w-4xl mx-auto uppercase leading-[1.1]" style="font-family: 'MODERNIZ', sans-serif;">
+                        Can't find the topic you're looking for?<br>Add it to the network!
+                    </h2>
+                    
+                    <div class="flex justify-center">
+                        <a href="{{ route('wiki.create') }}" class="group inline-flex items-center gap-6 bg-white hover:bg-gray-100 px-12 py-5 rounded-full transition-all duration-300 shadow-2xl shadow-blue-900/40">
+                            <span class="text-[#0d1117] text-[16px] font-black uppercase tracking-widest">
+                                Build the Archive
+                            </span>
+                            <div class="w-8 h-8 bg-[#0d1117] rounded-full flex items-center justify-center group-hover:rotate-45 transition-transform duration-500">
+                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 4v16m8-8H4"/>
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <p class="mt-12 text-white/20 text-[11px] font-bold uppercase tracking-[0.2em]">Become a contributor today and help scale the music knowledge graph.</p>
+                </div>
             </div>
         </div>
     </section>

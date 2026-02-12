@@ -50,7 +50,7 @@
                      AI <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Generator</span>
                  </h1>
                  <p class="text-slate-400 text-lg font-medium max-w-2xl leading-relaxed">
-                     Deploy our advanced neural network to synthesize comprehensive musical insights, historical context, and technical analysis in seconds.
+                     Use our advanced assistant to gather comprehensive musical insights, historical context, and technical analysis in seconds.
                  </p>
              </div>
 
@@ -62,7 +62,7 @@
                 </div>
                 <div>
                     <h3 class="text-red-400 font-bold mb-1 uppercase tracking-wider text-sm">Ollama Disconnected</h3>
-                    <p class="text-white/50 text-xs mb-3">The neural engine requires a local Ollama instance.</p>
+                    <p class="text-white/50 text-xs mb-3">The assistant requires a local Ollama instance.</p>
                     <div class="text-[10px] font-mono bg-black/40 border border-white/5 rounded-lg p-3 text-white/60 mb-3 space-y-1">
                         <div>1. Install: <span class="text-blue-400">ollama.com</span></div>
                         <div>2. Terminal: <span class="text-green-400">ollama pull llama3</span></div>
@@ -143,7 +143,7 @@
                             <div class="relative z-10 flex items-center justify-center gap-3">
                                 @if($isGenerating)
                                     <svg class="animate-spin w-5 h-5 text-black" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
-                                    <span>Generating Neural Map...</span>
+                                    <span>Generating Content...</span>
                                 @else
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
                                     <span>Create Topic</span>
@@ -173,7 +173,7 @@
                             <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_#22c55e]"></div>
                             <div class="flex flex-col">
                                 <span class="text-xs font-bold text-white uppercase tracking-widest leading-none mb-0.5">Output Ready</span>
-                                <span class="text-[9px] text-white/40 font-mono">NEURAL-HASH: {{ substr(md5($generatedDraft['title']), 0, 8) }}</span>
+                                <span class="text-[9px] text-white/40 font-mono">RECORD-HASH: {{ substr(md5($generatedDraft['title']), 0, 8) }}</span>
                             </div>
                          </div>
                          <div class="flex items-center gap-4">
@@ -193,7 +193,7 @@
                             <div>
                                 <span class="text-[9px] font-black text-purple-400 uppercase tracking-[0.2em] block mb-3 flex items-center gap-2">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-                                    Neural Connections
+                                    Related Context
                                 </span>
                                 <div class="flex flex-wrap gap-2">
                                     @foreach($generatedDraft['tags'] as $tag)

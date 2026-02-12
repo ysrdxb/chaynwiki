@@ -5,7 +5,7 @@
         <div class="absolute top-0 inset-x-0 p-8 z-10 bg-gradient-to-b from-[#0d1117]/90 to-transparent pointer-events-none">
             <div class="flex justify-between items-start">
                 <div>
-                    <h2 class="text-3xl font-black uppercase tracking-tighter text-white">Neural Knowledge Graph</h2>
+                    <h2 class="text-3xl font-black uppercase tracking-tighter text-white">Connection Network Graph</h2>
                     <p class="text-white/40 text-xs mt-1 uppercase tracking-widest font-bold">Mapping {{ count($graphData['nodes'] ?? []) }} nodes & {{ count($graphData['links'] ?? []) }} connections</p>
                 </div>
                 

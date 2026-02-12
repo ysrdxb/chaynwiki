@@ -44,7 +44,7 @@
             <div class="relative z-10">
                 <div class="flex items-center gap-2 mb-3">
                     <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
-                    <p class="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em]">Neural Nodes</p>
+                    <p class="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em]">Archive Nodes</p>
                 </div>
                 <h3 class="text-[40px] font-black text-white tracking-tighter leading-none">{{ number_format($stats['nodes'] ?? 0) }}</h3>
                 <div class="flex items-center gap-2 mt-6">
@@ -132,7 +132,7 @@
                     </div>
                     <div class="relative z-10">
                         <div class="text-[14px] font-bold text-white group-hover:text-purple-300 transition-colors">AI Generator</div>
-                        <div class="text-[10px] text-white/40 mt-1 uppercase tracking-widest font-black group-hover:text-white/60">Neural Pulse</div>
+                        <div class="text-[10px] text-white/40 mt-1 uppercase tracking-widest font-black group-hover:text-white/60">System Pulse</div>
                     </div>
                 </a>
 

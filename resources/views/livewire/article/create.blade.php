@@ -262,8 +262,8 @@
 
                     {{-- Neural Tags --}}
                     <div class="col-span-full space-y-2 pt-4">
-                        <label class="text-white text-sm font-bold block mb-1">Neural Connections (Tags)</label>
-                        <p class="text-xs text-white/40 mb-2">Comma-separated topics to link in the Neural Map.</p>
+                        <label class="text-white text-sm font-bold block mb-1">Related Topics (Tags)</label>
+                        <p class="text-xs text-white/40 mb-2">Comma-separated topics to link in the connection map.</p>
                         <input wire:model="tags" type="text" placeholder="e.g. Synth-pop, 80s, Nostalgia" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none">
                     </div>
 
@@ -318,7 +318,7 @@
                 <div class="py-32 flex flex-col items-center justify-center text-center opacity-40 select-none">
                     <svg class="w-24 h-24 text-white/10 mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="0.5"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                     <h3 class="text-3xl font-black uppercase tracking-tighter text-white mb-2">Ready</h3>
-                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Distributed Neural Analysis // v4.0</p>
+                    <p class="text-[10px] font-bold text-slate-500 uppercase tracking-[0.3em] mt-1">Music Analysis Engine // v4.0</p>
                     <p class="text-sm text-white/20">Select a category to start adding content.</p>
                 </div>
             @endif

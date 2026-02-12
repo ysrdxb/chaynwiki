@@ -171,11 +171,12 @@
 
                 // Links
                 const link = g.append('g')
-                    .attr('stroke', 'rgba(255,255,255,0.08)')
                     .selectAll('line')
                     .data(this.data.links)
                     .join('line')
-                    .attr('stroke-width', 1);
+                    .attr('stroke', d => this.getLinkColor(d.type))
+                    .attr('stroke-opacity', 0.4)
+                    .attr('stroke-width', d => d.strength / 40);
 
                 // Nodes
                 const node = g.append('g')
@@ -244,7 +245,21 @@
                     case 'artist': return '#3b82f6'; 
                     case 'song': return '#22c55e'; 
                     case 'genre': return '#a855f7'; 
+                    case 'label': return '#10b981'; // Emerald for Labels/Studios
                     default: return '#64748b';
+                }
+            },
+
+            getLinkColor(type) {
+                switch(type) {
+                    case 'produced_by': return '#22d3ee'; // Cyan
+                    case 'released_on': return '#10b981'; // Emerald
+                    case 'remixed_by': return '#f472b6'; // Pink
+                    case 'mastered_by': return '#fbbf24'; // Amber
+                    case 'composed_by': return '#818cf8'; // Indigo
+                    case 'written_by': return '#f87171'; // Red
+                    case 'similar_to': return 'rgba(255,255,255,0.2)';
+                    default: return 'rgba(255,255,255,0.1)';
                 }
             },
 

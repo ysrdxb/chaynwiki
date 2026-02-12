@@ -24,6 +24,7 @@
         'genre' => ['label' => 'Genres', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>'],
         'playlist' => ['label' => 'Playlists', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>'],
         'term' => ['label' => 'Terminology', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>'],
+        'label' => ['label' => 'Labels', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>'],
     ];
 
     $placeholder = 'https://images.unsplash.com/photo-1514525253344-f856717429fb?auto=format&fit=crop&q=80&w=1200';
@@ -98,7 +99,7 @@
                      </div>
                      
                      <div class="flex-1 min-w-0 pb-4 text-center lg:text-left">
-                        <div class="flex items-center justify-center lg:justify-start gap-3 mb-6 md:mb-8">
+                         <div class="flex items-center justify-center lg:justify-start gap-3 mb-6 md:mb-8">
                              @if(!empty($artistMeta['spotify_id']) || !empty($artistMeta['website']))
                                 <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-black tracking-[0.2em] flex items-center gap-2 shadow-lg">
                                     <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> Verified Artist
@@ -106,6 +107,16 @@
                             @else
                                 <span class="px-3 py-1.5 bg-white/5 border border-white/10 text-white/50 rounded-lg text-[10px] font-bold tracking-widest shadow-lg">Artist profile</span>
                             @endif
+                            @if($article->is_master)
+                                <span class="px-3 py-1.5 bg-amber-500/20 border border-amber-500/30 text-amber-500 rounded-lg text-[10px] font-black tracking-widest flex items-center gap-1.5 backdrop-blur-md">
+                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                    Canonical
+                                </span>
+                            @endif
+                            <div class="px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-[10px] font-black tracking-widest text-emerald-400 flex items-center gap-2 backdrop-blur-md">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                {{ $article->data_quality }}% Archive
+                            </div>
                         </div>
                         
                         <h1 class="text-[42px] md:text-[64px] lg:text-[90px] font-black text-white tracking-tighter mb-8 leading-[0.9] -ml-1">
@@ -124,7 +135,7 @@
                             </div>
                             <div class="flex flex-col">
                                 <span class="text-blue-500 text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['impact'] ?? 0, 1) }}</span>
-                                <span class="text-[11px] text-white/30 font-bold tracking-widest">Impact radius</span>
+                                <span class="text-[11px] text-white/30 font-bold tracking-widest">Global Reach</span>
                             </div>
                              <div class="flex flex-col">
                                 <span class="text-white text-3xl font-black tracking-tighter mb-1">#{{ number_format($artistStats['rank'] ?? 0) }}</span>
@@ -204,7 +215,7 @@
                      <section class="border-t border-white/5 pt-16">
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter">Neural Discovery</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter">Related Content</h2>
                         </div>
                         <x-neural-map-visualization :articleId="$article->id" />
                     </section>
@@ -264,6 +275,11 @@
                                 <a href="{{ $artistMeta['website'] }}" target="_blank" class="flex items-center gap-2 text-[11px] font-bold text-blue-400 tracking-widest hover:text-white transition-colors">Link ↗</a>
                             </div>
                             @endif
+                            <div class="flex items-center justify-between py-3 border-t border-white/5 mt-4">
+                                <span class="text-[13px] text-white/40 font-bold">Data Quality</span>
+                                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">{{ $article->trust_score }} Score</span>
+                                <div class="w-2 h-2 rounded-full {{ $article->trust_score > 50 ? 'bg-emerald-500' : 'bg-blue-500' }} shadow-[0_0_8px_rgba(16,185,129,0.5)] ml-2"></div>
+                            </div>
                         </div>
                     </div>
                     @endif

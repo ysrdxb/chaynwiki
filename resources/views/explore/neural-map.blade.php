@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="title">Neural Discovery Map - ChaynWiki</x-slot>
+    <x-slot name="title">Connection Map - ChaynWiki</x-slot>
 
     <div class="min-h-screen bg-[#0d1117] pt-24 overflow-hidden flex flex-col">
         {{-- Fullscreen Header --}}
@@ -13,7 +13,7 @@
                     </div>
                     <div>
                         <h1 class="text-2xl font-black text-white tracking-tighter" style="font-family: 'Plus Jakarta Sans', sans-serif;">
-                            Neural <span class="text-purple-500">Discovery</span> Map
+                            Music <span class="text-purple-500">Connection</span> Map
                         </h1>
                         <p class="text-[10px] font-black text-white/30 tracking-widest leading-none">Global Music Knowledge Network</p>
                     </div>

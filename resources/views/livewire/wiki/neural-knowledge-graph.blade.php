@@ -29,7 +29,7 @@ new class extends Component
     <div x-ref="canvas" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
 
     <div class="absolute top-6 left-6 flex flex-col gap-2 pointer-events-none">
-        <h3 class="text-[10px] font-black text-white/40 tracking-[0.3em]">Neural Discovery Map</h3>
+        <h3 class="text-[10px] font-black text-white/40 tracking-[0.3em]">Music Connection Map</h3>
         <div class="flex items-center gap-4">
             <div class="flex items-center gap-1.5">
                 <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>

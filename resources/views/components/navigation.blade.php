@@ -16,25 +16,32 @@
             
             {{-- Left: Logo --}}
             <a href="{{ route('home') }}" wire:navigate class="group flex items-center gap-2">
-                <span class="text-3xl text-white uppercase transition-colors" style="font-family: 'MODERNIZ', 'Plus Jakarta Sans', sans-serif; letter-spacing: -0.05em; font-weight: 900;">CHAYNWIKI</span>
+                <span class="text-2xl font-black uppercase tracking-tighter text-white transition-colors">CHAYNWIKI</span>
             </a>
 
             {{-- Center: Search (Desktop) --}}
-            <div class="hidden md:flex flex-1 max-w-[420px] mx-12">
+            <div class="hidden md:flex flex-1 max-w-sm mx-12">
                 @livewire('header-search')
             </div>
 
             {{-- Right: Nav + Actions --}}
             <div class="flex items-center gap-4">
                 {{-- Navigation Links (Desktop) - Direct category links like Figma --}}
-                <nav class="hidden lg:flex items-center gap-2">
-                    <a href="{{ route('wiki.index') }}?category=artist" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Artists</a>
-                    <a href="{{ route('wiki.index') }}?category=genre" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Genres</a>
-                    <a href="{{ route('wiki.index') }}?category=song" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Lyrics</a>
-                    <a href="{{ route('wiki.index') }}?category=playlist" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Playlists</a>
-                    <a href="{{ route('community.crates') }}" class="px-4 py-2 text-[14px] font-light text-white/50 hover:text-white transition-colors">Community</a>
-                    <a href="{{ route('explore.neural-map') }}" class="ml-4 px-4 py-2 text-[12px] font-black text-purple-400 hover:text-white transition-colors tracking-widest border border-purple-500/20 rounded-xl bg-purple-500/5 hover:bg-purple-500/10">Neural Map</a>
+                <nav class="hidden lg:flex items-center gap-1">
+                    <a href="{{ route('wiki.index') }}?category=artist" class="px-5 py-2 text-[14px] font-bold text-white/50 hover:text-white transition-colors">Artists</a>
+                    <a href="{{ route('wiki.index') }}?category=genre" class="px-5 py-2 text-[14px] font-bold text-white/50 hover:text-white transition-colors">Genres</a>
+                    <a href="{{ route('wiki.index') }}?category=song" class="px-5 py-2 text-[14px] font-bold text-white/50 hover:text-white transition-colors">Lyrics</a>
+                    <a href="{{ route('wiki.index') }}?category=playlist" class="px-5 py-2 text-[14px] font-bold text-white/50 hover:text-white transition-colors">Playlists</a>
+                    <a href="{{ route('community.crates') }}" class="px-5 py-2 text-[14px] font-bold text-white/50 hover:text-white transition-colors whitespace-nowrap">Crates</a>
                 </nav>
+
+                {{-- Submit Topic Button --}}
+                <a href="{{ route('wiki.create') }}" class="hidden xl:flex items-center gap-3 bg-white/5 border border-white/10 hover:bg-white/10 text-white text-[13px] font-black uppercase tracking-widest rounded-full px-6 py-2.5 transition-all ml-4 group">
+                    <span>Submit Topic</span>
+                    <div class="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center group-hover:rotate-90 transition-transform duration-300">
+                        <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
+                    </div>
+                </a>
 
                 {{-- Avatar/Auth --}}
                 @if (Route::has('login'))
@@ -123,7 +130,7 @@
             <a href="{{ route('wiki.index') }}?category=song" class="block px-4 py-3 text-[14px] font-bold text-white/50 hover:text-white uppercase tracking-widest transition-all">Lyrics</a>
             <a href="{{ route('wiki.index') }}?category=playlist" class="block px-4 py-3 text-[14px] font-bold text-white/50 hover:text-white uppercase tracking-widest transition-all">Playlists</a>
             <a href="{{ route('community.crates') }}" class="block px-4 py-3 text-[14px] font-bold text-white/50 hover:text-white uppercase tracking-widest transition-all">Community</a>
-            <a href="{{ route('explore.neural-map') }}" class="block px-4 py-3 text-[14px] font-bold text-purple-400 hover:text-white uppercase tracking-widest transition-all">Neural Map</a>
+            <a href="{{ route('explore.neural-map') }}" class="block px-4 py-3 text-[14px] font-bold text-purple-400 hover:text-white uppercase tracking-widest transition-all">Connection Map</a>
             
             {{-- Mobile Create Button --}}
             <a href="{{ route('wiki.create') }}" class="flex items-center justify-center gap-2 mt-4 px-6 py-4 bg-white text-[#0d1117] text-[14px] font-black uppercase tracking-tighter rounded-full transition-colors">

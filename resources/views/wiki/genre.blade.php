@@ -130,7 +130,7 @@
                      <section class="border-t border-white/5 pt-16">
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter">Neural Discovery</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter">Related Content</h2>
                         </div>
                         <x-neural-map-visualization :articleId="$article->id" />
                     </section>
