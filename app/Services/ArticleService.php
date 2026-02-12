@@ -16,9 +16,9 @@ class ArticleService
      * @param array $metaData Specific data for the category (e.g. lyrics for songs)
      * @return Article
      */
-    public function createArticle(array $data, array $metaData = []): Article
+    public function createArticle(array $data, array $metaData = [], array $tags = []): Article
     {
-        return DB::transaction(function () use ($data, $metaData) {
+        return DB::transaction(function () use ($data, $metaData, $tags) {
             // 1. Create the base Article
             $article = Article::create([
                 'user_id' => auth()->id(), // Assuming authenticated user
@@ -43,8 +43,38 @@ class ArticleService
                 'change_summary' => 'Initial creation',
             ]);
 
+            // 4. Process Neural Tags
+            if (!empty($tags)) {
+                $this->processTags($article, $tags);
+            }
+
             return $article;
         });
+    }
+
+    private function processTags(Article $article, array $tags)
+    {
+        foreach ($tags as $tagName) {
+            // Find target article (case-insensitive)
+            $target = Article::where('title', 'LIKE', $tagName)->first();
+            
+            if ($target && $target->id !== $article->id) {
+                // Check if relationship already exists
+                $exists = \App\Models\ArticleRelationship::where('source_id', $article->id)
+                    ->where('target_id', $target->id)
+                    ->exists();
+                    
+                if (!$exists) {
+                    \App\Models\ArticleRelationship::create([
+                        'source_id' => $article->id,
+                        'target_id' => $target->id,
+                        'type' => 'similar_to',
+                        'strength' => 70,
+                        'metadata' => ['origin' => 'neural_tag'],
+                    ]);
+                }
+            }
+        }
     }
 
     /**

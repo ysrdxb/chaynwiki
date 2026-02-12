@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-[#0d1117] flex justify-center" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
+<div class="min-h-screen bg-[#0d1117] flex justify-center" x-data="{ loaded: true }">
     @php
         $categories = [
             'artist' => ['label' => 'Artists', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>'],
@@ -19,7 +19,7 @@
 
             <div class="h-px bg-white/5 mx-4 my-2"></div>
 
-            <a href="{{ route('wiki.generate') }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold bg-white/5 text-white transition-all">
+            <a href="{{ route('wiki.generate') }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold bg-[#161b22] border border-white/5 text-white transition-all shadow-lg shadow-blue-500/10">
                 <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 AI Generator
             </a>
@@ -38,26 +38,26 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 min-w-0" x-show="loaded" x-transition:enter="transition ease-out duration-700 delay-100" x-transition:enter-start="opacity-0 translate-y-4" x-transition:enter-end="opacity-100 translate-y-0">
+        <main class="flex-1 min-w-0">
              
              <!-- Header -->
              <div class="mb-12">
-                 <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] font-black uppercase tracking-widest text-blue-400 mb-6">
+                 <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] font-black uppercase tracking-widest text-blue-400 mb-6 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
                     <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
                     AI Assistant Ready
                  </div>
                  <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter leading-none mb-6">
                      AI <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">Generator</span>
                  </h1>
-                 <p class="text-white/50 text-lg font-medium max-w-2xl leading-relaxed">
+                 <p class="text-slate-400 text-lg font-medium max-w-2xl leading-relaxed">
                      Deploy our advanced neural network to synthesize comprehensive musical insights, historical context, and technical analysis in seconds.
                  </p>
              </div>
 
              <!-- Ollama Status -->
             @if(!$ollamaAvailable)
-            <div class="bg-red-500/5 border border-red-500/20 rounded-[20px] p-6 mb-12 flex items-start gap-4">
-                <div class="w-10 h-10 rounded-full bg-red-400/10 flex items-center justify-center shrink-0">
+            <div class="bg-red-500/5 border border-red-500/20 rounded-[24px] p-6 mb-12 flex items-start gap-4 backdrop-blur-md">
+                <div class="w-10 h-10 rounded-full bg-red-400/10 flex items-center justify-center shrink-0 shadow-lg shadow-red-500/10">
                     <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
                 </div>
                 <div>
@@ -76,7 +76,7 @@
 
             <!-- Generation Form -->
             <div class="relative group mb-12">
-                <div class="absolute -inset-1 bg-gradient-to-br from-blue-500/20 via-purple-500/5 to-transparent rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                <div class="absolute -inset-1 bg-gradient-to-br from-blue-500/20 via-purple-500/5 to-transparent rounded-[2.5rem] blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
                 <div class="relative bg-[#161b22]/80 backdrop-blur-xl border border-white/5 rounded-[2rem] p-8 md:p-10 shadow-2xl">
                     <form wire:submit="generate" class="space-y-10">
                         
@@ -92,7 +92,7 @@
                                     id="topic"
                                     wire:model="topic"
                                     placeholder="Enter a topic, artist name, or musical concept..."
-                                    class="w-full bg-[#0d1117] border border-white/10 rounded-xl px-6 py-6 text-white placeholder-white/20 focus:border-blue-500/50 focus:ring-0 transition-all text-lg font-bold"
+                                    class="w-full bg-[#0d1117] border border-white/10 rounded-xl px-6 py-6 text-white placeholder-white/20 focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/50 transition-all text-lg font-bold shadow-inner"
                                     @if(!$ollamaAvailable) disabled @endif
                                 />
                                 <div class="absolute right-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within/input:text-blue-400 transition-colors">
@@ -100,7 +100,10 @@
                                 </div>
                             </div>
                             @error('topic')
-                                <div class="text-[11px] text-slate-500">This topic will be visible to everyone once saved.</div>
+                                <div class="text-[11px] text-red-400 font-bold flex items-center gap-2">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
 
@@ -120,11 +123,11 @@
                                             class="peer sr-only"
                                             @if(!$ollamaAvailable) disabled @endif
                                         />
-                                        <div class="bg-[#0d1117] border border-white/10 rounded-xl px-4 py-4 flex flex-col items-center gap-3 text-white/40 peer-checked:border-blue-500/50 peer-checked:bg-blue-500/5 peer-checked:text-white group-hover/label:border-white/20 transition-all">
-                                            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center peer-checked:bg-blue-500/20 peer-checked:text-blue-400">
+                                        <div class="bg-[#0d1117] border border-white/10 rounded-xl px-4 py-4 flex flex-col items-center gap-3 text-white/40 peer-checked:border-blue-500/50 peer-checked:bg-blue-500/10 peer-checked:text-white group-hover/label:border-white/20 transition-all h-full">
+                                            <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center peer-checked:bg-blue-500/20 peer-checked:text-blue-400 transition-colors">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
                                             </div>
-                                            <span class="text-xs font-bold uppercase tracking-widest">{{ $cat['label'] }}</span>
+                                            <span class="text-xs font-bold uppercase tracking-widest text-center">{{ $cat['label'] }}</span>
                                         </div>
                                     </label>
                                 @endforeach
@@ -134,13 +137,13 @@
                         <!-- Button -->
                          <button
                             type="submit"
-                            class="w-full relative overflow-hidden group/btn bg-white hover:bg-gray-100 text-black py-5 rounded-xl font-black uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+                            class="w-full relative overflow-hidden group/btn bg-white hover:bg-gray-100 text-black py-5 rounded-xl font-black uppercase tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(255,255,255,0.1)] hover:shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:-translate-y-0.5 active:scale-95"
                             @if(!$ollamaAvailable || $isGenerating) disabled @endif
                         >
                             <div class="relative z-10 flex items-center justify-center gap-3">
                                 @if($isGenerating)
                                     <svg class="animate-spin w-5 h-5 text-black" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
-                                    <span>Generating...</span>
+                                    <span>Generating Neural Map...</span>
                                 @else
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
                                     <span>Create Topic</span>
@@ -153,7 +156,7 @@
 
             <!-- Error -->
             @if($error)
-                <div class="bg-red-500/10 border-l-4 border-red-500 p-6 mb-8 rounded-r-xl">
+                <div class="bg-red-500/10 border-l-4 border-red-500 p-6 mb-8 rounded-r-xl backdrop-blur-md">
                     <div class="flex items-center gap-3 text-red-100">
                         <span class="font-bold uppercase tracking-wider text-xs">System Alert:</span>
                         <span>{{ $error }}</span>
@@ -163,12 +166,15 @@
 
             <!-- Result -->
             @if($generatedDraft)
-                <div class="bg-[#161b22] border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl relative">
+                <div class="bg-[#161b22] border border-white/10 rounded-[2rem] overflow-hidden shadow-2xl relative animate-in fade-in slide-in-from-bottom-8 duration-700">
                     <!-- Result Toolbar -->
                     <div class="bg-[#0d1117] border-b border-white/5 px-8 py-5 flex items-center justify-between">
                          <div class="flex items-center gap-4">
-                            <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                            <span class="text-xs font-bold text-white/60 uppercase tracking-widest">Output Ready</span>
+                            <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse shadow-[0_0_10px_#22c55e]"></div>
+                            <div class="flex flex-col">
+                                <span class="text-xs font-bold text-white uppercase tracking-widest leading-none mb-0.5">Output Ready</span>
+                                <span class="text-[9px] text-white/40 font-mono">NEURAL-HASH: {{ substr(md5($generatedDraft['title']), 0, 8) }}</span>
+                            </div>
                          </div>
                          <div class="flex items-center gap-4">
                              <button wire:click="regenerate" class="text-xs font-bold text-white/40 hover:text-white uppercase tracking-wider transition-colors">Regenerate</button>
@@ -182,18 +188,35 @@
                             <h2 class="text-3xl font-black text-white tracking-tighter">{{ $generatedDraft['title'] }}</h2>
                         </div>
                         
+                        <!-- Neural Tags -->
+                        @if(!empty($generatedDraft['tags']))
+                            <div>
+                                <span class="text-[9px] font-black text-purple-400 uppercase tracking-[0.2em] block mb-3 flex items-center gap-2">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+                                    Neural Connections
+                                </span>
+                                <div class="flex flex-wrap gap-2">
+                                    @foreach($generatedDraft['tags'] as $tag)
+                                        <span class="px-3 py-1 bg-purple-500/10 border border-purple-500/20 text-purple-300 rounded-lg text-xs font-bold uppercase tracking-wide">
+                                            {{ $tag }}
+                                        </span>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+
                         <div>
                             <span class="text-[9px] font-black text-blue-400 uppercase tracking-[0.2em] block mb-4">Content Draft</span>
-                            <div class="bg-[#0d1117] rounded-2xl p-8 border border-white/5 prose prose-invert prose-lg max-w-none prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-p:text-white/70 prose-a:text-blue-400">
+                            <div class="bg-[#0d1117] rounded-2xl p-8 border border-white/5 prose prose-invert prose-lg max-w-none prose-headings:font-black prose-headings:uppercase prose-headings:tracking-tight prose-headings:text-white prose-p:text-slate-400 prose-a:text-blue-400 prose-strong:text-white">
                                 {!! \Illuminate\Support\Str::markdown($generatedDraft['content']) !!}
                             </div>
                         </div>
 
                          <button 
                             wire:click="useAsDraft"
-                            class="w-full py-4 bg-blue-500 hover:bg-blue-400 text-white font-black rounded-xl uppercase tracking-widest transition-all shadow-lg shadow-blue-500/20 flex items-center justify-center gap-3"
+                            class="w-full py-5 bg-blue-600 hover:bg-blue-500 text-white font-black rounded-xl uppercase tracking-widest transition-all shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 flex items-center justify-center gap-3 hover:-translate-y-0.5 active:scale-95"
                         >
-                            <span>Publish Topic</span>
+                            <span>Publish to Wiki</span>
                             <svg class="w-4 h-4 arrow-right" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                         </button>
                     </div>

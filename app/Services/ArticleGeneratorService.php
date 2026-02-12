@@ -54,11 +54,29 @@ class ArticleGeneratorService
             return null;
         }
 
+        // Parse Neural Connections
+        $tags = [];
+        $content = $response;
+        
+        if (preg_match('/## Neural Connections\s+(.+)$/s', $response, $matches)) {
+            // Extract tags
+            $tagText = trim($matches[1]);
+            // Remove bullet points if present
+            $tagText = preg_replace('/^\s*-\s*/m', '', $tagText);
+            $tags = array_map('trim', explode(',', str_replace("\n", ',', $tagText)));
+            $tags = array_filter($tags); // Remove empty
+            $tags = array_slice($tags, 0, 8); // Limit to 8
+
+            // Remove the section from content
+            $content = preg_replace('/## Neural Connections\s+.+$/s', '', $response);
+        }
+
         return [
             'title' => $this->generateTitle($topic),
             'slug' => Str::slug($topic),
-            'content' => $response,
-            'excerpt' => $this->generateExcerpt($response),
+            'content' => trim($content),
+            'tags' => $tags,
+            'excerpt' => $this->generateExcerpt($content),
             'category' => $category,
             'generated_at' => now(),
             'generation_time' => $generationTime,
@@ -121,7 +139,7 @@ PROMPT;
      */
     private function buildPrompt(string $topic, string $category): string
     {
-        $templates = [
+        $basePrompt = match($category) {
             'song' => <<<PROMPT
 Write a comprehensive music wiki article about the song "{$topic}".
 
@@ -143,10 +161,7 @@ Include these sections with markdown headers (##):
 
 ## Legacy
 - Long-term significance, how it's remembered today
-
-Write in an encyclopedic, neutral tone. Use facts where known, and be clear when speculating.
 PROMPT,
-
             'artist' => <<<PROMPT
 Write a comprehensive music wiki article about the artist/band "{$topic}".
 
@@ -168,10 +183,7 @@ Include these sections with markdown headers (##):
 
 ## Legacy and Influence
 - Impact on music, influenced artists, cultural significance
-
-Write in an encyclopedic, neutral tone.
 PROMPT,
-
             'genre' => <<<PROMPT
 Write a comprehensive music wiki article about the music genre "{$topic}".
 
@@ -193,10 +205,7 @@ Include these sections with markdown headers (##):
 
 ## Cultural Impact
 - Influence on fashion, culture, other genres
-
-Write in an encyclopedic, neutral tone.
 PROMPT,
-
             'playlist' => <<<PROMPT
 Write a comprehensive curator's note and description for a music playlist titled "{$topic}".
 
@@ -212,10 +221,7 @@ Include these sections with markdown headers (##):
 
 ## Context
 - When/where to listen, historical context if applicable
-
-Write in a knowledgeable, curator-style tone.
 PROMPT,
-
             'term' => <<<PROMPT
 Write a comprehensive music glossary definition for the term "{$topic}".
 
@@ -234,21 +240,21 @@ Include these sections with markdown headers (##):
 
 ## Related Terms
 - Similar or contrasting concepts
-
-Write in an encyclopedic, precise tone.
 PROMPT,
-
             'general' => <<<PROMPT
 Write a comprehensive music wiki article about "{$topic}".
 
 Structure the article with relevant markdown headers (##) based on the topic.
 Include factual information, historical context, and cultural significance.
-Write in an encyclopedic, neutral tone.
-Be thorough but concise. Aim for well-researched, informative content.
 PROMPT,
-        ];
+        };
 
-        return $templates[$category] ?? $templates['general'];
+        return $basePrompt . "\n\n" . <<<PROMPT
+## Neural Connections
+- Provide a comma-separated list of 5-8 related concepts, artists, genres, or moods for the knowledge graph.
+
+Write in an encyclopedic, neutral tone. Use facts where known, and be clear when speculating.
+PROMPT;
     }
 
     /**
@@ -266,6 +272,7 @@ PROMPT,
     {
         // Remove markdown headers
         $clean = preg_replace('/^##?\s+.+$/m', '', $content);
+        $clean = preg_replace('/## Neural Connections.*$/s', '', $clean);
         $clean = trim($clean);
         
         return Str::limit($clean, $length, '...');

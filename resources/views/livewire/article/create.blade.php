@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-[#0a0a12] pt-24 pb-12" x-data="{ loaded: false }" x-init="setTimeout(() => loaded = true, 500)">
+<div class="min-h-screen bg-[#0d1117] pt-24 pb-12" x-data="{ loaded: true }">
     <style>
         .bg-custom-9 {
             background-color: rgba(255, 255, 255, 0.06) !important;
@@ -259,6 +259,13 @@
                             @error('content') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
                     @endif
+
+                    {{-- Neural Tags --}}
+                    <div class="col-span-full space-y-2 pt-4">
+                        <label class="text-white text-sm font-bold block mb-1">Neural Connections (Tags)</label>
+                        <p class="text-xs text-white/40 mb-2">Comma-separated topics to link in the Neural Map.</p>
+                        <input wire:model="tags" type="text" placeholder="e.g. Synth-pop, 80s, Nostalgia" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none">
+                    </div>
 
                     {{-- Upload Zone --}}
                     <div class="col-span-full pt-8">

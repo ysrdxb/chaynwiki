@@ -1,53 +1,54 @@
-<div class="space-y-8" x-data="{ fullScreen: false }">
-    <div class="glass-card overflow-hidden h-[800px] flex flex-col relative" :class="fullScreen ? 'fixed inset-0 z-[100] h-screen' : ''">
-        {{-- Header overlay --}}
-        <div class="absolute top-0 inset-x-0 p-8 z-10 bg-gradient-to-b from-dark/80 to-transparent pointer-events-none">
+<div class="h-[calc(100vh-120px)] w-full flex flex-col" x-data="{ fullScreen: false }">
+    <div class="flex-1 bg-[#161b22] border border-white/5 rounded-2xl overflow-hidden relative shadow-2xl transition-all duration-300" :class="fullScreen ? 'fixed inset-0 z-[100] h-screen rounded-none border-0' : ''">
+        
+        {{-- Header Overlay --}}
+        <div class="absolute top-0 inset-x-0 p-8 z-10 bg-gradient-to-b from-[#0d1117]/90 to-transparent pointer-events-none">
             <div class="flex justify-between items-start">
                 <div>
-                    <h2 class="text-2xl font-black uppercase tracking-tighter text-white">Neural Knowledge Graph</h2>
-                    <p class="text-slate-400 text-xs mt-1 uppercase tracking-widest opacity-60">Mapping music relationships and connections</p>
+                    <h2 class="text-3xl font-black uppercase tracking-tighter text-white">Neural Knowledge Graph</h2>
+                    <p class="text-white/40 text-xs mt-1 uppercase tracking-widest font-bold">Mapping {{ count($graphData['nodes'] ?? []) }} nodes & {{ count($graphData['links'] ?? []) }} connections</p>
                 </div>
-                <div class="flex gap-4 pointer-events-auto">
-                    <button @click="fullScreen = !fullScreen" class="p-3 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-all">
+                
+                <div class="flex items-start gap-4 pointer-events-auto">
+                    {{-- Legend --}}
+                    <div class="bg-[#0d1117]/80 backdrop-blur-md border border-white/10 rounded-xl px-4 py-2 flex items-center gap-6 shadow-lg">
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></div>
+                            <span class="text-[10px] font-bold text-white/60 uppercase tracking-wide">Song</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(139,92,246,0.5)]"></div>
+                            <span class="text-[10px] font-bold text-white/60 uppercase tracking-wide">Artist</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+                            <span class="text-[10px] font-bold text-white/60 uppercase tracking-wide">Genre</span>
+                        </div>
+                    </div>
+
+                    {{-- Fullscreen Toggle --}}
+                    <button @click="fullScreen = !fullScreen" class="p-3 bg-[#0d1117]/80 backdrop-blur-md border border-white/10 rounded-xl hover:bg-white/10 text-white/60 hover:text-white transition-all shadow-lg">
                         <svg x-show="!fullScreen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
                         <svg x-show="fullScreen" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                     </button>
-                    <div class="bg-white/5 border border-white/10 rounded-xl px-4 py-2 flex items-center gap-6">
-                        <div class="flex items-center gap-2">
-                            <div class="w-2 h-2 rounded-full bg-[#3b82f6]"></div>
-                            <span class="text-[10px] font-bold text-white/60">SONG</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-2 h-2 rounded-full bg-[#8b5cf6]"></div>
-                            <span class="text-[10px] font-bold text-white/60">ARTIST</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <div class="w-2 h-2 rounded-full bg-[#10b981]"></div>
-                            <span class="text-[10px] font-bold text-white/60">GENRE</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
 
         {{-- Graph Container --}}
-        <div id="graph-container" class="flex-1 w-full bg-[#030308]/50"></div>
+        <div id="graph-container" class="flex-1 w-full bg-[#0d1117] relative"></div>
 
-        {{-- Legend/Info Footer --}}
-        <div class="absolute bottom-8 left-8 right-8 pointer-events-none">
-            <div class="max-w-xs bg-black/40 backdrop-blur-xl border border-white/5 rounded-2xl p-4 pointer-events-auto shadow-2xl">
-                <div class="text-[10px] font-black text-brand-400 uppercase tracking-widest mb-2">Cluster Intelligence</div>
-                <p class="text-[11px] text-slate-400 leading-relaxed">Drag items to stabilize clusters. Scroll to zoom deep into metadata hierarchies. Click an item to focus.</p>
+        {{-- Footer Info --}}
+        <div class="absolute bottom-8 left-8 pointer-events-none">
+            <div class="max-w-xs bg-[#0d1117]/80 backdrop-blur-md border border-white/10 rounded-2xl p-5 pointer-events-auto shadow-2xl">
+                <div class="flex items-center gap-2 mb-2">
+                    <div class="w-1.5 h-1.5 rounded-full bg-brand-400 animate-pulse"></div>
+                    <div class="text-[10px] font-black text-brand-400 uppercase tracking-widest">Live Intelligence</div>
+                </div>
+                <p class="text-[11px] text-white/50 leading-relaxed font-medium">Interactive visualization of semantic relationships. Drag nodes to restructure clusters. Scroll to zoom.</p>
             </div>
         </div>
     </div>
-    <style>
-        .text-gradient {
-            background: linear-gradient(to right, #fff, #3b82f6);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-    </style>
 </div>
 
 @push('scripts')
@@ -72,13 +73,12 @@
             .nodeLabel('name')
             .nodeVal('val')
             .nodeColor(node => colors[node.category] || colors.default)
-            .linkColor(() => 'rgba(255, 255, 255, 0.05)')
-            .linkWidth(1)
-            .linkDirectionalArrowLength(3)
+            .linkColor(() => 'rgba(255, 255, 255, 0.08)')
+            .linkWidth(1.5)
+            .linkDirectionalArrowLength(3.5)
             .linkDirectionalArrowRelPos(1)
-            .backgroundColor('#030308')
+            .backgroundColor('#0d1117') // Matching premium dark theme
             .onNodeClick(node => {
-                // Focus on item
                 Graph.centerAt(node.x, node.y, 1000);
                 Graph.zoom(4, 1000);
             })
@@ -86,32 +86,39 @@
                 const label = node.name;
                 const fontSize = 12/globalScale;
                 ctx.font = `${fontSize}px Inter, "Plus Jakarta Sans", sans-serif`;
-                const textWidth = ctx.measureText(label).width;
-                const bckgDimensions = [textWidth, fontSize].map(n => n + fontSize * 0.2); 
+                
+                // Glow effect based on category color
+                const color = colors[node.category] || colors.default;
 
-                // Shape
-                ctx.fillStyle = colors[node.category] || colors.default;
+                // Draw Node
+                ctx.fillStyle = color;
                 ctx.beginPath();
                 ctx.arc(node.x, node.y, 4, 0, 2 * Math.PI, false);
                 ctx.fill();
 
-                // Glow
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = colors[node.category] || colors.default;
-
-                // Label
-                if (globalScale > 2) {
+                // Add outer glow/ring
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = color;
+                ctx.strokeStyle = 'rgba(255,255,255,0.2)';
+                ctx.lineWidth = 0.5 / globalScale;
+                ctx.stroke();
+                
+                // Draw Label only when zoomed in or hovered (simulated here by scale)
+                if (globalScale > 1.5) {
+                    ctx.shadowBlur = 0; // Reset shadow for text
                     ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-                    ctx.fillText(label, node.x, node.y + 10);
+                    ctx.textBaseline = 'top';
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                    ctx.fillText(label, node.x, node.y + 6);
                 }
             });
 
-        // Resize observer for the container
+        // Resize observer
         const resizeObserver = new ResizeObserver(() => {
-            Graph.width(container.offsetWidth);
-            Graph.height(container.offsetHeight);
+            if(container) {
+                Graph.width(container.offsetWidth);
+                Graph.height(container.offsetHeight);
+            }
         });
         resizeObserver.observe(container);
     });
