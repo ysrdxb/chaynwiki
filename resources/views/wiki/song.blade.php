@@ -123,7 +123,7 @@
                             @endif
                         </div>
                         
-                        <h1 class="text-[42px] md:text-[52px] lg:text-[76px] font-black text-white tracking-tighter mb-4 leading-[0.95] -ml-1">
+                        <h1 class="text-3xl sm:text-[42px] md:text-[52px] lg:text-[76px] font-black text-white tracking-tighter mb-4 leading-[0.95] -ml-1">
                             {{ $article->title }}
                         </h1>
                         
@@ -136,7 +136,7 @@
                             @endif
                         </div>
 
-                        <div class="flex flex-wrap gap-12">
+                        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-8 sm:gap-12">
                              <div class="flex flex-col">
                                 <span class="text-white text-3xl font-black tracking-tighter mb-1">{{ $article->song->release_date ?? 'Unknown' }}</span>
                                 <span class="text-[11px] text-white/30 font-bold tracking-widest">Release date</span>

@@ -76,7 +76,7 @@
                             Archive Index
                         </span>
                         
-                        <h1 class="text-[56px] lg:text-[80px] font-black text-white tracking-tightest mb-4 leading-[0.9] -ml-1" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+                        <h1 class="text-[32px] sm:text-[56px] lg:text-[80px] font-black text-white tracking-tightest mb-4 leading-[0.9] -ml-1" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                             {{ $currentCategory ? ($categories[$currentCategory]['label'] ?? ucfirst($currentCategory)) : 'Global Archive' }}
                         </h1>
                         
@@ -86,9 +86,9 @@
                         </p>
                     </div>
 
-                    <div class="flex flex-wrap items-center gap-6">
+                    <div class="flex flex-col sm:flex-row items-center gap-6">
                         <!-- Premium Search Bar -->
-                        <form action="{{ route('wiki.index') }}" method="GET" class="relative group min-w-[300px]">
+                        <form action="{{ route('wiki.index') }}" method="GET" class="relative group w-full sm:min-w-[300px]">
                             @if($currentCategory)
                                 <input type="hidden" name="category" value="{{ $currentCategory }}">
                             @endif
@@ -100,7 +100,7 @@
                         </form>
 
                         <!-- Add Topic Button -->
-                        <a href="{{ route('wiki.create') }}" class="btn-figma-primary shadow-2xl shadow-blue-500/20 !px-8 !py-4 shrink-0">
+                        <a href="{{ route('wiki.create') }}" class="btn-figma-primary shadow-2xl shadow-blue-500/20 !px-8 !py-4 shrink-0 w-full sm:w-auto">
                             <span>Add topic</span>
                             <div class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>

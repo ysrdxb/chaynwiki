@@ -32,10 +32,10 @@
                             </div>
                         @endif
                     </div>
-                    <h1 class="text-6xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none mb-8">
+                    <h1 class="text-4xl sm:text-6xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none mb-8">
                         {{ $article->title }}
                     </h1>
-                    <div class="flex flex-wrap items-center gap-10">
+                    <div class="grid grid-cols-2 lg:flex lg:flex-wrap items-center gap-6 lg:gap-10">
                          <div class="flex flex-col">
                             <span class="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-1">Archive Trust</span>
                             <div class="flex items-center gap-2">

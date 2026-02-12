@@ -39,7 +39,7 @@
                         <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-lg text-[11px] font-bold text-blue-400 uppercase tracking-widest">Active Member</span>
                         <span class="text-white/40 text-[13px] font-medium">Joined in {{ $user->created_at->format('Y') }}</span>
                     </div>
-                    <h1 class="text-[54px] md:text-[64px] font-black text-white uppercase leading-[1.0] tracking-tighter mb-6" style="font-family: 'Moderniz', sans-serif;">
+                    <h1 class="text-3xl sm:text-[54px] md:text-[64px] font-black text-white uppercase leading-[1.0] tracking-tighter mb-6" style="font-family: 'Moderniz', sans-serif;">
                         {{ $user->name }}
                     </h1>
                     
@@ -68,7 +68,7 @@
         </div>
 
         {{-- Stats Grid Refined --}}
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {{-- Reputation Refined --}}
             <div class="card-premium-unified h-auto !bg-[#161b22]/40 group overflow-hidden shadow-3xl">
                 <div class="absolute inset-0 bg-blue-500/[0.02] opacity-0 group-hover:opacity-100 transition-opacity"></div>

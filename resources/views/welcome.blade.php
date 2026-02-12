@@ -31,7 +31,7 @@
          ========================================= --}}
     <section class="pt-32 pb-16 bg-[#0d1117] relative z-10 overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-8">
-            <h1 class="text-[48px] md:text-[64px] font-black text-white uppercase leading-[1.1] tracking-tight mb-4">
+            <h1 class="text-[32px] sm:text-[48px] md:text-[64px] font-black text-white uppercase leading-[1.1] tracking-tight mb-4">
                 YOUR COMMUNITY-DRIVEN<br>
                 MUSIC ENCYCLOPEDIA
             </h1>
@@ -227,10 +227,10 @@
     <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10" 
              x-data="{ active: 'growth', hovered: null, animateIn: false }" 
              x-init="setTimeout(() => animateIn = true, 300)">
-        <div class="max-w-[1400px] mx-auto px-8">
-            <div class="flex flex-col lg:flex-row items-center gap-16">
+        <div class="max-w-[1400px] mx-auto px-6 sm:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
                 {{-- Left: Radar Visualization --}}
-                <div class="w-full lg:w-1/2 relative bg-[#161b22]/40 rounded-[40px] p-12 border border-white/5 overflow-hidden group">
+                <div class="w-full lg:w-1/2 relative bg-[#161b22]/40 rounded-[32px] md:rounded-[40px] p-8 md:p-12 border border-white/5 overflow-hidden group">
                     {{-- Decore background --}}
                     <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/5 via-transparent to-transparent opacity-50"></div>
 
@@ -343,10 +343,10 @@
                 </div>
 
                 {{-- Right: Integrated Data Widgets --}}
-                <div class="w-full lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="w-full lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {{-- Active Nodes Card --}}
                     <div @mouseenter="active = 'growth'" 
-                         class="bg-[#161b22]/60 border border-white/5 rounded-[32px] p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer group hover:border-blue-500/30"
+                         class="bg-[#161b22]/60 border border-white/5 rounded-[32px] p-6 sm:p-8 flex flex-col justify-between transition-all duration-500 cursor-pointer group hover:border-blue-500/30"
                          :class="active === 'growth' ? 'bg-[#1c2128] border-blue-500/20' : ''">
                         <div class="flex justify-between items-start mb-8">
                             <div class="w-12 h-12 rounded-2xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 group-hover:bg-pink-500 group-hover:text-white transition-all duration-300">

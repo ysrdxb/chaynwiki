@@ -98,7 +98,7 @@
                     </span>
                     @endif
                     
-                    <h1 class="text-5xl lg:text-9xl font-black text-white tracking-tighter mb-8 leading-[0.85] -ml-1" style="font-family: 'Moderniz', sans-serif;">
+                    <h1 class="text-3xl sm:text-5xl lg:text-9xl font-black text-white tracking-tighter mb-8 leading-[0.85] -ml-1" style="font-family: 'Moderniz', sans-serif;">
                         {{ $article->title }}
                     </h1>
                     
@@ -106,7 +106,7 @@
                         <p class="text-blue-400 font-mono text-2xl mb-8 tracking-tighter">{{ $article->term->phonetic }}</p>
                     @endif
 
-                    <div class="flex items-center gap-10">
+                    <div class="grid grid-cols-2 sm:flex sm:items-center gap-6 sm:gap-10">
                          @if($article->term?->origin_language)
                          <div class="flex flex-col">
                             <span class="text-[11px] font-bold text-white/30 tracking-widest mb-1">Origin</span>

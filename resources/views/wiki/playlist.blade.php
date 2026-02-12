@@ -110,7 +110,7 @@
                             Playlist
                         </span>
                         
-                        <h1 class="text-4xl lg:text-7xl font-black text-white tracking-tighter mb-4 leading-none" style="font-family: 'Moderniz', sans-serif;">
+                        <h1 class="text-3xl sm:text-4xl lg:text-7xl font-black text-white tracking-tighter mb-4 leading-none" style="font-family: 'Moderniz', sans-serif;">
                             {{ $article->title }}
                         </h1>
                         

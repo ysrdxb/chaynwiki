@@ -98,9 +98,9 @@
                          <div class="absolute -inset-8 bg-blue-500/20 blur-[60px] rounded-full opacity-30 group-hover:opacity-60 transition-all duration-1000"></div>
                      </div>
                      
-                     <div class="flex-1 min-w-0 pb-4 text-center lg:text-left">
-                         <div class="flex items-center justify-center lg:justify-start gap-3 mb-6 md:mb-8">
-                             @if(!empty($artistMeta['spotify_id']) || !empty($artistMeta['website']))
+                    <div class="flex-1 min-w-0 pb-4 text-center lg:text-left">
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-6 md:mb-8">
+                            @if(!empty($artistMeta['spotify_id']) || !empty($artistMeta['website']))
                                 <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-black tracking-[0.2em] flex items-center gap-2 shadow-lg">
                                     <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> Verified Artist
                                 </span>
@@ -119,27 +119,27 @@
                             </div>
                         </div>
                         
-                        <h1 class="text-[42px] md:text-[64px] lg:text-[90px] font-black text-white tracking-tighter mb-8 leading-[0.9] -ml-1">
+                        <h1 class="text-[32px] sm:text-[42px] md:text-[64px] lg:text-[90px] font-black text-white tracking-tighter mb-8 leading-[0.9] -ml-1">
                             {{ $article->title }}
                         </h1>
                         
                         <!-- Stats Mini Grid -->
-                        <div class="flex flex-wrap gap-10">
+                        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-6 sm:gap-10">
                              <div class="flex flex-col">
-                                <span class="text-white text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['views'] ?? 0) }}</span>
-                                <span class="text-[11px] text-white/30 font-bold tracking-widest">Global views</span>
+                                <span class="text-white text-2xl sm:text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['views'] ?? 0) }}</span>
+                                <span class="text-[10px] text-white/30 font-bold tracking-widest uppercase">Global views</span>
                             </div>
                             <div class="flex flex-col">
-                                <span class="text-white text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['streams'] ?? 0) }}</span>
-                                <span class="text-[11px] text-white/30 font-bold tracking-widest">Streams</span>
+                                <span class="text-white text-2xl sm:text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['streams'] ?? 0) }}</span>
+                                <span class="text-[10px] text-white/30 font-bold tracking-widest uppercase">Streams</span>
                             </div>
                             <div class="flex flex-col">
-                                <span class="text-blue-500 text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['impact'] ?? 0, 1) }}</span>
-                                <span class="text-[11px] text-white/30 font-bold tracking-widest">Global Reach</span>
+                                <span class="text-blue-500 text-2xl sm:text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['impact'] ?? 0, 1) }}</span>
+                                <span class="text-[10px] text-white/30 font-bold tracking-widest uppercase">Impact</span>
                             </div>
                              <div class="flex flex-col">
-                                <span class="text-white text-3xl font-black tracking-tighter mb-1">#{{ number_format($artistStats['rank'] ?? 0) }}</span>
-                                <span class="text-[11px] text-white/30 font-bold tracking-widest">World rank</span>
+                                <span class="text-white text-2xl sm:text-3xl font-black tracking-tighter mb-1">#{{ number_format($artistStats['rank'] ?? 0) }}</span>
+                                <span class="text-[10px] text-white/30 font-bold tracking-widest uppercase">Rank</span>
                             </div>
                         </div>
                      </div>

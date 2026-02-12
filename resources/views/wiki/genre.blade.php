@@ -89,11 +89,11 @@
                         Genre info
                     </span>
                     
-                    <h1 class="text-[42px] md:text-[64px] lg:text-[100px] font-black text-white tracking-tighter mb-10 leading-[0.85] -ml-1">
+                    <h1 class="text-4xl sm:text-[64px] lg:text-[100px] font-black text-white tracking-tighter mb-10 leading-[0.85] -ml-1">
                         {{ $article->title }}
                     </h1>
                     
-                    <div class="flex items-center gap-10">
+                    <div class="grid grid-cols-2 md:flex md:items-center gap-6 md:gap-10">
                          <div class="flex flex-col">
                             <span class="text-white text-3xl font-black tracking-tighter mb-1">{{ number_format($article->views_count ?? rand(100, 2000)) }}</span>
                             <span class="text-[11px] text-white/30 font-bold tracking-widest">Songs</span>
