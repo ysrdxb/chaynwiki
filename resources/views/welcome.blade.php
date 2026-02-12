@@ -75,7 +75,7 @@
                         <div class="pill-icon"></div>
                         Leaderboard
                     </a>
-                    <a href="{{ route('wiki.generate') }}" class="action-pill">
+                    <a href="{{ route('admin.articles.generate') }}" class="action-pill">
                         <div class="pill-icon bg-purple-500"></div>
                         AI Generator
                     </a>

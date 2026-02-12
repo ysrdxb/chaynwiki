@@ -247,11 +247,31 @@ Write a comprehensive music wiki article about "{$topic}".
 Structure the article with relevant markdown headers (##) based on the topic.
 Include factual information, historical context, and cultural significance.
 PROMPT,
+            'label' => <<<PROMPT
+Write a comprehensive music wiki article about the Record Label/Studio "{$topic}".
+
+Include these sections with markdown headers (##):
+## History
+- Founding, vision, and key eras
+
+## Musical Identity
+- Signature sound, genres focused on, and production aesthetic
+
+## Key Releases
+- Most influential albums/singles released under this imprint
+
+## Notable Artists
+- Famous artists who were signed to or worked with this label
+
+## Legacy
+- Impact on the music industry and cultural reach
+PROMPT,
         };
 
         return $basePrompt . "\n\n" . <<<PROMPT
 ## Neural Connections
-- Provide a comma-separated list of 5-8 related concepts, artists, genres, or moods for the knowledge graph.
+- Provide a comma-separated list of 5-8 related concepts.
+- Explicitly include "Archival Roles" if known (e.g. Producer: [Name], Mastered By: [Name], Label: [Name], Remixed By: [Name]).
 
 Write in an encyclopedic, neutral tone. Use facts where known, and be clear when speculating.
 PROMPT;

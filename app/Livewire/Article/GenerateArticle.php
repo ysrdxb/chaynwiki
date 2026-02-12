@@ -10,8 +10,9 @@ class GenerateArticle extends Component
 {
     public string $topic = '';
     public string $category = 'general';
-    public bool $isGenerating = false;
     public bool $ollamaAvailable = false;
+    public bool $isGenerating = false;
+    public ?int $wantlist_id = null;
     
     public ?array $generatedDraft = null;
     public ?string $error = null;
@@ -23,11 +24,18 @@ class GenerateArticle extends Component
         'genre' => 'Music Genre',
         'playlist' => 'Curated Playlist',
         'term' => 'Terminology',
+        'label' => 'Record Label / Studio',
     ];
 
     public function mount(): void
     {
         $this->checkOllama();
+        
+        if (request()->has('wantlist_id')) {
+            $this->wantlist_id = request('wantlist_id');
+            $this->topic = request('topic', '');
+            $this->category = request('category', 'general');
+        }
     }
 
     public function checkOllama(): void
@@ -73,7 +81,9 @@ class GenerateArticle extends Component
     public function useAsDraft(): void
     {
         if ($this->generatedDraft) {
-            session()->flash('draft', $this->generatedDraft);
+            $draft = $this->generatedDraft;
+            $draft['wantlist_id'] = $this->wantlist_id;
+            session()->flash('draft', $draft);
             $this->redirect(route('wiki.create'));
         }
     }

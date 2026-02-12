@@ -35,6 +35,14 @@ class Articles extends Component
         }
     }
 
+    public function toggleMaster($id)
+    {
+        $article = Article::find($id);
+        if ($article) {
+            $article->update(['is_master' => !$article->is_master]);
+        }
+    }
+
     public function render()
     {
         $articles = Article::query()

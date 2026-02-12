@@ -19,6 +19,7 @@ class Create extends Component
     public $content = '';
     public $tags = ''; // Comma-separated tags
     public $featured_image;
+    public $wantlist_id; // For community request fulfillment
     
     // Meta Data (Dynamic based on category)
     public $meta = [];
@@ -42,30 +43,38 @@ class Create extends Component
             if ($this->category) {
                 $this->step = 2;
             }
+
+            $this->wantlist_id = $draft['wantlist_id'] ?? null;
         }
     }
     
-    // ... (rest of the properties)
-
+    public $step = 1;
+    
     // Validation Rules
     protected function rules()
     {
         $rules = [
-            'category' => 'required|in:song,artist,genre,playlist,term',
+            'category' => 'required|in:song,artist,genre,playlist,term,label',
             'title' => 'required|min:2|max:255',
             'content' => 'required|min:10',
             'tags' => 'nullable|string',
             'featured_image' => 'nullable|image|max:10240',
         ];
         
-        // ... (rest of rules)
-
         return $rules;
     }
 
-    // ... (messages and fetchFromLink)
+    public function setCategory($id)
+    {
+        $this->category = $id;
+        $this->step = 2;
+    }
 
-    // ... (setCategory and goBack)
+    public function goBack()
+    {
+        $this->step = 1;
+        $this->category = '';
+    }
 
     public function save(ArticleService $service)
     {
@@ -82,6 +91,14 @@ class Create extends Component
         $tagsArray = array_filter($tagsArray);
 
         $article = $service->createArticle($data, $this->meta, $tagsArray);
+
+        // Fulfill Wantlist Request if applicable
+        if ($this->wantlist_id) {
+            $request = \App\Models\Wantlist::find($this->wantlist_id);
+            if ($request) {
+                $request->update(['status' => 'fulfilled']);
+            }
+        }
 
         // Redirect to the newly created article
         // return redirect()->route('wiki.show', ['category' => $this->category, 'slug' => $article->slug]);

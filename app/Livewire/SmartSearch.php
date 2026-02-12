@@ -84,6 +84,37 @@ class SmartSearch extends Component
         $this->resetPage();
     }
 
+    public function requestArchivalEntry($title, $cat = 'general'): void
+    {
+        if (!auth()->check()) {
+            $this->redirect(route('login'));
+            return;
+        }
+
+        $exists = \App\Models\Wantlist::where('title', $title)->where('status', 'pending')->first();
+        
+        if ($exists) {
+            // Upvote instead
+            if (!$exists->voters()->where('user_id', auth()->id())->exists()) {
+                $exists->increment('votes');
+                $exists->voters()->attach(auth()->id());
+                session()->flash('message', 'Acquisition request prioritized!');
+            } else {
+                session()->flash('message', 'You have already requested this target.');
+            }
+        } else {
+            $req = \App\Models\Wantlist::create([
+                'user_id' => auth()->id(),
+                'title' => $title,
+                'category' => $cat,
+                'status' => 'pending',
+                'votes' => 1
+            ]);
+            $req->voters()->attach(auth()->id());
+            session()->flash('message', 'Target added to Neural Map Wantlist!');
+        }
+    }
+
     public function render()
     {
         $results = null;

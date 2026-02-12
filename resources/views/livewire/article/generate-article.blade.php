@@ -19,7 +19,7 @@
 
             <div class="h-px bg-white/5 mx-4 my-2"></div>
 
-            <a href="{{ route('wiki.generate') }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold bg-[#161b22] border border-white/5 text-white transition-all shadow-lg shadow-blue-500/10">
+            <a href="{{ route('admin.articles.generate') }}" class="flex items-center gap-4 px-4 py-3 rounded-xl text-sm font-bold bg-[#161b22] border border-white/5 text-white transition-all shadow-lg shadow-blue-500/10">
                 <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
                 AI Generator
             </a>

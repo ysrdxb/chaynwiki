@@ -310,14 +310,29 @@
                         We couldn't find any results for "{{ $query }}".<br>Try a different keyword or category.
                     </p>
                     
-                    <div class="flex items-center justify-center gap-6">
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-6">
                         <button wire:click="clearSearch" class="px-8 py-3 rounded-full border border-white/10 text-[14px] font-bold text-white hover:bg-white/5 hover:border-white/30 transition-all">
                             Clear Search
                         </button>
-                        <a href="{{ route('wiki.create') }}" class="px-8 py-3 bg-white hover:bg-gray-100 rounded-full text-[14px] text-black font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]">
-                            Create Entry
-                        </a>
+                        
+                        <div class="flex items-center gap-4">
+                            <button wire:click="requestArchivalEntry('{{ addslashes($query) }}', 'general')" 
+                                class="px-8 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-full text-[14px] text-white font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:scale-105 active:scale-95 flex items-center gap-2">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                                Request as Archival Target
+                            </button>
+                            
+                            <a href="{{ route('wiki.create') }}" class="px-8 py-3 bg-white hover:bg-gray-100 rounded-full text-[14px] text-black font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]">
+                                Manual Entry
+                            </a>
+                        </div>
                     </div>
+
+                    @if (session()->has('message'))
+                        <div class="mt-8 text-emerald-400 text-[14px] font-black uppercase tracking-widest animate-bounce">
+                            {{ session('message') }}
+                        </div>
+                    @endif
                 </div>
             @endif
 

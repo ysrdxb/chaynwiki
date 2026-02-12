@@ -30,6 +30,10 @@ class ArticleService
                 'featured_image' => $data['featured_image'] ?? null,
                 'status' => 'published', // Default to published for now, or 'draft'
                 'published_at' => now(),
+                'is_master' => $data['is_master'] ?? false,
+                'master_id' => $data['master_id'] ?? null,
+                'data_quality' => $data['data_quality'] ?? 50,
+                'trust_score' => $data['trust_score'] ?? 0,
             ]);
 
             // 2. Create the specific content model
@@ -54,7 +58,26 @@ class ArticleService
 
     private function processTags(Article $article, array $tags)
     {
-        foreach ($tags as $tagName) {
+        foreach ($tags as $tag) {
+            $type = 'similar_to';
+            $tagName = $tag;
+
+            // Pattern for credits: "Role: TargetName"
+            if (preg_match('/^(.+?):\s*(.+)$/', $tag, $matches)) {
+                $role = strtolower(trim($matches[1]));
+                $tagName = trim($matches[2]);
+
+                $type = match($role) {
+                    'producer' => 'produced_by',
+                    'label' => 'released_on',
+                    'remixed by' => 'remixed_by',
+                    'mastered by' => 'mastered_by',
+                    'composer' => 'composed_by',
+                    'songwriter' => 'written_by',
+                    default => 'linked_to'
+                };
+            }
+
             // Find target article (case-insensitive)
             $target = Article::where('title', 'LIKE', $tagName)->first();
             
@@ -62,15 +85,16 @@ class ArticleService
                 // Check if relationship already exists
                 $exists = \App\Models\ArticleRelationship::where('source_id', $article->id)
                     ->where('target_id', $target->id)
+                    ->where('type', $type)
                     ->exists();
                     
                 if (!$exists) {
                     \App\Models\ArticleRelationship::create([
                         'source_id' => $article->id,
                         'target_id' => $target->id,
-                        'type' => 'similar_to',
-                        'strength' => 70,
-                        'metadata' => ['origin' => 'neural_tag'],
+                        'type' => $type,
+                        'strength' => 85, // Direct credits are stronger than similarity
+                        'metadata' => ['origin' => 'neural_archival_tag'],
                     ]);
                 }
             }
@@ -92,6 +116,10 @@ class ArticleService
                 'content' => $data['content'] ?? $article->content,
                 'excerpt' => $data['excerpt'] ?? $article->excerpt,
                 'featured_image' => $data['featured_image'] ?? $article->featured_image,
+                'is_master' => $data['is_master'] ?? $article->is_master,
+                'master_id' => $data['master_id'] ?? $article->master_id,
+                'data_quality' => $data['data_quality'] ?? $article->data_quality,
+                'trust_score' => $data['trust_score'] ?? $article->trust_score,
                 // Slug usually doesn't change to maintain SEO, unless explicitly requested
             ]);
 

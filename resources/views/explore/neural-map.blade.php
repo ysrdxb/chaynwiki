@@ -67,6 +67,10 @@
                         <div class="w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.6)] animate-pulse"></div>
                         <span class="text-[10px] font-black text-white/50 tracking-widest">Genres</span>
                     </div>
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.6)] animate-pulse"></div>
+                        <span class="text-[10px] font-black text-white/50 tracking-widest">Labels</span>
+                    </div>
                 </div>
             </div>
         </div>

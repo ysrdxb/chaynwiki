@@ -12,6 +12,9 @@ class Article extends Model
 
     protected $casts = [
         'published_at' => 'datetime',
+        'is_master' => 'boolean',
+        'data_quality' => 'integer',
+        'trust_score' => 'integer',
     ];
 
     public function getFeaturedImageAttribute($value)
@@ -110,6 +113,22 @@ class Article extends Model
     public function incomingRelationships()
     {
         return $this->hasMany(ArticleRelationship::class, 'target_id');
+    }
+
+    /**
+     * Deep Archival Hierarchy: The Master article (e.g. Original Song)
+     */
+    public function master()
+    {
+        return $this->belongsTo(Article::class, 'master_id');
+    }
+
+    /**
+     * Deep Archival Hierarchy: Child releases (e.g. Remixes, Covers, Edits)
+     */
+    public function releases()
+    {
+        return $this->hasMany(Article::class, 'master_id');
     }
 
     public function getMetaDescriptionAttribute(): string

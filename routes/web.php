@@ -21,7 +21,7 @@ Route::get('/wiki/create', \App\Livewire\Article\Create::class)
 
 Route::get('/wiki/generate', \App\Livewire\Article\GenerateArticle::class)
     ->middleware(['auth'])
-    ->name('wiki.generate');
+    ->name('admin.articles.generate'); // Renamed for clarity in admin flow
 
 Route::get('/tools/lyrics', \App\Livewire\Article\LyricAnalyzer::class)
     ->name('tools.lyrics');
@@ -72,6 +72,7 @@ Route::middleware(['auth', 'can:admin'])->prefix('admin')->group(function () {
     Route::get('/batch-analysis', \App\Livewire\Admin\BatchAnalysis::class)->name('admin.batch-analysis');
     Route::get('/knowledge-graph', \App\Livewire\Admin\KnowledgeGraph::class)->name('admin.knowledge-graph');
     Route::get('/users', \App\Livewire\Admin\Users::class)->name('admin.users');
+    Route::get('/wantlist', \App\Livewire\Admin\Wantlist::class)->name('admin.wantlist');
 });
 
 // Knowledge Graph API

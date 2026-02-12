@@ -49,10 +49,10 @@ class KnowledgeGraphController extends Controller
 
     public function global()
     {
-        $articles = Article::whereIn('status', ['published', 'review', 'draft'])->limit(300)->get();
+        $articles = Article::whereIn('status', ['published', 'review', 'draft'])->limit(500)->get();
         $relationships = ArticleRelationship::whereIn('source_id', $articles->pluck('id'))
                          ->orWhereIn('target_id', $articles->pluck('id'))
-                         ->limit(500)
+                         ->limit(1000)
                          ->get();
 
         $nodes = [];
@@ -84,6 +84,7 @@ class KnowledgeGraphController extends Controller
             'category' => $article->category,
             'slug' => $article->slug,
             'url' => route('wiki.show', $article->slug),
+            'trust' => $article->trust_score ?? 0,
             'val' => $isPrimary ? 2 : 1
         ];
     }
