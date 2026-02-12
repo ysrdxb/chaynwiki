@@ -67,6 +67,7 @@ new class extends Component
                     async initGraph() {
                         try {
                             const response = await fetch(this.config.apiUrl);
+                            if (!response.ok) throw new Error('Network response was not ok');
                             this.data = await response.json();
                             this.render();
                         } catch (e) {
