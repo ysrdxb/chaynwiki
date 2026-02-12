@@ -108,7 +108,7 @@
                             @endif
                         </div>
                         
-                        <h1 class="text-[56px] lg:text-[90px] font-black text-white tracking-tighter mb-8 leading-[0.9] -ml-1" style="font-family: 'Moderniz', sans-serif;">
+                        <h1 class="text-[56px] lg:text-[90px] font-black text-white tracking-tighter mb-8 leading-[0.9] -ml-1">
                             {{ $article->title }}
                         </h1>
                         
@@ -141,7 +141,7 @@
                      <section>
                          <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Biography</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter">Biography</h2>
                         </div>
                         <article class="prose prose-invert prose-lg max-w-none">
                             <div class="article-content text-white/70 text-base leading-relaxed">
@@ -158,7 +158,7 @@
                         <div class="flex items-center justify-between border-b border-white/5 pb-6 mb-10">
                              <div class="flex items-center">
                                 <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                                <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Discography</h2>
+                                <h2 class="text-3xl font-black text-white tracking-tighter">Discography</h2>
                              </div>
                              <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="group flex items-center gap-2 text-[11px] font-bold text-white/30 tracking-widest hover:text-blue-400 transition-all">
                                 <span>Browse all tracks</span>
@@ -177,7 +177,7 @@
                                         </div>
                                     </div>
                                     <h4 class="text-white font-black text-sm truncate tracking-tight group-hover:text-blue-400 transition-colors leading-tight mb-2">{{ $item['title'] }}</h4>
-                                    <p class="text-[10px] font-black text-white/20 tracking-[0.2em]">{{ $item['year'] ?? 'Unknown' }}</p>
+                                    <p class="text-[10px] font-black text-white/20 tracking-[0.2em]">@if(isset($item['year'])){{ $item['year'] }}@else Unknown @endif</p>
                                  </a>
                             @endforeach
                         </div>
@@ -186,7 +186,7 @@
                      <section>
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Gallery</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter">Gallery</h2>
                         </div>
                         <div class="grid grid-cols-2 lg:grid-cols-3 gap-6">
                             @foreach($artistGallery as $item)
@@ -204,7 +204,7 @@
                      <section class="border-t border-white/5 pt-16">
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Neural Discovery</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter">Neural Discovery</h2>
                         </div>
                         <livewire:wiki.neural-knowledge-graph :articleId="$article->id" />
                     </section>
@@ -212,7 +212,7 @@
                      <section class="border-t border-white/5 pt-16">
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Discussion</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter">Discussion</h2>
                         </div>
                         <livewire:article.comments :article="$article" />
                     </section>

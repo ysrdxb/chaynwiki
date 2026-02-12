@@ -107,7 +107,8 @@
             setTimeout(() => { if (playing) narrate(); }, 500);
         });
     "
-    x-show="show"
+    x-show="show && isVisible"
+    x-cloak
     id="pulse-player-container"
     x-transition:enter="transition ease-out duration-500"
     x-transition:enter-start="translate-y-full opacity-0"
@@ -156,14 +157,13 @@
             {{-- Info & Metadata --}}
             <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-3">
-                    <h4 class="text-[11px] font-black text-white uppercase tracking-tighter truncate">
+                    <h4 class="text-[11px] font-black text-white tracking-tighter truncate">
                         {{ $currentArticle?->title ?? 'Playback active' }}
                     </h4>
                     <span class="px-2 py-0.5 bg-[#38bdf8]/10 border border-[#38bdf8]/20 rounded text-[7px] font-black text-[#38bdf8] uppercase tracking-widest">
-                        LIVE AUDIO
+                        Live Audio
                     </span>
                 </div>
-                <div class="text-[9px] font-black text-white/40 uppercase tracking-[0.2em] mt-1 truncate">
                         {{ ucfirst($currentArticle?->category ?? 'Topic') }} reference
                 </div>
             </div>

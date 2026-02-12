@@ -24,24 +24,24 @@ new class extends Component
         isGlobal: {{ $isGlobal ? 'true' : 'false' }},
         apiUrl: '{{ $isGlobal ? route('api.graph.global') : route('api.graph.show', ['id' => $articleId]) }}'
      })"
-     x-init="initGraph()">
+     x-init="$nextTick(() => initGraph())">
     
     <div x-ref="canvas" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
 
     <div class="absolute top-6 left-6 flex flex-col gap-2 pointer-events-none">
-        <h3 class="text-[10px] font-black text-white/40 uppercase tracking-[0.3em]">Neural Discovery Map</h3>
+        <h3 class="text-[10px] font-black text-white/40 tracking-[0.3em]">Neural Discovery Map</h3>
         <div class="flex items-center gap-4">
             <div class="flex items-center gap-1.5">
                 <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
-                <span class="text-[8px] font-black text-white/20 uppercase tracking-widest">Artist</span>
+                <span class="text-[8px] font-black text-white/20 tracking-widest">Artist</span>
             </div>
             <div class="flex items-center gap-1.5">
                 <div class="w-1.5 h-1.5 rounded-full bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
-                <span class="text-[8px] font-black text-white/20 uppercase tracking-widest">Song</span>
+                <span class="text-[8px] font-black text-white/20 tracking-widest">Song</span>
             </div>
             <div class="flex items-center gap-1.5">
                 <div class="w-1.5 h-1.5 rounded-full bg-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]"></div>
-                <span class="text-[8px] font-black text-white/20 uppercase tracking-widest">Genre</span>
+                <span class="text-[8px] font-black text-white/20 tracking-widest">Genre</span>
             </div>
         </div>
     </div>
@@ -157,7 +157,7 @@ new class extends Component
                         .attr('fill', 'rgba(255,255,255,0.5)')
                         .attr('font-size', '9px')
                         .attr('font-weight', '900')
-                        .attr('class', 'uppercase tracking-tighter pointer-events-none');
+                        .attr('class', 'tracking-tighter pointer-events-none');
 
                     simulation.on('tick', () => {
                         link

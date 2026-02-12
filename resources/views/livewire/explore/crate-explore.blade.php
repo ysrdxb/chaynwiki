@@ -120,8 +120,8 @@ new class extends Component
     <!-- Header/Search Area -->
     <div class="flex flex-col md:flex-row items-center justify-between gap-8">
         <div>
-            <h2 class="text-4xl font-black text-white tracking-tighter uppercase mb-2" style="font-family: 'Moderniz', sans-serif;">Community <span class="text-blue-500">Crates</span></h2>
-            <p class="text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">Explore verified collections from top contributors</p>
+            <h2 class="text-4xl font-black text-white tracking-tighter mb-2">Community <span class="text-blue-500">Crates</span></h2>
+            <p class="text-[10px] font-black text-white/20 tracking-widest">Explore verified collections from top contributors</p>
         </div>
 
         <div class="flex items-center gap-4 w-full md:w-auto">
@@ -135,10 +135,10 @@ new class extends Component
             </div>
 
             <div class="flex bg-[#161b22]/40 border border-white/5 rounded-2xl p-1.5 shadow-xl">
-                <button wire:click="$set('filter', 'trending')" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $filter === 'trending' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' : 'text-white/20 hover:text-white' }}">Trending</button>
-                <button wire:click="$set('filter', 'newest')" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $filter === 'newest' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' : 'text-white/20 hover:text-white' }}">Newest</button>
+                <button wire:click="$set('filter', 'trending')" class="px-6 py-2.5 rounded-xl text-[10px] font-black tracking-widest transition-all {{ $filter === 'trending' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' : 'text-white/20 hover:text-white' }}">Trending</button>
+                <button wire:click="$set('filter', 'newest')" class="px-6 py-2.5 rounded-xl text-[10px] font-black tracking-widest transition-all {{ $filter === 'newest' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' : 'text-white/20 hover:text-white' }}">Newest</button>
                 @auth
-                    <button wire:click="$set('filter', 'followed')" class="px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all {{ $filter === 'followed' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' : 'text-white/20 hover:text-white' }}">Following</button>
+                    <button wire:click="$set('filter', 'followed')" class="px-6 py-2.5 rounded-xl text-[10px] font-black tracking-widest transition-all {{ $filter === 'followed' ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/20' : 'text-white/20 hover:text-white' }}">Following</button>
                 @endauth
             </div>
         </div>
@@ -171,11 +171,11 @@ new class extends Component
 
                                         @if(!$isContributor && auth()->user()->reputation >= 500)
                                             <button wire:click="requestCollaboration({{ $crate->id }})" 
-                                                    class="px-3 py-1.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-[9px] font-black text-purple-400 uppercase tracking-widest hover:bg-purple-500 hover:text-white transition-all shadow-lg">
+                                                    class="px-3 py-1.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-[9px] font-black text-purple-400 tracking-widest hover:bg-purple-500 hover:text-white transition-all shadow-lg">
                                                 Contribute
                                             </button>
                                         @elseif($isContributor)
-                                            <span class="px-3 py-1.5 rounded-xl bg-green-500/10 border border-green-500/20 text-[9px] font-black text-green-400 uppercase tracking-widest shadow-lg">
+                                            <span class="px-3 py-1.5 rounded-xl bg-green-500/10 border border-green-500/20 text-[9px] font-black text-green-400 tracking-widest shadow-lg">
                                                 Contributor
                                             </span>
                                         @endif
@@ -196,8 +196,8 @@ new class extends Component
 
                     <!-- Info -->
                     <div class="flex-1">
-                        <h3 class="text-xl font-black text-white tracking-tightest mb-2" style="font-family: 'Moderniz', sans-serif;">{{ $crate->name }}</h3>
-                        <p class="text-[10px] font-black text-white/20 uppercase tracking-widest mb-6">{{ $crate->articles_count ?? 0 }} Topics collected</p>
+                        <h3 class="text-xl font-black text-white tracking-tightest mb-2">{{ $crate->name }}</h3>
+                        <p class="text-[10px] font-black text-white/20 tracking-widest mb-6">{{ $crate->articles_count ?? 0 }} Topics collected</p>
                         <p class="text-white/40 text-[11px] font-bold leading-relaxed line-clamp-2 min-h-[3rem]">{{ $crate->description ?? 'A curated collection of musical records and insights.' }}</p>
                     </div>
 
@@ -238,7 +238,7 @@ new class extends Component
                 <div class="w-20 h-20 rounded-full bg-white/5 border border-white/5 flex items-center justify-center mx-auto mb-8 shadow-inner">
                     <svg class="w-10 h-10 text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
                 </div>
-                <h3 class="text-white font-bold mb-2 uppercase tracking-widest text-[12px]">No collection found</h3>
+                <h3 class="text-white font-bold mb-2 tracking-widest text-[12px]">No collection found</h3>
                 <p class="text-white/20 text-[10px] tracking-widest">Adjust your search or filters to find more crates</p>
             </div>
         @endforelse

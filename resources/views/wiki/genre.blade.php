@@ -89,7 +89,7 @@
                         Genre info
                     </span>
                     
-                    <h1 class="text-[64px] lg:text-[100px] font-black text-white tracking-tighter mb-10 leading-[0.85] -ml-1" style="font-family: 'Moderniz', sans-serif;">
+                    <h1 class="text-[64px] lg:text-[100px] font-black text-white tracking-tighter mb-10 leading-[0.85] -ml-1">
                         {{ $article->title }}
                     </h1>
                     
@@ -112,7 +112,7 @@
                      <section>
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Description</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter">Description</h2>
                         </div>
                         <article class="prose prose-invert prose-lg max-w-none">
                             <div class="article-content text-white/70 text-base leading-relaxed">
@@ -130,7 +130,7 @@
                      <section class="border-t border-white/5 pt-16">
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Neural Discovery</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter">Neural Discovery</h2>
                         </div>
                         <livewire:wiki.neural-knowledge-graph :articleId="$article->id" />
                     </section>
@@ -138,7 +138,7 @@
                      <section class="border-t border-white/5 pt-16">
                         <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Discussion</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter">Discussion</h2>
                         </div>
                         <livewire:article.comments :article="$article" />
                     </section>

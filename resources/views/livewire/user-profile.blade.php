@@ -32,14 +32,14 @@
                 <!-- User Info -->
                 <div class="flex-1 mt-6 md:mt-0">
                     <div class="flex items-center gap-4 mb-4">
-                        <span class="px-3 py-1 bg-white/5 border border-white/5 rounded-full text-[10px] font-black text-white/40 tracking-[0.3em]">Verified contributor</span>
-                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] font-black text-blue-500 tracking-[0.3em] uppercase">Sonic Bridge v1.1</span>
+                        <span class="px-3 py-1 bg-white/5 border border-white/5 rounded-full text-[10px] font-black text-white/40 tracking-widest">Verified contributor</span>
+                        <span class="px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] font-black text-blue-500 tracking-widest">Sonic Bridge v1.1</span>
                         <span class="text-white/20 text-xs font-black tracking-[0.2em] ml-2">Established {{ $user->created_at->format('Y') }}</span>
                     </div>
                     <h1 class="text-[64px] md:text-[84px] font-black text-white tracking-tightest mb-4 leading-[0.8]" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $user->name }}</h1>
                     
                     <div class="flex items-center gap-6 mb-8">
-                        <p class="text-blue-500 text-[14px] font-black tracking-[0.2em]">{{ '@' . $user->username }}</p>
+                        <p class="text-blue-500 text-[14px] font-black tracking-widest">{{ '@' . $user->username }}</p>
                         <div class="w-1.5 h-1.5 rounded-full bg-white/10"></div>
                         <p class="text-white text-[16px] font-black tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;"><span class="text-white/20 mr-2">Credits:</span> {{ number_format($points) }}</p>
                     </div>
@@ -55,19 +55,19 @@
                     <!-- Stats pills refined -->
                     <div class="flex flex-wrap items-center gap-4">
                         <div class="card-premium h-auto !py-3 !px-6 border-blue-500/10 hover:border-blue-500/30">
-                            <span class="text-[9px] font-black text-white/20 tracking-[0.3em] block mb-1">Topics</span>
+                            <span class="text-[9px] font-black text-white/20 tracking-widest block mb-1">Topics</span>
                             <span class="text-[14px] font-black text-white tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $topicsAdded }} <span class="text-white/10 text-[10px] ml-1">added</span></span>
                         </div>
                         <div class="card-premium h-auto !py-3 !px-6 border-blue-500/10 hover:border-blue-500/30">
-                            <span class="text-[9px] font-black text-white/20 tracking-[0.3em] block mb-1">Revisions</span>
+                            <span class="text-[9px] font-black text-white/20 tracking-widest block mb-1">Revisions</span>
                             <span class="text-[14px] font-black text-white tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $editsMade }} <span class="text-white/10 text-[10px] ml-1">edits</span></span>
                         </div>
                         <div class="card-premium h-auto !py-3 !px-6 border-blue-500/10 hover:border-blue-500/30">
-                            <span class="text-[9px] font-black text-white/20 tracking-[0.3em] block mb-1">Approved</span>
+                            <span class="text-[9px] font-black text-white/20 tracking-widest block mb-1">Approved</span>
                             <span class="text-[14px] font-black text-white tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $approvedContributions }} <span class="text-white/10 text-[10px] ml-1">verified</span></span>
                         </div>
                         <div class="card-premium h-auto !py-3 !px-6 border-blue-500/10 hover:border-blue-500/30">
-                            <span class="text-[9px] font-black text-white/20 tracking-[0.3em] block mb-1">In Queue</span>
+                            <span class="text-[9px] font-black text-white/20 tracking-widest block mb-1">In Queue</span>
                             <span class="text-[14px] font-black text-white tracking-tightest" style="font-family: 'Plus Jakarta Sans', sans-serif;">{{ $pendingReviews }} <span class="text-white/10 text-[10px] ml-1">pending</span></span>
                         </div>
                     </div>
@@ -97,13 +97,13 @@
                 </div>
 
                 <div class="shrink-0 pt-8 md:pt-0">
-                    <button wire:click="toggleHistory" class="btn-figma-primary shadow-3xl !py-4 !px-8">
-                        <span>{{ $showHistory ? 'Close history' : 'Contribution logs' }}</span>
-                        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                    <button wire:click="toggleHistory" class="group flex items-center gap-4 px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-[2rem] font-black transition-all duration-300 shadow-3xl shadow-blue-500/20">
+                        <span class="tracking-tight">{{ $showHistory ? 'Close history' : 'Contribution logs' }}</span>
+                        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-blue-500 transition-all">
                             @if($showHistory)
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
                             @else
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             @endif
                         </div>
                     </button>
@@ -132,20 +132,20 @@
                                         <svg class="w-7 h-7 text-white/20 group-hover:text-blue-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-4.514A9.01 9.01 0 0012 21a9.003 9.003 0 008.384-5.91M8.211 14.243a8 8 0 1111.314 0M15 11l3 3m0 0l-3 3m3-3H9"/></svg>
                                     </div>
                                     <div>
-                                        <h4 class="text-xl font-black text-white tracking-tightest mb-2" style="font-family: 'Moderniz', sans-serif;">{{ $revision->article->title ?? 'Deleted topic' }}</h4>
+                                        <h4 class="text-xl font-black text-white tracking-tightest mb-2">{{ $revision->article->title ?? 'Deleted topic' }}</h4>
                                         <div class="flex items-center gap-4">
-                                            <p class="text-white/20 text-[10px] font-black tracking-[0.3em]">{{ $revision->created_at->diffForHumans() }}</p>
+                                            <p class="text-white/20 text-[10px] font-black tracking-widest">{{ $revision->created_at->diffForHumans() }}</p>
                                             <div class="w-1 h-1 rounded-full bg-white/10"></div>
-                                            <p class="text-blue-500/40 text-[10px] font-black tracking-[0.3em]">Edit type: {{ $revision->type ?? 'Patch' }}</p>
+                                            <p class="text-blue-500/40 text-[10px] font-black tracking-widest">Edit type: {{ $revision->type ?? 'Patch' }}</p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="flex items-center gap-6">
-                                    <span class="px-5 py-2 rounded-xl text-[10px] font-black tracking-[0.3em] shadow-2xl
+                                    <span class="px-5 py-2 rounded-xl text-[10px] font-black tracking-widest shadow-2xl
                                         {{ $revision->status === 'approved' ? 'bg-green-500/10 text-green-400 border border-green-500/10' : 
                                            ($revision->status === 'rejected' ? 'bg-red-500/10 text-red-400 border border-red-500/10' : 
                                            'bg-yellow-500/10 text-yellow-500 border border-yellow-500/10 shadow-yellow-500/5') }}">
-                                        {{ ucfirst($revision->status) }}
+                                        {{ $revision->status }}
                                     </span>
                                     <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
@@ -190,7 +190,11 @@
         @endif
 
         <!-- Topics Added Section -->
-        <section class="bg-[#0d1117] py-24 border-t border-white/5">
+        <section class="bg-[#0d1117] py-24 border-t border-white/5" 
+                 x-data="{ 
+                    scrollLeft() { this.$refs.slider.scrollBy({ left: -400, behavior: 'smooth' }) },
+                    scrollRight() { this.$refs.slider.scrollBy({ left: 400, behavior: 'smooth' }) }
+                 }">
             <div class="max-w-[1400px] mx-auto px-8">
                 <div class="flex items-center justify-between mb-16 px-4">
                     <div class="flex items-center gap-6">
@@ -200,26 +204,28 @@
                     
                     <!-- Navigation Arrows Refined -->
                     <div class="flex items-center gap-4">
-                        <button class="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center hover:bg-white/10 hover:border-white/10 transition-all text-white/20 hover:text-white shadow-2xl">
+                        <button @click="scrollLeft()" class="w-12 h-12 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center hover:bg-white/10 hover:border-white/10 transition-all text-white/20 hover:text-white shadow-2xl">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7"/></svg>
                         </button>
-                        <button class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-white/5 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all text-blue-500 shadow-2xl shadow-blue-500/5">
+                        <button @click="scrollRight()" class="w-12 h-12 rounded-2xl bg-blue-500/10 border border-white/5 flex items-center justify-center hover:bg-blue-500 hover:text-white transition-all text-blue-500 shadow-2xl shadow-blue-500/5">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7"/></svg>
                         </button>
                     </div>
                 </div>
 
-                <!-- Article Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Article Carousel -->
+                <div x-ref="slider" class="flex gap-6 overflow-x-auto snap-x snap-mandatory no-scrollbar pb-8 scroll-smooth">
                     @forelse($articles as $article)
-                        @include('wiki._article-card', ['article' => $article])
+                        <div class="snap-start shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
+                            @include('wiki._article-card', ['article' => $article])
+                        </div>
                     @empty
-                        <div class="col-span-full py-32 bg-[#161b22]/40 backdrop-blur-sm border border-white/5 rounded-[3rem] flex flex-col items-center justify-center text-center shadow-3xl">
+                        <div class="w-full py-32 bg-[#161b22]/40 backdrop-blur-sm border border-white/5 rounded-[3rem] flex flex-col items-center justify-center text-center shadow-3xl">
                             <div class="w-24 h-24 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center mb-10 shadow-3xl">
                                 <svg class="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
                             </div>
                             <h3 class="text-3xl font-black text-white tracking-tightest mb-4" style="font-family: 'Plus Jakarta Sans', sans-serif;">Archive empty</h3>
-                            <p class="text-white/20 text-[11px] font-black tracking-[0.5em] max-w-sm mx-auto">This contributor has not added any data to the archive yet.</p>
+                            <p class="text-white/20 text-[11px] font-black tracking-widest max-w-sm mx-auto">This contributor has not added any data to the archive yet.</p>
                         </div>
                     @endforelse
                 </div>
@@ -235,6 +241,11 @@
                 </div>
                 @endif
             </div>
+
+            <style>
+                .no-scrollbar::-webkit-scrollbar { display: none; }
+                .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            </style>
         </section>
     @endif
 </div>

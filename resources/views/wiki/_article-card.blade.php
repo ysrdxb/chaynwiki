@@ -28,7 +28,7 @@
             
             <div class="absolute top-4 left-4">
                 <span class="px-3 py-1 bg-blue-500 text-navy-950 text-[10px] font-bold tracking-widest rounded-lg shadow-2xl">
-                    {{ ucfirst($article->category) }}
+                    {{ $article->category }}
                 </span>
             </div>
 
@@ -56,7 +56,7 @@
                         <span class="text-[10px] font-black text-blue-500">{{ ucfirst(substr($article->user->name ?? 'A', 0, 1)) }}</span>
                     </div>
                     <div class="flex flex-col">
-                        <span class="text-[9px] font-black text-white/20 tracking-[0.2em] leading-none mb-1">Archivist</span>
+                        <span class="text-[9px] font-black text-white/20 tracking-widest leading-none mb-1">Archivist</span>
                         <span class="text-[11px] font-black text-white/50 tracking-tight leading-none truncate max-w-[80px]">{{ $article->user->name ?? 'Guest' }}</span>
                     </div>
                 </div>
