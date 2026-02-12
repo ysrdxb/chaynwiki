@@ -46,86 +46,89 @@
     @livewireStyles
     @stack('styles')
 </head>
-<body class="bg-dark text-slate-200 antialiased overflow-x-hidden">
+<body class="bg-[#0d1117] text-white antialiased overflow-x-hidden selection:bg-blue-500/30">
     
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen relative">
+        {{-- Ambient Background --}}
+        <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+            <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-600/5 blur-[120px] rounded-full mix-blend-screen"></div>
+            <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-600/5 blur-[120px] rounded-full mix-blend-screen"></div>
+        </div>
+
         <!-- Sidebar -->
-        <aside class="w-72 bg-black/40 backdrop-blur-3xl border-r border-white/5 flex flex-col fixed h-screen z-50">
-            <div class="p-8">
-                <a href="{{ route('home') }}" class="text-2xl font-display font-black tracking-tighter text-gradient">
-                    CHAYNWIKI
-                    <span class="block text-[10px] tracking-widest text-[#3b82f6] opacity-60 mt-1">COMMAND CENTER</span>
+        <aside class="w-72 bg-[#161b22]/80 backdrop-blur-xl border-r border-white/5 flex flex-col fixed h-screen z-50 transition-all duration-300">
+            <div class="p-8 border-b border-white/5">
+                <a href="{{ route('home') }}" class="group flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-black shadow-lg shadow-blue-500/20">C</div>
+                    <div>
+                        <span class="block text-[14px] font-black tracking-tighter text-white uppercase leading-none">CHAYNWIKI</span>
+                        <span class="block text-[9px] tracking-[0.2em] text-blue-400 font-bold mt-1">COMMAND</span>
+                    </div>
                 </a>
             </div>
 
-            <nav class="flex-1 px-4 space-y-2 overflow-y-auto">
-                <a href="{{ route('admin.dashboard') }}" class="sidebar-item {{ request()->is('admin/dashboard') ? 'active' : '' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+            <nav class="flex-1 px-4 py-6 space-y-1 overflow-y-auto custom-scrollbar">
+                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-[13px] font-bold rounded-xl transition-all {{ request()->is('admin/dashboard') ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
                     Dashboard
                 </a>
                 
-                <div class="pt-4 pb-2 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Content</div>
-                <a href="{{ route('admin.articles') }}" class="sidebar-item {{ request()->is('admin/articles*') ? 'active' : '' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                <div class="pt-6 pb-3 px-4 text-[10px] font-black text-white/20 uppercase tracking-widest">Global Content</div>
+                
+                <a href="{{ route('admin.articles') }}" class="flex items-center gap-3 px-4 py-3 text-[13px] font-bold rounded-xl transition-all {{ request()->is('admin/articles*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                     Articles
                 </a>
-                <a href="{{ route('admin.revisions') }}" class="sidebar-item {{ request()->is('admin/revisions*') ? 'active' : '' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+                <a href="{{ route('admin.revisions') }}" class="flex items-center gap-3 px-4 py-3 text-[13px] font-bold rounded-xl transition-all {{ request()->is('admin/revisions*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
                     Moderation Queue
                 </a>
-                <a href="{{ route('admin.batch-analysis') }}" class="sidebar-item {{ request()->is('admin/batch-analysis*') ? 'active' : '' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                <a href="{{ route('admin.batch-analysis') }}" class="flex items-center gap-3 px-4 py-3 text-[13px] font-bold rounded-xl transition-all {{ request()->is('admin/batch-analysis*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                     Batch Analysis
                 </a>
-                <a href="{{ route('admin.knowledge-graph') }}" class="sidebar-item {{ request()->is('admin/knowledge-graph*') ? 'active' : '' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <a href="{{ route('admin.knowledge-graph') }}" class="flex items-center gap-3 px-4 py-3 text-[13px] font-bold rounded-xl transition-all {{ request()->is('admin/knowledge-graph*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     Knowledge Graph
                 </a>
 
-                <div class="pt-4 pb-2 px-4 text-[10px] font-bold text-slate-500 uppercase tracking-widest">Community</div>
-                <a href="{{ route('admin.users') }}" class="sidebar-item {{ request()->is('admin/users*') ? 'active' : '' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <div class="pt-6 pb-3 px-4 text-[10px] font-black text-white/20 uppercase tracking-widest">Community</div>
+                
+                <a href="{{ route('admin.users') }}" class="flex items-center gap-3 px-4 py-3 text-[13px] font-bold rounded-xl transition-all {{ request()->is('admin/users*') ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     Users
                 </a>
             </nav>
 
-            <div class="p-6 border-t border-white/5 mx-2 mb-2 rounded-2xl bg-white/[0.02]">
-                <div class="flex items-center">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center font-bold">
+            <div class="p-6 border-t border-white/5 mx-2 mb-2">
+                <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5">
+                    <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg">
                         {{ substr(auth()->user()->name, 0, 1) }}
                     </div>
-                    <div class="ml-3 overflow-hidden">
-                        <div class="text-sm font-bold truncate">{{ auth()->user()->name }}</div>
-                        <div class="text-[10px] text-brand-400 font-bold uppercase">{{ auth()->user()->role }}</div>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-[13px] font-bold text-white truncate">{{ auth()->user()->name }}</div>
+                        <div class="text-[10px] text-blue-400 font-bold uppercase tracking-wider">{{ auth()->user()->role }}</div>
                     </div>
                 </div>
             </div>
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 ml-72 p-10 relative">
-            <!-- Background Decoration -->
-            <div class="fixed inset-0 pointer-events-none z-0">
-                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-600/10 blur-[150px] rounded-full"></div>
-                <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-600/5 blur-[120px] rounded-full"></div>
-            </div>
-
-            <div class="relative z-10">
-                <header class="flex justify-between items-center mb-10">
-                    <div>
-                        <h1 class="text-3xl font-display font-black">@yield('header', 'Overview')</h1>
-                        <p class="text-slate-400 text-sm mt-1">@yield('subheader', 'Platform operational status.')</p>
+        <main class="flex-1 ml-72 p-12 relative z-10 w-full max-w-[calc(100vw-18rem)]">
+            <header class="flex justify-between items-center mb-12">
+                <div>
+                    <h1 class="text-[32px] font-black text-white uppercase tracking-tighter leading-none">@yield('header', 'Overview')</h1>
+                    <p class="text-white/40 text-[14px] font-medium mt-2">@yield('subheader', 'Platform operational status.')</p>
+                </div>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20">
+                        <div class="w-1.5 h-1.5 rounded-full bg-blue-500 mr-2 animate-pulse shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                        <span class="text-[11px] font-bold uppercase tracking-widest text-blue-400">System Live</span>
                     </div>
-                    <div class="flex items-center space-y-0 space-x-4">
-                        <div class="flex items-center px-4 py-2 rounded-xl bg-white/[0.03] border border-white/5">
-                            <div class="w-2 h-2 rounded-full bg-emerald-500 mr-2 pulse"></div>
-                            <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">System Live</span>
-                        </div>
-                    </div>
-                </header>
+                </div>
+            </header>
 
-                {{ $slot }}
-            </div>
+            {{ $slot }}
         </main>
     </div>
 

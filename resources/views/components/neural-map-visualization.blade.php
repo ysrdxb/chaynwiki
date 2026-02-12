@@ -1,7 +1,7 @@
 @props(['articleId' => null, 'isGlobal' => false, 'height' => 600])
 
 <div class="relative w-full @if(!$isGlobal) rounded-[3rem] overflow-hidden border border-white/5 bg-black/20 backdrop-blur-md @endif" 
-     style="height: {{ $height }}px;"
+     style="height: {{ $height }}px; touch-action: none;"
      x-data="neuralmap_{{ $articleId ?: 'global' }}()"
      x-init="init()"
      wire:ignore>
@@ -18,9 +18,9 @@
 
     {{-- Legend Overlay (Simplified for Widget) --}}
     @if(!$isGlobal)
-    <div class="absolute top-6 left-6 flex flex-col gap-2 pointer-events-none">
+    <div class="absolute top-6 left-6 flex flex-col gap-2 pointer-events-none z-10">
         <h3 class="text-[10px] font-black text-white/40 tracking-[0.3em]">NEURAL MAP</h3>
-        <div class="flex items-center gap-4">
+        <div class="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
             <div class="flex items-center gap-1.5">
                 <div class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
                 <span class="text-[8px] font-black text-white/20 tracking-widest">Artist</span>
@@ -38,8 +38,8 @@
     @endif
 
     <div class="absolute bottom-6 right-6 flex items-center gap-2 z-30">
-        <button @click="resetView()" class="p-3 rounded-xl bg-white/5 border border-white/5 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-sm shadow-2xl">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        <button @click="resetView()" class="p-3 md:p-3 rounded-xl bg-white/5 border border-white/5 text-white/40 hover:text-white hover:bg-white/10 transition-all backdrop-blur-sm shadow-2xl active:scale-95">
+            <svg class="w-5 h-5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
         </button>
     </div>
 </div>

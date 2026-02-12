@@ -97,6 +97,7 @@ class SmartSearchService
                     ->orWhere('title', 'LIKE', "%{$query}%");
             })
             ->select('id', 'title', 'slug', 'category')
+            ->select('id', 'title', 'slug', 'category', 'featured_image')
             ->orderByRaw("CASE WHEN title LIKE ? THEN 0 ELSE 1 END", ["{$query}%"])
             ->limit($limit)
             ->get();
@@ -106,7 +107,9 @@ class SmartSearchService
             'title' => $a->title,
             'slug' => $a->slug,
             'category' => $a->category,
+            'image' => $a->featured_image ? (str_starts_with($a->featured_image, 'http') ? $a->featured_image : \Illuminate\Support\Facades\Storage::url($a->featured_image)) : null,
             'url' => route('wiki.show', $a),
+            'type' => 'direct', // Indicates a direct database match
         ])->toArray();
     }
 
@@ -149,27 +152,91 @@ class SmartSearchService
      */
     public function getSuggestions(string $query, int $limit = 5): array
     {
-        if (strlen($query) < 2) {
-            return $this->getTrendingSearches($limit);
+        $suggestions = [];
+
+        // 1. Get direct database matches (Rich Objects)
+        $autoItems = $this->autocomplete($query, $limit);
+        foreach ($autoItems as $item) {
+            $suggestions[] = $item;
         }
 
-        // Get suggestions from past searches
-        $pastSearches = SearchLog::query()
-            ->where('query', 'LIKE', "{$query}%")
-            ->select('query', DB::raw('COUNT(*) as count'))
-            ->groupBy('query')
-            ->orderByDesc('count')
-            ->limit($limit)
-            ->pluck('query')
-            ->toArray();
+        // 2. If we need more, check past search logs
+        if (count($suggestions) < $limit) {
+            $remaining = $limit - count($suggestions);
+            $pastSearches = SearchLog::query()
+                ->where('query', 'LIKE', "{$query}%")
+                ->select('query', DB::raw('COUNT(*) as count'))
+                ->groupBy('query')
+                ->orderByDesc('count')
+                ->limit($remaining)
+                ->pluck('query')
+                ->toArray();
 
-        // Fill with autocomplete if not enough
-        if (count($pastSearches) < $limit) {
-            $autoItems = $this->autocomplete($query, $limit - count($pastSearches));
-            $pastSearches = array_merge($pastSearches, array_column($autoItems, 'title'));
+            foreach ($pastSearches as $term) {
+                // Ensure we don't add duplicates if a log matches a title
+                $exists = false;
+                foreach ($suggestions as $s) {
+                    if (strcasecmp($s['title'], $term) === 0) {
+                        $exists = true;
+                        break;
+                    }
+                }
+
+                if (!$exists) {
+                    $suggestions[] = [
+                        'title' => $term,
+                        'type' => 'history', // Indicates a historical search term
+                        'url' => null, // Clicking this just fills the search box
+                        'image' => null,
+                        'category' => 'search'
+                    ];
+                }
+            }
         }
 
-        return array_unique(array_slice($pastSearches, 0, $limit));
+        // 3. Neural Suggestions (Graph-based)
+        if (count($suggestions) < $limit) {
+            $remaining = $limit - count($suggestions);
+            
+            // Find nodes connected to the current best match or trending nodes similar to query
+            $neuralMatches = DB::table('knowledge_graph_links')
+                ->join('articles as source', 'knowledge_graph_links.source_id', '=', 'source.id')
+                ->join('articles as target', 'knowledge_graph_links.target_id', '=', 'target.id')
+                ->where('source.title', 'LIKE', "%{$query}%")
+                ->orWhere('target.title', 'LIKE', "%{$query}%")
+                ->select(
+                    'target.id', 'target.title', 'target.slug', 'target.category', 'target.featured_image',
+                    DB::raw('"neural" as type')
+                )
+                ->distinct()
+                ->limit($remaining)
+                ->get();
+
+            foreach ($neuralMatches as $match) {
+                // Deduplicate
+                $exists = false;
+                foreach ($suggestions as $s) {
+                    if (isset($s['id']) && $s['id'] == $match->id) { 
+                        $exists = true; 
+                        break; 
+                    }
+                }
+
+                if (!$exists) {
+                    $suggestions[] = [
+                        'id' => $match->id,
+                        'title' => $match->title,
+                        'slug' => $match->slug,
+                        'category' => $match->category,
+                        'image' => $match->featured_image ? (str_starts_with($match->featured_image, 'http') ? $match->featured_image : \Illuminate\Support\Facades\Storage::url($match->featured_image)) : null,
+                        'url' => route('wiki.show', ['article' => $match->slug]),
+                        'type' => 'neural', // Indicates a graph-based recommendation
+                    ];
+                }
+            }
+        }
+
+        return array_slice($suggestions, 0, $limit);
     }
 
     /**
@@ -203,12 +270,34 @@ class SmartSearchService
     /**
      * Update click-through for a search result
      */
-    public function logClick(int $searchLogId, int $articleId): void
+    /**
+     * Get trending nodes from the knowledge graph
+     */
+    public function getNeuralTrending(int $limit = 6): array
     {
-        SearchLog::where('id', $searchLogId)
-            ->update([
-                'clicked_article_id' => $articleId,
-                'results_count' => DB::raw('results_count + 1'),
-            ]);
+        // Find nodes with the most connections (Source or Target)
+        // This is a simplified "PageRank-lite" approach
+        $popularNodes = DB::table('knowledge_graph_links')
+            ->select('target_id as id', DB::raw('count(*) as connections'))
+            ->groupBy('target_id')
+            ->orderByDesc('connections')
+            ->limit($limit)
+            ->get();
+            
+        $ids = $popularNodes->pluck('id')->toArray();
+        
+        return Article::whereIn('id', $ids)
+            ->select('id', 'title', 'slug', 'category', 'featured_image')
+            ->get()
+            ->map(fn($a) => [
+                'id' => $a->id,
+                'title' => $a->title,
+                'slug' => $a->slug,
+                'category' => $a->category,
+                'image' => $a->featured_image ? (str_starts_with($a->featured_image, 'http') ? $a->featured_image : \Illuminate\Support\Facades\Storage::url($a->featured_image)) : null,
+                'url' => route('wiki.show', $a),
+                'type' => 'neural_trend'
+            ])
+            ->toArray();
     }
 }

@@ -41,13 +41,8 @@ class SmartSearch extends Component
     {
         $this->resetPage();
         
-        if (strlen($this->query) >= 2) {
-            $service = app(SmartSearchService::class);
-            $this->suggestions = $service->getSuggestions($this->query, 5);
-            $this->showSuggestions = !empty($this->suggestions);
-        } else {
-            $this->showSuggestions = false;
-        }
+        // Suggestion fetching removed as per user request (redundant on main search page)
+        $this->showSuggestions = false;
     }
 
     public function updatedCategory(): void
@@ -60,9 +55,18 @@ class SmartSearch extends Component
         $this->resetPage();
     }
 
-    public function selectSuggestion(string $suggestion): void
+    public function selectSuggestion($suggestion): void
     {
-        $this->query = $suggestion;
+        if (is_array($suggestion)) {
+            if (!empty($suggestion['url'])) {
+                $this->redirect($suggestion['url']);
+                return;
+            }
+            $this->query = $suggestion['title'];
+        } else {
+            $this->query = $suggestion;
+        }
+        
         $this->showSuggestions = false;
     }
 

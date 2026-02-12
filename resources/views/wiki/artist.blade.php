@@ -87,18 +87,18 @@
                      <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[160px] -mr-40 -mt-40"></div>
                  </div>
                  
-                 <div class="relative z-10 p-12 lg:p-16 flex flex-col lg:flex-row gap-12 items-end">
+                 <div class="relative z-10 p-6 md:p-12 lg:p-16 flex flex-col lg:flex-row gap-8 lg:gap-12 items-end">
                      <!-- Artist Portrait -->
                      <div class="shrink-0 relative">
-                         <div class="w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden border-8 border-white/5 shadow-[0_0_100px_rgba(0,0,0,0.8)] relative z-10 bg-[#161b22] group-hover:border-blue-500/20 transition-all duration-700">
+                         <div class="w-48 h-48 md:w-72 md:h-72 rounded-full overflow-hidden border-4 md:border-8 border-white/5 shadow-[0_0_100px_rgba(0,0,0,0.8)] relative z-10 bg-[#161b22] group-hover:border-blue-500/20 transition-all duration-700">
                              <img src="{{ $featured_image }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 grayscale-[0.2] group-hover:grayscale-0">
                          </div>
                          {{-- Premium Glow --}}
                          <div class="absolute -inset-8 bg-blue-500/20 blur-[60px] rounded-full opacity-30 group-hover:opacity-60 transition-all duration-1000"></div>
                      </div>
                      
-                     <div class="flex-1 min-w-0 pb-4">
-                        <div class="flex items-center gap-3 mb-8">
+                     <div class="flex-1 min-w-0 pb-4 text-center lg:text-left">
+                        <div class="flex items-center justify-center lg:justify-start gap-3 mb-6 md:mb-8">
                              @if(!empty($artistMeta['spotify_id']) || !empty($artistMeta['website']))
                                 <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-black tracking-[0.2em] flex items-center gap-2 shadow-lg">
                                     <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> Verified Artist
@@ -108,7 +108,7 @@
                             @endif
                         </div>
                         
-                        <h1 class="text-[56px] lg:text-[90px] font-black text-white tracking-tighter mb-8 leading-[0.9] -ml-1">
+                        <h1 class="text-[42px] md:text-[64px] lg:text-[90px] font-black text-white tracking-tighter mb-8 leading-[0.9] -ml-1">
                             {{ $article->title }}
                         </h1>
                         

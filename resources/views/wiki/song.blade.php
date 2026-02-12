@@ -89,10 +89,10 @@
                      <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[160px] -mr-40 -mt-40"></div>
                  </div>
                  
-                 <div class="relative z-10 p-12 lg:p-16 flex flex-col lg:flex-row gap-12 items-end">
+                 <div class="relative z-10 p-6 md:p-12 lg:p-16 flex flex-col lg:flex-row gap-8 lg:gap-12 items-end">
                      <!-- Cover Art -->
                      <div class="shrink-0 relative group/cover cursor-pointer">
-                         <div class="w-56 h-56 md:w-72 md:h-72 rounded-[32px] overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.8)] relative z-10 transition-all duration-700 group-hover:border-blue-500/30">
+                         <div class="w-48 h-48 md:w-72 md:h-72 rounded-[32px] overflow-hidden border border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.8)] relative z-10 transition-all duration-700 group-hover:border-blue-500/30">
                              <img src="{{ $featured_image }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
                              <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/cover:opacity-100 transition-all duration-300">
                                  <div class="w-16 h-16 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-2xl transform scale-90 group-hover/cover:scale-100 transition-all duration-500">
@@ -104,15 +104,15 @@
                          <div class="absolute -inset-8 bg-blue-500/20 blur-[60px] rounded-full opacity-30 group-hover:opacity-60 transition-all duration-1000"></div>
                      </div>
                      
-                     <div class="flex-1 min-w-0 pb-4">
-                        <div class="flex items-center gap-3 mb-8">
+                     <div class="flex-1 min-w-0 pb-4 text-center lg:text-left">
+                        <div class="flex items-center justify-center lg:justify-start gap-3 mb-6 md:mb-8">
                             <span class="px-3 py-1.5 bg-blue-500 text-[#0d1117] rounded-lg text-[10px] font-black tracking-widest shadow-lg shadow-blue-500/20">Track file</span>
                             @if($article->song->label)
                                 <span class="px-3 py-1.5 bg-white/5 border border-white/10 text-white/50 rounded-lg text-[10px] font-bold tracking-widest shadow-lg">{{ $article->song->label }}</span>
                             @endif
                         </div>
                         
-                        <h1 class="text-[52px] lg:text-[76px] font-black text-white tracking-tighter mb-4 leading-[0.95] -ml-1">
+                        <h1 class="text-[42px] md:text-[52px] lg:text-[76px] font-black text-white tracking-tighter mb-4 leading-[0.95] -ml-1">
                             {{ $article->title }}
                         </h1>
                         

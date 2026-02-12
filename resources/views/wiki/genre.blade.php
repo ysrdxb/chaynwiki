@@ -84,12 +84,12 @@
                  <div class="absolute inset-0 bg-gradient-to-br from-[#0d1117] via-[#161b22] to-blue-900/20"></div>
                  <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/10 rounded-full blur-[160px] -mr-40 -mt-40"></div>
                  
-                 <div class="relative z-10 p-12 lg:p-16 w-full">
+                 <div class="relative z-10 p-6 md:p-12 lg:p-16 w-full">
                      <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-bold tracking-widest inline-block mb-8 shadow-lg">
                         Genre info
                     </span>
                     
-                    <h1 class="text-[64px] lg:text-[100px] font-black text-white tracking-tighter mb-10 leading-[0.85] -ml-1">
+                    <h1 class="text-[42px] md:text-[64px] lg:text-[100px] font-black text-white tracking-tighter mb-10 leading-[0.85] -ml-1">
                         {{ $article->title }}
                     </h1>
                     
