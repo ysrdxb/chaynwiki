@@ -422,103 +422,106 @@
     {{-- =========================================
          BROWSE BY CATEGORY - CARD GRID
          ========================================= --}}
+    {{-- =========================================
+         BROWSE BY CATEGORY - DYNAMIC SLIDER
+         ========================================= --}}
     @php
         $categories = [
             [
-                'key' => 'genre',
-                'title' => 'Genres',
-                'desc' => 'Discover music styles, their origins, key pioneers, and how they evolved over time.',
-                'count' => number_format($heroStats['genres'] ?? 0) . ' topics',
-                'url' => route('wiki.index', ['category' => 'genre']),
-            ],
-            [
                 'key' => 'artist',
                 'title' => 'Artists',
-                'desc' => 'Browse detailed artist profiles, bios, discographies, and related collaborations.',
-                'count' => number_format($musicWeather['raw']['viral_artists'] ?? 0) . ' artists',
-                'url' => route('wiki.index', ['category' => 'artist']),
+                'desc' => 'Profiles of musicians, producers, and performers with consolidated discographies.',
+                'icon' => '<path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>',
+                'count_label' => 'Entities',
             ],
             [
                 'key' => 'song',
-                'title' => 'Songs',
-                'desc' => 'Lyrics, release dates, credits, streaming stats, and behind-the-music insights.',
-                'count' => number_format($musicWeather['raw']['trending_songs'] ?? 0) . ' songs',
-                'url' => route('wiki.index', ['category' => 'song']),
+                'title' => 'Tracks',
+                'desc' => 'Detailed track information including technical metadata, sample history, and credits.',
+                'icon' => '<path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>',
+                'count_label' => 'Tracks',
+            ],
+            [
+                'key' => 'genre',
+                'title' => 'Genres',
+                'desc' => 'Deep archival entries for musical styles, tracing origins, subgenres, and regional evolutions.',
+                'icon' => '<path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>',
+                'count_label' => 'Topics',
             ],
             [
                 'key' => 'playlist',
                 'title' => 'Playlists',
-                'desc' => 'Curated lists of tracks for every mood, genre, or occasion.',
-                'count' => number_format($categoryCounts->where('category', 'playlist')->first()->total ?? 0) . ' playlists',
-                'url' => route('wiki.index', ['category' => 'playlist']),
+                'desc' => 'Curated lists of tracks for every mood, genre, or occasion, tracked across platforms.',
+                'icon' => '<path d="M4 6h16M4 10h16M4 14h16M4 18h16"/>',
+                'count_label' => 'Playlists',
             ],
             [
                 'key' => 'term',
                 'title' => 'Terminology',
-                'desc' => 'Essential music terms, theory, equipment, and industry lingo.',
-                'count' => number_format($categoryCounts->where('category', 'term')->first()->total ?? 0) . ' terms',
-                'url' => route('wiki.index', ['category' => 'term']),
+                'desc' => 'Essential music terms, theory, equipment, and industry lingo for the modern archivist.',
+                'icon' => '<path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>',
+                'count_label' => 'Terms',
             ],
         ];
     @endphp
 
-    {{-- =========================================
-         BROWSE BY CATEGORY - GRID DESIGN
-         ========================================= --}}
-    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 transition-all">
+    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 transition-all"
+        x-data="{ 
+            canScrollLeft: false, 
+            canScrollRight: true,
+            checkScroll() {
+                const el = this.$refs.categorySlider;
+                this.canScrollLeft = el.scrollLeft > 10;
+                this.canScrollRight = el.scrollLeft < (el.scrollWidth - el.clientWidth - 10);
+            },
+            sliderScroll(offset) {
+                this.$refs.categorySlider.scrollBy({ left: offset, behavior: 'smooth' });
+                setTimeout(() => this.checkScroll(), 350);
+            }
+        }" x-init="checkScroll()">
         <div class="max-w-[1400px] mx-auto px-8">
             <div class="flex items-end justify-between mb-12">
                 <div class="max-w-2xl">
                     <h2 class="section-title mb-2">Explore Categories</h2>
                     <p class="section-subtitle">Browse through the main sections of our music library.</p>
                 </div>
+
+                {{-- Navigation Arrows --}}
+                <div class="hidden md:flex items-center gap-4">
+                    <button @click="sliderScroll(-400)" :class="canScrollLeft ? 'text-white border-white/15' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all bg-white/5 hover:bg-white/10 hover:border-white/20 group">
+                        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <button @click="sliderScroll(400)" :class="canScrollRight ? 'text-white border-white/15' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all bg-white/5 hover:bg-white/10 hover:border-white/20 group">
+                        <svg class="w-5 h-5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {{-- Category 1: Artists --}}
-                <div class="card-premium-unified p-8 bg-[#161b22]/60 border border-white/5 flex flex-col h-full group">
-                    <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 mb-8 transition-transform group-hover:scale-110">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-                    </div>
-                    <h3 class="text-[24px] font-bold tracking-tight text-white mb-4">Artists</h3>
-                    <p class="text-white/40 text-[15px] font-medium leading-relaxed mb-10">
-                        Profiles of musicians, producers, and performers with consolidated discographies and professional collaborations.
-                    </p>
-                    <div class="mt-auto flex justify-between items-center">
-                        <span class="text-white/20 text-[12px] font-bold uppercase tracking-widest">{{ number_format($categoryCounts->where('category', 'artist')->first()->total ?? 0) }} Entities</span>
-                        <a href="{{ route('wiki.index', ['category' => 'artist']) }}" class="px-6 py-2 bg-white/5 border border-white/5 rounded-full text-[13px] font-bold text-white hover:bg-blue-500 hover:border-blue-500 transition-all">Explore</a>
-                    </div>
+            <div class="overflow-x-auto scrollbar-hide -mx-8 px-8" x-ref="categorySlider" @scroll="checkScroll()" style="scrollbar-width: none; -ms-overflow-style: none;">
+                <div class="flex gap-8 pb-8">
+                    @foreach($categories as $cat)
+                        <a href="{{ route('wiki.index', ['category' => $cat['key']]) }}" class="card-premium-unified min-w-[340px] md:min-w-[400px] p-8 bg-[#161b22]/60 border border-white/5 flex flex-col h-full group hover:bg-[#1c2128] transition-all duration-500">
+                            <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 mb-8 transition-transform group-hover:scale-110">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">{!! $cat['icon'] !!}</svg>
+                            </div>
+                            <h3 class="text-[24px] font-bold tracking-tight text-white mb-4 group-hover:text-blue-400 transition-colors">{{ $cat['title'] }}</h3>
+                            <p class="text-white/40 text-[15px] font-medium leading-relaxed mb-10 line-clamp-2">
+                                {{ $cat['desc'] }}
+                            </p>
+                            <div class="mt-auto flex justify-between items-center">
+                                <span class="text-white/20 text-[12px] font-bold uppercase tracking-widest">
+                                    {{ number_format($categoryCounts->where('category', $cat['key'])->first()->total ?? 0) }} {{ $cat['count_label'] }}
+                                </span>
+                                <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
                 </div>
-
-                {{-- Category 2: Genres --}}
-                <div class="card-premium-unified p-8 bg-[#161b22]/60 border border-white/5 flex flex-col h-full group">
-                    <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 mb-8 transition-transform group-hover:scale-110">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
-                    </div>
-                    <h3 class="text-[24px] font-bold tracking-tight text-white mb-4">Genres</h3>
-                    <p class="text-white/40 text-[15px] font-medium leading-relaxed mb-10">
-                        Deep archival entries for musical styles, tracing origins, subgenres, and regional evolutions.
-                    </p>
-                    <div class="mt-auto flex justify-between items-center">
-                        <span class="text-white/20 text-[12px] font-bold uppercase tracking-widest">{{ number_format($categoryCounts->where('category', 'genre')->first()->total ?? 0) }} Topics</span>
-                        <a href="{{ route('wiki.index', ['category' => 'genre']) }}" class="px-6 py-2 bg-white/5 border border-white/5 rounded-full text-[13px] font-bold text-white hover:bg-blue-500 hover:border-blue-500 transition-all">Explore</a>
-                    </div>
-                </div>
-
-                {{-- Category 3: Songs/Tracks --}}
-                <div class="card-premium-unified p-8 bg-[#161b22]/60 border border-white/5 flex flex-col h-full group">
-                    <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 mb-8 transition-transform group-hover:scale-110">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    </div>
-                    <h3 class="text-[24px] font-bold tracking-tight text-white mb-4">Tracks</h3>
-                    <p class="text-white/40 text-[15px] font-medium leading-relaxed mb-10">
-                        Detailed track information including technical metadata, sample history, and contributor credits.
-                    </p>
-                    <div class="mt-auto flex justify-between items-center">
-                        <span class="text-white/20 text-[12px] font-bold uppercase tracking-widest">{{ number_format($categoryCounts->where('category', 'song')->first()->total ?? 0) }} Tracks</span>
-                        <a href="{{ route('wiki.index', ['category' => 'song']) }}" class="px-6 py-2 bg-white/5 border border-white/5 rounded-full text-[13px] font-bold text-white hover:bg-blue-500 hover:border-blue-500 transition-all">Explore</a>
-                    </div>
-                </div>
+            </div>
+        </div>
+    </section>
             </div>
         </div>
     </section>
