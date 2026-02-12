@@ -10,10 +10,24 @@ class ArticleController extends Controller
     {
         $search = $request->get('q');
         $category = $request->get('category');
+        $crateSlug = $request->get('crate');
+        $activeCrate = null;
         
         $baseQuery = \App\Models\Article::query()
             ->with(['user', 'song.artist'])
             ->where('status', 'published');
+
+        if ($crateSlug) {
+            $activeCrate = \App\Models\Crate::where('slug', $crateSlug)
+                ->with('user')
+                ->first();
+            
+            if ($activeCrate) {
+                $baseQuery->whereHas('crates', function($q) use ($activeCrate) {
+                    $q->where('user_crates.id', $activeCrate->id);
+                });
+            }
+        }
 
         if ($search) {
             $baseQuery->where(function($q) use ($search) {
@@ -31,7 +45,7 @@ class ArticleController extends Controller
                     'terms' => (clone $baseQuery)->where('category', 'term')->limit(4)->get(),
                     'total_count' => $baseQuery->count()
                 ];
-                return view('wiki.index', compact('results', 'search'));
+                return view('wiki.index', compact('results', 'search', 'activeCrate'));
             }
         }
 
@@ -42,7 +56,7 @@ class ArticleController extends Controller
         $baseQuery->latest('view_count');
         $articles = $baseQuery->paginate(12);
         
-        return view('wiki.index', compact('articles', 'search', 'category'));
+        return view('wiki.index', compact('articles', 'search', 'category', 'activeCrate'));
     }
 
     public function show(\App\Models\Article $article, \App\Services\SmartLinkerService $linker)

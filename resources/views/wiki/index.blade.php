@@ -44,7 +44,7 @@
                 <div class="h-px bg-white/5 mx-4 my-6"></div>
                 
                 @foreach($categories as $key => $cat)
-                    <a href="{{ route('wiki.index', ['category' => $key]) }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[13px] font-black tracking-widest transition-all {{ $currentCategory == $key ? 'bg-blue-500/10 text-white border border-blue-500/20 shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
+                    <a href="{{ route('wiki.index', array_filter(['category' => $key, 'crate' => $activeCrate ? $activeCrate->slug : null])) }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[13px] font-black tracking-widest transition-all {{ $currentCategory == $key ? 'bg-blue-500/10 text-white border border-blue-500/20 shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
                         <div class="w-8 h-8 rounded-lg {{ $currentCategory == $key ? 'bg-blue-500' : 'bg-white/5' }} flex items-center justify-center transition-all group-hover:scale-110">
                             <svg class="w-4 h-4 {{ $currentCategory == $key ? 'text-white' : 'text-blue-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
                         </div>
@@ -58,11 +58,11 @@
                 <!-- Mobile Horizontal Nav -->
                 <div class="lg:hidden mb-10 overflow-x-auto pb-4 scrollbar-hide">
                     <div class="flex items-center gap-3 w-max px-1">
-                         <a href="{{ route('wiki.index') }}" class="px-5 py-2.5 rounded-xl text-xs font-bold tracking-widest transition-all {{ !$currentCategory ? 'bg-blue-400 text-white' : 'bg-white/5 text-white/60' }}">
+                         <a href="{{ route('wiki.index', array_filter(['crate' => $activeCrate ? $activeCrate->slug : null])) }}" class="px-5 py-2.5 rounded-xl text-xs font-bold tracking-widest transition-all {{ !$currentCategory ? 'bg-blue-400 text-white' : 'bg-white/5 text-white/60' }}">
                             All
                         </a>
                         @foreach($categories as $key => $cat)
-                            <a href="{{ route('wiki.index', ['category' => $key]) }}" class="px-5 py-2.5 rounded-xl text-xs font-bold tracking-widest transition-all {{ $currentCategory == $key ? 'bg-blue-400 text-white' : 'bg-white/5 text-white/60' }}">
+                            <a href="{{ route('wiki.index', array_filter(['category' => $key, 'crate' => $activeCrate ? $activeCrate->slug : null])) }}" class="px-5 py-2.5 rounded-xl text-xs font-bold tracking-widest transition-all {{ $currentCategory == $key ? 'bg-blue-400 text-white' : 'bg-white/5 text-white/60' }}">
                                 {{ $cat['label'] }}
                             </a>
                         @endforeach
@@ -73,8 +73,23 @@
                 <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-16">
                     <div>
                          <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-black tracking-[0.3em] inline-block mb-8 shadow-lg">
-                            Archive Index
+                            {{ $activeCrate ? 'Crate Index' : 'Archive Index' }}
                         </span>
+
+                        @if($activeCrate)
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold text-sm leading-none mb-1">{{ $activeCrate->name }}</h4>
+                                    <p class="text-[10px] font-black text-white/20 uppercase tracking-widest">Collection by {{ $activeCrate->user->name }}</p>
+                                </div>
+                                <a href="{{ route('wiki.index') }}" class="ml-4 px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-[9px] font-black text-white/40 hover:text-white uppercase tracking-widest transition-all">
+                                    Clear Filter
+                                </a>
+                            </div>
+                        @endif
                         
                         <h1 class="text-[32px] sm:text-[56px] lg:text-[80px] font-black text-white tracking-tightest mb-4 leading-[0.9] -ml-1" style="font-family: 'Plus Jakarta Sans', sans-serif;">
                             {{ $currentCategory ? ($categories[$currentCategory]['label'] ?? ucfirst($currentCategory)) : 'Global Archive' }}
@@ -91,6 +106,9 @@
                         <form action="{{ route('wiki.index') }}" method="GET" class="relative group w-full sm:min-w-[300px]">
                             @if($currentCategory)
                                 <input type="hidden" name="category" value="{{ $currentCategory }}">
+                            @endif
+                            @if($activeCrate)
+                                <input type="hidden" name="crate" value="{{ $activeCrate->slug }}">
                             @endif
                             <input type="text" name="q" value="{{ request('q') }}" placeholder="Search topics..." 
                                 class="w-full px-8 py-4 bg-white/5 border border-white/10 rounded-2xl text-white text-[13px] font-black tracking-widest placeholder-white/20 focus:border-blue-500/50 focus:bg-white/10 focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all shadow-2xl">
