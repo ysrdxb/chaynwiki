@@ -14,8 +14,6 @@
     @endpush
     
     @push('styles')
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=MODERNIZ:400,700&display=swap">
-    @push('styles')
         <style>
             :root {
                 @if(isset($article) && $article->analysis && $article->analysis->ambient_signature)
@@ -23,7 +21,6 @@
                 @endif
             }
         </style>
-    @endpush
     @endpush
 
     <!-- Navigation -->

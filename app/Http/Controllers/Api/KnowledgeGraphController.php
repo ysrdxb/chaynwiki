@@ -49,7 +49,7 @@ class KnowledgeGraphController extends Controller
 
     public function global()
     {
-        $articles = Article::where('status', 'published')->limit(200)->get();
+        $articles = Article::whereIn('status', ['published', 'review', 'draft'])->limit(300)->get();
         $relationships = ArticleRelationship::whereIn('source_id', $articles->pluck('id'))
                          ->orWhereIn('target_id', $articles->pluck('id'))
                          ->limit(500)

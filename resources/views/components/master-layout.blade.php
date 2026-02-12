@@ -128,8 +128,8 @@
         <livewire:chat-assistant />
     @endauth
 
-    @stack('scripts')
     @livewireScripts
+    @stack('scripts')
     
     <script>
         // Clear AI context on navigation if not on a wiki page
