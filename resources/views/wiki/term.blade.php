@@ -70,7 +70,7 @@
                           <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-2 py-2 pr-6 backdrop-blur-md">
                              @if($article->user)
                                  <img src="{{ $article->user->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode($article->user->name).'&background=random' }}" class="w-8 h-8 rounded-full border border-blue-500/50">
-                                 <span class="text-[11px] font-black text-white uppercase tracking-widest pl-2">Researcher {{ $article->user->name }}</span>
+                                 <span class="text-[11px] font-black text-white uppercase tracking-widest pl-2">Added by {{ $article->user->name }}</span>
                              @else
                                  <img src="https://ui-avatars.com/api/?name=System" class="w-8 h-8 rounded-full border border-white/10">
                                  <span class="text-[11px] font-black text-white/50 uppercase tracking-widest pl-2">System</span>
@@ -159,7 +159,7 @@
                                     <img src="{{ $article->user->avatar ?? 'https://ui-avatars.com/api/?name='.$article->user->name }}" class="w-10 h-10 rounded-full border border-blue-500/30">
                                     <div>
                                         <p class="text-sm font-bold text-white">{{ $article->user->name }}</p>
-                                        <p class="text-[10px] text-white/30 uppercase tracking-widest">Lead Investigator</p>
+                                        <p class="text-[10px] text-white/30 uppercase tracking-widest">Contributor</p>
                                     </div>
                                 </div>
                                 @endif
