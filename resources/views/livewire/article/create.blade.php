@@ -234,6 +234,7 @@
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Category Type <span class="text-red-400">*</span></label>
+                            <div class="relative">
                                 <select wire:model="meta.category_type" class="w-full bg-custom-9 border rounded-xl px-6 py-4 text-white text-sm focus:border-white/20 appearance-none outline-none @error('meta.category_type') border-red-500 @else border-custom-35 @enderror">
                                     <option value="" class="bg-[#151522] text-white">Select a category...</option>
                                     <option value="theory" class="bg-[#151522] text-white">Music Theory</option>

@@ -3,7 +3,7 @@
     
     {{-- Chat Toggle Button --}}
     <button
-        wire:click="toggle"
+        @click="show = !show"
         class="w-16 h-16 rounded-2xl bg-white hover:bg-gray-50 text-blue-600 shadow-2xl shadow-blue-900/20 flex items-center justify-center transition-all hover:scale-110 active:scale-95 border border-white/10"
         :class="{ 'scale-0 opacity-0': show }"
     >
@@ -38,7 +38,7 @@
                     <p class="text-white/60 text-[11px] font-medium mt-0.5">Always here to help</p>
                 </div>
             </div>
-            <button wire:click="close" class="text-white/60 hover:text-white transition-colors relative z-10 p-1 hover:bg-white/10 rounded-lg">
+            <button @click="show = false" class="text-white/60 hover:text-white transition-colors relative z-10 p-1 hover:bg-white/10 rounded-lg">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
                 </svg>

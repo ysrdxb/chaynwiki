@@ -55,6 +55,15 @@ class ChatAssistant extends Component
         $this->isOpen = false;
     }
 
+    public function updatedIsOpen($value): void
+    {
+        if ($value) {
+            $this->checkAI();
+            // Scroll to bottom
+            $this->dispatch('chat-opened');
+        }
+    }
+
     public function toggle(): void
     {
         $this->isOpen = !$this->isOpen;
