@@ -38,13 +38,13 @@
         
         <!-- Sidebar Navigation -->
         <aside class="hidden lg:block w-72 sticky top-32 shrink-0 space-y-2 pr-8 border-r border-white/5">
-            <div class="mb-10 px-4">
-                <span class="text-white/20 text-[11px] font-bold text-blue-400 tracking-widest">Explore all</span>
+            <div class="mb-8 px-4">
+                <span class="text-white/20 text-[10px] font-black tracking-[0.2em] uppercase">Wiki Explorer</span>
             </div>
             
-            <a href="{{ route('home') }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[14px] font-bold text-white/50 hover:text-white hover:bg-white/5 transition-all">
-                <div class="w-9 h-9 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center group-hover:bg-blue-500 group-hover:scale-110 transition-all shadow-lg shadow-blue-500/10">
-                    <svg class="w-4 h-4 text-blue-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            <a href="{{ route('home') }}" class="group flex items-center gap-4 px-4 py-3 rounded-full text-[13px] font-bold text-white/50 hover:text-white transition-all border border-transparent hover:border-white/5 hover:bg-white/5">
+                <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
                 </div>
                 Home
             </a>
@@ -52,9 +52,9 @@
             <div class="h-px bg-white/5 mx-4 my-6"></div>
             
             @foreach($categories as $key => $cat)
-                <a href="{{ route('wiki.index', ['category' => $key]) }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[14px] font-bold transition-all {{ $key === 'genre' ? 'bg-blue-500/10 text-white border border-blue-500/20 shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
-                    <div class="w-9 h-9 rounded-full {{ $key === 'genre' ? 'bg-blue-500 shadow-lg shadow-blue-500/20' : 'bg-white/5' }} flex items-center justify-center transition-all group-hover:scale-110">
-                        <svg class="w-4 h-4 {{ $key === 'genre' ? 'text-white' : 'text-blue-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
+                <a href="{{ route('wiki.index', ['category' => $key]) }}" class="group flex items-center gap-4 px-4 py-3 rounded-full text-[13px] font-bold transition-all border border-transparent {{ $key === 'genre' ? 'bg-blue-500/10 text-white border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]' : 'text-white/50 hover:text-white hover:bg-white/5 hover:border-white/5' }}">
+                    <div class="w-8 h-8 rounded-full {{ $key === 'genre' ? 'bg-blue-500 shadow-lg text-white' : 'bg-white/5 group-hover:bg-white/10' }} flex items-center justify-center transition-all">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
                     </div>
                     {{ $cat['label'] }}
                 </a>
@@ -122,7 +122,7 @@
                 <section>
                     <div class="flex items-center justify-between mb-8">
                         <div>
-                            <h2 class="text-soundbook-heading text-3xl lg:text-4xl text-white uppercase tracking-tighter">History</h2>
+                            <h2 class="text-soundbook-heading text-4xl lg:text-6xl text-white uppercase tracking-tighter mb-2">History & Origins</h2>
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
