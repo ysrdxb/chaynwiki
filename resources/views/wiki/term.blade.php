@@ -40,7 +40,7 @@
         <!-- Sidebar Navigation -->
         <aside class="hidden lg:block w-72 sticky top-32 shrink-0 space-y-2 pr-8 border-r border-white/5">
             <div class="mb-10 px-4">
-                <span class="text-white/20 text-[11px] font-bold text-blue-400 tracking-widest">Explore all</span>
+                <span class="text-white/20 text-[11px] font-bold text-blue-400 tracking-widest uppercase">Navigation</span>
             </div>
             
             <a href="{{ route('home') }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[14px] font-bold text-white/50 hover:text-white hover:bg-white/5 transition-all">
@@ -82,140 +82,136 @@
             <div class="relative w-full aspect-[21/9] rounded-[2rem] overflow-hidden mb-10 border border-white/5 group">
                  @if($featured_image)
                     <img src="{{ $featured_image }}" class="w-full h-full object-cover group-hover:scale-105 transition duration-1000">
-                    <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-[#0d1117]/80 to-transparent"></div>
-                 @else
-                    <!-- Professional Fallback Gradient -->
-                    <div class="absolute inset-0 bg-gradient-to-br from-[#161b22] via-[#0d1117] to-black"></div>
-                    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 brightness-100 contrast-150"></div>
-                    <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] -mr-32 -mt-32"></div>
-                    <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-[120px] -ml-32 -mb-32"></div>
                  @endif
-                 
-                 <div class="absolute bottom-0 left-0 p-10 lg:p-16 w-full z-10">
-                     @if($article->term?->category_type)
-                     <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-bold tracking-widest inline-block mb-8 shadow-lg">
-                        {{ ucfirst($article->term->category_type) }}
-                    </span>
-                    @endif
-                    
-                    <h1 class="text-3xl sm:text-5xl lg:text-9xl font-black text-white tracking-tighter mb-8 leading-[0.85] -ml-1" style="font-family: 'Moderniz', sans-serif;">
-                        {{ $article->title }}
-                    </h1>
-                    
-                    @if($article->term->phonetic)
-                        <p class="text-blue-400 font-mono text-2xl mb-8 tracking-tighter">{{ $article->term->phonetic }}</p>
-                    @endif
-
-                    <div class="grid grid-cols-2 sm:flex sm:items-center gap-6 sm:gap-10">
-                         @if($article->term?->origin_language)
-                         <div class="flex flex-col">
-                            <span class="text-[11px] font-bold text-white/30 tracking-widest mb-1">Origin</span>
-                            <span class="text-2xl font-black text-white px-1 tracking-tighter">{{ $article->term->origin_language }}</span>
-                         </div>
-                         @endif
-                         <div class="flex flex-col">
-                            <span class="text-[11px] font-bold text-white/30 tracking-widest mb-1">Views</span>
-                            <span class="text-2xl font-black text-blue-500 px-1 tracking-tighter">{{ number_format($article->view_count ?? 0) }}</span>
-                         </div>
-                    </div>
-                 </div>
             </div>
 
-            <div class="flex flex-col xl:flex-row gap-12">
-                <!-- Article Content -->
-                <div class="flex-1 min-w-0 space-y-12">
-                     <article class="prose prose-invert prose-lg max-w-none">
-                        @if($summary)
-                            <div class="mb-12 p-10 bg-blue-500/5 border border-white/5 rounded-[2.5rem] relative overflow-hidden group hover:border-blue-500/20 transition-all shadow-3xl">
-                                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-[100px] -mr-32 -mt-32"></div>
-                                <div class="relative z-10">
-                                    <div class="text-[11px] font-bold text-blue-400 tracking-widest mb-6 border-b border-blue-400/20 pb-4 inline-block">Summary</div>
-                                    <p class="text-white text-2xl leading-relaxed m-0 font-medium tracking-tight">{{ $summary }}</p>
-                                </div>
+            {{-- Hero Section Text --}}
+            <div class="relative pb-24 overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-b from-blue-500/10 via-transparent to-transparent opacity-50"></div>
+                
+                <div class="relative z-10">
+                    <div class="flex items-center gap-3 mb-8">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-500/10 border border-blue-500/20 rounded-full text-[10px] font-black uppercase tracking-widest text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                            Wiki Dictionary
+                        </div>
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-7xl md:text-9xl font-black text-white uppercase tracking-tighter leading-none mb-12">
+                         {{ $article->title }}
+                    </h1>
+
+                    <div class="flex flex-wrap items-center gap-8">
+                        <div class="flex flex-col">
+                            <span class="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-1">Status</span>
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]"></span>
+                                <span class="text-sm font-black text-white uppercase tracking-widest">Verified Entry</span>
                             </div>
-                        @endif
-                        
+                        </div>
+                        <div class="h-10 w-px bg-white/10 shrink-0"></div>
+                        <div class="flex flex-col">
+                            <span class="text-[10px] font-black text-white/30 uppercase tracking-[0.2em] mb-1">Reference ID</span>
+                            <span class="text-sm font-mono text-white/60 tracking-tighter">TRM-{{ strtoupper(substr($article->title, 0, 3)) }}-{{ $article->id }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-24">
+                {{-- Definition Section --}}
+                <section>
+                    <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                        <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+                        <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Definition</h2>
+                    </div>
+                    <article class="prose prose-invert prose-lg max-w-none">
                         <div class="article-content text-white/70 text-base leading-relaxed">
-                             {!! Str::markdown($article->content) !!}
+                            {!! Str::markdown($article->content ?? 'No definition available.') !!}
                         </div>
                     </article>
-                    
-                     <section class="border-t border-white/5 pt-16">
-                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
-                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter" style="font-family: 'Moderniz', sans-serif;">Discussion</h2>
-                        </div>
-                        <livewire:article.comments :article="$article" />
-                    </section>
-                </div>
+                </section>
 
-                <!-- Right Sidebar (Relevant Data) -->
-                <aside class="w-full xl:w-80 space-y-6 shrink-0">
-                    <!-- Terminology Info -->
-                    <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
-                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest mb-6">Terminology info</h3>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between py-2 border-b border-white/5">
-                                <span class="text-sm text-white/50 font-medium">Type</span>
-                                <span class="text-sm text-white font-bold">{{ $article->term->category_type ?? 'Term' }}</span>
-                            </div>
-                            <div class="flex items-center justify-between py-2 border-b border-white/5">
-                                <span class="text-sm text-white/50 font-medium">Published</span>
-                                <span class="text-sm text-white font-bold">{{ optional($article->created_at)->format('M d, Y') }}</span>
-                            </div>
-                             <div class="flex items-center justify-between py-2">
-                                <span class="text-sm text-white/50 font-medium">Views</span>
-                                <span class="text-sm text-white font-bold">{{ number_format($article->view_count) }}</span>
-                            </div>
-                        </div>
+                {{-- Usage Section --}}
+                <section>
+                    <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                        <div class="w-1.5 h-10 bg-emerald-500 rounded-full mr-6 shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
+                        <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Standard Usage</h2>
                     </div>
-
-                    <!-- Related Terms -->
-                    @if(!empty($article->term->related_terms))
-                    <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
-                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest mb-6">Related terms</h3>
-                        <div class="flex flex-wrap gap-2">
-                            @foreach($article->term->related_terms as $related)
-                                <span class="px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-xs font-bold text-white/70 hover:text-blue-400 hover:border-blue-400/30 transition-all cursor-pointer shadow-sm">
-                                    {{ $related }}
-                                </span>
-                            @endforeach
-                        </div>
+                    <div class="bg-emerald-500/[0.03] border border-white/5 rounded-[2.5rem] p-12 relative overflow-hidden group">
+                         <div class="absolute top-0 right-0 p-10">
+                             <svg class="w-16 h-16 text-emerald-500/5" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21L14.017 18C14.017 16.8954 14.9124 16 16.017 16H19.017C19.5693 16 20.017 15.5523 20.017 15V9C20.017 8.44772 19.5693 8 19.017 8H16.017C14.9124 8 14.017 7.10457 14.017 6V4C14.017 3.44772 14.4647 3 15.017 3H21.017C21.5693 3 22.017 3.44772 22.017 4V15C22.017 18.3137 19.3307 21 16.017 21H14.017ZM3 21L3 18C3 16.8954 3.89543 16 5 16H8C8.55228 16 9 15.5523 9 15V9C9 8.44772 8.55228 8 8 8H5C3.89543 8 3 7.10457 3 6V4C3 3.44772 3.44772 3 4 3H10C10.5523 3 11 3.44772 11 4V15C11 18.3137 8.31371 21 5 21H3Z"/></svg>
+                         </div>
+                         <p class="text-2xl text-white font-bold italic leading-relaxed relative z-10 max-w-3xl">
+                             "The implementation of this concept is vital for the archivation of the sonic landscape within the wiki."
+                         </p>
+                         <div class="mt-8 flex items-center gap-4 relative z-10">
+                             <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-500">
+                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                             </div>
+                             <span class="text-[10px] font-black text-emerald-400 uppercase tracking-[0.2em]">Contextual Example</span>
+                         </div>
                     </div>
-                    @endif
+                </section>
 
-                    <!-- Actions -->
-                    <div class="card-premium-unified !bg-[#161b22]/40 !p-8 shadow-3xl space-y-4">
-                        <livewire:article.add-to-collection :article="$article" />
-                        <livewire:article.bookmark-button :article="$article" />
-                    </div>
-
-                    <!-- Contributor -->
-                    @if($article->user)
-                    <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
-                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest mb-6">Added by</h3>
-                        <a href="{{ route('profile', $article->user->username) }}" class="flex items-center gap-4 group">
-                            <div class="w-12 h-12 rounded-full p-0.5 bg-gradient-to-br from-white/10 to-transparent group-hover:from-blue-500/50 transition-all duration-500">
-                                <div class="w-full h-full rounded-full overflow-hidden border border-white/10 bg-[#0d1117] flex items-center justify-center">
-                                    @if($article->user->avatar)
-                                        <img src="{{ $article->user->avatar }}" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
-                                    @else
-                                        <span class="text-sm text-white font-bold">{{ strtoupper(substr($article->user->name, 0, 1)) }}</span>
-                                    @endif
+                {{-- Action & Info Composite --}}
+                <section class="border-t border-white/5 pt-20">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        {{-- Controls --}}
+                        <div class="card-premium-unified !bg-[#161b22]/40 !p-10 space-y-8">
+                             <div class="flex items-center gap-6">
+                                <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-blue-400">
+                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                                 </div>
+                                <div>
+                                    <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase">Archival Controls</h3>
+                                    <p class="text-sm text-white/70 leading-relaxed mt-1">Bookmark this terminology or add it to your research collection.</p>
+                                </div>
+                             </div>
+                             <div class="space-y-6 pt-6 border-t border-white/5">
+                                <div class="flex gap-4">
+                                    <div class="flex-1"><livewire:article.add-to-collection :article="$article" /></div>
+                                    <div class="flex-1"><livewire:article.bookmark-button :article="$article" /></div>
+                                </div>
+                             </div>
+                        </div>
+
+                        {{-- Metadata --}}
+                        <div class="card-premium-unified !bg-[#161b22]/60 !p-10">
+                            <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase mb-8">Archival Summary</h3>
+                            <div class="space-y-6">
+                                <div class="flex items-center justify-between py-2 border-b border-white/5">
+                                    <span class="text-sm text-white/50">Status</span>
+                                    <span class="text-xs font-black text-blue-400 uppercase tracking-widest">Verified Entry</span>
+                                </div>
+                                @if($article->user)
+                                <div class="flex items-center gap-4 pt-4">
+                                    <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-sm">
+                                        {{ substr($article->user->name, 0, 1) }}
+                                    </div>
+                                    <div>
+                                        <p class="text-sm font-bold text-white">{{ $article->user->name }}</p>
+                                        <p class="text-[9px] text-white/30 uppercase tracking-widest">Lead Investigator</p>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
-                            <div>
-                                <p class="text-[15px] font-bold text-white group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
-                                <p class="text-[11px] text-white/30 font-medium tracking-widest">Contributor</p>
-                            </div>
-                        </a>
+                        </div>
                     </div>
-                    @endif
+                </section>
 
-                </aside>
+                {{-- Discussion --}}
+                <section>
+                    <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                        <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
+                        <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Peer Review</h2>
+                    </div>
+                    <div class="card-premium-unified !bg-[#161b22]/20 !p-12">
+                        <livewire:article.comments :article="$article" />
+                    </div>
+                </section>
             </div>
-
-        </main>
+        </div>
     </div>
 </div>
 @endsection

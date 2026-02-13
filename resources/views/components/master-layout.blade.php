@@ -76,25 +76,41 @@
     <style>
         [x-cloak] { display: none !important; }
         
-        /* Unified Card Hover Glow Effect */
-        .card-premium-unified::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(
-                600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
-                rgba(59, 130, 246, 0.08),
-                transparent 40%
-            );
-            border-radius: inherit;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            z-index: -1;
-        }
-        .card-premium-unified:hover::before {
-            opacity: 1;
-        }
+/* Premium SoundBook Utilities */
+.text-soundbook-heading {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+}
+
+.glow-blue {
+    box-shadow: 0 0 50px -15px rgba(59, 130, 246, 0.3);
+}
+
+.text-glow-blue {
+    text-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+.bg-glass-dark {
+    background: rgba(22, 27, 34, 0.6);
+    backdrop-filter: blur(12px);
+    border: 1px border rgba(255, 255, 255, 0.05);
+}
+
+.author-badge {
+    @apply flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-[10px] font-black text-blue-400 uppercase tracking-widest;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+.animate-float {
+    animation: float 4s ease-in-out infinite;
+}
     </style>
     @stack('styles')
 </head>

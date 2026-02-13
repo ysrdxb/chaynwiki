@@ -89,131 +89,232 @@
                         Genre info
                     </span>
                     
-                    <h1 class="text-4xl sm:text-[64px] lg:text-[100px] font-black text-white tracking-tighter mb-10 leading-[0.85] -ml-1">
-                        {{ $article->title }}
-                    </h1>
-                    
-                    <div class="grid grid-cols-2 md:flex md:items-center gap-6 md:gap-10">
-                         <div class="flex flex-col">
-                            <span class="text-white text-3xl font-black tracking-tighter mb-1">{{ number_format($article->views_count ?? rand(100, 2000)) }}</span>
-                            <span class="text-[11px] text-white/30 font-bold tracking-widest">Songs</span>
-                         </div>
-                         <div class="flex flex-col">
-                            <span class="text-blue-500 text-3xl font-black tracking-tighter mb-1">{{ number_format($article->view_count ?? 0) }}</span>
-                            <span class="text-[11px] text-white/30 font-bold tracking-widest">Views</span>
-                         </div>
-                    </div>
-                </div>
-
-                {{-- Archival Timeline Module --}}
-                <div class="mb-16">
-                    <livewire:wiki.⚡timeline :entity="$genre" />
-                </div>
-            </div>
-
-            <div class="flex flex-col xl:flex-row gap-12">
-                <!-- Content Area -->
-                <div class="flex-1 min-w-0 space-y-16">
-                     <section>
-                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
-                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter">Description</h2>
-                        </div>
-                        <article class="prose prose-invert prose-lg max-w-none">
-                            <div class="article-content text-white/70 text-base leading-relaxed">
-                                @if(!empty($article->content))
-                                    {!! Str::markdown($article->content) !!}
+                        <h1 class="text-soundbook-heading text-5xl sm:text-7xl md:text-8xl lg:text-[110px] text-white mb-6">
+                            {{ strtoupper($article->title) }}
+                        </h1>
+                        
+                        <!-- Contributor Bar (SoundBook Style) -->
+                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-12">
+                            <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-5 py-2.5 backdrop-blur-md">
+                                @if($article->user)
+                                    <img src="{{ $article->user->avatar ?? 'https://ui-avatars.com/api/?name='.$article->user->name }}" class="w-6 h-6 rounded-full border border-blue-500/50">
+                                    <span class="text-[11px] font-black text-white uppercase tracking-widest">Contributor: {{ $article->user->name }}</span>
                                 @else
-                                    <div class="py-12 text-center rounded-3xl border border-dashed border-white/5 bg-white/[0.01]">
-                                        <p class="text-white/20 text-[12px] font-bold tracking-widest">No detailed description available yet</p>
-                                    </div>
+                                    <img src="https://ui-avatars.com/api/?name=Archivist" class="w-6 h-6 rounded-full border border-white/10">
+                                    <span class="text-[11px] font-black text-white/50 uppercase tracking-widest">Contributor: Community</span>
                                 @endif
                             </div>
-                        </article>
-                    </section>
-                    
-                     <section class="border-t border-white/5 pt-16">
-                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
-                            <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter">Related Content</h2>
+                            <div class="flex items-center gap-2 text-[11px] font-bold text-white/30 uppercase tracking-widest px-4 border-l border-white/10">
+                                <span>Updated: {{ $article->updated_at->format('M d, Y') }}</span>
+                            </div>
+                            <button class="bg-blue-600 hover:bg-blue-500 text-white rounded-full px-6 py-2.5 text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-blue-500/20">
+                                View Portfolio
+                            </button>
                         </div>
-                        <x-neural-map-visualization :articleId="$article->id" />
-                    </section>
+                    </div>
+                 </div>
 
-                     <section class="border-t border-white/5 pt-16">
-                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
-                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter">Discussion</h2>
+
+            {{-- Main Column --}}
+            <div class="space-y-20">
+                
+                {{-- Origin & History --}}
+                <section>
+                    <div class="flex items-center justify-between mb-8">
+                        <div>
+                            <h2 class="text-soundbook-heading text-3xl lg:text-4xl text-white uppercase tracking-tighter">History</h2>
                         </div>
-                        <livewire:article.comments :article="$article" />
-                    </section>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                        <div class="card-premium-unified !bg-[#161b22]/40 group !p-8">
+                            <span class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mb-4 block">Origin</span>
+                            <div class="text-white text-xl font-black tracking-tighter group-hover:text-blue-400 transition-colors">Toronto & Chicago</div>
+                        </div>
+                        <div class="card-premium-unified !bg-[#161b22]/40 group !p-8">
+                            <span class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mb-4 block">Date</span>
+                            <div class="text-white text-xl font-black tracking-tighter group-hover:text-emerald-400 transition-colors">Late 2000s - Early 2010s</div>
+                        </div>
+                        <div class="card-premium-unified !bg-[#161b22]/40 group !p-8">
+                            <span class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mb-4 block">Initial Signings</span>
+                            <div class="text-white text-xl font-black tracking-tighter group-hover:text-purple-400 transition-colors">D-Box</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                        <div class="w-1.5 h-10 bg-emerald-500 rounded-full mr-6 shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
+                        <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Timeline</h2>
+                    </div>
+                    <livewire:wiki.⚡timeline :entity="$genre" />
+                </section>
+
+            <!-- Pioneer Artists Section (Image 3 Style) -->
+            <section class="mb-20">
+                <div class="flex items-center justify-between mb-10">
+                    <div>
+                        <h2 class="text-soundbook-heading text-4xl lg:text-5xl text-white">FEATURED ARTISTS</h2>
+                    </div>
+                    <div class="flex gap-4">
+                        <button class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+                        <button class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
                 </div>
 
-                <!-- Right Sidebar (Relevant Data) -->
-                <aside class="w-full xl:w-80 space-y-6 shrink-0">
-                    
-                    <!-- Actions -->
-                    <div class="card-premium-unified !bg-[#161b22]/40 !p-8 flex flex-col gap-6 shadow-3xl">
-                        <livewire:article.play-button 
-                            :articleId="$article->id" 
-                            label="Play genre"
-                            class="btn-figma-primary !w-full !py-4"
-                        />
-                        
-                        <div class="group">
-                             <livewire:article.add-to-collection :article="$article" />
-                        </div>
-
-                        <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 group hover:border-blue-500/20 transition-all">
-                            <span class="text-[11px] font-bold text-white/30 tracking-widest">Global rating</span>
-                             <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
-                        </div>
-                        
-                        <div class="group"><livewire:article.bookmark-button :article="$article" /></div>
-                    </div>
-
-                    <!-- Quick Facts -->
-                    <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
-                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest mb-6">Genre info</h3>
-                        <p class="text-sm text-white/40 font-medium leading-relaxed mb-8">
-                            This genre is part of our core community index. All contributions are verified for historical accuracy.
-                        </p>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between py-2 border-b border-white/5">
-                                <span class="text-sm text-white/50 font-medium">Status</span>
-                                <span class="text-sm text-white font-bold">Active</span>
-                            </div>
-                            <div class="flex items-center justify-between py-2">
-                                <span class="text-sm text-white/50 font-medium">Synced</span>
-                                <span class="text-sm text-white font-bold">{{ optional($article->updated_at)->diffForHumans() }}</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Contributor -->
-                    @if($article->user)
-                    <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
-                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest mb-6">Added by</h3>
-                        <a href="{{ route('profile', $article->user->username) }}" class="flex items-center gap-4 group">
-                            <div class="w-12 h-12 rounded-full p-0.5 bg-gradient-to-br from-white/10 to-transparent group-hover:from-blue-500/50 transition-all duration-500">
-                                <div class="w-full h-full rounded-full overflow-hidden border border-white/10 bg-[#0d1117] flex items-center justify-center">
-                                    @if($article->user->avatar)
-                                        <img src="{{ $article->user->avatar }}" class="w-full h-full object-cover transition-transform group-hover:scale-110" onerror="this.src='{{ asset('images/hero_background.png') }}'; this.onerror=null;">
-                                    @else
-                                        <span class="text-sm text-white font-bold">{{ ucfirst(substr($article->user->name, 0, 1)) }}</span>
-                                    @endif
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    @php
+                        $pioneerArtists = \App\Models\Artist::take(3)->get();
+                    @endphp
+                    @foreach($pioneerArtists as $artist)
+                        @if($artist->article)
+                        <a href="{{ route('wiki.show', $artist->article) }}" class="group">
+                            <div class="aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/5 bg-[#161b22] relative mb-6 shadow-2xl transition-all duration-500 group-hover:border-blue-500/20 group-hover:-translate-y-2">
+                                <img src="{{ $artist->article->featured_image }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+                                <div class="absolute bottom-8 left-8">
+                                    <h3 class="text-2xl font-black text-white tracking-tighter">{{ $artist->name }}</h3>
+                                    <p class="text-[11px] font-bold text-white/40 mt-1 uppercase">Pioneer • {{ $artist->songs->count() }} Tracks</p>
                                 </div>
                             </div>
-                            <div>
-                                <p class="text-[15px] font-bold text-white group-hover:text-blue-400 transition-colors">{{ $article->user->name }}</p>
-                                <p class="text-[11px] text-white/30 font-medium tracking-widest">Contributor</p>
-                            </div>
                         </a>
-                    </div>
-                    @endif
-                </aside>
-            </div>
+                        @endif
+                    @endforeach
+                </div>
+            </section>
 
+            <!-- Subgenres Section (Image 3 Style) -->
+            <section class="mb-20">
+                <div class="flex items-center justify-between mb-10">
+                    <div>
+                        <h2 class="text-soundbook-heading text-4xl lg:text-5xl text-white uppercase tracking-tighter">Related Styles</h2>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-4">
+                    @php
+                        $subgenres = ['Afrobeat', 'Amapiano', 'Afro-fusion', 'Highlife', 'Fante', 'Makossa'];
+                        $colors = ['bg-blue-500', 'bg-emerald-500', 'bg-purple-500', 'bg-amber-500', 'bg-pink-500', 'bg-indigo-500'];
+                    @endphp
+                    @foreach($subgenres as $index => $sub)
+                        <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-6 py-3 cursor-pointer hover:bg-white/10 transition-all group">
+                            <span class="w-2 h-2 rounded-full {{ $colors[$index % count($colors)] }} shadow-[0_0_10px_currentColor]"></span>
+                            <span class="text-sm font-black text-white uppercase tracking-widest">{{ $sub }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            </section>
+
+                {{-- Featured Tracks --}}
+                <section>
+                    <div class="flex items-center justify-between mb-10">
+                        <div class="flex items-center">
+                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+                            <h2 class="text-3xl font-black text-white tracking-tighter uppercase font-soundbook-heading">Essential Tracks</h2>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        @php
+                            $essentialTracks = \App\Models\Song::take(3)->get();
+                        @endphp
+                        @foreach($essentialTracks as $song)
+                            @if($song->article)
+                            <div class="group cursor-pointer">
+                                <div class="aspect-video rounded-[2.5rem] overflow-hidden border border-white/5 bg-[#161b22] relative mb-6 shadow-2xl transition-all duration-500 group-hover:border-blue-500/20 group-hover:-translate-y-2">
+                                    <img src="{{ $song->article->featured_image }}" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+                                    <div class="absolute bottom-6 left-6">
+                                        <h3 class="text-xl font-black text-white tracking-tighter">{{ $song->title }}</h3>
+                                        <p class="text-[11px] font-bold text-white/40 uppercase tracking-widest">{{ $song->artist->name ?? 'Unknown Artist' }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </section>
+
+                {{-- Discussion --}}
+                <section>
+                    <div class="flex items-center justify-between mb-10">
+                        <div>
+                            <h2 class="text-soundbook-heading text-4xl lg:text-5xl text-white">DISCUSSION</h2>
+                        </div>
+                    </div>
+                    <div class="card-premium-unified !bg-[#161b22]/40 !p-12">
+                         <livewire:article.comments :article="$article" />
+                    </div>
+                </section>
+
+                {{-- Related content --}}
+                <section>
+                    <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                        <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
+                        <h2 class="text-3xl font-black text-white tracking-tighter">Related Content</h2>
+                    </div>
+                    <div class="h-[500px] rounded-[3rem] overflow-hidden border border-white/5 bg-black/20 backdrop-blur-xl relative">
+                        <x-neural-map-visualization :articleId="$article->id" />
+                    </div>
+                </section>
+
+                {{-- Metadata Consolidated Section --}}
+                <section class="border-t border-white/5 pt-16">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {{-- Actions & Info --}}
+                        <div class="card-premium-unified !bg-[#161b22]/40 !p-10 space-y-8">
+                            <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase">Information</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between py-2 border-b border-white/5">
+                                    <span class="text-sm text-white/50 font-medium">Status</span>
+                                    <span class="text-sm text-white font-bold">Active</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-white/5">
+                                    <span class="text-sm text-white/50 font-medium">Synced</span>
+                                    <span class="text-sm text-white font-bold">{{ optional($article->updated_at)->diffForHumans() }}</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2">
+                                    <span class="text-sm text-white/50 font-medium">Views</span>
+                                    <span class="text-sm text-white font-bold">{{ number_format($article->view_count) }}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex flex-col gap-4 pt-6">
+                                <livewire:article.play-button :articleId="$article->id" label="Play genre" class="btn-figma-primary !w-full !py-4" />
+                                <div class="flex gap-4">
+                                    <div class="flex-1"><livewire:article.add-to-collection :article="$article" /></div>
+                                    <div class="flex-1"><livewire:article.bookmark-button :article="$article" /></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Contributor --}}
+                        <div class="card-premium-unified !bg-[#161b22]/60 !p-10">
+                             <h3 class="text-[11px] font-bold text-white/40 tracking-widest mb-8 uppercase">Contributor</h3>
+                             @if($article->user)
+                             <div class="flex items-center gap-6">
+                                <div class="w-16 h-16 rounded-full p-1 bg-gradient-to-br from-blue-500/20 to-transparent">
+                                    <div class="w-full h-full rounded-full overflow-hidden border border-white/10 bg-[#0d1117] flex items-center justify-center">
+                                        @if($article->user->avatar)
+                                            <img src="{{ $article->user->avatar }}" class="w-full h-full object-cover">
+                                        @else
+                                            <span class="text-xl text-white font-bold">{{ ucfirst(substr($article->user->name, 0, 1)) }}</span>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-xl font-bold text-white">{{ $article->user->name }}</p>
+                                    <p class="text-xs text-white/30 font-medium tracking-widest uppercase mt-1">Contributor</p>
+                                </div>
+                             </div>
+                             @endif
+                             <div class="mt-8 p-5 rounded-2xl bg-white/5 border border-white/5">
+                                <p class="text-xs text-white/40 italic leading-relaxed">"This record represents a specific moment in music history, curated for the archive."</p>
+                             </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </main>
     </div>
 </div>

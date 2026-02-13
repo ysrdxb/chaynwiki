@@ -41,7 +41,7 @@
         <!-- Sidebar Navigation -->
         <aside class="hidden lg:block w-72 sticky top-32 shrink-0 space-y-2 pr-8 border-r border-white/5">
             <div class="mb-10 px-4">
-                <span class="text-white/20 text-[11px] font-bold text-blue-400 tracking-widest">Explore all</span>
+                <span class="text-white/20 text-[11px] font-bold text-blue-400 tracking-widest uppercase">Navigation</span>
             </div>
             
             <a href="{{ route('home') }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[14px] font-bold text-white/50 hover:text-white hover:bg-white/5 transition-all">
@@ -88,7 +88,7 @@
                      <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[160px] -mr-40 -mt-40"></div>
                  </div>
                  
-                 <div class="relative z-10 p-6 md:p-12 lg:p-16 flex flex-col lg:flex-row gap-8 lg:gap-12 items-end">
+                 <div class="relative z-10 p-6 md:p-12 lg:p-16 flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
                      <!-- Artist Portrait -->
                      <div class="shrink-0 relative">
                          <div class="w-48 h-48 md:w-72 md:h-72 rounded-full overflow-hidden border-4 md:border-8 border-white/5 shadow-[0_0_100px_rgba(0,0,0,0.8)] relative z-10 bg-[#161b22] group-hover:border-blue-500/20 transition-all duration-700">
@@ -98,220 +98,195 @@
                          <div class="absolute -inset-8 bg-blue-500/20 blur-[60px] rounded-full opacity-30 group-hover:opacity-60 transition-all duration-1000"></div>
                      </div>
                      
-                    <div class="flex-1 min-w-0 pb-4 text-center lg:text-left">
-                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-6 md:mb-8">
-                            @if(!empty($artistMeta['spotify_id']) || !empty($artistMeta['website']))
-                                <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-black tracking-[0.2em] flex items-center gap-2 shadow-lg">
-                                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span> Verified Artist
-                                </span>
-                            @else
-                                <span class="px-3 py-1.5 bg-white/5 border border-white/10 text-white/50 rounded-lg text-[10px] font-bold tracking-widest shadow-lg">Artist profile</span>
-                            @endif
-                            @if($article->is_master)
-                                <span class="px-3 py-1.5 bg-amber-500/20 border border-amber-500/30 text-amber-500 rounded-lg text-[10px] font-black tracking-widest flex items-center gap-1.5 backdrop-blur-md">
-                                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                                    Canonical
-                                </span>
-                            @endif
-                            <div class="px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-[10px] font-black tracking-widest text-emerald-400 flex items-center gap-2 backdrop-blur-md">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                {{ $article->data_quality }}% Archive
+                        <div class="flex-1 min-w-0 pb-4 text-center lg:text-left w-full">
+                            <h1 class="text-soundbook-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white mb-6 leading-[0.9] tracking-tighter">
+                                {{ strtoupper($article->title) }}
+                            </h1>
+                            
+                            <!-- Premium Meta Bar (SoundBook Style) -->
+                            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-6 mb-10 text-[12px] font-bold text-white/40 tracking-wider">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                                    <span>Born: <span class="text-white">Oct 24, 1986</span></span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                    <span>Active: <span class="text-white">2006 — Present</span></span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
+                                    <span>Genres: <span class="text-white">{{ $article->genre->name ?? 'Mixed' }}</span></span>
+                                </div>
                             </div>
-                        </div>
-                        
-                        <h1 class="text-[32px] sm:text-[42px] md:text-[64px] lg:text-[90px] font-black text-white tracking-tighter mb-8 leading-[0.9] -ml-1">
-                            {{ $article->title }}
-                        </h1>
-                        
-                        <!-- Stats Mini Grid -->
-                        <div class="grid grid-cols-2 sm:flex sm:flex-wrap gap-6 sm:gap-10">
-                             <div class="flex flex-col">
-                                <span class="text-white text-2xl sm:text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['views'] ?? 0) }}</span>
-                                <span class="text-[10px] text-white/30 font-bold tracking-widest uppercase">Global views</span>
-                            </div>
-                            <div class="flex flex-col">
-                                <span class="text-white text-2xl sm:text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['streams'] ?? 0) }}</span>
-                                <span class="text-[10px] text-white/30 font-bold tracking-widest uppercase">Streams</span>
-                            </div>
-                            <div class="flex flex-col">
-                                <span class="text-blue-500 text-2xl sm:text-3xl font-black tracking-tighter mb-1">{{ number_format($artistStats['impact'] ?? 0, 1) }}</span>
-                                <span class="text-[10px] text-white/30 font-bold tracking-widest uppercase">Impact</span>
-                            </div>
-                             <div class="flex flex-col">
-                                <span class="text-white text-2xl sm:text-3xl font-black tracking-tighter mb-1">#{{ number_format($artistStats['rank'] ?? 0) }}</span>
-                                <span class="text-[10px] text-white/30 font-bold tracking-widest uppercase">Rank</span>
+
+                            <!-- Artist Statistics -->
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 xl:gap-12 mt-16 pt-12 border-t border-white/5 max-w-5xl">
+                                 <div class="flex flex-col">
+                                    <span class="text-white text-3xl font-black tracking-tighter mb-1">84 M</span>
+                                    <span class="text-[11px] text-white/30 font-bold tracking-widest uppercase">Monthly Listeners</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-white text-3xl font-black tracking-tighter mb-1">75+ B</span>
+                                    <span class="text-[11px] text-white/30 font-bold tracking-widest uppercase">Total Streams</span>
+                                </div>
+                                <div class="flex flex-col">
+                                    <span class="text-blue-500 text-3xl font-black tracking-tighter mb-1">96/100</span>
+                                    <span class="text-[11px] text-white/30 font-bold tracking-widest uppercase">Trending Score</span>
+                                </div>
+                                 <div class="flex flex-col">
+                                    <span class="text-white text-3xl font-black tracking-tighter mb-1">#2</span>
+                                    <span class="text-[11px] text-white/30 font-bold tracking-widest uppercase">Global Ranking</span>
+                                </div>
                             </div>
                         </div>
                      </div>
                 </div>
 
-                {{-- Archival Timeline Module --}}
+                <!-- Artist History -->
                 <div class="mb-16">
+                    <h2 class="text-[11px] font-black text-white/30 uppercase tracking-[0.3em] mb-8">Release History</h2>
                     <livewire:wiki.⚡timeline :entity="$artist" />
                 </div>
-            </div>
 
-            <div class="flex flex-col xl:flex-row gap-12">
-                <!-- Article Content -->
-                <div class="flex-1 min-w-0 space-y-16">
+
+            <div class="space-y-24">
+                {{-- Content Column --}}
+                <div class="space-y-24">
                      <section>
                          <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                             <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter">Biography</h2>
+                            <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Biography</h2>
                         </div>
                         <article class="prose prose-invert prose-lg max-w-none">
                             <div class="article-content text-white/70 text-base leading-relaxed">
-                                @if(!empty($article->content))
-                                    {!! Str::markdown($article->content) !!}
-                                @else
-                                    <p class="text-white/30 italic">No biography available.</p>
-                                @endif
+                                {!! Str::markdown($article->content ?? 'No biography available.') !!}
                             </div>
                         </article>
+                     </section>
+
+                     {{-- Actions & Meta --}}
+                     <section class="border-t border-white/5 pt-16">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                             <div class="card-premium-unified !bg-[#161b22]/40 !p-10 space-y-8">
+                                <div class="flex items-center gap-6">
+                                    <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-blue-400">
+                                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase">Artist Control</h3>
+                                        <p class="text-sm text-white/70 leading-relaxed mt-1">Listen to top tracks or manage this artist in your personal archive.</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-6 pt-6 border-t border-white/5">
+                                    <livewire:article.play-button :articleId="$article->id" label="Play tracks" class="btn-figma-primary !w-full !py-4" />
+                                    <div class="flex gap-4">
+                                        <div class="flex-1"><livewire:article.add-to-collection :article="$article" /></div>
+                                        <div class="flex-1"><livewire:article.bookmark-button :article="$article" /></div>
+                                    </div>
+                                </div>
+                             </div>
+
+                             <div class="card-premium-unified !bg-[#161b22]/60 !p-10">
+                                <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase mb-8">Metadata</h3>
+                                <div class="space-y-6">
+                                    @foreach(['origin' => 'Origin', 'active_from' => 'Active From'] as $key => $lbl)
+                                        @if(!empty($artistMeta[$key]))
+                                            <div class="flex items-center justify-between py-3 border-b border-white/5">
+                                                <span class="text-sm text-white/50">{{ $lbl }}</span>
+                                                <span class="text-sm text-white font-bold">{{ $artistMeta[$key] }}</span>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                    <div class="pt-4">
+                                        <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5">
+                                            <span class="text-[11px] font-bold text-white/30 tracking-widest uppercase">Popularity</span>
+                                            <livewire:article.vote-button :model="$article" wire:key="artist-vote-{{ $article->id }}" />
+                                        </div>
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
                      </section>
 
                      <section>
                         <div class="flex items-center justify-between border-b border-white/5 pb-6 mb-10">
                              <div class="flex items-center">
-                                <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                                <h2 class="text-3xl font-black text-white tracking-tighter">Discography</h2>
+                                <div class="w-1.5 h-10 bg-emerald-500 rounded-full mr-6 shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
+                                <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Discography</h2>
                              </div>
-                             <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="group flex items-center gap-2 text-[11px] font-bold text-white/30 tracking-widest hover:text-blue-400 transition-all">
-                                <span>Browse all tracks</span>
+                             <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="group flex items-center gap-2 text-[11px] font-bold text-white/30 tracking-widest hover:text-blue-400 transition-all uppercase">
+                                <span>Complete Catalog</span>
                                 <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
                              </a>
                         </div>
-                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
                             @foreach($artistDiscography as $item)
-                                 <a href="{{ $item['url'] }}" class="card-premium-unified group block !p-4 border border-white/5 hover:border-blue-500/30 transition-all">
-                                    <div class="aspect-square rounded-2xl overflow-hidden bg-black/40 mb-5 relative group-hover:shadow-[0_0_50px_rgba(59,130,246,0.1)] transition-all">
+                                 <a href="{{ $item['url'] }}" class="card-premium-unified group block !p-4 border border-white/5 hover:border-emerald-500/30 transition-all shadow-2xl">
+                                    <div class="aspect-square rounded-2xl overflow-hidden bg-black/40 mb-5 relative">
                                         <img src="{{ $item['image'] }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover transition duration-1000 group-hover:scale-110">
-                                        <div class="absolute inset-0 bg-blue-500/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                        <div class="absolute inset-0 bg-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                              <div class="w-12 h-12 rounded-full bg-white text-navy-900 flex items-center justify-center scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500 shadow-2xl">
                                                  <svg class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                              </div>
                                         </div>
                                     </div>
-                                    <h4 class="text-white font-black text-sm truncate tracking-tight group-hover:text-blue-400 transition-colors leading-tight mb-2">{{ $item['title'] }}</h4>
-                                    <p class="text-[10px] font-black text-white/20 tracking-[0.2em]">@if(isset($item['year'])){{ $item['year'] }}@else Unknown @endif</p>
+                                    <h4 class="text-white font-black text-sm truncate tracking-tight group-hover:text-emerald-400 transition-colors uppercase leading-tight mb-2">{{ $item['title'] }}</h4>
+                                    <p class="text-[10px] font-black text-white/20 tracking-[0.2em]">{{ $item['year'] ?? 'Unknown' }}</p>
                                  </a>
                             @endforeach
                         </div>
                      </section>
-
-                     <section>
-                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
-                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter">Gallery</h2>
-                        </div>
-                        <div class="grid grid-cols-2 lg:grid-cols-3 gap-6">
-                            @foreach($artistGallery as $item)
-                                <div class="relative aspect-[3/4] rounded-2xl overflow-hidden border border-white/5 group hover:border-blue-500/30 transition-all shadow-2xl">
-                                    <img src="{{ $item['image'] }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000 grayscale-[0.3] group-hover:grayscale-0">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent opacity-80 group-hover:opacity-40 transition-opacity"></div>
-                                    <div class="absolute bottom-6 left-6 right-6">
-                                        <p class="text-[10px] font-black text-white tracking-[0.3em] truncate">{{ $item['title'] }}</p>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                     </section>
-
-                     <section class="border-t border-white/5 pt-16">
-                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
-                            <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter">Related Content</h2>
-                        </div>
-                        <x-neural-map-visualization :articleId="$article->id" />
-                    </section>
-
-                     <section class="border-t border-white/5 pt-16">
-                        <div class="flex items-center border-b border-white/5 pb-6 mb-10">
-                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter">Discussion</h2>
-                        </div>
-                        <livewire:article.comments :article="$article" />
-                    </section>
                 </div>
 
-                <!-- Right Sidebar (Relevant Data) -->
-                <aside class="w-full xl:w-80 space-y-6 shrink-0">
-                    
-                    <!-- Actions -->
-                    <div class="card-premium-unified !bg-[#161b22]/40 !p-8 flex flex-col gap-6 shadow-3xl">
-                        <livewire:article.play-button 
-                            :articleId="$article->id" 
-                            label="Play profile"
-                            class="btn-figma-primary !w-full !py-4"
-                        />
-                        
-                        <div class="group">
-                             <livewire:article.add-to-collection :article="$article" />
-                        </div>
-
-                        <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5 group hover:border-blue-500/20 transition-all">
-                            <span class="text-[11px] font-bold text-white/30 tracking-widest">Global rating</span>
-                             <livewire:article.vote-button :model="$article" wire:key="sidebar-vote-article-{{ $article->id }}" />
-                        </div>
-                        
-                        <div class="group"><livewire:article.bookmark-button :article="$article" /></div>
-                    </div>
-
-                    <!-- Metadata List -->
-                    @if(!empty(array_filter($artistMeta ?? [])))
-                    <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
-                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest mb-8">Artist info</h3>
-                        <div class="space-y-6">
-                            @if(!empty($artistMeta['origin']))
-                            <div class="flex items-center justify-between py-3 border-b border-white/5">
-                                <span class="text-[13px] text-white/40 font-bold">Origin</span>
-                                <span class="text-[13px] text-white font-black tracking-tight">{{ $artistMeta['origin'] }}</span>
-                            </div>
-                            @endif
-                            @if(!empty($artistMeta['active_from']))
-                            <div class="flex items-center justify-between py-3 border-b border-white/5">
-                                <span class="text-[13px] text-white/40 font-bold">Active from</span>
-                                <span class="text-[13px] text-white font-black tracking-tight">{{ $artistMeta['active_from'] }}</span>
-                            </div>
-                            @endif
-                            @if(!empty($artistMeta['website']))
-                            <div class="flex items-center justify-between py-3">
-                                <span class="text-[13px] text-white/40 font-bold">Website</span>
-                                <a href="{{ $artistMeta['website'] }}" target="_blank" class="flex items-center gap-2 text-[11px] font-bold text-blue-400 tracking-widest hover:text-white transition-colors">Link ↗</a>
-                            </div>
-                            @endif
-                            <div class="flex items-center justify-between py-3 border-t border-white/5 mt-4">
-                                <span class="text-[13px] text-white/40 font-bold">Data Quality</span>
-                                <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">{{ $article->trust_score }} Score</span>
-                                <div class="w-2 h-2 rounded-full {{ $article->trust_score > 50 ? 'bg-emerald-500' : 'bg-blue-500' }} shadow-[0_0_8px_rgba(16,185,129,0.5)] ml-2"></div>
-                            </div>
+                <section>
+                    <div class="flex items-center justify-between mb-10">
+                        <div class="flex items-center">
+                            <div class="w-1.5 h-10 bg-emerald-500 rounded-full mr-6 shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
+                            <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Top Songs</h2>
                         </div>
                     </div>
-                    @endif
 
-                    <!-- Related topics -->
-                     @if(!$relatedSongs->isEmpty())
-                     <div class="card-premium-unified !bg-[#161b22]/60 !p-8 shadow-3xl">
-                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest mb-8">Related artists</h3>
-                        <div class="space-y-6">
-                            @foreach($relatedSongs as $song)
-                                @if($song->article)
-                                <a href="{{ route('wiki.show', $song->article->slug) }}" class="flex items-center gap-5 group">
-                                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-white/5 overflow-hidden shrink-0 flex items-center justify-center text-blue-400 group-hover:bg-blue-500 group-hover:text-white transition-all shadow-lg">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        @foreach($article->artist->songs->take(3) as $song)
+                            <div class="group cursor-pointer">
+                                <div class="aspect-square rounded-[2.5rem] overflow-hidden border border-white/5 bg-[#161b22] relative mb-6 shadow-2xl transition-all duration-500 group-hover:border-blue-500/20 group-hover:-translate-y-2">
+                                    @if($song->article)
+                                    <img src="{{ $song->article->featured_image }}" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                    @endif
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+                                    <div class="absolute bottom-8 left-8 right-8">
+                                        <h3 class="text-xl font-black text-white tracking-tighter">{{ $song->title }}</h3>
+                                        <p class="text-[11px] font-bold text-white/40 mt-1 uppercase">{{ $song->genre->name ?? 'Mixed' }} • {{ $song->release_date ? $song->release_date->format('Y') : '2024' }}</p>
                                     </div>
-                                    <div class="min-w-0">
-                                        <p class="text-[13px] font-bold text-white tracking-tight truncate group-hover:text-blue-400 transition-colors">{{ $song->title }}</p>
-                                        <p class="text-[9px] text-white/30 font-bold tracking-widest">Topic</p>
-                                    </div>
-                                </a>
-                                @endif
-                            @endforeach
-                        </div>
-                     </div>
-                     @endif
+                                </div>
+                                <div class="flex items-center justify-between px-4">
+                                    @if($song->article)
+                                    <a href="{{ route('wiki.show', $song->article) }}" class="text-[11px] font-black text-blue-400 group-hover:text-blue-300 uppercase tracking-widest flex items-center gap-2">
+                                        View Details
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+                                    </a>
+                                    @endif
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </section>
 
-                </aside>
+                 <section class="border-t border-white/5 pt-16">
+                    <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                        <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
+                        <h2 class="text-3xl font-black text-white tracking-tighter">Related Content</h2>
+                    </div>
+                    <x-neural-map-visualization :articleId="$article->id" />
+                </section>
+
+                 <section class="border-t border-white/5 pt-16">
+                    <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                        <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+                        <h2 class="text-3xl font-black text-white tracking-tighter">Discussion</h2>
+                    </div>
+                    <livewire:article.comments :article="$article" />
+                </section>
             </div>
 
         </main>

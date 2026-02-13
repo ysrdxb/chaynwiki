@@ -57,7 +57,7 @@
                     </div>
                     <div class="flex flex-col">
                         <span class="text-[9px] font-black text-white/20 tracking-widest leading-none mb-1">Archivist</span>
-                        <span class="text-[11px] font-black text-white/50 tracking-tight leading-none truncate max-w-[80px]">{{ $article->user->name ?? 'Guest' }}</span>
+                        <span class="text-[11px] font-black text-white/50 tracking-tight leading-none truncate max-w-[80px]">{{ $article->user->name ?? 'Community' }}</span>
                     </div>
                 </div>
                 
