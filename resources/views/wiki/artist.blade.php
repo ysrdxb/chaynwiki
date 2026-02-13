@@ -39,29 +39,7 @@
     <div class="max-w-[1400px] w-full px-8 flex items-start gap-12 pt-32 pb-16">
         
         <!-- Sidebar Navigation -->
-        <aside class="hidden lg:block w-72 sticky top-32 shrink-0 space-y-2 pr-8 border-r border-white/5">
-            <div class="mb-8 px-4">
-                <span class="text-white/20 text-[10px] font-black tracking-[0.2em] uppercase">Wiki Explorer</span>
-            </div>
-            
-            <a href="{{ route('home') }}" class="group flex items-center gap-4 px-4 py-3 rounded-full text-[13px] font-bold text-white/50 hover:text-white transition-all border border-transparent hover:border-white/5 hover:bg-white/5">
-                <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                </div>
-                Home
-            </a>
-
-            <div class="h-px bg-white/5 mx-4 my-6"></div>
-            
-            @foreach($categories as $key => $cat)
-                <a href="{{ route('wiki.index', ['category' => $key]) }}" class="group flex items-center gap-4 px-4 py-3 rounded-full text-[13px] font-bold transition-all border border-transparent {{ $key === 'artist' ? 'bg-blue-500/10 text-white border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]' : 'text-white/50 hover:text-white hover:bg-white/5 hover:border-white/5' }}">
-                    <div class="w-8 h-8 rounded-full {{ $key === 'artist' ? 'bg-blue-500 shadow-lg text-white' : 'bg-white/5 group-hover:bg-white/10' }} flex items-center justify-center transition-all">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
-                    </div>
-                    {{ $cat['label'] }}
-                </a>
-            @endforeach
-        </aside>
+@include('wiki._sidebar')
 
         <!-- Main Content -->
         <main class="flex-1 min-w-0">
@@ -79,80 +57,128 @@
                 </div>
             </div>
 
-            <!-- Hero Area -->
-            <div class="relative w-full rounded-[2.5rem] overflow-hidden mb-16 border border-white/5 group bg-[#0d1117] shadow-3xl">
-                 {{-- Immersive Background --}}
-                 <div class="absolute inset-0 z-0">
-                     <img src="{{ $featured_image }}" class="w-full h-full object-cover grayscale opacity-10 blur-3xl scale-125 transition-all duration-1000 group-hover:scale-110 group-hover:opacity-20">
-                     <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-[#0d1117]/80 to-transparent"></div>
-                     <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 rounded-full blur-[160px] -mr-40 -mt-40"></div>
-                 </div>
-                 
-                 <div class="relative z-10 p-6 md:p-12 lg:p-16 flex flex-col lg:flex-row gap-8 lg:gap-12 items-center">
-                     <!-- Artist Portrait -->
-                     <div class="shrink-0 relative">
-                         <div class="w-48 h-48 md:w-72 md:h-72 rounded-full overflow-hidden border-4 md:border-8 border-white/5 shadow-[0_0_100px_rgba(0,0,0,0.8)] relative z-10 bg-[#161b22] group-hover:border-blue-500/20 transition-all duration-700">
-                             <img src="{{ $featured_image }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 grayscale-[0.2] group-hover:grayscale-0">
+            @php
+                // Dynamic Data Fetching
+                $realContributors = $article->revisions()
+                    ->with('user')
+                    ->select('user_id')
+                    ->distinct()
+                    ->take(3)
+                    ->get()
+                    ->pluck('user')
+                    ->filter();
+
+                if ($realContributors->isEmpty() && $article->user) {
+                    $realContributors = collect([$article->user]);
+                }
+
+                $realDiscography = $article->artist ? $article->artist->songs()
+                    ->with('article')
+                    ->latest('release_date')
+                    ->take(8)
+                    ->get() : collect();
+
+                $origin = $article->artist->origin ?? 'Unknown Origin';
+                $activeSince = $article->artist->active_from ? $article->artist->active_from->format('Y') : 'Unknown';
+                $born = $article->artist->born ?? 'Unknown'; 
+                $genres = $article->artist->genres ?? ['Music']; // Assuming cast to array or simple string
+                if (is_string($genres)) $genres = explode(',', $genres);
+            @endphp
+
+            <div class="relative w-full mb-16">
+                 <!-- Text Content -->
+                 <div class="relative z-10 w-full mb-12">
+                     <!-- Title -->
+                     <h1 class="text-soundbook-heading text-6xl sm:text-7xl md:text-8xl lg:text-[120px] text-white leading-[0.85] tracking-tighter mb-6 break-words">
+                         {{ strtoupper($article->title) }}
+                     </h1>
+                     
+                     <!-- Meta Data Row -->
+                     <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] font-bold text-white/50 tracking-wide mb-8">
+                         <span>Origin: <span class="text-white">{{ $origin }}</span></span>
+                         <span class="w-1 h-1 rounded-full bg-white/20"></span>
+                         <span>Active Since: <span class="text-white">{{ $activeSince }}</span></span>
+                         <span class="w-1 h-1 rounded-full bg-white/20"></span>
+                          <span>Genres: 
+                            <span class="text-white">
+                                @foreach(collect($genres)->take(3) as $g)
+                                    {{ $g }}@if(!$loop->last) • @endif
+                                @endforeach
+                            </span>
+                          </span>
+                     </div>
+
+                     <!-- Bio Excerpt -->
+                     <div class="max-w-4xl text-lg text-white/70 leading-relaxed mb-10 font-medium font-sans">
+                          {{ Str::limit(strip_tags((string) $article->content), 350, '...') }}
+                          <a href="#biography" class="text-white underline decoration-white/30 hover:decoration-white transition-all cursor-pointer ml-2">Read Full Bio</a>
+                     </div>
+
+                     <!-- Author & Actions Row -->
+                     <div class="flex flex-wrap items-center gap-6 border-b border-white/5 pb-10 mb-8">
+                          <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-2 py-2 pr-6 backdrop-blur-md">
+                             @if($article->user)
+                                 <img src="{{ $article->user->avatar ?? 'https://ui-avatars.com/api/?name='.$article->user->name }}" class="w-8 h-8 rounded-full border border-blue-500/50">
+                                 <span class="text-[11px] font-black text-white uppercase tracking-widest pl-2">Author {{ $article->user->name }}</span>
+                             @else
+                                 <img src="https://ui-avatars.com/api/?name=System" class="w-8 h-8 rounded-full border border-white/10">
+                                 <span class="text-[11px] font-black text-white/50 uppercase tracking-widest pl-2">System</span>
+                             @endif
+                             <div class="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-[10px] text-white">
+                                 <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                             </div>
                          </div>
-                         {{-- Premium Glow --}}
-                         <div class="absolute -inset-8 bg-blue-500/20 blur-[60px] rounded-full opacity-30 group-hover:opacity-60 transition-all duration-1000"></div>
+                         
+                          <div class="flex items-center gap-2 text-[11px] font-bold text-white/40 uppercase tracking-widest bg-white/5 border border-white/10 rounded-full px-4 py-2.5">
+                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                             <span>Updated {{ $article->updated_at->format('M d, Y') }}</span>
+                         </div>
+
+                         @if($article->user)
+                         <a href="{{ route('profile', $article->user->username ?? 'admin') }}" class="flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/20 hover:border-white hover:bg-white hover:text-[#0d1117] text-[10px] font-black text-white uppercase tracking-widest transition-all">
+                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                             <span>View Author Profile</span>
+                         </a>
+                         @endif
+                          <a href="#history" class="flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/20 hover:border-white hover:bg-white hover:text-[#0d1117] text-[10px] font-black text-white uppercase tracking-widest transition-all">
+                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                             <span>View Edit History</span>
+                         </a>
                      </div>
                      
-                        <div class="flex-1 min-w-0 pb-4 text-center lg:text-left w-full">
-                            <h1 class="text-soundbook-heading text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white mb-6 leading-[0.9] tracking-tighter">
-                                {{ strtoupper($article->title) }}
-                            </h1>
-                            
-                            <!-- Premium Meta Bar (SoundBook Style) -->
-                            <div class="flex flex-wrap items-center justify-center lg:justify-start gap-6 mb-10 text-[12px] font-bold text-white/40 tracking-wider">
-                                <div class="flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
-                                    <span>Born: <span class="text-white">Oct 24, 1986</span></span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    <span>Active: <span class="text-white">2006 — Present</span></span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span>
-                                    <span>Genres: <span class="text-white">{{ $article->genre->name ?? 'Mixed' }}</span></span>
-                                </div>
-                            </div>
-
-                            <!-- Artist Statistics -->
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 xl:gap-12 mt-16 pt-12 border-t border-white/5 max-w-5xl">
-                                 <div class="flex flex-col">
-                                    <span class="text-white text-3xl font-black tracking-tighter mb-1">84 M</span>
-                                    <span class="text-[11px] text-white/30 font-bold tracking-widest uppercase">Monthly Listeners</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="text-white text-3xl font-black tracking-tighter mb-1">75+ B</span>
-                                    <span class="text-[11px] text-white/30 font-bold tracking-widest uppercase">Total Streams</span>
-                                </div>
-                                <div class="flex flex-col">
-                                    <span class="text-blue-500 text-3xl font-black tracking-tighter mb-1">96/100</span>
-                                    <span class="text-[11px] text-white/30 font-bold tracking-widest uppercase">Trending Score</span>
-                                </div>
-                                 <div class="flex flex-col">
-                                    <span class="text-white text-3xl font-black tracking-tighter mb-1">#2</span>
-                                    <span class="text-[11px] text-white/30 font-bold tracking-widest uppercase">Global Ranking</span>
-                                </div>
-                            </div>
-                        </div>
+                     <!-- Contributors List -->
+                     @if($realContributors->isNotEmpty())
+                     <div>
+                         <h4 class="text-[11px] font-black text-white/30 uppercase tracking-[0.2em] mb-4">Contributors</h4>
+                         <div class="flex items-center gap-6">
+                              @foreach($realContributors as $contributor)
+                                 <a href="{{ route('profile', $contributor->username ?? 'admin') }}" class="flex items-center gap-3 group cursor-pointer transition-all hover:translate-x-1">
+                                     <img src="{{ $contributor->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode($contributor->name).'&background=random' }}" class="w-7 h-7 rounded-full grayscale group-hover:grayscale-0 transition-all border border-transparent group-hover:border-white/20">
+                                     <span class="text-[10px] font-bold text-white/50 group-hover:text-white transition-colors">{{ $contributor->name }}</span>
+                                 </a>
+                             @endforeach
+                         </div>
                      </div>
-                </div>
+                     @endif
+                 </div>
 
-                <!-- Artist History -->
-                <div class="mb-16">
-                    <h2 class="text-[11px] font-black text-white/30 uppercase tracking-[0.3em] mb-8">Release History</h2>
-                    <livewire:wiki.⚡timeline :entity="$artist" />
-                </div>
+                 <!-- Hero Image Banner -->
+                 <div class="relative w-full aspect-[21/9] rounded-[2rem] overflow-hidden border border-white/10 shadow-3xl group mb-24">
+                      <img src="{{ $featured_image }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                       <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent opacity-60"></div>
+                 </div>
+            </div>
+
+            <!-- Artist History -->
+            <div id="history" class="mb-16">
+                <h2 class="text-[11px] font-black text-white/30 uppercase tracking-[0.3em] mb-8">Release History</h2>
+                <livewire:wiki.⚡timeline :entity="$artist" />
 
 
             <div class="space-y-24">
                 {{-- Content Column --}}
                 <div class="space-y-24">
-                     <section>
+                     <section id="biography">
                          <div class="flex items-center border-b border-white/5 pb-8 mb-12">
                             <div class="w-1.5 h-16 bg-blue-500 rounded-full mr-8 shadow-[0_0_20px_rgba(59,130,246,0.5)]"></div>
                             <h2 class="text-5xl lg:text-7xl font-black text-white tracking-tighter uppercase leading-[0.9]">Biography</h2>
@@ -173,7 +199,7 @@
                                         <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                     </div>
                                     <div>
-                                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase">Artist Control</h3>
+                                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase">Actions</h3>
                                         <p class="text-sm text-white/70 leading-relaxed mt-1">Listen to top tracks or manage this artist in your personal archive.</p>
                                     </div>
                                 </div>
@@ -187,16 +213,16 @@
                              </div>
 
                              <div class="card-premium-unified !bg-[#161b22]/60 !p-10">
-                                <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase mb-8">Metadata</h3>
+                                <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase mb-8">Artist Details</h3>
                                 <div class="space-y-6">
-                                    @foreach(['origin' => 'Origin', 'active_from' => 'Active From'] as $key => $lbl)
-                                        @if(!empty($artistMeta[$key]))
-                                            <div class="flex items-center justify-between py-3 border-b border-white/5">
-                                                <span class="text-sm text-white/50">{{ $lbl }}</span>
-                                                <span class="text-sm text-white font-bold">{{ $artistMeta[$key] }}</span>
-                                            </div>
-                                        @endif
-                                    @endforeach
+                                     <div class="flex items-center justify-between py-3 border-b border-white/5">
+                                         <span class="text-sm text-white/50">Origin</span>
+                                         <span class="text-sm text-white font-bold">{{ $origin }}</span>
+                                     </div>
+                                     <div class="flex items-center justify-between py-3 border-b border-white/5">
+                                         <span class="text-sm text-white/50">Active Since</span>
+                                         <span class="text-sm text-white font-bold">{{ $activeSince }}</span>
+                                     </div>
                                     <div class="pt-4">
                                         <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5">
                                             <span class="text-[11px] font-bold text-white/30 tracking-widest uppercase">Popularity</span>
@@ -209,68 +235,88 @@
                      </section>
 
                      <section>
-                        <div class="flex items-center justify-between border-b border-white/5 pb-6 mb-10">
-                             <div class="flex items-center">
-                                <div class="w-1.5 h-10 bg-emerald-500 rounded-full mr-6 shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
-                                <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Discography</h2>
+                        <div class="flex items-center justify-between mb-12">
+                             <div>
+                                 <h2 class="text-soundbook-heading text-6xl text-white uppercase tracking-tighter mb-2">ALBUMS</h2>
+                                 <p class="text-[13px] font-bold text-white/40 tracking-widest uppercase">All Releases</p>
                              </div>
-                             <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="group flex items-center gap-2 text-[11px] font-bold text-white/30 tracking-widest hover:text-blue-400 transition-all uppercase">
-                                <span>Complete Catalog</span>
-                                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                             </a>
+                             
+                             <div class="flex items-center gap-4">
+                                 <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="text-[11px] font-bold text-white/60 hover:text-white transition-colors uppercase tracking-widest mr-4 hidden md:block">View All</a>
+                             </div>
                         </div>
                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                            @foreach($artistDiscography as $item)
-                                 <a href="{{ $item['url'] }}" class="card-premium-unified group block !p-4 border border-white/5 hover:border-emerald-500/30 transition-all shadow-2xl">
+                            @foreach($realDiscography as $song)
+                                 <a href="{{ route('wiki.show', $song->article) }}" class="card-premium-unified group block !p-4 border border-white/5 hover:border-emerald-500/30 transition-all shadow-2xl">
                                     <div class="aspect-square rounded-2xl overflow-hidden bg-black/40 mb-5 relative">
-                                        <img src="{{ $item['image'] }}" onerror="this.onerror=null;this.src='{{ $placeholder }}';" class="w-full h-full object-cover transition duration-1000 group-hover:scale-110">
+                                        <img src="{{ $song->article->featured_image ?? $placeholder }}" class="w-full h-full object-cover transition duration-1000 group-hover:scale-110">
                                         <div class="absolute inset-0 bg-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                              <div class="w-12 h-12 rounded-full bg-white text-navy-900 flex items-center justify-center scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500 shadow-2xl">
                                                  <svg class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
                                              </div>
                                         </div>
                                     </div>
-                                    <h4 class="text-white font-black text-sm truncate tracking-tight group-hover:text-emerald-400 transition-colors uppercase leading-tight mb-2">{{ $item['title'] }}</h4>
-                                    <p class="text-[10px] font-black text-white/20 tracking-[0.2em]">{{ $item['year'] ?? 'Unknown' }}</p>
+                                    <h4 class="text-white font-black text-sm truncate tracking-tight group-hover:text-emerald-400 transition-colors uppercase leading-tight mb-2">{{ $song->title }}</h4>
+                                    <p class="text-[10px] font-black text-white/20 tracking-[0.2em]">{{ $song->release_date ? $song->release_date->format('Y') : 'Unknown' }}</p>
                                  </a>
                             @endforeach
+                            @if($realDiscography->isEmpty())
+                                <div class="col-span-full py-12 text-center text-white/30 text-sm font-bold tracking-widest uppercase">
+                                    No releases found in database.
+                                </div>
+                            @endif
                         </div>
                      </section>
                 </div>
 
                 <section>
-                    <div class="flex items-center justify-between mb-10">
-                        <div class="flex items-center">
-                            <div class="w-1.5 h-10 bg-emerald-500 rounded-full mr-6 shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Top Songs</h2>
-                        </div>
-                    </div>
+                     <div class="mb-12">
+                         <h2 class="text-soundbook-heading text-6xl text-white uppercase tracking-tighter mb-2">TOP SONGS</h2>
+                         <p class="text-[13px] font-bold text-white/40 tracking-widest uppercase">Popular Songs by {{ $article->title }}</p>
+                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        @foreach($article->artist->songs->take(3) as $song)
-                            <div class="group cursor-pointer">
-                                <div class="aspect-square rounded-[2.5rem] overflow-hidden border border-white/5 bg-[#161b22] relative mb-6 shadow-2xl transition-all duration-500 group-hover:border-blue-500/20 group-hover:-translate-y-2">
-                                    @if($song->article)
-                                    <img src="{{ $song->article->featured_image }}" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                                    @endif
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-                                    <div class="absolute bottom-8 left-8 right-8">
-                                        <h3 class="text-xl font-black text-white tracking-tighter">{{ $song->title }}</h3>
-                                        <p class="text-[11px] font-bold text-white/40 mt-1 uppercase">{{ $song->genre->name ?? 'Mixed' }} • {{ $song->release_date ? $song->release_date->format('Y') : '2024' }}</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-between px-4">
-                                    @if($song->article)
-                                    <a href="{{ route('wiki.show', $song->article) }}" class="text-[11px] font-black text-blue-400 group-hover:text-blue-300 uppercase tracking-widest flex items-center gap-2">
-                                        View Details
-                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
-                                    </a>
-                                    @endif
-                                </div>
+                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                         @foreach($article->artist->songs->take(3) as $song)
+                             <a href="{{ $song->article ? route('wiki.show', $song->article) : '#' }}" class="group relative aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/5 bg-[#161b22] shadow-2xl transition-all duration-500 hover:border-blue-500/20 hover:-translate-y-2 cursor-pointer block">
+                                 <!-- Background Image -->
+                                 <img src="{{ $song->article->featured_image ?? $placeholder }}" class="absolute inset-0 w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                 <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-[#0d1117]/40 to-transparent opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                                 
+                                 <!-- Content -->
+                                 <div class="absolute inset-0 p-8 flex flex-col justify-between z-10">
+                                     <!-- Badge -->
+                                     <div class="self-start">
+                                         @if($song->genre)
+                                         <span class="px-3 py-1.5 bg-blue-600 text-white rounded-full text-[10px] font-black tracking-widest shadow-lg uppercase">
+                                             {{ $song->genre->name }}
+                                         </span>
+                                         @endif
+                                     </div>
+
+                                     <div class="space-y-1">
+                                         <h3 class="text-2xl font-black text-white leading-tight tracking-tight mb-1">{{ $song->title }}</h3>
+                                         <p class="text-[11px] font-bold text-white/30 uppercase tracking-widest mb-6">Release: {{ $song->release_date ? $song->release_date->format('Y') : 'Unknown' }}</p>
+                                         
+                                         <div class="flex items-center justify-between border-t border-white/10 pt-6 group-hover:border-white/30 transition-colors">
+                                             <span class="text-[11px] font-black text-white/60 group-hover:text-white transition-colors uppercase tracking-widest flex items-center gap-2">
+                                                 View Details
+                                             </span>
+                                             <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all shadow-lg">
+                                                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </a>
+                         @endforeach
+                         @if($article->artist->songs->isEmpty())
+                            <div class="col-span-full py-12 text-center text-white/30 text-sm font-bold tracking-widest uppercase">
+                                No songs linked to this artist yet.
                             </div>
-                        @endforeach
-                    </div>
+                         @endif
+                     </div>
                 </section>
+
 
                  <section class="border-t border-white/5 pt-16">
                     <div class="flex items-center border-b border-white/5 pb-6 mb-10">

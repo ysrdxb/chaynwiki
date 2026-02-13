@@ -21,37 +21,7 @@
         <!-- Flex Container -->
         <div class="flex items-start gap-12 pt-32 pb-16">
             
-            <!-- Sidebar Navigation (Desktop) -->
-            <aside class="hidden lg:block w-72 sticky top-32 shrink-0 space-y-2 pr-8 border-r border-white/5">
-                <div class="mb-10 px-4">
-                    <span class="text-white/20 text-[10px] font-black tracking-[0.4em]">Explore all</span>
-                </div>
-                
-                <a href="{{ route('home') }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[13px] font-black tracking-widest text-white/50 hover:text-white hover:bg-white/5 transition-all">
-                    <div class="w-8 h-8 rounded-lg bg-blue-500/10 border border-white/5 flex items-center justify-center group-hover:bg-blue-500 group-hover:scale-110 transition-all">
-                        <svg class="w-4 h-4 text-blue-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                    </div>
-                    Home
-                </a>
-
-                <a href="{{ route('wiki.index') }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[13px] font-black tracking-widest transition-all {{ !$currentCategory ? 'bg-blue-500/10 text-white border border-blue-500/20 shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
-                    <div class="w-8 h-8 rounded-lg {{ !$currentCategory ? 'bg-blue-500' : 'bg-white/5' }} flex items-center justify-center transition-all group-hover:scale-110">
-                        <svg class="w-4 h-4 {{ !$currentCategory ? 'text-white' : 'text-blue-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
-                    </div>
-                    Library
-                </a>
-
-                <div class="h-px bg-white/5 mx-4 my-6"></div>
-                
-                @foreach($categories as $key => $cat)
-                    <a href="{{ route('wiki.index', array_filter(['category' => $key, 'crate' => $activeCrate ? $activeCrate->slug : null])) }}" class="group flex items-center gap-4 px-4 py-4 rounded-2xl text-[13px] font-black tracking-widest transition-all {{ $currentCategory == $key ? 'bg-blue-500/10 text-white border border-blue-500/20 shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5' }}">
-                        <div class="w-8 h-8 rounded-lg {{ $currentCategory == $key ? 'bg-blue-500' : 'bg-white/5' }} flex items-center justify-center transition-all group-hover:scale-110">
-                            <svg class="w-4 h-4 {{ $currentCategory == $key ? 'text-white' : 'text-blue-400' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
-                        </div>
-                        {{ $cat['label'] }}
-                    </a>
-                @endforeach
-            </aside>
+@include('wiki._sidebar')
 
             <!-- Main Content Area -->
             <main class="flex-1 min-w-0">

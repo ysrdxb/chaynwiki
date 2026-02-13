@@ -18,302 +18,322 @@
 
 @section('content')
 @php
-    $categories = [
-        'artist' => ['label' => 'Artists', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>'],
-        'song' => ['label' => 'Songs', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>'],
-        'genre' => ['label' => 'Genres', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>'],
-        'playlist' => ['label' => 'Playlists', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>'],
-        'term' => ['label' => 'Terminology', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>'],
-    ];
+    // Dynamic Data Fetching
+    $genre = $article->genre; // Assuming the relationship exists
+
+    // Contributors
+    $realContributors = $article->revisions()
+        ->with('user')
+        ->select('user_id')
+        ->distinct()
+        ->take(3)
+        ->get()
+        ->pluck('user')
+        ->filter();
+
+    if ($realContributors->isEmpty() && $article->user) {
+        $realContributors = collect([$article->user]);
+    }
+
+    // Top Artists (derived from songs in this genre)
+    // We limit to 4 artists
+    $topArtists = collect();
+    if ($genre) {
+        $topArtists = $genre->songs()
+            ->with(['artist.article'])
+            ->latest() // or popular
+            ->take(50) // look at last 50 songs to find unique artists
+            ->get()
+            ->pluck('artist')
+            ->unique('id')
+            ->take(4);
+    }
+
+    // Essential Tracks
+    $essentialTracks = collect();
+    if ($genre) {
+        $essentialTracks = $genre->songs()
+            ->with(['article', 'artist'])
+            ->latest('created_at')
+            ->take(4)
+            ->get();
+    }
+
+    // Subgenres
+    $subgenres = $genre ? $genre->children : collect();
+    $parentGenre = $genre ? $genre->parent : null;
 
     $featured_image = $article->featured_image;
     if ($featured_image && !Str::startsWith($featured_image, ['http://', 'https://'])) {
         $featured_image = Storage::url($featured_image);
     }
-    // No specific placeholder for genre usually, maybe a pattern
+    $featured_image = $featured_image ?: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=1200';
 @endphp
 
 <div class="min-h-screen bg-[#0d1117] flex justify-center">
-    <div class="max-w-[1400px] w-full px-8 flex items-start gap-12 pt-32 pb-16">
+    <div class="max-w-[1400px] w-full px-8 flex items-start gap-12 pt-16 pb-16">
         
-        <!-- Sidebar Navigation -->
-        <aside class="hidden lg:block w-72 sticky top-32 shrink-0 space-y-2 pr-8 border-r border-white/5">
-            <div class="mb-8 px-4">
-                <span class="text-white/20 text-[10px] font-black tracking-[0.2em] uppercase">Wiki Explorer</span>
-            </div>
-            
-            <a href="{{ route('home') }}" class="group flex items-center gap-4 px-4 py-3 rounded-full text-[13px] font-bold text-white/50 hover:text-white transition-all border border-transparent hover:border-white/5 hover:bg-white/5">
-                <div class="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
-                </div>
-                Home
-            </a>
-
-            <div class="h-px bg-white/5 mx-4 my-6"></div>
-            
-            @foreach($categories as $key => $cat)
-                <a href="{{ route('wiki.index', ['category' => $key]) }}" class="group flex items-center gap-4 px-4 py-3 rounded-full text-[13px] font-bold transition-all border border-transparent {{ $key === 'genre' ? 'bg-blue-500/10 text-white border-blue-500/20 shadow-[0_0_15px_rgba(59,130,246,0.2)]' : 'text-white/50 hover:text-white hover:bg-white/5 hover:border-white/5' }}">
-                    <div class="w-8 h-8 rounded-full {{ $key === 'genre' ? 'bg-blue-500 shadow-lg text-white' : 'bg-white/5 group-hover:bg-white/10' }} flex items-center justify-center transition-all">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">{!! $cat['icon'] !!}</svg>
-                    </div>
-                    {{ $cat['label'] }}
-                </a>
-            @endforeach
-        </aside>
+        <!-- Sidebar Navigation (Consistent with Artist Page) -->
+        @include('wiki._sidebar')
 
         <!-- Main Content -->
         <main class="flex-1 min-w-0">
              <!-- Top Action Row -->
-             <div class="flex justify-between items-center mb-8">
+             <div class="flex justify-between items-center mb-16">
                  <!-- Breadcrumbs -->
                  <nav class="flex items-center gap-2 text-[10px] font-bold text-white/30 tracking-[0.2em]">
-                    <a href="{{ route('wiki.index', ['category' => 'genre']) }}" class="hover:text-blue-400 transition-colors">Genres</a>
+                    <a href="{{ route('wiki.index', ['category' => 'genre']) }}" class="hover:text-blue-400 transition-colors uppercase">All Genres</a>
                     <span>/</span>
-                    <span class="text-white">{{ Str::limit($article->title, 30) }}</span>
+                    <span class="text-white uppercase">{{ Str::limit($article->title, 30) }}</span>
                 </nav>
 
                 <div class="flex items-center gap-4">
-                    <a href="{{ route('wiki.edit', $article) }}" class="text-xs font-bold text-white/50 hover:text-white tracking-wider transition-colors">Edit</a>
+                    <a href="{{ route('wiki.edit', $article) }}" class="text-xs font-bold text-white/50 hover:text-white tracking-wider transition-colors uppercase">Edit Page</a>
                 </div>
             </div>
 
-            <!-- Hero Area -->
-            <div class="relative w-full rounded-[2.5rem] overflow-hidden mb-16 border border-white/5 group bg-[#0d1117] min-h-[400px] flex items-end shadow-3xl">
-                 {{-- Immersive Background --}}
-                 <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-                 <div class="absolute inset-0 bg-gradient-to-br from-[#0d1117] via-[#161b22] to-blue-900/20"></div>
-                 <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-500/10 rounded-full blur-[160px] -mr-40 -mt-40"></div>
-                 
-                 <div class="relative z-10 p-6 md:p-12 lg:p-16 w-full">
-                     <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded-lg text-[10px] font-bold tracking-widest inline-block mb-8 shadow-lg">
-                        Genre info
-                    </span>
-                    
-                        <h1 class="text-soundbook-heading text-5xl sm:text-7xl md:text-8xl lg:text-[110px] text-white mb-6">
-                            {{ strtoupper($article->title) }}
-                        </h1>
-                        
-                        <!-- Contributor Bar (SoundBook Style) -->
-                        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-12">
-                            <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-5 py-2.5 backdrop-blur-md">
-                                @if($article->user)
-                                    <img src="{{ $article->user->avatar ?? 'https://ui-avatars.com/api/?name='.$article->user->name }}" class="w-6 h-6 rounded-full border border-blue-500/50">
-                                    <span class="text-[11px] font-black text-white uppercase tracking-widest">Contributor: {{ $article->user->name }}</span>
-                                @else
-                                    <img src="https://ui-avatars.com/api/?name=Archivist" class="w-6 h-6 rounded-full border border-white/10">
-                                    <span class="text-[11px] font-black text-white/50 uppercase tracking-widest">Contributor: Community</span>
-                                @endif
-                            </div>
-                            <div class="flex items-center gap-2 text-[11px] font-bold text-white/30 uppercase tracking-widest px-4 border-l border-white/10">
-                                <span>Updated: {{ $article->updated_at->format('M d, Y') }}</span>
-                            </div>
-                            <button class="bg-blue-600 hover:bg-blue-500 text-white rounded-full px-6 py-2.5 text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-blue-500/20">
-                                View Portfolio
-                            </button>
-                        </div>
-                    </div>
+            <!-- Hero Section (Vertical Layout) -->
+            <div class="relative w-full mb-24">
+                 <!-- Text Content -->
+                 <div class="relative z-10 w-full mb-12">
+                     <!-- Title -->
+                     <h1 class="text-soundbook-heading text-6xl sm:text-7xl md:text-8xl lg:text-[120px] text-white leading-[0.85] tracking-tighter mb-6 break-words">
+                         {{ strtoupper($article->title) }}
+                     </h1>
+                     
+                     <!-- Meta Data Row -->
+                     <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] font-bold text-white/50 tracking-wide mb-8">
+                         <span>Parent Genre: <span class="text-white">{{ $parentGenre ? $parentGenre->name : 'None' }}</span></span>
+                         <span class="w-1 h-1 rounded-full bg-white/20"></span>
+                         <span>Subgenres: <span class="text-white">{{ $subgenres->count() }}</span></span>
+                         <span class="w-1 h-1 rounded-full bg-white/20"></span>
+                         <span>Tracks: <span class="text-white">{{ $genre ? $genre->songs()->count() : '0' }}</span></span>
+                     </div>
+
+                     <!-- Bio Excerpt -->
+                     <div class="max-w-4xl text-lg text-white/70 leading-relaxed mb-10 font-medium font-sans">
+                          {{ Str::limit(strip_tags((string) $article->content), 350, '...') }}
+                          <a href="#details" class="text-white underline decoration-white/30 hover:decoration-white transition-all cursor-pointer ml-2">Read Full Overview</a>
+                     </div>
+
+                     <!-- Author & Actions Row -->
+                     <div class="flex flex-wrap items-center gap-6 border-b border-white/5 pb-10 mb-8">
+                          <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-2 py-2 pr-6 backdrop-blur-md">
+                             @if($article->user)
+                                 <img src="{{ $article->user->avatar ?? 'https://ui-avatars.com/api/?name='.$article->user->name }}" class="w-8 h-8 rounded-full border border-blue-500/50">
+                                 <span class="text-[11px] font-black text-white uppercase tracking-widest pl-2">Author {{ $article->user->name }}</span>
+                             @else
+                                 <img src="https://ui-avatars.com/api/?name=System" class="w-8 h-8 rounded-full border border-white/10">
+                                 <span class="text-[11px] font-black text-white/50 uppercase tracking-widest pl-2">System</span>
+                             @endif
+                             <div class="w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center text-[10px] text-white">
+                                 <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                             </div>
+                         </div>
+                         
+                          <div class="flex items-center gap-2 text-[11px] font-bold text-white/40 uppercase tracking-widest bg-white/5 border border-white/10 rounded-full px-4 py-2.5">
+                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                             <span>Updated {{ $article->updated_at->format('M d, Y') }}</span>
+                         </div>
+
+                         @if($article->user)
+                         <a href="{{ route('profile', $article->user->username ?? 'admin') }}" class="flex items-center gap-2 px-6 py-2.5 rounded-full border border-white/20 hover:border-white hover:bg-white hover:text-[#0d1117] text-[10px] font-black text-white uppercase tracking-widest transition-all">
+                             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                             <span>View Author Profile</span>
+                         </a>
+                         @endif
+                     </div>
+                     
+                     <!-- Contributors List -->
+                     @if($realContributors->isNotEmpty())
+                     <div>
+                         <h4 class="text-[11px] font-black text-white/30 uppercase tracking-[0.2em] mb-4">Contributors</h4>
+                         <div class="flex items-center gap-6">
+                              @foreach($realContributors as $contributor)
+                                 <a href="{{ route('profile', $contributor->username ?? 'admin') }}" class="flex items-center gap-3 group cursor-pointer transition-all hover:translate-x-1">
+                                     <img src="{{ $contributor->avatar ?? 'https://ui-avatars.com/api/?name='.urlencode($contributor->name).'&background=random' }}" class="w-7 h-7 rounded-full grayscale group-hover:grayscale-0 transition-all border border-transparent group-hover:border-white/20">
+                                     <span class="text-[10px] font-bold text-white/50 group-hover:text-white transition-colors">{{ $contributor->name }}</span>
+                                 </a>
+                             @endforeach
+                         </div>
+                     </div>
+                     @endif
                  </div>
 
+                 <!-- Hero Image Banner -->
+                 <div class="relative w-full aspect-[21/9] rounded-[2rem] overflow-hidden border border-white/10 shadow-3xl group mb-24">
+                      <img src="{{ $featured_image }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105">
+                       <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-transparent to-transparent opacity-60"></div>
+                 </div>
+            </div>
 
-            {{-- Main Column --}}
-            <div class="space-y-20">
+            <!-- Content Column -->
+            <div class="space-y-24">
                 
-                {{-- Origin & History --}}
+                <!-- History Timeline -->
                 <section>
-                    <div class="flex items-center justify-between mb-8">
-                        <div>
-                            <h2 class="text-soundbook-heading text-4xl lg:text-6xl text-white uppercase tracking-tighter mb-2">History & Origins</h2>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                        <div class="card-premium-unified !bg-[#161b22]/40 group !p-8">
-                            <span class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mb-4 block">Origin</span>
-                            <div class="text-white text-xl font-black tracking-tighter group-hover:text-blue-400 transition-colors">Toronto & Chicago</div>
-                        </div>
-                        <div class="card-premium-unified !bg-[#161b22]/40 group !p-8">
-                            <span class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mb-4 block">Date</span>
-                            <div class="text-white text-xl font-black tracking-tighter group-hover:text-emerald-400 transition-colors">Late 2000s - Early 2010s</div>
-                        </div>
-                        <div class="card-premium-unified !bg-[#161b22]/40 group !p-8">
-                            <span class="text-[10px] font-black text-white/20 uppercase tracking-[0.3em] mb-4 block">Initial Signings</span>
-                            <div class="text-white text-xl font-black tracking-tighter group-hover:text-purple-400 transition-colors">D-Box</div>
-                        </div>
-                    </div>
-
-                    <div class="flex items-center border-b border-white/5 pb-6 mb-10">
-                        <div class="w-1.5 h-10 bg-emerald-500 rounded-full mr-6 shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
-                        <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Timeline</h2>
+                    <div class="flex items-center justify-between mb-12">
+                         <div>
+                             <h2 class="text-soundbook-heading text-6xl text-white uppercase tracking-tighter mb-2">HISTORY</h2>
+                             <p class="text-[13px] font-bold text-white/40 tracking-widest uppercase">Genre Evolution</p>
+                         </div>
                     </div>
                     <livewire:wiki.⚡timeline :entity="$genre" />
                 </section>
 
-            <!-- Pioneer Artists Section (Image 3 Style) -->
-            <section class="mb-20">
-                <div class="flex items-center justify-between mb-10">
-                    <div>
-                        <h2 class="text-soundbook-heading text-4xl lg:text-5xl text-white">FEATURED ARTISTS</h2>
-                    </div>
-                    <div class="flex gap-4">
-                        <button class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
-                        </button>
-                        <button class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/5 transition-all">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
-                        </button>
-                    </div>
-                </div>
+                <!-- Full Biography / Details -->
+                <section id="details">
+                    <div class="flex items-center border-b border-white/5 pb-8 mb-12">
+                       <div class="w-1.5 h-16 bg-blue-500 rounded-full mr-8 shadow-[0_0_20px_rgba(59,130,246,0.5)]"></div>
+                       <h2 class="text-5xl lg:text-7xl font-black text-white tracking-tighter uppercase leading-[0.9]">Overview</h2>
+                   </div>
+                   <article class="prose prose-invert prose-lg max-w-none">
+                       <div class="article-content text-white/70 text-base leading-relaxed">
+                           {!! Str::markdown($article->content ?? 'No content available.') !!}
+                       </div>
+                   </article>
+                </section>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    @php
-                        $pioneerArtists = \App\Models\Artist::take(3)->get();
-                    @endphp
-                    @foreach($pioneerArtists as $artist)
-                        @if($artist->article)
-                        <a href="{{ route('wiki.show', $artist->article) }}" class="group">
-                            <div class="aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/5 bg-[#161b22] relative mb-6 shadow-2xl transition-all duration-500 group-hover:border-blue-500/20 group-hover:-translate-y-2">
-                                <img src="{{ $artist->article->featured_image }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-                                <div class="absolute bottom-8 left-8">
-                                    <h3 class="text-2xl font-black text-white tracking-tighter">{{ $artist->name }}</h3>
-                                    <p class="text-[11px] font-bold text-white/40 mt-1 uppercase">Pioneer • {{ $artist->songs->count() }} Tracks</p>
-                                </div>
-                            </div>
-                        </a>
-                        @endif
-                    @endforeach
-                </div>
-            </section>
-
-            <!-- Subgenres Section (Image 3 Style) -->
-            <section class="mb-20">
-                <div class="flex items-center justify-between mb-10">
-                    <div>
-                        <h2 class="text-soundbook-heading text-4xl lg:text-5xl text-white uppercase tracking-tighter">Related Styles</h2>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap-4">
-                    @php
-                        $subgenres = ['Afrobeat', 'Amapiano', 'Afro-fusion', 'Highlife', 'Fante', 'Makossa'];
-                        $colors = ['bg-blue-500', 'bg-emerald-500', 'bg-purple-500', 'bg-amber-500', 'bg-pink-500', 'bg-indigo-500'];
-                    @endphp
-                    @foreach($subgenres as $index => $sub)
-                        <div class="flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-6 py-3 cursor-pointer hover:bg-white/10 transition-all group">
-                            <span class="w-2 h-2 rounded-full {{ $colors[$index % count($colors)] }} shadow-[0_0_10px_currentColor]"></span>
-                            <span class="text-sm font-black text-white uppercase tracking-widest">{{ $sub }}</span>
-                        </div>
-                    @endforeach
-                </div>
-            </section>
-
-                {{-- Featured Tracks --}}
+                <!-- Featured Artists -->
                 <section>
-                    <div class="flex items-center justify-between mb-10">
-                        <div class="flex items-center">
-                            <div class="w-1.5 h-10 bg-blue-500 rounded-full mr-6 shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
-                            <h2 class="text-3xl font-black text-white tracking-tighter uppercase font-soundbook-heading">Essential Tracks</h2>
-                        </div>
+                    <div class="flex items-center justify-between mb-12">
+                         <div>
+                             <h2 class="text-soundbook-heading text-6xl text-white uppercase tracking-tighter mb-2">ARTISTS</h2>
+                             <p class="text-[13px] font-bold text-white/40 tracking-widest uppercase">Key Figures in {{ $article->title }}</p>
+                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        @php
-                            $essentialTracks = \App\Models\Song::take(3)->get();
-                        @endphp
-                        @foreach($essentialTracks as $song)
-                            @if($song->article)
-                            <div class="group cursor-pointer">
-                                <div class="aspect-video rounded-[2.5rem] overflow-hidden border border-white/5 bg-[#161b22] relative mb-6 shadow-2xl transition-all duration-500 group-hover:border-blue-500/20 group-hover:-translate-y-2">
-                                    <img src="{{ $song->article->featured_image }}" class="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-                                    <div class="absolute bottom-6 left-6">
-                                        <h3 class="text-xl font-black text-white tracking-tighter">{{ $song->title }}</h3>
-                                        <p class="text-[11px] font-bold text-white/40 uppercase tracking-widest">{{ $song->artist->name ?? 'Unknown Artist' }}</p>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                        @foreach($topArtists as $artist)
+                            @if($artist->article)
+                             <a href="{{ route('wiki.show', $artist->article) }}" class="card-premium-unified group block !p-4 border border-white/5 hover:border-emerald-500/30 transition-all shadow-2xl">
+                                <div class="aspect-square rounded-2xl overflow-hidden bg-black/40 mb-5 relative">
+                                    <img src="{{ $artist->article->featured_image }}" class="w-full h-full object-cover transition duration-1000 group-hover:scale-110">
+                                    <div class="absolute inset-0 bg-emerald-500/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                         <div class="w-12 h-12 rounded-full bg-white text-navy-900 flex items-center justify-center scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500 shadow-2xl">
+                                             <svg class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                                <h4 class="text-white font-black text-sm truncate tracking-tight group-hover:text-emerald-400 transition-colors uppercase leading-tight mb-2">{{ $artist->name }}</h4>
+                                <p class="text-[10px] font-black text-white/20 tracking-[0.2em]">{{ $artist->songs_count ?? $artist->songs()->count() }} Tracks</p>
+                             </a>
                             @endif
                         @endforeach
+                        @if($topArtists->isEmpty())
+                            <div class="col-span-full py-12 text-center text-white/30 text-sm font-bold tracking-widest uppercase">
+                                No artists linked to this genre found.
+                            </div>
+                        @endif
                     </div>
                 </section>
 
-                {{-- Discussion --}}
+                <!-- Essential Tracks -->
                 <section>
-                    <div class="flex items-center justify-between mb-10">
-                        <div>
-                            <h2 class="text-soundbook-heading text-4xl lg:text-5xl text-white">DISCUSSION</h2>
-                        </div>
+                    <div class="flex items-center justify-between mb-12">
+                         <div>
+                             <h2 class="text-soundbook-heading text-6xl text-white uppercase tracking-tighter mb-2">TRACKS</h2>
+                             <p class="text-[13px] font-bold text-white/40 tracking-widest uppercase">Essential {{ $article->title }} Songs</p>
+                         </div>
+                    </div>
+
+                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                         @foreach($essentialTracks as $song)
+                             <a href="{{ $song->article ? route('wiki.show', $song->article) : '#' }}" class="group relative aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/5 bg-[#161b22] shadow-2xl transition-all duration-500 hover:border-blue-500/20 hover:-translate-y-2 cursor-pointer block">
+                                 <!-- Background Image -->
+                                 <img src="{{ $song->article->featured_image ?? $placeholder ?? '' }}" class="absolute inset-0 w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700">
+                                 <div class="absolute inset-0 bg-gradient-to-t from-[#0d1117] via-[#0d1117]/40 to-transparent opacity-90 group-hover:opacity-80 transition-opacity"></div>
+                                 
+                                 <!-- Content -->
+                                 <div class="absolute inset-0 p-8 flex flex-col justify-between z-10">
+                                     <!-- Badge -->
+                                     <div class="self-start">
+                                         @if($song->artist)
+                                         <span class="px-3 py-1.5 bg-blue-600 text-white rounded-full text-[10px] font-black tracking-widest shadow-lg uppercase">
+                                             {{ $song->artist->name }}
+                                         </span>
+                                         @endif
+                                     </div>
+
+                                     <div class="space-y-1">
+                                         <h3 class="text-2xl font-black text-white leading-tight tracking-tight mb-1">{{ $song->title }}</h3>
+                                         <p class="text-[11px] font-bold text-white/30 uppercase tracking-widest mb-6">Release: {{ $song->release_date ? $song->release_date->format('Y') : 'Unknown' }}</p>
+                                         
+                                         <div class="flex items-center justify-between border-t border-white/10 pt-6 group-hover:border-white/30 transition-colors">
+                                             <span class="text-[11px] font-black text-white/60 group-hover:text-white transition-colors uppercase tracking-widest flex items-center gap-2">
+                                                 View Details
+                                             </span>
+                                             <div class="w-8 h-8 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all shadow-lg">
+                                                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                             </a>
+                         @endforeach
+                         @if($essentialTracks->isEmpty())
+                            <div class="col-span-full py-12 text-center text-white/30 text-sm font-bold tracking-widest uppercase">
+                                No songs linked to this genre found.
+                            </div>
+                         @endif
+                     </div>
+                </section>
+
+                <!-- Subgenres & Related -->
+                <section class="border-t border-white/5 pt-16">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                         <!-- Actions -->
+                         <div class="card-premium-unified !bg-[#161b22]/40 !p-10 space-y-8">
+                            <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase">Actions</h3>
+                            <div class="space-y-6 pt-6 border-t border-white/5">
+                                <livewire:article.play-button :articleId="$article->id" label="Play Genre Mix" class="btn-figma-primary !w-full !py-4" />
+                                <div class="flex gap-4">
+                                    <div class="flex-1"><livewire:article.add-to-collection :article="$article" /></div>
+                                    <div class="flex-1"><livewire:article.bookmark-button :article="$article" /></div>
+                                </div>
+                            </div>
+                         </div>
+
+                         <!-- Subgenres List -->
+                         <div class="card-premium-unified !bg-[#161b22]/60 !p-10">
+                            <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase mb-8">Related Styles</h3>
+                            <div class="flex flex-wrap gap-4">
+                                @foreach($subgenres as $sub)
+                                    <a href="#" class="px-4 py-2 rounded-full border border-white/10 bg-white/5 text-[11px] font-bold text-white hover:bg-white hover:text-black transition-all uppercase tracking-wider">
+                                        {{ $sub->name }}
+                                    </a>
+                                @endforeach
+                                @if($subgenres->isEmpty())
+                                    <span class="text-white/30 text-sm italic">No subgenres defined.</span>
+                                @endif
+                            </div>
+                         </div>
+                    </div>
+                </section>
+
+                <!-- Discussion -->
+                <section>
+                    <div class="flex items-center justify-between mb-12">
+                         <div>
+                             <h2 class="text-soundbook-heading text-6xl text-white uppercase tracking-tighter mb-2">DISCUSSION</h2>
+                         </div>
                     </div>
                     <div class="card-premium-unified !bg-[#161b22]/40 !p-12">
                          <livewire:article.comments :article="$article" />
                     </div>
                 </section>
-
-                {{-- Related content --}}
-                <section>
+                
+                <!-- Related Content -->
+                 <section>
                     <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                         <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                        <h2 class="text-3xl font-black text-white tracking-tighter">Related Content</h2>
+                        <h2 class="text-3xl font-black text-white tracking-tighter">Network</h2>
                     </div>
                     <div class="h-[500px] rounded-[3rem] overflow-hidden border border-white/5 bg-black/20 backdrop-blur-xl relative">
                         <x-neural-map-visualization :articleId="$article->id" />
                     </div>
                 </section>
 
-                {{-- Metadata Consolidated Section --}}
-                <section class="border-t border-white/5 pt-16">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        {{-- Actions & Info --}}
-                        <div class="card-premium-unified !bg-[#161b22]/40 !p-10 space-y-8">
-                            <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase">Information</h3>
-                            <div class="space-y-4">
-                                <div class="flex items-center justify-between py-2 border-b border-white/5">
-                                    <span class="text-sm text-white/50 font-medium">Status</span>
-                                    <span class="text-sm text-white font-bold">Active</span>
-                                </div>
-                                <div class="flex items-center justify-between py-2 border-b border-white/5">
-                                    <span class="text-sm text-white/50 font-medium">Synced</span>
-                                    <span class="text-sm text-white font-bold">{{ optional($article->updated_at)->diffForHumans() }}</span>
-                                </div>
-                                <div class="flex items-center justify-between py-2">
-                                    <span class="text-sm text-white/50 font-medium">Views</span>
-                                    <span class="text-sm text-white font-bold">{{ number_format($article->view_count) }}</span>
-                                </div>
-                            </div>
-                            
-                            <div class="flex flex-col gap-4 pt-6">
-                                <livewire:article.play-button :articleId="$article->id" label="Play genre" class="btn-figma-primary !w-full !py-4" />
-                                <div class="flex gap-4">
-                                    <div class="flex-1"><livewire:article.add-to-collection :article="$article" /></div>
-                                    <div class="flex-1"><livewire:article.bookmark-button :article="$article" /></div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{-- Contributor --}}
-                        <div class="card-premium-unified !bg-[#161b22]/60 !p-10">
-                             <h3 class="text-[11px] font-bold text-white/40 tracking-widest mb-8 uppercase">Contributor</h3>
-                             @if($article->user)
-                             <div class="flex items-center gap-6">
-                                <div class="w-16 h-16 rounded-full p-1 bg-gradient-to-br from-blue-500/20 to-transparent">
-                                    <div class="w-full h-full rounded-full overflow-hidden border border-white/10 bg-[#0d1117] flex items-center justify-center">
-                                        @if($article->user->avatar)
-                                            <img src="{{ $article->user->avatar }}" class="w-full h-full object-cover">
-                                        @else
-                                            <span class="text-xl text-white font-bold">{{ ucfirst(substr($article->user->name, 0, 1)) }}</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div>
-                                    <p class="text-xl font-bold text-white">{{ $article->user->name }}</p>
-                                    <p class="text-xs text-white/30 font-medium tracking-widest uppercase mt-1">Contributor</p>
-                                </div>
-                             </div>
-                             @endif
-                             <div class="mt-8 p-5 rounded-2xl bg-white/5 border border-white/5">
-                                <p class="text-xs text-white/40 italic leading-relaxed">"This record represents a specific moment in music history, curated for the archive."</p>
-                             </div>
-                        </div>
-                    </div>
-                </section>
             </div>
         </main>
     </div>
