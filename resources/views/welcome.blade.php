@@ -762,26 +762,26 @@
          ========================================= --}}
     <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-8">
-            <div class="relative bg-[#161b22] rounded-[40px] p-12 md:p-24 text-center border border-white/5 overflow-hidden group">
+            <div class="relative bg-[#161b22] rounded-[32px] md:rounded-[40px] p-8 sm:p-12 md:p-24 text-center border border-white/5 overflow-hidden group">
                 {{-- Decorative background elements --}}
-                <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-blue-500/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/10 transition-all duration-700"></div>
-                <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/5 blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2"></div>
+                <div class="absolute top-0 right-0 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-blue-500/5 blur-[80px] sm:blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:bg-blue-500/10 transition-all duration-700"></div>
+                <div class="absolute bottom-0 left-0 w-[200px] sm:w-[400px] h-[200px] sm:h-[400px] bg-purple-500/5 blur-[60px] sm:blur-[100px] rounded-full translate-y-1/2 -translate-x-1/2"></div>
 
                 <div class="relative z-10">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full mb-8">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full mb-6 sm:mb-8">
                         <span class="text-[10px] font-black text-white/40 uppercase tracking-widest">Open Archive</span>
                     </div>
                     
-                    <h2 class="text-[32px] md:text-[56px] font-black text-white tracking-tight mb-12 max-w-4xl mx-auto uppercase leading-[1.1]" style="font-family: 'MODERNIZ', sans-serif;">
-                        Can't find the topic you're looking for?<br>Add it to the network!
+                    <h2 class="text-[24px] sm:text-[32px] md:text-[56px] font-black text-white tracking-tight mb-8 sm:mb-12 max-w-4xl mx-auto uppercase leading-[1.2] sm:leading-[1.1]" style="font-family: 'MODERNIZ', sans-serif;">
+                        Can't find the topic you're looking for?<br class="hidden sm:block">Add it to the network!
                     </h2>
                     
                     <div class="flex justify-center">
-                        <a href="{{ route('wiki.create') }}" class="group inline-flex items-center gap-6 bg-white hover:bg-gray-100 px-12 py-5 rounded-full transition-all duration-300 shadow-2xl shadow-blue-900/40">
-                            <span class="text-[#0d1117] text-[16px] font-black uppercase tracking-widest">
+                        <a href="{{ route('wiki.create') }}" class="group inline-flex items-center gap-4 sm:gap-6 bg-white hover:bg-gray-100 px-8 py-4 sm:px-12 sm:py-5 rounded-full transition-all duration-300 shadow-2xl shadow-blue-900/40 w-full sm:w-auto justify-center">
+                            <span class="text-[#0d1117] text-[14px] sm:text-[16px] font-black uppercase tracking-widest">
                                 Build the Archive
                             </span>
-                            <div class="w-8 h-8 bg-[#0d1117] rounded-full flex items-center justify-center group-hover:rotate-45 transition-transform duration-500">
+                            <div class="w-8 h-8 bg-[#0d1117] rounded-full flex items-center justify-center group-hover:rotate-45 transition-transform duration-500 shrink-0">
                                 <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 4v16m8-8H4"/>
                                 </svg>

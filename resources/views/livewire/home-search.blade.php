@@ -10,10 +10,10 @@
             placeholder="Search for a song, artist, or genre..." 
             class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-white/20 text-[15px] px-6 font-medium tracking-tight"
         >
-        <button wire:click="goToSearch" class="flex items-center gap-4 px-6 py-3 bg-white text-[#0d1117] rounded-full hover:bg-gray-100 transition-all group">
-            <span class="text-[14px] font-bold uppercase tracking-tight">Search</span>
-            <div class="w-5 h-5 bg-[#3b82f6] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/20">
-                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        <button wire:click="goToSearch" class="flex items-center gap-0 sm:gap-4 p-0 sm:px-6 sm:py-3 bg-transparent sm:bg-white text-[#0d1117] rounded-full hover:bg-transparent sm:hover:bg-gray-100 transition-all group shrink-0">
+            <span class="text-[14px] font-bold uppercase tracking-tight hidden sm:block">Search</span>
+            <div class="w-10 h-10 sm:w-5 sm:h-5 bg-[#3b82f6] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/20">
+                <svg class="w-5 h-5 sm:w-3 sm:h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </div>
         </button>
     </div>
