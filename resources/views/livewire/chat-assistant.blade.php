@@ -1,13 +1,12 @@
-{{-- Floating Chat Widget --}}
-<div class="fixed bottom-6 right-6 z-50" x-data="{ show: @entangle('isOpen') }">
+<div class="fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-[9000]" x-data="{ show: @entangle('isOpen') }">
     
     {{-- Chat Toggle Button --}}
     <button
         @click="show = !show"
-        class="w-16 h-16 rounded-2xl bg-white hover:bg-gray-50 text-blue-600 shadow-2xl shadow-blue-900/20 flex items-center justify-center transition-all hover:scale-110 active:scale-95 border border-white/10"
-        :class="{ 'scale-0 opacity-0': show }"
+        class="w-14 h-14 sm:w-16 sm:h-16 rounded-full sm:rounded-2xl bg-white hover:bg-gray-50 text-blue-600 shadow-2xl shadow-blue-900/40 flex items-center justify-center transition-all hover:scale-110 active:scale-95 border border-white/10 relative z-[9010]"
+        :class="{ 'opacity-0 pointer-events-none': show }"
     >
-        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
         </svg>
     </button>
@@ -15,13 +14,13 @@
     {{-- Chat Window --}}
     <div
         x-show="show"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 scale-95 translate-y-4"
-        x-transition:enter-end="opacity-100 scale-100 translate-y-0"
-        x-transition:leave="transition ease-in duration-150"
-        x-transition:leave-start="opacity-100 scale-100 translate-y-0"
-        x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-        class="absolute bottom-0 right-0 w-[380px] max-h-[600px] bg-[#0A0A14]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/50 overflow-hidden flex flex-col"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 translate-y-full sm:translate-y-4 sm:scale-95"
+        x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+        x-transition:leave-end="opacity-0 translate-y-full sm:translate-y-4 sm:scale-95"
+        class="fixed inset-0 sm:inset-auto sm:absolute sm:bottom-0 sm:right-0 w-full h-full sm:w-[380px] sm:h-auto sm:max-h-[600px] bg-[#0A0A14] sm:bg-[#0A0A14]/95 backdrop-blur-xl border-none sm:border sm:border-white/10 rounded-none sm:rounded-2xl shadow-none sm:shadow-2xl sm:shadow-black/50 overflow-hidden flex flex-col z-[100]"
         style="display: none;"
     >
         {{-- Header --}}
