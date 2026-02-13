@@ -163,9 +163,11 @@
                         <div>
                              <h2 class="text-soundbook-heading text-4xl text-white uppercase tracking-tighter mb-8">About the Track</h2>
                              <article class="prose prose-invert prose-lg max-w-none">
-                                 <div class="article-content text-white/70 text-base leading-relaxed">
-                                     {!! Str::markdown($article->content ?? 'No content available.') !!}
-                                 </div>
+                                 <livewire:wiki.annotations.context-layer :articleId="$article->id" context-type="bio">
+                                     <div class="article-content text-white/70 text-base leading-relaxed annotatable-content relative">
+                                         {!! Str::markdown($article->content ?? 'No content available.') !!}
+                                     </div>
+                                 </livewire:wiki.annotations.context-layer>
                              </article>
                         </div>
                         
@@ -175,12 +177,15 @@
                                 <h3 class="text-soundbook-heading text-2xl text-white uppercase tracking-tighter">Lyrics</h3>
                                 <div class="px-3 py-1 bg-white/5 text-[10px] font-bold text-white/50 rounded-lg">VERIFIED</div>
                             </div>
-                            <div class="h-[400px] overflow-y-auto pr-4 custom-scrollbar">
-                                <div class="space-y-6 text-lg font-medium text-white/60 leading-relaxed font-sans">
-                                     @foreach(explode("\n", $song->lyrics ?? "Lyrics not available yet.") as $line)
-                                         <p class="hover:text-white transition-colors">{{ $line }}</p>
-                                     @endforeach
-                                </div>
+                            <!-- Lyrics Content Wrapper -->
+                            <div class="h-[400px] overflow-y-auto pr-4 custom-scrollbar relative">
+                                <livewire:wiki.annotations.context-layer :articleId="$article->id" context-type="lyrics">
+                                    <div class="space-y-6 text-lg font-medium text-white/60 leading-relaxed font-sans cursor-text relative annotatable-content">
+                                         @foreach(explode("\n", $song->lyrics ?? "Lyrics not available yet.") as $line)
+                                             <p class="hover:text-white transition-colors">{{ $line }}</p>
+                                         @endforeach
+                                    </div>
+                                </livewire:wiki.annotations.context-layer>
                             </div>
                         </div>
                      </div>
@@ -199,9 +204,9 @@
                         @php
                             // Using real data if available, else placeholders that look dynamic
                             $metrics = [
-                                ['label' => 'Energy', 'value' => $song->energy ?? rand(60, 90), 'icon' => '⚡', 'color' => 'bg-blue-500'],
-                                ['label' => 'Danceability', 'value' => $song->danceability ?? rand(50, 95), 'icon' => '🕺', 'color' => 'bg-emerald-500'],
-                                ['label' => 'Valence', 'value' => $song->valence ?? rand(30, 80), 'icon' => '✨', 'color' => 'bg-purple-500'],
+                                ['label' => 'Energy', 'value' => isset($song->energy) ? round($song->energy * 100) : rand(60, 90), 'icon' => '⚡', 'color' => 'bg-blue-500'],
+                                ['label' => 'Danceability', 'value' => isset($song->danceability) ? round($song->danceability * 100) : rand(50, 95), 'icon' => '🕺', 'color' => 'bg-emerald-500'],
+                                ['label' => 'Valence', 'value' => isset($song->valence) ? round($song->valence * 100) : rand(30, 80), 'icon' => '✨', 'color' => 'bg-purple-500'],
                             ];
                         @endphp
                         @foreach($metrics as $metric)
@@ -294,7 +299,12 @@
 
                 <!-- Discussion -->
                 <section>
-                    <div class="flex items-center justify-between mb-12">
+                    <div class="flex flex-col gap-12">
+                         <h2 class="text-soundbook-heading text-6xl text-white uppercase tracking-tighter mb-2">COMMUNITY RATING</h2>
+                         <livewire:wiki.rating :model="$article" />
+                    </div>
+
+                    <div class="flex items-center justify-between mb-12 mt-24">
                          <div>
                              <h2 class="text-soundbook-heading text-6xl text-white uppercase tracking-tighter mb-2">DISCUSSION</h2>
                          </div>

@@ -68,6 +68,47 @@
         $featured_image = Storage::url($featured_image);
     }
     $featured_image = $featured_image ?: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80&w=1200';
+
+    // Discogs-Style Analytics
+    $topLabels = collect();
+    $topProducers = collect();
+    $yearsActive = ['start' => 'N/A', 'end' => 'N/A'];
+    
+    if ($genre) {
+        $topLabels = \App\Models\Song::where('genre_id', $genre->id)
+            ->whereNotNull('record_label')
+            ->where('record_label', '!=', '')
+            ->select('record_label', \DB::raw('count(*) as total'))
+            ->groupBy('record_label')
+            ->orderByDesc('total')
+            ->take(5)
+            ->get();
+
+        $topProducers = \App\Models\Song::where('genre_id', $genre->id)
+            ->whereNotNull('producer')
+            ->where('producer', '!=', '')
+            ->select('producer', \DB::raw('count(*) as total'))
+            ->groupBy('producer')
+            ->orderByDesc('total')
+            ->take(5)
+            ->get();
+
+        $minYear = \App\Models\Song::where('genre_id', $genre->id)->min('release_date');
+        $maxYear = \App\Models\Song::where('genre_id', $genre->id)->max('release_date');
+        
+        if ($minYear) $yearsActive['start'] = \Carbon\Carbon::parse($minYear)->format('Y');
+        if ($maxYear) $yearsActive['end'] = \Carbon\Carbon::parse($maxYear)->format('Y');
+
+        // Yearly Distribution Graph
+        $yearlyDistribution = \App\Models\Song::where('genre_id', $genre->id)
+            ->whereNotNull('release_date')
+            ->selectRaw('YEAR(release_date) as year, count(*) as count')
+            ->groupBy('year')
+            ->orderBy('year', 'asc')
+            ->get();
+            
+        $maxCount = $yearlyDistribution->max('count') ?? 1;
+    }
 @endphp
 
 <div class="min-h-screen bg-[#0d1117] flex justify-center">
@@ -103,17 +144,27 @@
                      
                      <!-- Meta Data Row -->
                      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] font-bold text-white/50 tracking-wide mb-8">
-                         <span>Parent Genre: <span class="text-white">{{ $parentGenre ? $parentGenre->name : 'None' }}</span></span>
+                         <span>Parent Genre: <span class="text-white">{{ $genre?->parent?->name ?? 'None' }}</span></span>
                          <span class="w-1 h-1 rounded-full bg-white/20"></span>
-                         <span>Subgenres: <span class="text-white">{{ $subgenres->count() }}</span></span>
+                         <span>Subgenres: <span class="text-white">{{ $genre?->children()->count() ?? 0 }}</span></span>
                          <span class="w-1 h-1 rounded-full bg-white/20"></span>
-                         <span>Tracks: <span class="text-white">{{ $genre ? $genre->songs()->count() : '0' }}</span></span>
+                         <span>Tracks: <span class="text-white">{{ $genre?->songs()->count() ?? 0 }}</span></span>
                      </div>
 
                      <!-- Bio Excerpt -->
                      <div class="max-w-4xl text-lg text-white/70 leading-relaxed mb-10 font-medium font-sans">
                           {{ Str::limit(strip_tags((string) $article->content), 350, '...') }}
                           <a href="#details" class="text-white underline decoration-white/30 hover:decoration-white transition-all cursor-pointer ml-2">Read Full Overview</a>
+                     </div>
+
+                     <div class="flex flex-wrap gap-4 mb-10">
+                        <a href="{{ route('wiki.index', ['category' => 'song', 'q' => $article->title]) }}" class="px-8 py-3 bg-blue-600 hover:bg-blue-500 text-white text-[11px] font-black uppercase tracking-widest rounded-full transition-all shadow-lg shadow-blue-600/20 flex items-center gap-3 group">
+                            <span>Explore {{ $article->title }} Tracks</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </a>
+                        <a href="{{ route('wiki.index', ['category' => 'artist', 'q' => $article->title]) }}" class="px-8 py-3 bg-white/5 hover:bg-white/10 text-white text-[11px] font-black uppercase tracking-widest rounded-full transition-all border border-white/10 group">
+                            <span>View Artists</span>
+                        </a>
                      </div>
 
                      <!-- Author & Actions Row -->
@@ -169,8 +220,73 @@
 
             <!-- Content Column -->
             <div class="space-y-24">
-                
-                <!-- History Timeline -->
+
+                <!-- Genre Analytics (Discogs Style) -->
+                <section>
+                    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+                        <!-- Years Active -->
+                        <div class="bg-[#161b22]/60 border border-white/5 p-8 rounded-[2rem] flex flex-col justify-center group hover:bg-[#1c2128] transition-colors">
+                            <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase mb-4 group-hover:text-blue-400 transition-colors">Active Era</h3>
+                            <div class="text-4xl font-black text-white tracking-tighter">
+                                {{ $yearsActive['start'] }} <span class="text-white/20">—</span> {{ $yearsActive['end'] }}
+                            </div>
+                        </div>
+
+                        <!-- Top Labels -->
+                        <div class="bg-[#161b22]/60 border border-white/5 p-8 rounded-[2rem] xl:col-span-2 group hover:bg-[#1c2128] transition-colors">
+                            <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase mb-4 group-hover:text-blue-400 transition-colors">Key Labels</h3>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach($topLabels as $label)
+                                    <a href="{{ route('wiki.index', ['q' => $label->record_label]) }}" class="px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-[12px] font-bold text-white hover:bg-white hover:text-black hover:border-white transition-all">
+                                        {{ $label->record_label }} <span class="text-white/30 ml-1 group-hover:text-black/30">({{ $label->total }})</span>
+                                    </a>
+                                @endforeach
+                                @if($topLabels->isEmpty()) <span class="text-white/20 text-xs font-bold uppercase tracking-widest">No label data available</span> @endif
+                            </div>
+                        </div>
+
+                        <!-- Producers -->
+                        <div class="bg-[#161b22]/60 border border-white/5 p-8 rounded-[2rem] group hover:bg-[#1c2128] transition-colors">
+                            <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase mb-4 group-hover:text-blue-400 transition-colors">Top Producers</h3>
+                             <div class="space-y-3">
+                                @foreach($topProducers->take(3) as $prod)
+                                    <a href="{{ route('wiki.index', ['q' => $prod->producer]) }}" class="flex justify-between items-center text-[13px] font-bold group/prod hover:bg-white/5 p-2 rounded-lg -mx-2 transition-colors">
+                                        <span class="text-white group-hover/prod:text-blue-400 transition-colors">{{ $prod->producer }}</span>
+                                        <span class="text-white/30 text-[10px] bg-white/5 px-2 py-0.5 rounded">{{ $prod->total }}</span>
+                                    </a>
+                                @endforeach
+                                @if($topProducers->isEmpty()) <span class="text-white/20 text-xs font-bold uppercase tracking-widest">No producer data</span> @endif
+                            </div>
+                        </div>
+                    </div>
+                    
+                    @if($yearlyDistribution->isNotEmpty())
+                    <!-- Yearly Trend Graph -->
+                    <div class="bg-[#161b22]/60 border border-white/5 rounded-[2rem] p-8">
+                        <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase mb-6 flex items-center justify-between">
+                            <span>Release History</span>
+                            <span class="bg-white/5 px-2 py-1 rounded text-white/30 ml-2">Total Released Tracks: {{ $genre->songs()->whereNotNull('release_date')->count() }}</span>
+                        </h3>
+                        <div class="flex items-end gap-1 h-[120px] w-full overflow-x-auto pb-2 scrollbar-hide select-none relative">
+                             @foreach($yearlyDistribution as $data)
+                                @php 
+                                    $heightPercent = ($data->count / $maxCount) * 100;
+                                    $heightPercent = max($heightPercent, 10); // Minimum visibility 
+                                @endphp
+                                <div class="flex-1 min-w-[30px] group relative flex flex-col justify-end items-center h-full">
+                                    <div class="w-full mx-0.5 bg-blue-500/20 group-hover:bg-blue-500 rounded-t-sm transition-all relative" style="height: {{ $heightPercent }}%;"></div>
+                                    <span class="text-[9px] font-black text-white/20 group-hover:text-white mt-2 absolute -bottom-4 transition-colors">{{ $data->year }}</span>
+                                    
+                                    <!-- Tooltip -->
+                                    <div class="absolute bottom-full mb-2 bg-[#0d1117] border border-white/10 px-3 py-1.5 rounded-lg text-xs font-bold text-white shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-20 pointer-events-none">
+                                        {{ $data->year }}: {{ $data->count }} Tracks
+                                    </div>
+                                </div>
+                             @endforeach
+                        </div>
+                    </div>
+                    @endif
+                </section>
                 <section>
                     <div class="flex items-center justify-between mb-12">
                          <div>
@@ -298,12 +414,12 @@
                          <div class="card-premium-unified !bg-[#161b22]/60 !p-10">
                             <h3 class="text-[11px] font-bold text-white/40 tracking-widest uppercase mb-8">Related Styles</h3>
                             <div class="flex flex-wrap gap-4">
-                                @foreach($subgenres as $sub)
+                                @foreach($genre?->children ?? collect() as $sub)
                                     <a href="#" class="px-4 py-2 rounded-full border border-white/10 bg-white/5 text-[11px] font-bold text-white hover:bg-white hover:text-black transition-all uppercase tracking-wider">
                                         {{ $sub->name }}
                                     </a>
                                 @endforeach
-                                @if($subgenres->isEmpty())
+                                @if(!($genre?->children()->exists()))
                                     <span class="text-white/30 text-sm italic">No subgenres defined.</span>
                                 @endif
                             </div>

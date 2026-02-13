@@ -1,4 +1,4 @@
-<div class="relative max-w-[640px] mb-12 z-20" x-data="{ focused: false }">
+<div class="relative max-w-[800px] mb-12 z-20" x-data="{ focused: false }">
     {{-- Search Input --}}
     <div class="flex items-center bg-[#161b22]/80 backdrop-blur-sm border border-white/5 rounded-full p-1.5 focus-within:border-white/10 transition-all">
         <input 
@@ -11,9 +11,9 @@
             class="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-white/20 text-[15px] px-6 font-medium tracking-tight"
         >
         <button wire:click="goToSearch" class="flex items-center gap-4 px-6 py-3 bg-white text-[#0d1117] rounded-full hover:bg-gray-100 transition-all group">
-            <span class="text-[14px] font-black uppercase tracking-tight">Search</span>
-            <div class="w-6 h-6 bg-[#3b82f6] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/20">
-                <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            <span class="text-[14px] font-bold uppercase tracking-tight">Search</span>
+            <div class="w-5 h-5 bg-[#3b82f6] rounded-full flex items-center justify-center group-hover:scale-110 transition-transform shadow-lg shadow-blue-500/20">
+                <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
             </div>
         </button>
     </div>

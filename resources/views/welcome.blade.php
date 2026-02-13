@@ -163,18 +163,14 @@
                                 </div>
 
                                 {{-- Meta Counters Row --}}
-                                <div class="flex items-center gap-6 text-white/40 text-[12px] font-bold">
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                                        <span>{{ number_format($topic['views'] ?? 0) }}</span>
+                                <div class="flex items-center gap-6 mt-auto">
+                                    <div class="flex items-center gap-2 text-white/40 group-hover:text-white/60 transition-colors">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                        <span class="text-[12px] font-bold">{{ number_format($topic['views'] ?? 0) }}</span>
                                     </div>
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
-                                        <span>{{ $topic['edits'] ?? 0 }} edits</span>
-                                    </div>
-                                    <div class="flex items-center gap-2">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><rect width="18" height="18" x="3" y="3" rx="4" stroke="currentColor"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 12 2 2 4-4"/></svg>
-                                        <span>{{ $topic['edits'] ?? 0 }} edits</span>
+                                    <div class="flex items-center gap-2 text-white/40 group-hover:text-white/60 transition-colors">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                                        <span class="text-[12px] font-bold">{{ $topic['edits'] ?? 0 }} edits</span>
                                     </div>
                                 </div>
                             </div>
@@ -465,29 +461,27 @@
         ];
     @endphp
 
-    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 transition-all"
-        x-data="{ 
-            canScrollLeft: false, 
-            canScrollRight: true,
-            checkScroll() {
-                const el = this.$refs.categorySlider;
-                this.canScrollLeft = el.scrollLeft > 10;
-                this.canScrollRight = el.scrollLeft < (el.scrollWidth - el.clientWidth - 10);
-            },
-            sliderScroll(offset) {
-                this.$refs.categorySlider.scrollBy({ left: offset, behavior: 'smooth' });
-                setTimeout(() => this.checkScroll(), 350);
-            }
-        }" x-init="checkScroll()">
+    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10"
+             x-data="{ 
+                canScrollLeft: false, 
+                canScrollRight: true,
+                checkScroll() {
+                    let s = this.$refs.catSlider;
+                    this.canScrollLeft = s.scrollLeft > 0;
+                    this.canScrollRight = s.scrollLeft + s.offsetWidth < s.scrollWidth - 2;
+                },
+                sliderScroll(amount) {
+                    this.$refs.catSlider.scrollBy({ left: amount, behavior: 'smooth' });
+                    setTimeout(() => this.checkScroll(), 350);
+                }
+            }" x-init="checkScroll()">
         <div class="max-w-[1400px] mx-auto px-8">
             <div class="flex items-end justify-between mb-12">
-                <div class="max-w-2xl">
+                 <div class="max-w-2xl">
                     <h2 class="section-title mb-2">Explore Categories</h2>
                     <p class="section-subtitle">Browse through the main sections of our music library.</p>
                 </div>
-
-                {{-- Navigation Arrows --}}
-                <div class="hidden md:flex items-center gap-4">
+                 <div class="hidden md:flex items-center gap-4">
                     <button @click="sliderScroll(-400)" :class="canScrollLeft ? 'text-white border-white/15' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center transition-all bg-white/5 hover:bg-white/10 hover:border-white/20 group">
                         <svg class="w-5 h-5 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
                     </button>
@@ -497,27 +491,27 @@
                 </div>
             </div>
 
-            <div class="overflow-x-auto scrollbar-hide -mx-8 px-8" x-ref="categorySlider" @scroll="checkScroll()" style="scrollbar-width: none; -ms-overflow-style: none;">
-                <div class="flex gap-8 pb-8">
-                    @foreach($categories as $cat)
-                        <a href="{{ route('wiki.index', ['category' => $cat['key']]) }}" class="card-premium-unified min-w-[340px] md:min-w-[400px] p-8 bg-[#161b22]/60 border border-white/5 flex flex-col h-full group hover:bg-[#1c2128] transition-all duration-500">
-                            <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 mb-8 transition-transform group-hover:scale-110">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">{!! $cat['icon'] !!}</svg>
+            <div class="overflow-x-auto scrollbar-hide -mx-8 px-8" x-ref="catSlider" @scroll="checkScroll()" style="scrollbar-width: none; -ms-overflow-style: none;">
+                <div class="flex gap-6 pb-8">
+                @foreach($categories as $cat)
+                    <a href="{{ route('wiki.index', ['category' => $cat['key']]) }}" class="card-premium-unified min-w-[300px] md:min-w-[380px] p-8 bg-[#161b22]/60 border border-white/5 flex flex-col h-full group hover:bg-[#1c2128] transition-all duration-500">
+                        <div class="w-12 h-12 rounded-full bg-blue-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/10 mb-8 transition-transform group-hover:scale-110">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">{!! $cat['icon'] !!}</svg>
+                        </div>
+                        <h3 class="text-[24px] font-bold tracking-tight text-white mb-4 group-hover:text-blue-400 transition-colors">{{ $cat['title'] }}</h3>
+                        <p class="text-white/40 text-[15px] font-medium leading-relaxed mb-10 line-clamp-2">
+                            {{ $cat['desc'] }}
+                        </p>
+                        <div class="mt-auto flex justify-between items-center">
+                            <span class="text-white/20 text-[12px] font-bold uppercase tracking-widest">
+                                {{ number_format($categoryCounts->where('category', $cat['key'])->first()->total ?? 0) }} {{ $cat['count_label'] }}
+                            </span>
+                            <div class="px-6 py-2 bg-white/5 border border-white/5 rounded-full text-[13px] font-bold text-white/50 group-hover:bg-blue-500 group-hover:text-white group-hover:border-blue-500 transition-all">
+                                Explore
                             </div>
-                            <h3 class="text-[24px] font-bold tracking-tight text-white mb-4 group-hover:text-blue-400 transition-colors">{{ $cat['title'] }}</h3>
-                            <p class="text-white/40 text-[15px] font-medium leading-relaxed mb-10 line-clamp-2">
-                                {{ $cat['desc'] }}
-                            </p>
-                            <div class="mt-auto flex justify-between items-center">
-                                <span class="text-white/20 text-[12px] font-bold uppercase tracking-widest">
-                                    {{ number_format($categoryCounts->where('category', $cat['key'])->first()->total ?? 0) }} {{ $cat['count_label'] }}
-                                </span>
-                                <div class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20 group-hover:bg-blue-500 group-hover:text-white transition-all">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                                </div>
-                            </div>
-                        </a>
-                    @endforeach
+                        </div>
+                    </a>
+                @endforeach
                 </div>
             </div>
         </div>
@@ -543,41 +537,53 @@
                 {{-- Column 1 --}}
                 <div class="flex-1 flex flex-col gap-10">
                     {{-- Hyperpop Card - Top Left --}}
-                    <a href="{{ route('wiki.index', ['category' => 'genre', 'q' => 'hyperpop']) }}" class="bg-[#161b22] border border-white/5 rounded-[32px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group">
-                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                    <a href="{{ route('wiki.index', ['category' => 'genre', 'q' => 'hyperpop']) }}" class="relative bg-[#161b22]/40 backdrop-blur-sm border border-white/5 rounded-[32px] p-10 hover:border-blue-500/30 hover:bg-[#161b22]/60 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-500 group">
+                        <div class="absolute top-8 right-8 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest">
+                            #1 Trending
                         </div>
-                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2">HYPERPOP</h3>
+                        <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-10 group-hover:bg-blue-500 transition-all duration-300">
+                            <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                        </div>
+                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2 group-hover:text-blue-400 transition-colors">HYPERPOP</h3>
                         <p class="text-white/40 text-[16px] font-medium">+78% growth this week</p>
                     </a>
 
                     {{-- Burna Boy Card - Lower Left --}}
-                    <a href="{{ route('wiki.index', ['q' => 'Burna Boy']) }}" class="bg-[#161b22] border border-white/5 rounded-[32px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group md:mt-16">
-                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    <a href="{{ route('wiki.index', ['q' => 'Burna Boy']) }}" class="relative bg-[#161b22]/40 backdrop-blur-sm border border-white/5 rounded-[32px] p-10 hover:border-blue-500/30 hover:bg-[#161b22]/60 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-500 group md:mt-16">
+                         <div class="absolute top-8 right-8 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest">
+                            #3 Trending
                         </div>
-                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2">BURNA BOY</h3>
-                        <p class="text-white/40 text-[16px] font-medium">#3 Global Momentum</p>
+                        <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-10 group-hover:bg-blue-500 transition-all duration-300">
+                            <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                        </div>
+                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2 group-hover:text-blue-400 transition-colors">BURNA BOY</h3>
+                        <p class="text-white/40 text-[16px] font-medium">Global Momentum</p>
                     </a>
                 </div>
 
                 {{-- Column 2 - Offset Middle --}}
                 <div class="flex-1 flex flex-col gap-10 md:mt-24">
                     {{-- Blinding Lights Card - Middle Top (Offset) --}}
-                    <a href="{{ route('wiki.index', ['q' => 'Blinding Lights']) }}" class="bg-[#161b22] border border-white/5 rounded-[32px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group">
-                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                    <a href="{{ route('wiki.index', ['q' => 'Blinding Lights']) }}" class="relative bg-[#161b22]/40 backdrop-blur-sm border border-white/5 rounded-[32px] p-10 hover:border-blue-500/30 hover:bg-[#161b22]/60 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-500 group">
+                         <div class="absolute top-8 right-8 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest">
+                            #2 Trending
                         </div>
-                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2 leading-tight">BLINDING<br>LIGHTS</h3>
+                        <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-10 group-hover:bg-blue-500 transition-all duration-300">
+                            <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                        </div>
+                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2 leading-tight group-hover:text-blue-400 transition-colors">BLINDING<br>LIGHTS</h3>
                         <p class="text-white/40 text-[16px] font-medium">Most edited today</p>
                     </a>
 
                     {{-- Afrofusion Card - Middle Bottom (Offset) --}}
-                    <a href="{{ route('wiki.index', ['category' => 'genre', 'q' => 'afrofusion']) }}" class="bg-[#161b22] border border-white/5 rounded-[32px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group md:mt-16">
-                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <a href="{{ route('wiki.index', ['category' => 'genre', 'q' => 'afrofusion']) }}" class="relative bg-[#161b22]/40 backdrop-blur-sm border border-white/5 rounded-[32px] p-10 hover:border-blue-500/30 hover:bg-[#161b22]/60 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-500 group md:mt-16">
+                         <div class="absolute top-8 right-8 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest">
+                            Rising
                         </div>
-                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2">AFROFUSION</h3>
+                        <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-10 group-hover:bg-blue-500 transition-all duration-300">
+                            <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2 group-hover:text-blue-400 transition-colors">AFROFUSION</h3>
                         <p class="text-white/40 text-[16px] font-medium">Emerging subgenre</p>
                     </a>
                 </div>
@@ -585,11 +591,14 @@
                 {{-- Column 3 - Offset Right --}}
                 <div class="flex-1 flex flex-col gap-10 md:mt-12">
                     {{-- Emerging Subgenre Card - Top Right (Offset) --}}
-                    <a href="{{ route('wiki.index', ['category' => 'genre']) }}" class="bg-[#161b22] border border-white/5 rounded-[32px] p-10 hover:border-white/20 hover:bg-[#1c2128] transition-all duration-500 group">
-                        <div class="w-12 h-12 rounded-full bg-[#3b82f6] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
-                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
+                    <a href="{{ route('wiki.index', ['category' => 'genre']) }}" class="relative bg-[#161b22]/40 backdrop-blur-sm border border-white/5 rounded-[32px] p-10 hover:border-blue-500/30 hover:bg-[#161b22]/60 hover:shadow-lg hover:shadow-blue-500/10 transition-all duration-500 group">
+                         <div class="absolute top-8 right-8 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-black uppercase tracking-widest">
+                            New
                         </div>
-                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2 leading-tight">EMERGING<br>SUBGENRE</h3>
+                        <div class="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-10 group-hover:bg-blue-500 transition-all duration-300">
+                            <svg class="w-6 h-6 text-blue-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"/></svg>
+                        </div>
+                        <h3 class="text-white text-[24px] font-black uppercase tracking-tight mb-2 leading-tight group-hover:text-blue-400 transition-colors">EMERGING<br>SUBGENRE</h3>
                         <p class="text-white/40 text-[16px] font-medium">New Remix</p>
                     </a>
                 </div>
@@ -685,84 +694,64 @@
     {{-- =========================================
          COMMUNITY INSIGHTS - FIGMA DESIGN
          ========================================= --}}
-    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 overflow-hidden"
-             x-data="{ 
-                canScrollLeft: false, 
-                canScrollRight: true,
-                sliderScroll(amount) {
-                    const slider = this.$refs.insightSlider;
-                    slider.scrollBy({ left: amount, behavior: 'smooth' });
-                    setTimeout(() => this.checkScroll(), 350);
-                },
-                checkScroll() {
-                    const slider = this.$refs.insightSlider;
-                    this.canScrollLeft = slider.scrollLeft > 10;
-                    this.canScrollRight = slider.scrollLeft < (slider.scrollWidth - slider.clientWidth - 10);
-                }
-            }" x-init="checkScroll()">
+    <section class="section-unified py-24 bg-[#0d1117] border-t border-white/5 relative z-10 overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-8">
-            <div class="flex items-end justify-between mb-16">
-                <div class="max-w-2xl">
-                    <h2 class="text-white text-[32px] font-black uppercase tracking-tight mb-2" style="font-family: 'MODERNIZ', sans-serif;">TRENDING NOW</h2>
-                    <p class="section-subtitle">See what the community is actively updating right now.</p>
-                </div>
-
-                {{-- Slider Controls --}}
-                <div class="hidden md:flex items-center gap-4">
-                    <button @click="sliderScroll(-400)" :class="canScrollLeft ? 'text-white border-white/20' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center transition-all bg-transparent hover:border-white/40 group">
-                        <svg class="w-5 h-5 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19l-7-7 7-7"/></svg>
-                    </button>
-                    <button @click="sliderScroll(400)" :class="canScrollRight ? 'text-white border-white/20' : 'text-white/10 border-white/5 cursor-not-allowed'" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center transition-all bg-transparent hover:border-white/40 group">
-                        <svg class="w-5 h-5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5l7 7-7 7"/></svg>
-                    </button>
-                </div>
+            <div class="mb-16 max-w-2xl">
+                <h2 class="text-white text-[32px] font-black uppercase tracking-tight mb-2" style="font-family: 'MODERNIZ', sans-serif;">COMMUNITY INSIGHTS</h2>
+                <p class="section-subtitle">Real-time statistics covering our archival momentum.</p>
             </div>
 
-            <div class="overflow-x-auto scrollbar-hide -mx-8 px-8" x-ref="insightSlider" @scroll="checkScroll()" style="scrollbar-width: none; -ms-overflow-style: none;">
-                <div class="flex gap-6 pb-8">
-                    @php
-                        $insights = [
-                            [
-                                'title' => 'Most Edited Artist Today',
-                                'value' => 'Drake',
-                                'badge' => '42 updates',
-                            ],
-                            [
-                                'title' => 'Most Added Genre',
-                                'value' => 'Afrobeats',
-                                'badge' => '+12 today',
-                            ],
-                            [
-                                'title' => 'Fastest Growing Playlist',
-                                'value' => 'Summer Hits',
-                                'badge' => '+1.2K likes',
-                            ],
-                            [
-                                'title' => 'Trending Category',
-                                'value' => 'Music Theory',
-                                'badge' => 'High Heat',
-                            ],
-                        ];
-                    @endphp
-
-                    @foreach($insights as $insight)
-                    <div class="card-premium-unified min-w-[380px] md:min-w-[440px] p-10 flex flex-col min-h-[220px] group transition-all duration-300">
-                        <div class="flex justify-between items-start mb-6">
-                            <span class="text-white/40 text-[12px] font-bold uppercase tracking-widest">{{ $insight['title'] }}</span>
-                            <div class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center border border-white/10 group-hover:bg-blue-500 transition-all">
-                                <svg class="w-4 h-4 text-blue-500 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" stroke-width="2.5"/></svg>
-                            </div>
-                        </div>
-                        <h3 class="text-[48px] font-black text-white leading-none tracking-tighter mb-auto">
-                            {{ $insight['value'] }}
-                        </h3>
-                        <div class="flex items-center gap-2 mt-8">
-                            <span class="px-4 py-1.5 bg-blue-600/10 border border-blue-500/20 text-blue-400 text-[11px] font-black uppercase tracking-widest rounded-full">
-                                {{ $insight['badge'] }}
-                            </span>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {{-- Card 1: New Topics --}}
+                <div class="card-premium-unified bg-[#161b22]/60 border border-white/5 p-8 flex flex-col min-h-[200px] group transition-all duration-300 hover:bg-[#1c2128]">
+                    <span class="text-white/40 text-[12px] font-bold uppercase tracking-widest mb-6">New Topics This Week</span>
+                    <h3 class="text-[48px] font-black text-white leading-none tracking-tighter mb-auto">
+                        {{ number_format(data_get($musicWeather, 'raw.new_this_week', 0)) }}
+                    </h3>
+                    <div class="self-end mt-4">
+                        <div class="w-10 h-10 rounded-full bg-blue-500/10 border border-white/10 flex items-center justify-center text-blue-500 group-hover:bg-blue-500 group-hover:text-white transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
                         </div>
                     </div>
-                    @endforeach
+                </div>
+
+                {{-- Card 2: Daily Edits --}}
+                <div class="card-premium-unified bg-[#161b22]/60 border border-white/5 p-8 flex flex-col min-h-[200px] group transition-all duration-300 hover:bg-[#1c2128]">
+                    <span class="text-white/40 text-[12px] font-bold uppercase tracking-widest mb-6">Edits Today</span>
+                    <h3 class="text-[48px] font-black text-white leading-none tracking-tighter mb-auto">
+                        {{ number_format(data_get($musicWeather, 'raw.edits_today', 0)) }}
+                    </h3>
+                    <div class="self-end mt-4">
+                        <div class="w-10 h-10 rounded-full bg-cyan-500/10 border border-white/10 flex items-center justify-center text-cyan-500 group-hover:bg-cyan-500 group-hover:text-white transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Card 3: Active Users --}}
+                <div class="card-premium-unified bg-[#161b22]/60 border border-white/5 p-8 flex flex-col min-h-[200px] group transition-all duration-300 hover:bg-[#1c2128]">
+                    <span class="text-white/40 text-[12px] font-bold uppercase tracking-widest mb-6">Archivists Online</span>
+                    <h3 class="text-[48px] font-black text-white leading-none tracking-tighter mb-auto">
+                        {{ number_format(data_get($musicWeather, 'raw.active_now', 0)) }}
+                    </h3>
+                    <div class="self-end mt-4">
+                         <div class="w-10 h-10 rounded-full bg-pink-500/10 border border-white/10 flex items-center justify-center text-pink-500 group-hover:bg-pink-500 group-hover:text-white transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Card 4: Verification Rate --}}
+                <div class="card-premium-unified bg-[#161b22]/60 border border-white/5 p-8 flex flex-col min-h-[200px] group transition-all duration-300 hover:bg-[#1c2128]">
+                    <span class="text-white/40 text-[12px] font-bold uppercase tracking-widest mb-6">Verification Rate</span>
+                    <h3 class="text-[48px] font-black text-white leading-none tracking-tighter mb-auto">
+                        {{ data_get($musicWeather, 'raw.verification_rate', 95) }}%
+                    </h3>
+                    <div class="self-end mt-4">
+                        <div class="w-10 h-10 rounded-full bg-emerald-500/10 border border-white/10 flex items-center justify-center text-emerald-500 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

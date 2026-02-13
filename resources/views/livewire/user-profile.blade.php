@@ -189,6 +189,9 @@
         </section>
         @endif
 
+        <!-- Digital Crate Section -->
+        <livewire:wiki.profile.crate :user="$user" />
+
         <!-- Topics Added Section -->
         <section class="bg-[#0d1117] py-24 border-t border-white/5" 
                  x-data="{ 

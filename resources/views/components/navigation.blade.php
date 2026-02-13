@@ -36,9 +36,9 @@
                 </nav>
 
                 {{-- Submit Topic Button --}}
-                <a href="{{ route('wiki.create') }}" class="hidden xl:flex items-center gap-3 bg-white/5 border border-white/10 hover:bg-white/10 text-white text-[13px] font-black uppercase tracking-widest rounded-full px-6 py-2.5 transition-all ml-4 group">
+                <a href="{{ route('wiki.create') }}" class="hidden xl:flex items-center gap-3 bg-blue-600 hover:bg-blue-500 text-white text-[13px] font-black uppercase tracking-widest rounded-full px-6 py-2.5 shadow-lg shadow-blue-600/20 transition-all ml-4 group">
                     <span>Submit Topic</span>
-                    <div class="w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center group-hover:rotate-90 transition-transform duration-300">
+                    <div class="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center group-hover:rotate-90 transition-transform duration-300">
                         <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"/></svg>
                     </div>
                 </a>
