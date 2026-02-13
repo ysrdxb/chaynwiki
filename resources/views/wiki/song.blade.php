@@ -229,6 +229,11 @@
                             </div>
                         </article>
                     </section>
+                    
+                    {{-- Genetic Mapping Module --}}
+                    <section class="mb-16">
+                        <livewire:wiki.⚡genetic-tree :song="$article->song" />
+                    </section>
 
                     <!-- Lyrics -->
                     @if($article->song && $article->song->lyrics)
