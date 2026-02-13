@@ -143,7 +143,12 @@
                             </div>
                         </div>
                      </div>
-                 </div>
+                </div>
+
+                {{-- Archival Timeline Module --}}
+                <div class="mb-16">
+                    <livewire:wiki.⚡timeline :entity="$artist" />
+                </div>
             </div>
 
             <div class="flex flex-col xl:flex-row gap-12">

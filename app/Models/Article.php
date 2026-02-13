@@ -92,6 +92,11 @@ class Article extends Model
         return $this->hasMany(Bookmark::class);
     }
 
+    public function milestones()
+    {
+        return $this->hasMany(Milestone::class);
+    }
+
     public function crates()
     {
         return $this->belongsToMany(Crate::class, 'crate_articles')

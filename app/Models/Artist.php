@@ -23,4 +23,9 @@ class Artist extends Model
     {
         return $this->hasMany(Song::class);
     }
+
+    public function milestones()
+    {
+        return $this->hasMany(Milestone::class);
+    }
 }

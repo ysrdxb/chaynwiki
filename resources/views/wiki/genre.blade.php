@@ -103,7 +103,12 @@
                             <span class="text-[11px] text-white/30 font-bold tracking-widest">Views</span>
                          </div>
                     </div>
-                 </div>
+                </div>
+
+                {{-- Archival Timeline Module --}}
+                <div class="mb-16">
+                    <livewire:wiki.⚡timeline :entity="$genre" />
+                </div>
             </div>
 
             <div class="flex flex-col xl:flex-row gap-12">
