@@ -32,6 +32,11 @@
                  class="space-y-8" 
                  style="display: none;">
                 
+                {{-- Vault Dashboard --}}
+                <div class="card-premium h-auto !bg-transparent !p-0 border-0 shadow-none">
+                    <livewire:profile.vault-dashboard />
+                </div>
+                
                 <div class="card-premium h-auto !bg-[#161b22]/40 backdrop-blur-sm !p-12 rounded-[3.5rem] border-white/5 hover:border-blue-500/20 shadow-3xl transition-all duration-700">
                     <livewire:profile.update-profile-information-form />
                 </div>

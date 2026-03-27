@@ -200,7 +200,7 @@
                          </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
                         @php
                             // Using real data if available, else placeholders that look dynamic
                             $metrics = [
@@ -224,7 +224,70 @@
                         </div>
                         @endforeach
                     </div>
+
+                    <!-- Harmonic Mixing / Camelot Wheel -->
+                    @if($song->camelot_key)
+                    <div class="card-premium-unified !bg-[#161b22]/40 !p-10 border-l-4 border-l-purple-500">
+                        <div class="flex flex-col md:flex-row items-center gap-12">
+                            <div class="text-center md:text-left">
+                                <span class="text-[10px] font-black uppercase tracking-widest text-purple-400 mb-2 block">Harmonic Key</span>
+                                <div class="text-6xl font-black text-white tracking-tighter">{{ $song->camelot_key }}</div>
+                                <div class="text-white/40 text-sm mt-1">{{ $song->key ?? '' }}</div>
+                            </div>
+                            
+                            <div class="flex-1 w-full relative">
+                                <div class="flex items-center justify-between mb-4">
+                                     <h4 class="text-sm font-bold text-white uppercase tracking-wider">Mixes Well With</h4>
+                                     <span class="text-[10px] text-white/30 uppercase tracking-widest">Camelot System</span>
+                                </div>
+                                <div class="flex flex-wrap gap-4">
+                                    @foreach($song->compatible_keys as $key)
+                                        <div class="px-6 py-3 bg-white/5 border border-white/10 rounded-xl text-white font-black text-xl hover:bg-white/10 hover:border-purple-500/50 transition-all cursor-default">
+                                            {{ $key }}
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                 </section>
+
+                <!-- Studio Gear Locker -->
+                @if($article->gears->isNotEmpty())
+                <section>
+                    <div class="flex items-center justify-between mb-12">
+                         <div>
+                             <h2 class="text-soundbook-heading text-6xl text-white uppercase tracking-tighter mb-2">STUDIO GEAR</h2>
+                             <p class="text-[13px] font-bold text-white/40 tracking-widest uppercase">Production Tools & Hardware</p>
+                         </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach($article->gears as $gear)
+                        <div class="card-premium-unified !bg-[#161b22]/40 !p-6 group hover:border-blue-500/30 transition-all">
+                            <div class="flex items-start gap-4">
+                                <div class="w-20 h-20 rounded-xl bg-black/40 border border-white/5 overflow-hidden flex-shrink-0">
+                                    <img src="{{ $gear->image ?? 'https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=200&q=80' }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 mb-1">
+                                        <span class="text-[9px] font-black uppercase tracking-widest text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">{{ $gear->type }}</span>
+                                    </div>
+                                    <h4 class="text-lg font-black text-white leading-tight mb-1 group-hover:text-blue-400 transition-colors">{{ $gear->name }}</h4>
+                                    <p class="text-[11px] font-bold text-white/40 tracking-wide uppercase">{{ $gear->brand }}</p>
+                                </div>
+                            </div>
+                            @if($gear->pivot->usage_notes)
+                            <div class="mt-4 pt-4 border-t border-white/5">
+                                <p class="text-sm text-white/60 italic">"{{ $gear->pivot->usage_notes }}"</p>
+                            </div>
+                            @endif
+                        </div>
+                        @endforeach
+                    </div>
+                </section>
+                @endif
 
                 <!-- Related Versions -->
                 @if($relatedVersions->isNotEmpty())
@@ -256,14 +319,14 @@
                 </section>
                 @endif
                 
-                <!-- Network -->
+                <!-- Network / Genealogy -->
                  <section>
                     <div class="flex items-center border-b border-white/5 pb-6 mb-10">
                         <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                        <h2 class="text-3xl font-black text-white tracking-tighter">Network</h2>
+                        <h2 class="text-3xl font-black text-white tracking-tighter">Sonic Genealogy</h2>
                     </div>
-                    <div class="h-[500px] rounded-[3rem] overflow-hidden border border-white/5 bg-black/20 backdrop-blur-xl relative">
-                        <x-neural-map-visualization :articleId="$article->id" />
+                    <div class="h-[600px] rounded-[3rem] overflow-hidden border border-white/5 bg-black/20 backdrop-blur-xl relative">
+                        <livewire:wiki.sonic-tree :articleId="$article->id" />
                     </div>
                 </section>
 

@@ -112,7 +112,65 @@
                             <h3 class="text-[20px] font-black text-white uppercase tracking-tighter mb-2">Artist Directory</h3>
                             <p class="text-[14px] text-white/40 font-medium">Verified musician profiles</p>
                         </a>
-                    </div>
+
+                        {{-- Crate Digger Mode --}}
+                        <div class="col-span-full mt-8">
+                             <div class="w-full relative group overflow-hidden rounded-[40px] border border-white/5 bg-[#161b22]/60 hover:border-yellow-500/50 transition-all duration-500 p-12 text-center">
+                                <div class="absolute inset-0 bg-gradient-to-r from-yellow-500/10 via-transparent to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                
+                                <div class="relative z-10">
+                                    <button wire:click="digCrate" class="group/btn focus:outline-none transition-transform active:scale-95">
+                                        <div class="w-20 h-20 bg-yellow-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover/btn:scale-110 group-hover/btn:rotate-12 transition-all duration-500 border border-yellow-500/20">
+                                            <svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                        </div>
+                                        <h3 class="text-[32px] font-black text-white uppercase tracking-tighter mb-2 group-hover/btn:text-yellow-400 transition-colors">Crate Digger Mode</h3>
+                                    </button>
+                                    
+                                    <p class="text-[16px] text-white/40 font-medium mb-8">Feeling lucky? Dig through the archives using 3D visualization.</p>
+                                    
+                                    <div wire:loading wire:target="digCrate" class="py-12">
+                                        <div class="flex flex-col items-center gap-4">
+                                            <svg class="animate-spin h-8 w-8 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                                            <span class="text-xs font-bold text-yellow-500 uppercase tracking-widest animate-pulse">Digging through crates...</span>
+                                        </div>
+                                    </div>
+
+                                    @if(!empty($crateDigs))
+                                    <div class="h-[300px] perspective-1000 flex items-center justify-center gap-4 py-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                                         @foreach($crateDigs as $index => $dig)
+                                            @php
+                                                // Calculate transform for 3D fan effect centered (index 2 is center)
+                                                // 0: -30deg, 1: -15deg, 2: 0deg, 3: 15deg, 4: 30deg
+                                                $rotate = ($index - 2) * 10;
+                                                $translateZ = abs($index - 2) * -30;
+                                                $translateX = ($index - 2) * 40;
+                                            @endphp
+                                            <a href="{{ $dig['url'] }}" class="w-48 h-48 bg-[#0d1117] rounded-xl shadow-2xl transform transition-all duration-500 hover:scale-125 hover:z-50 hover:rotate-0 hover:translate-z-10 cursor-pointer border border-white/10 relative overflow-hidden group/album"
+                                                style="transform: perspective(1000px) rotateY({{ $rotate }}deg) translateZ({{ $translateZ }}px) translateX({{ $translateX }}px)">
+                                                
+                                                @if($dig['image'])
+                                                <img src="{{ $dig['image'] }}" class="w-full h-full object-cover opacity-80 group-hover/album:opacity-100 transition-opacity">
+                                                @else
+                                                <div class="w-full h-full flex items-center justify-center bg-white/5">
+                                                    <svg class="w-12 h-12 text-white/10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                                </div>
+                                                @endif
+                                                
+                                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent flex flex-col justify-end p-4 opacity-0 group-hover/album:opacity-100 transition-opacity duration-300">
+                                                    <span class="text-white font-black text-xs uppercase tracking-tighter leading-tight line-clamp-2">{{ $dig['title'] }}</span>
+                                                    <span class="text-yellow-500 text-[9px] font-bold uppercase tracking-widest mt-1">View Record</span>
+                                                </div>
+                                            </a>
+                                         @endforeach
+                                    </div>
+                                    @else
+                                        <div class="mt-4 text-white/20 text-xs font-bold uppercase tracking-widest" wire:loading.remove>
+                                            Click above to discover random gems
+                                        </div>
+                                    @endif
+                                </div>
+                             </div>
+                        </div>
                 </div>
                 
             @elseif($results && $results->count() > 0)

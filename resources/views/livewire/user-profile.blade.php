@@ -97,13 +97,13 @@
                 </div>
 
                 <div class="shrink-0 pt-8 md:pt-0">
-                    <button wire:click="toggleHistory" class="group flex items-center gap-4 px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-[2rem] font-black transition-all duration-300 shadow-3xl shadow-blue-500/20">
-                        <span class="tracking-tight">{{ $showHistory ? 'Close history' : 'Contribution logs' }}</span>
-                        <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-blue-500 transition-all">
+                    <button wire:click="toggleHistory" class="btn-figma-secondary shadow-lg shadow-blue-500/10">
+                        <span>{{ $showHistory ? 'Close history' : 'Contribution logs' }}</span>
+                        <div class="figma-icon">
                             @if($showHistory)
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+                                <svg class="w-3 h-3 text-current" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
                             @else
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                <svg class="w-3 h-3 text-current" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                             @endif
                         </div>
                     </button>
@@ -237,8 +237,8 @@
                 <div class="text-center mt-20">
                     <a href="{{ route('wiki.index', ['user' => $user->username]) }}" class="btn-figma-secondary !px-12 !py-5 shadow-3xl">
                         <span>Expand Data View</span>
-                        <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shadow-inner">
-                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                        <div class="figma-icon">
+                            <svg class="w-3 h-3 text-current" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                         </div>
                     </a>
                 </div>

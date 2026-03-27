@@ -15,6 +15,7 @@ class Article extends Model
         'is_master' => 'boolean',
         'data_quality' => 'integer',
         'trust_score' => 'integer',
+        'meta' => 'array',
     ];
 
     public function getFeaturedImageAttribute($value)
@@ -151,5 +152,12 @@ class Article extends Model
             $base = array_merge($base, $this->analysis->themes);
         }
         return implode(', ', array_unique($base));
+    }
+
+    public function gears()
+    {
+        return $this->belongsToMany(Gear::class, 'article_gear')
+                    ->withPivot('usage_notes')
+                    ->withTimestamps();
     }
 }

@@ -26,6 +26,9 @@ Route::get('/wiki/generate', \App\Livewire\Article\GenerateArticle::class)
 Route::get('/tools/lyrics', \App\Livewire\Article\LyricAnalyzer::class)
     ->name('tools.lyrics');
 
+Route::get('/tools/sound-map', \App\Livewire\Tools\SoundMap::class)
+    ->name('tools.sound-map');
+
 Route::get('/leaderboard', \App\Livewire\Leaderboard::class)
     ->name('leaderboard');
 

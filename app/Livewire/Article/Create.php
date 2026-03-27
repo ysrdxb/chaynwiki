@@ -27,6 +27,7 @@ class Create extends Component
     // Spotify Integration
     public $spotifyImportUrl = '';
     public $isFetchingSpotify = false;
+    public $remoteImage = null; // URL from Spotify
 
     public function mount()
     {
@@ -76,15 +77,122 @@ class Create extends Component
         $this->category = '';
     }
 
+    public function importSpotify(SpotifyService $spotify)
+    {
+        $this->isFetchingSpotify = true;
+        $this->resetErrorBag();
+        
+        try {
+            $url = $this->spotifyImportUrl;
+            $type = '';
+            $id = '';
+            
+            // Parse URL
+            if (Str::contains($url, 'open.spotify.com/')) {
+                $path = parse_url($url, PHP_URL_PATH);
+                $parts = explode('/', trim($path, '/'));
+                // Expected: ['track', 'ID'] or ['artist', 'ID']
+                $type = $parts[0] ?? '';
+                $id = $parts[1] ?? '';
+            } elseif (Str::startsWith($url, 'spotify:')) {
+                $parts = explode(':', $url);
+                $type = $parts[1] ?? '';
+                $id = $parts[2] ?? '';
+            }
+            
+            if (!$id || !$type) {
+                $this->addError('spotifyImportUrl', 'Invalid Spotify URL. Use a Track or Artist link.');
+                return;
+            }
+
+            if ($type === 'track') {
+                $this->category = 'song';
+                $track = $spotify->getTrack($id);
+                $features = $spotify->getAudioFeatures($id);
+                
+                if ($track) {
+                    $this->title = $track->name;
+                    $this->meta['artist_name'] = collect($track->artists)->pluck('name')->implode(', ');
+                    $this->meta['release_date'] = $track->album->release_date ?? null;
+                    $this->meta['spotify_id'] = $id;
+
+                    // Images
+                    if (!empty($track->album->images)) {
+                        $this->remoteImage = $track->album->images[0]->url;
+                    }
+
+                    // Genre from Artist
+                    if (!empty($track->artists[0]->id)) {
+                        $artist = $spotify->getArtist($track->artists[0]->id);
+                        if ($artist && !empty($artist->genres)) {
+                            $this->meta['genre'] = implode(', ', array_slice($artist->genres, 0, 3));
+                        }
+                    }
+
+                    if ($features) {
+                        $this->meta['bpm'] = $features['tempo'];
+                        $this->meta['camelot_key'] = $features['camelot'];
+                        $this->meta['energy'] = $features['energy'];
+                    }
+                    
+                    // Basic Content Template
+                    $this->content = "<h3>Overview</h3>\n<p><strong>{$this->title}</strong> is a song by <strong>{$this->meta['artist_name']}</strong>, released on {$this->meta['release_date']} as part of the album *{$track->album->name}*.</p>\n\n<h3>Production</h3>\n<p>The track features a tempo of {$this->meta['bpm']} BPM and is written in the key of {$this->meta['camelot_key']} ({$features['key']}).</p>";
+                }
+            } elseif ($type === 'artist') {
+                $this->category = 'artist';
+                $artist = $spotify->getArtist($id);
+                
+                if ($artist) {
+                    $this->title = $artist->name;
+                    $this->meta['genre'] = implode(', ', array_slice($artist->genres, 0, 5));
+                    $this->meta['spotify_id'] = $id;
+                    $this->meta['followers'] = $artist->followers->total ?? 0;
+                    
+                    if (!empty($artist->images)) {
+                        $this->remoteImage = $artist->images[0]->url;
+                    }
+
+                    $this->content = "<h3>Biography</h3>\n<p><strong>{$artist->name}</strong> is a recording artist known for " . implode(', ', $artist->genres) . ".</p>";
+                }
+            } else {
+                 $this->addError('spotifyImportUrl', 'Only Tracks and Artists are supported currently.');
+                 return;
+            }
+            
+            $this->step = 2; // Auto-advance
+
+        } catch (\Exception $e) {
+            $this->addError('spotifyImportUrl', 'Import failed: ' . $e->getMessage());
+        } finally {
+            $this->isFetchingSpotify = false;
+        }
+    }
+
     public function save(ArticleService $service)
     {
         $this->validate();
+
+        // Handle Image
+        $imagePath = null;
+        if ($this->featured_image) {
+            $imagePath = $this->featured_image->store('articles', 'public');
+        } elseif ($this->remoteImage) {
+            // Download remote image
+            try {
+                $contents = file_get_contents($this->remoteImage);
+                $name = 'articles/' . Str::random(40) . '.jpg';
+                \Illuminate\Support\Facades\Storage::disk('public')->put($name, $contents);
+                $imagePath = $name;
+            } catch (\Exception $e) {
+                // Ignore download failure, just continue without image
+            }
+        }
 
         $data = [
             'title' => $this->title,
             'category' => $this->category,
             'content' => $this->content,
-            'featured_image' => $this->featured_image ? $this->featured_image->store('articles', 'public') : null,
+            'featured_image' => $imagePath,
         ];
         
         $tagsArray = array_map('trim', explode(',', $this->tags));
@@ -101,9 +209,8 @@ class Create extends Component
         }
 
         // Redirect to the newly created article
-        // return redirect()->route('wiki.show', ['category' => $this->category, 'slug' => $article->slug]);
         session()->flash('message', 'Article created successfully!');
-        return redirect()->to(route('dashboard')); // Temporary
+        return redirect()->route('wiki.show', ['article' => $article->slug]);
     }
 
     public function render()

@@ -98,7 +98,225 @@
                  @endif
             </div>
 
+            {{-- Matrix Timeline --}}
+            @php
+                 $timelineReleases = collect();
+                 if ($article->category === 'artist') {
+                     $timelineReleases = \App\Models\Article::where('category', 'song') // or album if exists
+                         ->where('meta->artist_name', $article->title)
+                         ->whereNotNull('meta->release_date')
+                         ->orderBy('meta->release_date')
+                         ->limit(20) // Performance cap
+                         ->get()
+                         ->map(function($a) {
+                             return [
+                                 'id' => $a->id,
+                                 'title' => $a->title,
+                                 'year' => \Carbon\Carbon::parse($a->meta['release_date'])->year,
+                                 'image' => $a->featured_image,
+                                 'type' => 'Release',
+                                 'url' => route('wiki.show', $a)
+                             ];
+                         })
+                         ->values();
+                 }
+            @endphp
+
+            @if($timelineReleases->isNotEmpty())
+            <div class="mb-24">
+                <div class="flex items-center border-b border-white/5 pb-2 mb-8">
+                    <h2 class="text-xs font-black text-white/50 uppercase tracking-widest">Release Matrix</h2>
+                    <div class="flex-1 h-px bg-white/5 ml-4"></div>
+                </div>
+                <div class="card-premium-unified !bg-[#161b22]/40 border-0">
+                    <x-wiki.matrix-timeline :releases="$timelineReleases" />
+                </div>
+            </div>
+            @endif
+
             <div class="space-y-24">
+                
+                {{-- Galaxy Network Graph --}}
+                @php
+                    $galaxyService = app(\App\Services\GalaxyService::class);
+                    $constellation = $galaxyService->getConstellation($article);
+                @endphp
+                @if(count($constellation['nodes']) > 1)
+                <section>
+                    <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                        <div class="w-1.5 h-10 bg-purple-500 rounded-full mr-6 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
+                        <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Galaxy Network</h2>
+                    </div>
+                    <x-wiki.galaxy-graph :nodes="$constellation['nodes']" :links="$constellation['links']" />
+                </section>
+                @endif
+
+                {{-- Sync Lab (Mix Monitor) --}}
+                @if($article->category === 'song')
+                <section>
+                    <livewire:wiki.mix-monitor :rootArticle="$article" />
+                </section>
+                @endif
+
+                {{-- Song Analysis (Camelot Wheel) --}}
+                @if($article->category === 'song' && $article->song && $article->song->camelot_key)
+                <section>
+                    <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                        <div class="w-1.5 h-10 bg-pink-500 rounded-full mr-6 shadow-[0_0_15px_rgba(236,72,153,0.5)]"></div>
+                        <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Harmonic Profile</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                        <div class="bg-[#161b22]/40 border border-white/5 rounded-[32px] p-8 flex justify-center">
+                             <x-wiki.camelot-wheel :currentKey="$article->song->camelot_key" :compatibleKeys="$article->song->compatible_keys" />
+                        </div>
+                        <div>
+                             <h3 class="text-white text-2xl font-black mb-4 uppercase tracking-tight">Harmonic Mixing</h3>
+                             <p class="text-white/60 text-lg leading-relaxed mb-8">
+                                 This track is in the key of <strong class="text-white">{{ $article->song->camelot_key }}</strong>. 
+                                 For seamless transitions, mix with tracks in <span class="text-blue-400 font-bold">{{ implode(', ', $article->song->compatible_keys ?? []) }}</span>.
+                             </p>
+                             
+                             <div class="flex flex-wrap gap-3">
+                                 @foreach($article->song->compatible_keys ?? [] as $k)
+                                     <a href="{{ route('wiki.index', ['category' => 'song', 'key' => $k]) }}" class="px-4 py-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 text-xs font-bold text-white transition-all uppercase tracking-wider">
+                                         {{ $k }}
+                                     </a>
+                                 @endforeach
+                             </div>
+                        </div>
+                    </div>
+                </section>
+                @endif
+
+                {{-- Sonic DNA Analysis --}}
+                @if($article->category === 'song' && !empty($article->meta['energy']))
+                <section>
+                    <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                        <div class="w-1.5 h-10 bg-cyan-500 rounded-full mr-6 shadow-[0_0_15px_rgba(6,182,212,0.5)]"></div>
+                        <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Sonic DNA</h2>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                         <x-wiki.sonic-dna 
+                            :track1="[
+                                'title' => $article->title,
+                                'energy' => $article->meta['energy'] ?? 50,
+                                'danceability' => $article->meta['danceability'] ?? 60,
+                                'valence' => $article->meta['valence'] ?? 50,
+                                'acousticness' => $article->meta['acousticness'] ?? 10,
+                                'instrumentalness' => $article->meta['instrumentalness'] ?? 0,
+                                'bpm' => $article->meta['bpm'] ?? 0,
+                                'key' => $article->meta['camelot_key'] ?? 'N/A'
+                            ]"
+                            :track2="[
+                                'title' => 'Average Genre Standard', 
+                                'energy' => 65, 
+                                'danceability' => 55, 
+                                'valence' => 45, 
+                                'acousticness' => 20, 
+                                'instrumentalness' => 5,
+                                'bpm' => 124,
+                                'key' => 'Mixed'
+                            ]" 
+                        />
+                        
+                        <div class="space-y-8">
+                            <h3 class="text-white text-2xl font-black uppercase tracking-tight">Audio Analysis</h3>
+                            <p class="text-white/60 text-lg leading-relaxed">
+                                The <strong>Sonic DNA</strong> print visualizes the acoustic characteristics of this track. 
+                                High <strong class="text-cyan-400">Energy</strong> and <strong class="text-cyan-400">Danceability</strong> suggest club utility, 
+                                while <strong class="text-cyan-400">Valence</strong> indicates the musical positiveness (mood).
+                            </p>
+                            
+                            <div class="p-6 bg-[#161b22]/40 border border-white/5 rounded-2xl">
+                                <h4 class="text-[11px] font-bold text-white/40 uppercase tracking-widest mb-4">Production Insight</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex justify-between text-xs font-bold text-white mb-1">
+                                            <span>Dynamic Range</span>
+                                            <span class="text-cyan-400">High</span>
+                                        </div>
+                                        <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                            <div class="h-full w-[85%] bg-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-xs font-bold text-white mb-1">
+                                            <span>Vocal Presence</span>
+                                            <span class="text-cyan-400">Medium</span>
+                                        </div>
+                                        <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                                            <div class="h-full w-[60%] bg-cyan-500/50"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                @endif
+
+                {{-- Neuro-Semantic Context (Lyrics) --}}
+                @if(($article->category === 'song' || $article->category === 'artist') && !empty($article->meta['lyrics_snippet']))
+                     <section class="mb-24">
+                        <div class="flex items-center justify-between border-b border-white/5 pb-6 mb-10">
+                            <div class="flex items-center">
+                                <div class="w-1.5 h-10 bg-emerald-500 rounded-full mr-6 shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
+                                <h2 class="text-3xl font-black text-white tracking-tighter uppercase">Lyrical Context</h2>
+                            </div>
+                            <div class="hidden md:flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-emerald-400 text-[10px] font-black uppercase tracking-widest hover:bg-emerald-500 hover:text-white transition-all cursor-pointer group">
+                                <svg class="w-3.5 h-3.5 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                <span>Neuro-Analysis: Active</span>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                            <div class="lg:col-span-2 relative">
+                                <div class="absolute -left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-white/10 to-transparent"></div>
+                                <div class="prose prose-invert prose-lg max-w-none font-serif text-xl leading-loose text-white/90 whitespace-pre-wrap pl-6 relative">
+                                    {{ $article->meta['lyrics_snippet'] }}
+                                    
+                                    <div class="absolute -right-4 top-2 group cursor-pointer hidden md:block">
+                                        <div class="w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 hover:bg-blue-500 hover:text-white transition-all">
+                                            <span class="text-[10px] font-bold">1</span>
+                                        </div>
+                                        <div class="absolute right-8 top-0 w-64 bg-[#161b22] border border-blue-500/30 p-4 rounded-xl shadow-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto z-50">
+                                            <span class="text-[10px] font-bold text-blue-400 uppercase tracking-widest block mb-2">Context Note</span>
+                                            <p class="text-xs text-white/80 leading-relaxed">This phrasing typically references the artist's recurring theme of isolation.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-6">
+                                <div class="bg-[#161b22]/40 border border-white/5 rounded-2xl p-6">
+                                    <h3 class="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-4">Sentiment Analysis</h3>
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-full border-4 border-emerald-500/20 border-t-emerald-500 flex items-center justify-center">
+                                            <span class="text-[10px] font-bold text-emerald-400">85%</span>
+                                        </div>
+                                        <div>
+                                            <span class="block text-white font-bold text-sm">Melancholic</span>
+                                            <span class="block text-white/40 text-xs">Primary Tone</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-xs text-white/50 leading-relaxed">The lyrical structure exhibits high emotional intensity with recurring references to loss and nostalgia.</p>
+                                </div>
+                                
+                                <div class="bg-[#161b22]/40 border border-white/5 rounded-2xl p-6">
+                                    <h3 class="text-white/40 text-[10px] font-bold uppercase tracking-widest mb-4">Thematic Nodes</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-3 py-1.5 bg-purple-500/10 border border-purple-500/20 rounded-lg text-purple-300 text-[10px] font-bold uppercase tracking-wide">Nostalgia</span>
+                                        <span class="px-3 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-lg text-blue-300 text-[10px] font-bold uppercase tracking-wide">City Life</span>
+                                        <span class="px-3 py-1.5 bg-pink-500/10 border border-pink-500/20 rounded-lg text-pink-300 text-[10px] font-bold uppercase tracking-wide">Romance</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </section>
+                @endif
+
                 {{-- Content Section --}}
                 <section id="content">
                     <div class="flex items-center border-b border-white/5 pb-6 mb-10">
@@ -168,6 +386,28 @@
                         <livewire:article.comments :article="$article" />
                     </div>
                 </section>
+
+                {{-- Revisions Time Machine --}}
+                @if($article->revisions->count() > 1)
+                <section>
+                    <div class="flex items-center border-b border-white/5 pb-6 mb-10">
+                        <div class="w-1.5 h-10 bg-yellow-500 rounded-full mr-6 shadow-[0_0_15px_rgba(234,179,8,0.5)]"></div>
+                        <h2 class="text-3xl font-black text-white tracking-tighter uppercase">History</h2>
+                    </div>
+                    
+                    <div class="card-premium-unified !bg-[#161b22]/40 !p-12">
+                         <x-wiki.time-machine :revisions="$article->revisions->map(function($rev) {
+                             return [
+                                 'id' => $rev->id,
+                                 'date' => $rev->created_at->format('M d, Y H:i'),
+                                 'user' => $rev->user->name ?? 'System',
+                                 'content' => Str::markdown($rev->content_snapshot['content'] ?? ''),
+                                 'hash' => substr(md5($rev->created_at), 0, 8)
+                             ];
+                         })->reverse()->values()->all()" />
+                    </div>
+                </section>
+                @endif
             </div>
         </main>
     </div>

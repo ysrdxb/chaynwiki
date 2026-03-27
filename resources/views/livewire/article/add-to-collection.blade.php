@@ -66,9 +66,11 @@ new class extends Component {
 
 <div class="relative">
     <button wire:click="$set('isOpen', true)" class="btn-figma-secondary !w-full !py-4 flex items-center justify-center gap-3 group">
-        <svg class="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-        </svg>
+        <div class="figma-icon">
+            <svg class="w-3 h-3 text-current" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+        </div>
         <span class="text-xs font-bold tracking-widest">Save to Library</span>
     </button>
 

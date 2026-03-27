@@ -25,6 +25,35 @@
             <p class="text-white/50 text-sm">Choose one content type — fields will adapt automatically.</p>
         </div>
 
+        <!-- Spotify Magic Import -->
+        <div class="mb-16 p-8 rounded-[32px] bg-gradient-to-r from-[#1db954]/10 to-[#1db954]/5 border border-[#1db954]/20 relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-8 opacity-20 pointer-events-none">
+                <svg class="w-32 h-32 text-[#1db954]" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+            </div>
+            
+            <div class="relative z-10 max-w-2xl">
+                <div class="flex items-center gap-3 mb-2">
+                    <h3 class="text-2xl font-black text-white uppercase tracking-tight">Magic Import</h3>
+                    <span class="px-2 py-0.5 rounded bg-[#1db954]/20 border border-[#1db954]/30 text-[#1db954] text-[10px] font-black uppercase tracking-widest">Beta</span>
+                </div>
+                <p class="text-white/60 text-sm mb-6">Paste a Spotify link to instantly populate track or artist data.</p>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="flex-1">
+                        <input wire:model="spotifyImportUrl" type="text" placeholder="https://open.spotify.com/track/..." class="w-full h-full bg-[#0d1117]/80 border border-[#1db954]/30 rounded-2xl px-6 py-3 text-white text-sm focus:border-[#1db954] transition-colors outline-none placeholder:text-white/20">
+                        @error('spotifyImportUrl') <span class="text-red-400 text-xs mt-2 block pl-4 font-bold">{{ $message }}</span> @enderror
+                    </div>
+                    <button wire:click="importSpotify" wire:loading.attr="disabled" class="btn-figma-secondary !bg-[#1db954] !border-none !text-[#0d1117] hover:!bg-[#1ed760] disabled:opacity-50 disabled:cursor-wait shrink-0 h-[50px]">
+                        <span wire:loading.remove wire:target="importSpotify">Auto-Fill</span>
+                        <span wire:loading wire:target="importSpotify" class="flex items-center gap-2">
+                            <svg class="animate-spin h-4 w-4 text-[#0d1117]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            Fetching...
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Category Selector Cards -->
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-16">
             @foreach([
@@ -99,6 +128,18 @@
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Songwriters</label>
                             <input wire:model="meta.songwriters" type="text" placeholder="e.g. Abel Tesfaye, Max Martin" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none">
+                        </div>
+                        <div class="space-y-2">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-white text-sm font-bold block mb-1">BPM</label>
+                                    <input wire:model="meta.bpm" type="number" placeholder="128" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none">
+                                </div>
+                                <div>
+                                    <label class="text-white text-sm font-bold block mb-1">Camelot Key</label>
+                                    <input wire:model="meta.camelot_key" type="text" placeholder="8A" class="w-full bg-custom-9 border border-custom-35 rounded-xl px-6 py-4 text-white text-sm placeholder:text-white/40 focus:border-white/20 transition-all outline-none">
+                                </div>
+                            </div>
                         </div>
                         <div class="space-y-2">
                             <label class="text-white text-sm font-bold block mb-1">Studio Recorded</label>
@@ -275,7 +316,9 @@
                             <input wire:model="featured_image" type="file" class="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer">
                             <div class="w-full bg-white/[0.02] border border-custom-35 border-dashed rounded-[20px] py-16 flex flex-col items-center justify-center transition-all group-hover:border-white/10 group-hover:bg-white/[0.04]">
                                 @if ($featured_image)
-                                    <img src="{{ $featured_image->temporaryUrl() }}" class="w-48 h-48 object-cover rounded-xl mb-4">
+                                    <img src="{{ $featured_image->temporaryUrl() }}" class="w-48 h-48 object-cover rounded-xl mb-4 shadow-lg">
+                                @elseif ($remoteImage)
+                                    <img src="{{ $remoteImage }}" class="w-48 h-48 object-cover rounded-xl mb-4 shadow-lg">
                                 @else
                                     <div class="w-12 h-12 mb-4">
                                         <svg class="w-full h-full text-white/20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">

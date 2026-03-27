@@ -68,4 +68,45 @@ class Song extends Model
             ->where('type', 'remix_of')
             ->with(['source.song', 'source.artist']);
     }
+    /**
+     * Get compatible Camelot keys for mixing
+     * Returns: Same Key, Relative Minor/Major, +1 Semitone, -1 Semitone
+     */
+    public function getCompatibleKeysAttribute(): array
+    {
+        if (!$this->camelot_key) {
+            return [];
+        }
+
+        $key = strtoupper($this->camelot_key);
+        $number = (int) filter_var($key, FILTER_SANITIZE_NUMBER_INT);
+        $letter = preg_replace('/[^A-B]/', '', $key); // A or B
+
+        if (!$number || !$letter) {
+            return [];
+        }
+
+        $compatible = [];
+
+        // 1. Same Key (e.g. 8A -> 8A)
+        $compatible[] = $number . $letter;
+
+        // 2. Relative Major/Minor (e.g. 8A -> 8B)
+        $relativeLetter = ($letter === 'A') ? 'B' : 'A';
+        $compatible[] = $number . $relativeLetter;
+
+        // 3. Perfect Fifth Up (+1 Number) (e.g. 8A -> 9A)
+        $nextNum = $number + 1;
+        if ($nextNum > 12) $nextNum = 1;
+        $compatible[] = $nextNum . $letter;
+
+        // 4. Perfect Fifth Down (-1 Number) (e.g. 8A -> 7A)
+        $prevNum = $number - 1;
+        if ($prevNum < 1) $prevNum = 12;
+        $compatible[] = $prevNum . $letter;
+
+        // Extras: Energy Boost (+2) - Optional, but sticking to core harmonic mixing first
+        
+        return $compatible;
+    }
 }

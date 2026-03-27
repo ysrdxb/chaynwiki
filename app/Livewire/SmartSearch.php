@@ -17,6 +17,7 @@ class SmartSearch extends Component
     public array $suggestions = [];
     public array $trending = [];
     public array $categories = [];
+    public array $crateDigs = [];
     public bool $showSuggestions = false;
 
     protected $queryString = [
@@ -82,6 +83,23 @@ class SmartSearch extends Component
         $this->sortBy = 'relevance';
         $this->showSuggestions = false;
         $this->resetPage();
+    }
+
+    public function digCrate(): void
+    {
+        $this->crateDigs = \App\Models\Article::whereNotNull('featured_image')
+            ->inRandomOrder()
+            ->limit(5)
+            ->get(['id', 'title', 'featured_image', 'slug'])
+            ->map(function ($article) {
+                return [
+                    'id' => $article->id,
+                    'title' => $article->title,
+                    'image' => $article->featured_image,
+                    'url' => route('wiki.show', $article) // Or just generate url
+                ];
+            })
+            ->toArray();
     }
 
     public function requestArchivalEntry($title, $cat = 'general'): void

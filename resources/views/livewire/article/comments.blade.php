@@ -28,7 +28,7 @@
                             <div class="w-1 h-1 rounded-full bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.4)]"></div>
                             <div class="text-[11px] text-slate-500">Your comment will be visible to everyone.</div>
                         </div>
-                        <button type="submit" class="group relative px-8 py-3 bg-white text-black rounded-full font-black text-[11px] uppercase tracking-tighter overflow-hidden hover:scale-105 transition-all shadow-xl active:scale-95">
+                        <button type="submit" class="btn-figma-primary !px-8 !py-3 !text-[11px]">
                             <span class="relative z-10">Post Comment</span>
                         </button>
                     </div>
@@ -42,7 +42,7 @@
             <svg class="w-5 h-5 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
         </div>
         <p class="text-xs text-slate-400 mb-6 font-medium">Log in to participate in the conversation.</p>
-        <a href="{{ route('login') }}" class="inline-block px-8 py-3 bg-white text-black rounded-full text-[10px] font-black uppercase tracking-widest hover:scale-105 transition-all">Log in to Comment</a>
+        <a href="{{ route('login') }}" class="btn-figma-primary !inline-flex !px-8 !py-3 !text-[10px]">Log in to Comment</a>
     </div>
     @endauth
 

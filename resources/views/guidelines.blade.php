@@ -6,7 +6,7 @@
 @section('content')
     <section class="pt-28 pb-16 bg-primary section-divider">
         <div class="max-w-[1200px] mx-auto px-8">
-            <h1 class="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mb-6">Contribution Guidelines</h1>
+            <h1 class="text-4xl md:text-6xl font-black text-white italic uppercase tracking-tighter mb-6">Contribution Guidelines</h1>
             <p class="text-white/50 text-sm max-w-2xl leading-relaxed">
                 ChaynWiki is a community-run music encyclopedia. Use these guidelines to keep entries accurate, readable, and respectful.
             </p>

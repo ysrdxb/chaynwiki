@@ -72,6 +72,8 @@
     // Discogs-Style Analytics
     $topLabels = collect();
     $topProducers = collect();
+    $yearlyDistribution = collect();
+    $maxCount = 1;
     $yearsActive = ['start' => 'N/A', 'end' => 'N/A'];
     
     if ($genre) {
